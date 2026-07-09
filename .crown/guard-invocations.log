@@ -2923,3 +2923,16 @@
 {"at":"2026-07-09T20:41:06.226Z","tool":"Bash","path":"lsof -ti:3000 | xargs kill 2>/dev/null; sleep 1; (TURSO_DATABASE_URL= TURSO_AUTH"}
 {"at":"2026-07-09T20:41:25.014Z","tool":"Bash","path":"pnpm perf:api 2>&1 | tail -14"}
 {"at":"2026-07-09T20:41:47.981Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 sh -c '\ncp perf-api.json .crown/evidence/perf-api.json\ncp /tm"}
+{"at":"2026-07-09T20:42:30.954Z","tool":"Bash","path":"printf '/perf-api.json\\n' >> .gitignore && git rm --cached perf-api.json -q && C"}
+{"at":"2026-07-09T20:43:04.106Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/tests/injection.test.ts"}
+{"at":"2026-07-09T20:43:14.678Z","tool":"Bash","path":"pnpm exec vitest run tests/injection.test.ts --coverage=false 2>&1 | tail -4; gr"}
+{"at":"2026-07-09T20:43:26.424Z","tool":"Bash","path":"tail -12 e2e/onboarding.spec.ts"}
+{"at":"2026-07-09T20:43:36.853Z","tool":"Bash","path":"node - <<'NODEEOF'\nconst fs = require(\"node:fs\");\nconst f = \"e2e/onboarding.spec"}
+{"at":"2026-07-09T20:43:48.228Z","tool":"Bash","path":"sed -n 17,46p e2e/onboarding.spec.ts"}
+{"at":"2026-07-09T20:44:08.149Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/e2e/onboarding.spec.ts"}
+{"at":"2026-07-09T20:44:16.409Z","tool":"Bash","path":"lsof -ti:3000 | xargs kill 2>/dev/null; lsof -ti:3100 | xargs kill 2>/dev/null; "}
+{"at":"2026-07-09T20:44:43.360Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 sh -c '\npnpm exec vitest run app/api/routes.test.ts tests/inj"}
+{"at":"2026-07-09T20:45:03.765Z","tool":"Bash","path":"node -e \"console.log('postcss terpasang:', require('postcss/package.json').versi"}
+{"at":"2026-07-09T20:45:28.369Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 sh -c 'pnpm audit --prod > .crown/evidence/depaudit.txt 2>&1;"}
+{"at":"2026-07-09T20:46:10.703Z","tool":"Bash","path":"echo \"=== ROOT ===\" && ls -la && echo \"=== LIB ===\" && ls -la lib/ 2>/dev/null &"}
+{"at":"2026-07-09T20:46:11.698Z","tool":"Bash","path":"printf '/depaudit.txt\\n/seed-verify.json\\n/seed-timing.json\\n' >> .gitignore 2>/"}

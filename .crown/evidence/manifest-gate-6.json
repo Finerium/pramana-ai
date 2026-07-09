@@ -1,0 +1,13 @@
+{
+  "gate": 6,
+  "entries": [
+    {"id": "AC-SEC-01", "check": "vitest matrix 401 seluruh route non-publik (routes.test)", "expect": "pass", "artifact": ".crown/evidence/junit-sec.xml"},
+    {"id": "AC-SEC-02", "check": "vitest matrix isolasi role 403", "expect": "pass", "artifact": ".crown/evidence/junit-sec.xml"},
+    {"id": "AC-SEC-03", "check": "vitest injeksi (SQLi string + XSS payload nama) tersimpan ter-escape + render aman", "expect": "pass", "artifact": ".crown/evidence/junit-sec.xml"},
+    {"id": "AC-SEC-04", "check": "pnpm scan-secrets (tree + git log -p)", "expect": "0 temuan", "artifact": ".crown/evidence/secret-scan.txt"},
+    {"id": "AC-SEC-05", "check": "pnpm audit --prod", "expect": "0 high/critical", "artifact": ".crown/evidence/depaudit.txt"},
+    {"id": "AC-SEC-06", "check": "vitest hash bcrypt + cookie httpOnly/secure/sameSite + nol PII di log", "expect": "pass", "artifact": ".crown/evidence/junit-sec.xml"},
+    {"id": "AC-SEC-07", "check": "vitest rate limit login percobaan ke-6 -> 429", "expect": "pass", "artifact": ".crown/evidence/junit-sec.xml"},
+    {"id": "SEC-AUDIT", "check": "auditor keamanan independen fresh-context memverifikasi setiap temuan", "expect": "nol high/critical terbuka", "artifact": ".crown/evidence/sec-audit.json"}
+  ]
+}

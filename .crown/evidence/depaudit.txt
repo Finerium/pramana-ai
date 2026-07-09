@@ -1,0 +1,23 @@
+┌─────────────────────┬────────────────────────────────────────────────────────┐
+│ moderate            │ PostCSS has XSS via Unescaped </style> in its CSS      │
+│                     │ Stringify Output                                       │
+├─────────────────────┼────────────────────────────────────────────────────────┤
+│ Package             │ postcss                                                │
+├─────────────────────┼────────────────────────────────────────────────────────┤
+│ Vulnerable versions │ <8.5.10                                                │
+├─────────────────────┼────────────────────────────────────────────────────────┤
+│ Patched versions    │ >=8.5.10                                               │
+├─────────────────────┼────────────────────────────────────────────────────────┤
+│ Paths               │ .>next>postcss                                         │
+├─────────────────────┼────────────────────────────────────────────────────────┤
+│ More info           │ https://github.com/advisories/GHSA-qx2v-qp2m-jg93      │
+└─────────────────────┴────────────────────────────────────────────────────────┘
+1 vulnerabilities found
+Severity: 1 moderate
+
+CATATAN AC-SEC-05: 0 high/critical (kriteria lulus). 1 moderate tersisa:
+postcss <8.5.10 XSS via unescaped </style> disematkan next 16.2.10 secara
+internal (path .>next>postcss). postcss dep langsung kita = 8.5.16 (aman).
+Kerentanan hanya di jalur BUILD (postcss memproses CSS kita saat build,
+bukan komponen runtime produk), tidak terekspos ke input pengguna. Hilang
+saat next merilis rebuild dengan postcss patched. Dicatat di Report.

@@ -7,7 +7,8 @@ import { test, expect } from "./helpers/fixtures";
 import { reseed, shot } from "./helpers/sesi";
 
 const NIK_ERR = "Nomor NIK harus 16 angka. Silakan periksa kembali KTP Anda.";
-const SUKSES = "Selamat, Anda resmi menjadi anggota. Ini kartu anggota digital Anda.";
+const SUKSES =
+  "Selamat, Anda resmi menjadi anggota. Ini kartu anggota digital Anda.";
 const EMAIL16 = "uji-onboard16@pramana.id";
 const PASS = "RahasiaUji123";
 
@@ -21,7 +22,9 @@ test("AC-E2E-03 NIK 15 ditolak tanpa akun; NIK 16 membuat kartu + sesi aktif", a
   await page.goto("/daftar");
   await page.getByPlaceholder("Sesuai KTP").fill("Uji Lima Belas");
   await page.getByPlaceholder("Nomor pada KTP Anda").fill("123456789012345"); // 15
-  await page.getByPlaceholder("Dusun, desa, kecamatan").fill("Dusun Uji, Sukamaju");
+  await page
+    .getByPlaceholder("Dusun, desa, kecamatan")
+    .fill("Dusun Uji, Sukamaju");
   await page.getByPlaceholder("nama@contoh.id").fill("uji-nik15@pramana.id");
   await page.getByPlaceholder("Minimal 8 karakter").fill(PASS);
   await page.getByRole("button", { name: "Daftar dan verifikasi" }).click();
@@ -38,7 +41,9 @@ test("AC-E2E-03 NIK 15 ditolak tanpa akun; NIK 16 membuat kartu + sesi aktif", a
   await page.reload();
   await page.getByPlaceholder("Sesuai KTP").fill("Uji Enam Belas");
   await page.getByPlaceholder("Nomor pada KTP Anda").fill("3208010101010001"); // 16
-  await page.getByPlaceholder("Dusun, desa, kecamatan").fill("Dusun Uji, Sukamaju");
+  await page
+    .getByPlaceholder("Dusun, desa, kecamatan")
+    .fill("Dusun Uji, Sukamaju");
   await page.getByPlaceholder("nama@contoh.id").fill(EMAIL16);
   await page.getByPlaceholder("Minimal 8 karakter").fill(PASS);
   await page.getByRole("button", { name: "Daftar dan verifikasi" }).click();
@@ -55,4 +60,37 @@ test("AC-E2E-03 NIK 15 ditolak tanpa akun; NIK 16 membuat kartu + sesi aktif", a
       "Kas koperasi menurun dan ada satu pembelian besar yang perlu dijelaskan pengurus.",
     ),
   ).toBeVisible();
+});
+
+test("AC-SEC-03 payload XSS pada nama dirender aman (teks, bukan script)", async ({
+  page,
+}) => {
+  let alertMuncul = false;
+  page.on("dialog", (d) => {
+    alertMuncul = true;
+    void d.dismiss();
+  });
+  const xssNama = '<img src=x onerror="window.__xss=1"> Uji';
+  await page.goto("/daftar");
+  await page.getByPlaceholder("Sesuai KTP").fill(xssNama);
+  await page.getByPlaceholder("Nomor pada KTP Anda").fill("3208010101019999");
+  await page.getByPlaceholder("Dusun, desa, kecamatan").fill("Dusun XSS");
+  await page.getByPlaceholder("nama@contoh.id").fill("uji-xss@pramana.id");
+  await page.getByPlaceholder("Minimal 8 karakter").fill(PASS);
+  await page.getByRole("button", { name: "Daftar dan verifikasi" }).click();
+  await expect(page.getByText(SUKSES)).toBeVisible();
+
+  // Nama ditampilkan sebagai teks literal pada kartu (React meng-escape),
+  // tidak mengeksekusi handler dan tidak menyuntik elemen img.
+  await expect(page.getByText(xssNama, { exact: false })).toBeVisible();
+  const xssFlag = await page.evaluate(
+    () => (window as unknown as { __xss?: number }).__xss,
+  );
+  expect(xssFlag).toBeUndefined();
+  expect(alertMuncul).toBe(false);
+  const imgSuntik = await page
+    .locator('img[src="x"]')
+    .count()
+    .catch(() => 0);
+  expect(imgSuntik).toBe(0);
 });

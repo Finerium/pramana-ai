@@ -52,3 +52,7 @@ coverage/
 /ci-clean.log
 /demo-hash.txt
 /.vitest-perf.db
+/perf-api.json
+/depaudit.txt
+/seed-verify.json
+/seed-timing.json
