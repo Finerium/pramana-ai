@@ -1188,7 +1188,7 @@ export function PembukuanConsole() {
 
               {trxSuccess && (
                 <div style={S.successBox}>
-                  <span style={S.okIcon}>{"✓"}</span>
+                  <span style={S.okIcon}>{"\u2713"}</span>
                   <span>{c.trx.sukses}</span>
                 </div>
               )}
@@ -1361,7 +1361,7 @@ export function PembukuanConsole() {
 
               {pinSuccess && (
                 <div style={S.successBox}>
-                  <span style={S.okIcon}>{"✓"}</span>
+                  <span style={S.okIcon}>{"\u2713"}</span>
                   <span>{c.pin.sukses}</span>
                 </div>
               )}
@@ -1458,7 +1458,7 @@ export function PembukuanConsole() {
               )}
               {ratSuccess && (
                 <div style={S.successBox}>
-                  <span style={S.okIcon}>{"✓"}</span>
+                  <span style={S.okIcon}>{"\u2713"}</span>
                   <span>{c.rat.sukses}</span>
                 </div>
               )}
