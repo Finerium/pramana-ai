@@ -11,9 +11,11 @@
      bersifat global lintas route dan akan menimpa `font-mono`/utility shadcn
      di app/globals.css. Komponen memakai var(--token) langsung (setia
      prototipe yang juga inline var()). Custom property tetap verbatim.
-  2. --font-sans/--font-mono jadi indireksi var() ke next/font self-host
-     (--font-spline-sans / --font-spline-sans-mono), keluarga bundle tetap
-     sebagai fallback. Tanpa request runtime ke Google (kontrak porting).
+  2. --font-sans/--font-mono nilai token VERBATIM; keluarga 'Spline Sans' /
+     'Spline Sans Mono' dimuat self-host via next/font/google di layout subjek
+     (kelas variable memicu @font-face). Tanpa request runtime ke Google
+     (kontrak porting). Indireksi var() dihindari: var() tak terdefinisi di
+     :root membuat --font-* invalid-at-computed-value (jatuh ke serif).
 
   ATURAN KERAS: dilarang hard-code hex/rgb/oklch di komponen; konsumsi token.
 */
@@ -57,8 +59,8 @@
   --radius-card:  16px;
   --radius-pill:  999px;
 
-  --font-sans: var(--font-spline-sans), 'Spline Sans', system-ui, sans-serif;
-  --font-mono: var(--font-spline-sans-mono), 'Spline Sans Mono', ui-monospace, monospace;
+  --font-sans: 'Spline Sans', system-ui, sans-serif;
+  --font-mono: 'Spline Sans Mono', ui-monospace, monospace;
 }
 
 .dark {
