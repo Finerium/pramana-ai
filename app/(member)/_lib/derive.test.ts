@@ -74,22 +74,36 @@ describe("voteDots", () => {
 });
 
 describe("suaraAggregate", () => {
+  // temuanId memakai id seed nyata (tmn-anN). Server sudah menghitung baris
+  // pertanyaan_rat anggota ini setelah persist (F10 "keranjang seluruh
+  // anggota", blueprint B1: agregat AN-1 berubah 12 -> 13). Klien menampilkan
+  // angka server apa adanya dan hanya menandai "milik Anda" dari set sesi;
+  // TANPA +1 klien (anti hitung ganda, sejajar keputusanTally).
   const items = [
-    { temuanId: "an1", judul: "A", jumlahAnggota: 12 },
-    { temuanId: "an4", judul: "B", jumlahAnggota: 7 },
-    { temuanId: "an2", judul: "C", jumlahAnggota: 5 },
+    { temuanId: "tmn-an1", judul: "A", jumlahAnggota: 12 },
+    { temuanId: "tmn-an4", judul: "B", jumlahAnggota: 7 },
+    { temuanId: "tmn-an2", judul: "C", jumlahAnggota: 5 },
   ];
-  it("adds one and flags questions the member joined this session", () => {
-    const out = suaraAggregate(items, new Set(["an2"]));
-    const an2 = out.find((q) => q.temuanId === "an2")!;
-    expect(an2.jumlahAnggota).toBe(6);
+  it("shows the server count verbatim and flags the member's own questions (no client +1)", () => {
+    const out = suaraAggregate(items, new Set(["tmn-an2"]));
+    const an2 = out.find((q) => q.temuanId === "tmn-an2")!;
+    expect(an2.jumlahAnggota).toBe(5);
     expect(an2.milikAnda).toBe(true);
-    const an1 = out.find((q) => q.temuanId === "an1")!;
+    const an1 = out.find((q) => q.temuanId === "tmn-an1")!;
+    expect(an1.jumlahAnggota).toBe(12);
     expect(an1.milikAnda).toBe(false);
   });
-  it("sorts by adjusted count descending", () => {
-    const out = suaraAggregate(items, new Set(["an2"]));
-    expect(out.map((q) => q.temuanId)).toEqual(["an1", "an4", "an2"]);
+  it("does not double-count once the server total already includes the member (12 -> 13, never 14)", () => {
+    const out = suaraAggregate(
+      [{ temuanId: "tmn-an1", judul: "A", jumlahAnggota: 13 }],
+      new Set(["tmn-an1"]),
+    );
+    expect(out[0]!.jumlahAnggota).toBe(13);
+    expect(out[0]!.milikAnda).toBe(true);
+  });
+  it("sorts by member count descending", () => {
+    const out = suaraAggregate(items, new Set(["tmn-an2"]));
+    expect(out.map((q) => q.temuanId)).toEqual(["tmn-an1", "tmn-an4", "tmn-an2"]);
   });
 });
 

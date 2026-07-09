@@ -78,8 +78,14 @@ export function voteDots(setuju: number, tidak: number, total = 30): DotKind[] {
 export type SuaraItem = { temuanId: string; judul: string; jumlahAnggota: number };
 
 /**
- * Agregat pertanyaan: +1 dan tandai "milik Anda" bila anggota menambahkannya
- * pada sesi ini (model prototipe: base server + tambahan sesi). Urut jumlah
+ * Agregat pertanyaan RAT. jumlahAnggota dari GET /api/member/voice adalah COUNT
+ * baris pertanyaan_rat = "keranjang seluruh anggota" (F10) dan SUDAH termasuk
+ * anggota ini begitu POST /api/findings/:id/rat mem-persist barisnya (blueprint
+ * B1/AC-E2E-01: agregat AN-1 berubah 12 -> 13). Jadi angka server dipakai apa
+ * adanya; set sesi (addedIds, disemai dari sudahDitambahkan + tambahan sesi)
+ * HANYA menyalakan badge "Termasuk pertanyaan Anda", tidak menambah hitungan.
+ * Menambah +1 di klien akan menghitung ganda (13 -> 14). Sejajar keputusanTally
+ * yang juga tidak menambah suara sesi saat server sudah mencatatnya. Urut jumlah
  * penanya turun.
  */
 export function suaraAggregate(
@@ -87,15 +93,12 @@ export function suaraAggregate(
   addedIds: ReadonlySet<string>,
 ): Array<{ temuanId: string; judul: string; jumlahAnggota: number; milikAnda: boolean }> {
   return items
-    .map((q) => {
-      const milikAnda = addedIds.has(q.temuanId);
-      return {
-        temuanId: q.temuanId,
-        judul: q.judul,
-        jumlahAnggota: q.jumlahAnggota + (milikAnda ? 1 : 0),
-        milikAnda,
-      };
-    })
+    .map((q) => ({
+      temuanId: q.temuanId,
+      judul: q.judul,
+      jumlahAnggota: q.jumlahAnggota,
+      milikAnda: addedIds.has(q.temuanId),
+    }))
     .sort((a, b) => b.jumlahAnggota - a.jumlahAnggota);
 }
 
