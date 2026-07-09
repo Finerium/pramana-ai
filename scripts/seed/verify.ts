@@ -5,6 +5,7 @@
  */
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { pathToFileURL } from "node:url";
 import { createDb, resolveDbUrl } from "../../db/client";
 
 const TABLES = [
@@ -78,7 +79,9 @@ async function main(): Promise<void> {
   );
 }
 
-main().catch((err) => {
-  process.stderr.write(`Verify gagal: ${String(err)}\n`);
-  process.exit(1);
-});
+if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
+  main().catch((err) => {
+    process.stderr.write(`Verify gagal: ${String(err)}\n`);
+    process.exit(1);
+  });
+}
