@@ -22,7 +22,9 @@ export default function GovLayout({ children }: { children: React.ReactNode }) {
     <>
       {/* Terapkan tema gov sebelum paint agar tidak flash. */}
       <script dangerouslySetInnerHTML={{ __html: TEMA_SCRIPT }} />
-      <div className={`gov ${archivo.variable} ${publicSans.variable}`}>{children}</div>
+      <div className={`gov ${archivo.variable} ${publicSans.variable}`}>
+        {children}
+      </div>
     </>
   );
 }

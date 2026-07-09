@@ -1,0 +1,21 @@
+{
+  "gate": 1,
+  "at": "2026-07-09T16:54:19Z",
+  "pass": true,
+  "results": [
+    {"id": "AC-BLD-01", "pass": true, "note": "next build exit 0, 12 rute page + 19 API route (build.log)"},
+    {"id": "AC-TYP-01", "pass": true, "note": "tsc --noEmit exit 0; grep \": any\" pada lib/contracts, lib/audit, lib/llm = kosong (typecheck.log)"},
+    {"id": "AC-LNT-01", "pass": true, "note": "eslint --max-warnings 0 exit 0 (lint.log)"},
+    {"id": "AC-UNI-01", "pass": true, "note": "314 test hijau; coverage global stmt 89.26 branch 74.85 func 80.72 line 90.6 (threshold 70 ditegakkan config); branch 100 persen lib/audit/verdict.ts + lib/registerGuard.ts (threshold per-file ditegakkan)"},
+    {"id": "AC-SEED-01", "pass": true, "note": "dua run seed: checksum tabel identik (seed-verify-run1.json vs seed-verify.json), seedMs 278"},
+    {"id": "AC-SEED-02", "pass": true, "note": "seed.anomalies AN-1..AN-6 persis, id stabil (junit-seed.xml)"},
+    {"id": "AC-DB-01", "pass": true, "note": "FK enforced + EXPLAIN QUERY PLAN memakai indeks komposit + UNIQUE idempotensi (junit-db.xml)"},
+    {"id": "AC-LLM-01", "pass": true, "note": "chatJSON zod + retry-1 korektif + LLMUnavailable, mock transport (junit-llm.xml)"},
+    {"id": "AC-LLM-02", "pass": true, "note": "runAudit fixture deterministik menemukan AN-1 konflik merah Toko Berkah + kecocokan alamat (junit-llm.xml)"},
+    {"id": "AC-LLM-03", "pass": true, "note": "aturan warna 6.1 server-side menang atas adjudikator salah label; hitung ulang pasca-drop (junit-llm.xml)"},
+    {"id": "AC-REG-01", "pass": true, "note": "registerGuard >= 12 fixture: vonis ditolak, pola edukatif 1x diterima (junit-reg.xml)"},
+    {"id": "AC-REG-02", "pass": true, "note": "properti seed: SEMUA temuan (termasuk generik 11 koperasi) pertanyaan_rat diakhiri ? dan lolos guard (junit-reg.xml)"},
+    {"id": "AC-UI-01", "pass": true, "note": "check-tokens --strict: 4 surface ok, 0 undocumented drift; file token dilindungi dari formatter (.prettierignore); drift terdokumentasi dirujuk ledger D-06..D-11 (token-fidelity.json)"}
+  ],
+  "catatan": "Insiden evaluasi: prettier pass barrier menormalkan angka CSS token (0.50 jadi 0.5) sehingga strict awalnya gagal 15 drift; file token di-restore ke verbatim commit worker dan styles/tokens/ masuk .prettierignore. Konsistensi tree final dikonfirmasi ulang: 315 test hijau."
+}

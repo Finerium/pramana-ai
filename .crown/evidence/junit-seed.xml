@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="19" failures="0" errors="0" time="0.640273083">
+    <testsuite name="scripts/seed/seed.anomalies.test.ts" timestamp="2026-07-09T16:52:35.264Z" hostname="Ghaisans-MacBook-Pro.local" tests="19" failures="0" errors="0" skipped="0" time="0.640273083">
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="AN-1 konflik kepentingan (merah) &gt; trx-an1: pembelian Rp15.000.000, 14 Juni, Toko Berkah, alamat = bendahara" time="0.001380625">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="AN-2 anomali (kuning): 5 pinjaman 20 Juni, total 30jt &gt; trx-an2-1..5 pencairan + pj-an2-1..5 pinjaman @6jt, 2026-06-20" time="0.000935083">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="AN-3 anomali (kuning): split purchase 3 x 4,9jt &gt; trx-an3-1..3 ke CV Sumber Rejeki, masing-masing &lt; 5jt, dalam 5 hari" time="0.000330417">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="AN-5 kepatuhan (kuning): pinjaman lampaui plafon, dokumen belum lengkap &gt; pj-an5: 12jt, dokumenLengkap false" time="0.000125459">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="AN-6 kepatuhan (info): RAT belum &gt; kop-sukamaju ratStatus belum" time="0.000130875">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="audit_run seed Juni membawa AN-1..AN-6 (severity, urutan, ringkasan) &gt; run merah dengan 6 temuan berurutan URUTAN_TAMPIL + tanggapan AN-2" time="0.000502542">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="KPI dasbor pemerintah konsisten 6.7b &gt; 12 koperasi, verdict Jun 6 hijau/4 kuning/2 merah, temuanTerbuka 17" time="0.000224583">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="KPI dasbor pemerintah konsisten 6.7b &gt; tren sukamaju 6 run: hijau,hijau,hijau,kuning,kuning,merah" time="0.000359667">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="agregat sosial 6.7 &gt; pertanyaan_rat AN-1=12 (tanpa juri), AN-4=7, AN-2=5" time="0.000383083">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="agregat sosial 6.7 &gt; keputusan freezer terbuka: 9 setuju, 3 tidak, tanpa vote juri" time="0.000258625">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="agregat sosial 6.7 &gt; notifikasi belum dibaca untuk ang-juri dan ang-sari, n=5" time="0.000160917">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="akun seed &gt; 4 akun dengan hash bcrypt terverifikasi + binding benar" time="0.066993292">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="akun seed &gt; ang-juri: simpanan total 600rb, pinjaman sisa 1,2jt cicilan 200rb" time="0.000180792">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="distribusi transaksi 6.7b &gt; total baris 320-450" time="0.000115875">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="distribusi transaksi 6.7b &gt; net arus kas per bulan = delta saldo akhir beku; saldoKas Juni 36,5jt" time="0.000376333">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="idempotensi AC-SEED-01 &gt; seed dua kali = row-count + checksum identik" time="0.280995">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="komposisi bulanan 6.7b &gt; setoran 30 + gaji 5 per bulan; total baris per bulan dalam rentang" time="0.001318708">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="komposisi bulanan 6.7b &gt; buku pinjaman: 12 total, 9 aktif, 2 lunas, 1 tunggak &gt; 30 hari" time="0.000184417">
+        </testcase>
+        <testcase classname="scripts/seed/seed.anomalies.test.ts" name="komposisi bulanan 6.7b &gt; 4 unit usaha sukamaju + 5 pengurus + 30 anggota" time="0.000239583">
+        </testcase>
+    </testsuite>
+</testsuites>

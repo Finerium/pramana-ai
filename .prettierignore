@@ -13,3 +13,6 @@ playwright-report
 pnpm-lock.yaml
 deck/*.pdf
 *.zip
+
+# Token surface = port verbatim bundle (oracle AC-UI-01), jangan diformat
+styles/tokens/

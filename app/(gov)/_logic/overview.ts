@@ -46,12 +46,14 @@ export function sortKoperasi(
   const d = dir === "asc" ? 1 : -1;
   return [...rows].sort((a, b) => {
     let diff = 0;
-    if (key === "verdictWarna") diff = RANK[a.verdictWarna] - RANK[b.verdictWarna];
+    if (key === "verdictWarna")
+      diff = RANK[a.verdictWarna] - RANK[b.verdictWarna];
     else if (key === "temuanCount") diff = a.temuanCount - b.temuanCount;
     else diff = String(a[key]).localeCompare(String(b[key]), "id");
     diff *= d;
     if (diff === 0) {
-      diff = b.temuanCount - a.temuanCount || a.nama.localeCompare(b.nama, "id");
+      diff =
+        b.temuanCount - a.temuanCount || a.nama.localeCompare(b.nama, "id");
     }
     return diff;
   });

@@ -120,9 +120,9 @@ describe("auth session 6.4", () => {
   });
 
   it("requireRole 401 tanpa sesi", async () => {
-    await expect(
-      requireRole(reqWithCookie(), "anggota"),
-    ).rejects.toMatchObject({ code: "UNAUTHORIZED" });
+    await expect(requireRole(reqWithCookie(), "anggota")).rejects.toMatchObject(
+      { code: "UNAUTHORIZED" },
+    );
   });
 
   it("requireRole 403 saat role salah", async () => {

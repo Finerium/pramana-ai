@@ -5,8 +5,13 @@
       "passed": true,
       "commit": "fec34d3",
       "at": "2026-07-09T11:07:21.222Z"
+    },
+    "1": {
+      "passed": true,
+      "commit": "pending",
+      "at": "2026-07-09T16:54:19.444Z"
     }
   },
-  "spendNote": "Gate 0 passed. Wave 1 merged + reviewed penuh (workflow 15 agen 2.6M token; review pasca-merge f approve). Wave 2 (c/d/e/h) berjalan. Total kasar sesi relaunch: sekitar 4.5M token subagent + main thread.",
-  "lastPhase": 1
+  "spendNote": "Gate 0+1 passed. Wave1 15 agen 2.6M; wave2 16 agen 3.8M + 3 review lanjutan 280k. Masuk Phase 2 integrasi.",
+  "lastPhase": 2
 }

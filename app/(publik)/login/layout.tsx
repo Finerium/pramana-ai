@@ -5,10 +5,16 @@ import { Geist } from "next/font/google";
 // layout (publik) induk. Geist self-host di-wire ke --font-sans pada .m-app.
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
-export default function LoginLayout({ children }: { children: React.ReactNode }) {
+export default function LoginLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className={`m-app ${geist.variable}`} style={{ minHeight: "100dvh" }}>
-      <div style={{ maxWidth: 460, margin: "0 auto", minHeight: "100dvh" }}>{children}</div>
+      <div style={{ maxWidth: 460, margin: "0 auto", minHeight: "100dvh" }}>
+        {children}
+      </div>
     </div>
   );
 }

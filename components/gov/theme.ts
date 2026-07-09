@@ -10,7 +10,9 @@ export type Tema = "terang" | "gelap";
 
 export function bacaTema(): Tema {
   if (typeof document === "undefined") return "terang";
-  return document.documentElement.classList.contains("dark") ? "gelap" : "terang";
+  return document.documentElement.classList.contains("dark")
+    ? "gelap"
+    : "terang";
 }
 
 export function terapkanTema(t: Tema): void {

@@ -13,7 +13,8 @@ export async function POST(
   return runRoute(async () => {
     const s = await requireRole(req, "anggota");
     const anggotaId = s.anggotaId;
-    if (!anggotaId) throw new ApiError("INTERNAL", "Sesi anggota tidak lengkap.");
+    if (!anggotaId)
+      throw new ApiError("INTERNAL", "Sesi anggota tidak lengkap.");
     const { id: temuanId } = await ctx.params;
     const { db } = getDb();
 

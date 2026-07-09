@@ -12,9 +12,9 @@ const SEV_RANK: Record<Severity, number> = { merah: 3, kuning: 2, info: 1 };
  * Urut temuan tingkat tertinggi dulu; tie-break id ascending supaya
  * deterministik dan cocok urutan bundle (AN-1..AN-6) untuk data seed berurutan.
  */
-export function sortTemuanBySeverity<T extends { severity: Severity; id: string }>(
-  temuan: T[],
-): T[] {
+export function sortTemuanBySeverity<
+  T extends { severity: Severity; id: string },
+>(temuan: T[]): T[] {
   return [...temuan].sort(
     (a, b) =>
       SEV_RANK[b.severity] - SEV_RANK[a.severity] || a.id.localeCompare(b.id),
@@ -36,8 +36,18 @@ export function buktiLabel(bukti: EvidenceRef[]): string {
 }
 
 const BULAN_PENUH = [
-  "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-  "Juli", "Agustus", "September", "Oktober", "November", "Desember",
+  "Januari",
+  "Februari",
+  "Maret",
+  "April",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Agustus",
+  "September",
+  "Oktober",
+  "November",
+  "Desember",
 ];
 
 export type TrenCell = {

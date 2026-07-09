@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="8" failures="0" errors="0" time="0.011702833">
+    <testsuite name="db/db.design.test.ts" timestamp="2026-07-09T16:52:36.097Z" hostname="Ghaisans-MacBook-Pro.local" tests="8" failures="0" errors="0" skipped="0" time="0.011702833">
+        <testcase classname="db/db.design.test.ts" name="foreign keys aktif &gt; menolak insert anak tanpa induk (anggota -&gt; koperasi hantu)" time="0.001530084">
+        </testcase>
+        <testcase classname="db/db.design.test.ts" name="foreign keys aktif &gt; PRAGMA foreign_keys menyala pada koneksi" time="0.000297417">
+        </testcase>
+        <testcase classname="db/db.design.test.ts" name="indeks hot-path dipakai (EXPLAIN QUERY PLAN) &gt; daftar transaksi paginated per koperasi memakai indeks komposit" time="0.000262375">
+        </testcase>
+        <testcase classname="db/db.design.test.ts" name="indeks hot-path dipakai (EXPLAIN QUERY PLAN) &gt; agregasi flow per periode memakai indeks komposit" time="0.000129125">
+        </testcase>
+        <testcase classname="db/db.design.test.ts" name="indeks hot-path dipakai (EXPLAIN QUERY PLAN) &gt; temuan per audit_run memakai indeks" time="0.00010275">
+        </testcase>
+        <testcase classname="db/db.design.test.ts" name="indeks hot-path dipakai (EXPLAIN QUERY PLAN) &gt; audit_run per koperasi+periode memakai indeks" time="0.000109583">
+        </testcase>
+        <testcase classname="db/db.design.test.ts" name="introspeksi schema &gt; indeks unik penegak idempotensi hadir (vote, pertanyaan_rat)" time="0.000422291">
+        </testcase>
+        <testcase classname="db/db.design.test.ts" name="introspeksi schema &gt; UNIQUE(keputusanId, anggotaId) menolak vote ganda" time="0.001847417">
+        </testcase>
+    </testsuite>
+</testsuites>

@@ -11,17 +11,31 @@ import { useResource } from "@/components/member/data";
 import { deriveUang } from "@/components/member/derive";
 import { fmtRp, fmtTanggal, isi } from "@/components/member/format";
 import { CountUp } from "@/components/member/anim";
-import { Banner, Skeleton, EmptyCard, cardStyle, rise } from "@/components/member/ui";
+import {
+  Banner,
+  Skeleton,
+  EmptyCard,
+  cardStyle,
+  rise,
+} from "@/components/member/ui";
 import { IkonDompet, IkonKalender } from "@/components/member/icons";
 
-const OPTS: { emptyStatuses: number[]; isEmpty: (s: MemberSummary) => boolean } = {
+const OPTS: {
+  emptyStatuses: number[];
+  isEmpty: (s: MemberSummary) => boolean;
+} = {
   emptyStatuses: [404],
   isEmpty: (s) => s.uangAnda.totalSimpanan <= 0,
 };
 
 export function Uang() {
   const { muat } = useResource<MemberSummary>("/api/member/summary", OPTS);
-  const s = muat.status === "isi" ? muat.data : muat.status === "gagal" ? muat.data : null;
+  const s =
+    muat.status === "isi"
+      ? muat.data
+      : muat.status === "gagal"
+        ? muat.data
+        : null;
 
   return (
     <main
@@ -50,9 +64,21 @@ export function Uang() {
           WebkitBackdropFilter: "blur(18px) saturate(1.6)",
         }}
       >
-        <h1 style={{ margin: 0, fontSize: 25, fontWeight: 750, letterSpacing: -0.5 }}>{MEMBER_COPY["uang.judul"]}</h1>
+        <h1
+          style={{
+            margin: 0,
+            fontSize: 25,
+            fontWeight: 750,
+            letterSpacing: -0.5,
+          }}
+        >
+          {MEMBER_COPY["uang.judul"]}
+        </h1>
         <p style={{ margin: 0, fontSize: 13, color: "var(--muted)" }}>
-          {isi(MEMBER_COPY["uang.subjudul"], { nama: MEMBER_IDENTITY.nama, no: MEMBER_IDENTITY.noAnggota })}
+          {isi(MEMBER_COPY["uang.subjudul"], {
+            nama: MEMBER_IDENTITY.nama,
+            no: MEMBER_IDENTITY.noAnggota,
+          })}
         </p>
       </header>
 
@@ -60,7 +86,13 @@ export function Uang() {
         <Skeleton heights={[220, 140, 140]} />
       ) : muat.status === "kosong" ? (
         <EmptyCard
-          icon={<IkonDompet size={48} style={{ stroke: "var(--muted)" }} strokeWidth={1.6} />}
+          icon={
+            <IkonDompet
+              size={48}
+              style={{ stroke: "var(--muted)" }}
+              strokeWidth={1.6}
+            />
+          }
           judul={MEMBER_COPY["uang.kosong.judul"]}
           sub={MEMBER_COPY["uang.kosong.sub"]}
         />
@@ -68,7 +100,13 @@ export function Uang() {
         <>
           <Banner tone="peringatan">{MEMBER_COPY["uang.banner.cache"]}</Banner>
           <EmptyCard
-            icon={<IkonDompet size={48} style={{ stroke: "var(--muted)" }} strokeWidth={1.6} />}
+            icon={
+              <IkonDompet
+                size={48}
+                style={{ stroke: "var(--muted)" }}
+                strokeWidth={1.6}
+              />
+            }
             judul={MEMBER_COPY["uang.kosong.judul"]}
             sub={MEMBER_COPY["uang.kosong.sub"]}
           />
@@ -93,30 +131,75 @@ function UangIsi({ s, gagal }: { s: MemberSummary; gagal: boolean }) {
   const u = deriveUang(s);
   return (
     <>
-      {gagal ? <Banner tone="peringatan">{MEMBER_COPY["uang.banner.cache"]}</Banner> : null}
+      {gagal ? (
+        <Banner tone="peringatan">{MEMBER_COPY["uang.banner.cache"]}</Banner>
+      ) : null}
 
-      <section style={cardStyle({ padding: 22, display: "flex", flexDirection: "column", gap: 14, ...rise(0.03) })}>
-        <span style={{ fontSize: 14, color: "var(--muted)" }}>{MEMBER_COPY["uang.total"]}</span>
+      <section
+        style={cardStyle({
+          padding: 22,
+          display: "flex",
+          flexDirection: "column",
+          gap: 14,
+          ...rise(0.03),
+        })}
+      >
+        <span style={{ fontSize: 14, color: "var(--muted)" }}>
+          {MEMBER_COPY["uang.total"]}
+        </span>
         <CountUp
           className="tnum"
           value={u.totalSimpanan}
           format={fmtRp}
-          style={{ fontSize: 52, fontWeight: 600, letterSpacing: -1.8, lineHeight: 1 }}
+          style={{
+            fontSize: 52,
+            fontWeight: 600,
+            letterSpacing: -1.8,
+            lineHeight: 1,
+          }}
         />
         <div style={{ height: 0.5, background: "var(--border)" }} />
-        <div className="tnum" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        <div
+          className="tnum"
+          style={{ display: "flex", flexDirection: "column", gap: 10 }}
+        >
           {baris(MEMBER_COPY["uang.pokok"], u.pokok)}
           {baris(MEMBER_COPY["uang.wajib"], u.wajib)}
           {baris(MEMBER_COPY["uang.sukarela"], u.sukarela)}
         </div>
       </section>
 
-      <section style={cardStyle({ padding: 22, display: "flex", flexDirection: "column", gap: 12, ...rise(0.09) })}>
-        <span style={{ fontSize: 14, color: "var(--muted)" }}>{MEMBER_COPY["uang.sisa"]}</span>
-        <span className="tnum" style={{ fontSize: 31, fontWeight: 650, letterSpacing: -0.8, lineHeight: 1 }}>
+      <section
+        style={cardStyle({
+          padding: 22,
+          display: "flex",
+          flexDirection: "column",
+          gap: 12,
+          ...rise(0.09),
+        })}
+      >
+        <span style={{ fontSize: 14, color: "var(--muted)" }}>
+          {MEMBER_COPY["uang.sisa"]}
+        </span>
+        <span
+          className="tnum"
+          style={{
+            fontSize: 31,
+            fontWeight: 650,
+            letterSpacing: -0.8,
+            lineHeight: 1,
+          }}
+        >
           {fmtRp(u.sisaPinjaman)}
         </span>
-        <div style={{ height: 8, borderRadius: 999, background: "var(--bg)", overflow: "hidden" }}>
+        <div
+          style={{
+            height: 8,
+            borderRadius: 999,
+            background: "var(--bg)",
+            overflow: "hidden",
+          }}
+        >
           <div
             style={{
               width: `${u.progressPct}%`,
@@ -129,21 +212,52 @@ function UangIsi({ s, gagal }: { s: MemberSummary; gagal: boolean }) {
           />
         </div>
         <span className="tnum" style={{ fontSize: 13, color: "var(--muted)" }}>
-          {isi(MEMBER_COPY["uang.diangsur"], { sudah: fmtRp(u.diangsur), total: fmtRp(u.pinjamanAwal) })}
+          {isi(MEMBER_COPY["uang.diangsur"], {
+            sudah: fmtRp(u.diangsur),
+            total: fmtRp(u.pinjamanAwal),
+          })}
         </span>
       </section>
 
       {u.cicilan ? (
-        <section style={cardStyle({ padding: 22, display: "flex", flexDirection: "column", gap: 10, ...rise(0.15) })}>
-          <span style={{ fontSize: 14, color: "var(--muted)" }}>{MEMBER_COPY["uang.cicilan"]}</span>
-          <span className="tnum" style={{ fontSize: 31, fontWeight: 650, letterSpacing: -0.8, lineHeight: 1 }}>
+        <section
+          style={cardStyle({
+            padding: 22,
+            display: "flex",
+            flexDirection: "column",
+            gap: 10,
+            ...rise(0.15),
+          })}
+        >
+          <span style={{ fontSize: 14, color: "var(--muted)" }}>
+            {MEMBER_COPY["uang.cicilan"]}
+          </span>
+          <span
+            className="tnum"
+            style={{
+              fontSize: 31,
+              fontWeight: 650,
+              letterSpacing: -0.8,
+              lineHeight: 1,
+            }}
+          >
             {fmtRp(u.cicilan.jumlah)}
           </span>
           <div style={{ display: "flex", gap: 9, alignItems: "center" }}>
-            <IkonKalender size={16} style={{ stroke: "var(--muted)" }} strokeWidth={1.9} />
-            <span style={{ fontSize: 14.5, fontWeight: 600 }}>{isi(MEMBER_COPY["uang.cicilan.tempo"], { tgl: fmtTanggal(u.cicilan.tanggal) })}</span>
+            <IkonKalender
+              size={16}
+              style={{ stroke: "var(--muted)" }}
+              strokeWidth={1.9}
+            />
+            <span style={{ fontSize: 14.5, fontWeight: 600 }}>
+              {isi(MEMBER_COPY["uang.cicilan.tempo"], {
+                tgl: fmtTanggal(u.cicilan.tanggal),
+              })}
+            </span>
           </div>
-          <span style={{ fontSize: 13, color: "var(--muted)" }}>{MEMBER_COPY["uang.cicilan.tempat"]}</span>
+          <span style={{ fontSize: 13, color: "var(--muted)" }}>
+            {MEMBER_COPY["uang.cicilan.tempat"]}
+          </span>
         </section>
       ) : null}
     </>

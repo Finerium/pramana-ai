@@ -59,7 +59,11 @@ export function Daftar() {
       setKartu(data.kartu);
     } catch (e) {
       setBusy(false);
-      if (e instanceof ApiError && (e.code === "VALIDATION" || e.status === 400)) setNikErr(true);
+      if (
+        e instanceof ApiError &&
+        (e.code === "VALIDATION" || e.status === 400)
+      )
+        setNikErr(true);
     }
   }
 
@@ -76,8 +80,25 @@ export function Daftar() {
       }}
     >
       {kartu ? (
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: 22 }}>
-          <p style={{ margin: 0, fontSize: 16.5, lineHeight: 1.5, textAlign: "center", fontWeight: 600, ...rise(0, 0.5) }}>
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            gap: 22,
+          }}
+        >
+          <p
+            style={{
+              margin: 0,
+              fontSize: 16.5,
+              lineHeight: 1.5,
+              textAlign: "center",
+              fontWeight: 600,
+              ...rise(0, 0.5),
+            }}
+          >
             {COPY["onboard.sukses"]}
           </p>
           <div style={rise(0.1, 0.6)}>
@@ -91,21 +112,61 @@ export function Daftar() {
           <button
             type="button"
             onClick={() => router.push("/beranda")}
-            style={{ height: 54, borderRadius: 999, background: "var(--accent)", color: "var(--accent-on)", fontSize: 17, fontWeight: 600, textAlign: "center", ...rise(0.22, 0.5) }}
+            style={{
+              height: 54,
+              borderRadius: 999,
+              background: "var(--accent)",
+              color: "var(--accent-on)",
+              fontSize: 17,
+              fontWeight: 600,
+              textAlign: "center",
+              ...rise(0.22, 0.5),
+            }}
           >
             {MEMBER_COPY["daftar.kartu.masuk"]}
           </button>
-          <div style={{ display: "flex", gap: 8, alignItems: "center", justifyContent: "center", ...rise(0.3, 0.5) }}>
+          <div
+            style={{
+              display: "flex",
+              gap: 8,
+              alignItems: "center",
+              justifyContent: "center",
+              ...rise(0.3, 0.5),
+            }}
+          >
             <BelahKetupat size={9} color="var(--muted)" />
-            <span style={{ fontSize: 12.5, color: "var(--muted)" }}>{COPY["verifikasi.label"]}</span>
+            <span style={{ fontSize: 12.5, color: "var(--muted)" }}>
+              {COPY["verifikasi.label"]}
+            </span>
           </div>
         </div>
       ) : (
         <>
-          <BackLink label={MEMBER_COPY["daftar.kembali"]} onClick={() => router.push("/login")} />
+          <BackLink
+            label={MEMBER_COPY["daftar.kembali"]}
+            onClick={() => router.push("/login")}
+          />
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-            <h1 style={{ margin: 0, fontSize: 27, fontWeight: 750, letterSpacing: -0.5 }}>{MEMBER_COPY["daftar.judul"]}</h1>
-            <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.5, color: "var(--muted)" }}>{MEMBER_COPY["daftar.koperasi"]}</p>
+            <h1
+              style={{
+                margin: 0,
+                fontSize: 27,
+                fontWeight: 750,
+                letterSpacing: -0.5,
+              }}
+            >
+              {MEMBER_COPY["daftar.judul"]}
+            </h1>
+            <p
+              style={{
+                margin: 0,
+                fontSize: 14.5,
+                lineHeight: 1.5,
+                color: "var(--muted)",
+              }}
+            >
+              {MEMBER_COPY["daftar.koperasi"]}
+            </p>
           </div>
           <form
             onSubmit={(e) => {
@@ -120,12 +181,21 @@ export function Daftar() {
               border: "0.5px solid var(--border)",
               borderRadius: 22,
               padding: "22px 20px",
-              boxShadow: "0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05)",
+              boxShadow:
+                "0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05)",
             }}
           >
-            <Field label={MEMBER_COPY["daftar.nama"]} ph={MEMBER_COPY["daftar.nama.ph"]} value={nama} onChange={setNama} autoComplete="name" />
+            <Field
+              label={MEMBER_COPY["daftar.nama"]}
+              ph={MEMBER_COPY["daftar.nama.ph"]}
+              value={nama}
+              onChange={setNama}
+              autoComplete="name"
+            />
             <label style={{ display: "flex", flexDirection: "column", gap: 7 }}>
-              <span style={{ fontSize: 13.5, fontWeight: 600 }}>{MEMBER_COPY["daftar.nik"]}</span>
+              <span style={{ fontSize: 13.5, fontWeight: 600 }}>
+                {MEMBER_COPY["daftar.nik"]}
+              </span>
               <input
                 inputMode="numeric"
                 maxLength={16}
@@ -136,20 +206,59 @@ export function Daftar() {
                 style={INPUT}
               />
             </label>
-            {nikErr ? <Banner tone="galat">{COPY["onboard.nik.err"]}</Banner> : null}
-            <Field label={MEMBER_COPY["daftar.alamat"]} ph={MEMBER_COPY["daftar.alamat.ph"]} value={alamat} onChange={setAlamat} autoComplete="street-address" />
-            <Field label={MEMBER_COPY["daftar.email"]} ph={MEMBER_COPY["daftar.email.ph"]} value={email} onChange={setEmail} type="email" autoComplete="email" />
-            <Field label={MEMBER_COPY["daftar.sandi"]} ph={MEMBER_COPY["daftar.sandi.ph"]} value={pass} onChange={setPass} type="password" autoComplete="new-password" />
+            {nikErr ? (
+              <Banner tone="galat">{COPY["onboard.nik.err"]}</Banner>
+            ) : null}
+            <Field
+              label={MEMBER_COPY["daftar.alamat"]}
+              ph={MEMBER_COPY["daftar.alamat.ph"]}
+              value={alamat}
+              onChange={setAlamat}
+              autoComplete="street-address"
+            />
+            <Field
+              label={MEMBER_COPY["daftar.email"]}
+              ph={MEMBER_COPY["daftar.email.ph"]}
+              value={email}
+              onChange={setEmail}
+              type="email"
+              autoComplete="email"
+            />
+            <Field
+              label={MEMBER_COPY["daftar.sandi"]}
+              ph={MEMBER_COPY["daftar.sandi.ph"]}
+              value={pass}
+              onChange={setPass}
+              type="password"
+              autoComplete="new-password"
+            />
             <button
               type="submit"
-              style={{ height: 54, borderRadius: 999, background: "var(--accent)", color: "var(--accent-on)", fontSize: 17, fontWeight: 600, textAlign: "center" }}
+              style={{
+                height: 54,
+                borderRadius: 999,
+                background: "var(--accent)",
+                color: "var(--accent-on)",
+                fontSize: 17,
+                fontWeight: 600,
+                textAlign: "center",
+              }}
             >
               {busy ? MEMBER_COPY["daftar.busy"] : MEMBER_COPY["daftar.kirim"]}
             </button>
           </form>
-          <div style={{ display: "flex", gap: 8, alignItems: "center", justifyContent: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              gap: 8,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <BelahKetupat size={9} color="var(--muted)" />
-            <span style={{ fontSize: 12.5, color: "var(--muted)" }}>{COPY["verifikasi.label"]}</span>
+            <span style={{ fontSize: 12.5, color: "var(--muted)" }}>
+              {COPY["verifikasi.label"]}
+            </span>
           </div>
         </>
       )}

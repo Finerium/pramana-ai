@@ -5,7 +5,13 @@
  * 6.3 (tanpa flag). Envelope kontrak: sukses {ok:true,data}; gagal
  * {ok:false,error:{code,message}}. 401 memicu redirect ke /login (guard ringan).
  */
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { useRouter } from "next/navigation";
 
 export class ApiError extends Error {
@@ -25,14 +31,22 @@ async function parseEnvelope<T>(res: Response): Promise<T> {
   } catch {
     /* respons non-JSON */
   }
-  const b = body as { ok?: boolean; data?: T; error?: { code?: string; message?: string } } | null;
+  const b = body as {
+    ok?: boolean;
+    data?: T;
+    error?: { code?: string; message?: string };
+  } | null;
   if (res.ok && b && b.ok === true) return b.data as T;
-  const code = b?.error?.code ?? (res.status === 401 ? "UNAUTHORIZED" : "INTERNAL");
+  const code =
+    b?.error?.code ?? (res.status === 401 ? "UNAUTHORIZED" : "INTERNAL");
   const message = b?.error?.message ?? `Permintaan gagal (${res.status})`;
   throw new ApiError(code, message, res.status);
 }
 
-export async function fetchJson<T>(url: string, init?: RequestInit): Promise<T> {
+export async function fetchJson<T>(
+  url: string,
+  init?: RequestInit,
+): Promise<T> {
   const res = await fetch(url, {
     credentials: "same-origin",
     headers: { Accept: "application/json", ...(init?.headers ?? {}) },
@@ -213,7 +227,9 @@ const voteListeners = new Set<() => void>();
 export function simpanVote(keputusanId: string, pilihan: "setuju" | "tidak") {
   try {
     const raw = sessionStorage.getItem(voteKey);
-    const map = raw ? (JSON.parse(raw) as Record<string, "setuju" | "tidak">) : {};
+    const map = raw
+      ? (JSON.parse(raw) as Record<string, "setuju" | "tidak">)
+      : {};
     map[keputusanId] = pilihan;
     sessionStorage.setItem(voteKey, JSON.stringify(map));
   } catch {

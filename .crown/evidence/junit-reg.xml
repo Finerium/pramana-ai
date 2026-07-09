@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="19" failures="0" errors="0" time="0.291049875">
+    <testsuite name="lib/registerGuard.test.ts" timestamp="2026-07-09T16:52:38.623Z" hostname="Ghaisans-MacBook-Pro.local" tests="18" failures="0" errors="0" skipped="0" time="0.003633917">
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaTemuan (6.5, AC-REG-01/02) &gt; menerima temuan yang bersih" time="0.00149575">
+        </testcase>
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaTemuan (6.5, AC-REG-01/02) &gt; menolak kata vonis &apos;korupsi&apos; sebagai pernyataan" time="0.000224375">
+        </testcase>
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaTemuan (6.5, AC-REG-01/02) &gt; menolak kata vonis &apos;mencuri&apos; sebagai pernyataan" time="0.000078542">
+        </testcase>
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaTemuan (6.5, AC-REG-01/02) &gt; menolak kata vonis &apos;pelaku&apos; sebagai pernyataan" time="0.00006825">
+        </testcase>
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaTemuan (6.5, AC-REG-01/02) &gt; menerima pola edukatif &apos;berisiko ...&apos; satu kemunculan" time="0.000073708">
+        </testcase>
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaTemuan (6.5, AC-REG-01/02) &gt; menerima pola edukatif &apos;disebut ...&apos; satu kemunculan" time="0.000070458">
+        </testcase>
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaTemuan (6.5, AC-REG-01/02) &gt; menolak dua kemunculan pola edukatif" time="0.000056375">
+        </testcase>
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaTemuan (6.5, AC-REG-01/02) &gt; menolak pertanyaan_rat yang tidak diakhiri tanda tanya" time="0.000070875">
+        </testcase>
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaTemuan (6.5, AC-REG-01/02) &gt; menolak kata vonis di dalam pertanyaan_rat" time="0.000078708">
+        </testcase>
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaTemuan (6.5, AC-REG-01/02) &gt; menolak kata vonis di judul" time="0.000086583">
+        </testcase>
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaTemuan (6.5, AC-REG-01/02) &gt; menolak karakter em dash" time="0.000260292">
+        </testcase>
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaTemuan (6.5, AC-REG-01/02) &gt; menolak emoji" time="0.000052125">
+        </testcase>
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaTemuan (6.5, AC-REG-01/02) &gt; menolak sapaan &apos;kamu&apos;" time="0.000041125">
+        </testcase>
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaTemuan (6.5, AC-REG-01/02) &gt; tidak salah menolak kata &apos;kamus&apos; yang memuat &apos;kamu&apos;" time="0.000046167">
+        </testcase>
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaTemuan (6.5, AC-REG-01/02) &gt; mengumpulkan beberapa alasan sekaligus" time="0.0000765">
+        </testcase>
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaRingkasan (6.5) &gt; menerima ringkasan yang bersih" time="0.000054042">
+        </testcase>
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaRingkasan (6.5) &gt; menolak ringkasan dengan kata vonis" time="0.000032084">
+        </testcase>
+        <testcase classname="lib/registerGuard.test.ts" name="registerGuard.periksaRingkasan (6.5) &gt; menolak ringkasan dengan em dash" time="0.000031209">
+        </testcase>
+    </testsuite>
+    <testsuite name="scripts/seed/seed.register.test.ts" timestamp="2026-07-09T16:52:38.625Z" hostname="Ghaisans-MacBook-Pro.local" tests="1" failures="0" errors="0" skipped="0" time="0.287415958">
+        <testcase classname="scripts/seed/seed.register.test.ts" name="properti register temuan seed (AC-REG-02) &gt; semua pertanyaan_rat diakhiri tanda tanya dan lolos registerGuard" time="0.003184791">
+        </testcase>
+    </testsuite>
+</testsuites>

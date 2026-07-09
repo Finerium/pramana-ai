@@ -24,12 +24,19 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function MemberLayout({ children }: { children: React.ReactNode }) {
+export default function MemberLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       {/* Terapkan tema sebelum paint (kunci pramana-tema lintas surface). */}
       <ThemeScript />
-      <div className={`m-app ${geist.variable}`} style={{ minHeight: "100dvh" }}>
+      <div
+        className={`m-app ${geist.variable}`}
+        style={{ minHeight: "100dvh" }}
+      >
         <div
           style={{
             maxWidth: 460,

@@ -24,7 +24,10 @@ export async function POST(req: NextRequest) {
 
     const parsed = Body.safeParse(await req.json().catch(() => null));
     if (!parsed.success)
-      throw new ApiError("VALIDATION", "Data pinjaman tidak lengkap atau tidak sah.");
+      throw new ApiError(
+        "VALIDATION",
+        "Data pinjaman tidak lengkap atau tidak sah.",
+      );
     const b = parsed.data;
     const pinjamanId = ulid();
     const { db } = getDb();

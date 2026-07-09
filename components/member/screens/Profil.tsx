@@ -9,9 +9,19 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { MEMBER_COPY, MEMBER_IDENTITY } from "@/lib/copy/member";
 import { postJson } from "@/components/member/data";
-import { useTemaPilihan, terapkanTema, type Tema } from "@/components/member/theme";
+import {
+  useTemaPilihan,
+  terapkanTema,
+  type Tema,
+} from "@/components/member/theme";
 import { KartuAnggota } from "@/components/member/KartuAnggota";
-import { BackLink, cardStyle, SectionLabel, rise, SHADOW_SM } from "@/components/member/ui";
+import {
+  BackLink,
+  cardStyle,
+  SectionLabel,
+  rise,
+  SHADOW_SM,
+} from "@/components/member/ui";
 import { IkonChevronKanan, IkonKeluar } from "@/components/member/icons";
 
 const TEMA: { key: Tema; label: string }[] = [
@@ -61,8 +71,20 @@ export function Profil() {
           WebkitBackdropFilter: "blur(18px) saturate(1.6)",
         }}
       >
-        <BackLink label={MEMBER_COPY["profil.kembali"]} onClick={() => router.push("/beranda")} />
-        <h1 style={{ margin: 0, fontSize: 25, fontWeight: 750, letterSpacing: -0.5 }}>{MEMBER_COPY["profil.judul"]}</h1>
+        <BackLink
+          label={MEMBER_COPY["profil.kembali"]}
+          onClick={() => router.push("/beranda")}
+        />
+        <h1
+          style={{
+            margin: 0,
+            fontSize: 25,
+            fontWeight: 750,
+            letterSpacing: -0.5,
+          }}
+        >
+          {MEMBER_COPY["profil.judul"]}
+        </h1>
       </header>
 
       <div style={rise(0.03)}>
@@ -75,21 +97,79 @@ export function Profil() {
         />
       </div>
 
-      <section style={{ display: "flex", flexDirection: "column", gap: 8, ...rise(0.09) }}>
-        <SectionLabel style={{ paddingLeft: 16 }}>{MEMBER_COPY["profil.dataDiri"]}</SectionLabel>
-        <div style={cardStyle({ borderRadius: 22, overflow: "hidden", boxShadow: SHADOW_SM })}>
+      <section
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 8,
+          ...rise(0.09),
+        }}
+      >
+        <SectionLabel style={{ paddingLeft: 16 }}>
+          {MEMBER_COPY["profil.dataDiri"]}
+        </SectionLabel>
+        <div
+          style={cardStyle({
+            borderRadius: 22,
+            overflow: "hidden",
+            boxShadow: SHADOW_SM,
+          })}
+        >
           <RowKV k={MEMBER_COPY["profil.nama"]} v={MEMBER_IDENTITY.nama} />
-          <RowKV k={MEMBER_COPY["profil.nik"]} v={MEMBER_IDENTITY.nikMasked} tnum top />
-          <RowKV k={MEMBER_COPY["profil.alamat"]} v={MEMBER_IDENTITY.alamat} top />
+          <RowKV
+            k={MEMBER_COPY["profil.nik"]}
+            v={MEMBER_IDENTITY.nikMasked}
+            tnum
+            top
+          />
+          <RowKV
+            k={MEMBER_COPY["profil.alamat"]}
+            v={MEMBER_IDENTITY.alamat}
+            top
+          />
         </div>
       </section>
 
-      <section style={{ display: "flex", flexDirection: "column", gap: 8, ...rise(0.14) }}>
-        <SectionLabel style={{ paddingLeft: 16 }}>{MEMBER_COPY["profil.tampilan"]}</SectionLabel>
-        <div style={cardStyle({ borderRadius: 22, overflow: "hidden", boxShadow: SHADOW_SM })}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, minHeight: 56, padding: "8px 16px" }}>
+      <section
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 8,
+          ...rise(0.14),
+        }}
+      >
+        <SectionLabel style={{ paddingLeft: 16 }}>
+          {MEMBER_COPY["profil.tampilan"]}
+        </SectionLabel>
+        <div
+          style={cardStyle({
+            borderRadius: 22,
+            overflow: "hidden",
+            boxShadow: SHADOW_SM,
+          })}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 12,
+              minHeight: 56,
+              padding: "8px 16px",
+            }}
+          >
             <span style={{ fontSize: 15 }}>{MEMBER_COPY["profil.tema"]}</span>
-            <div role="group" aria-label="Pilih tema" style={{ display: "flex", background: "var(--bg)", borderRadius: 12, padding: 3, gap: 2 }}>
+            <div
+              role="group"
+              aria-label="Pilih tema"
+              style={{
+                display: "flex",
+                background: "var(--bg)",
+                borderRadius: 12,
+                padding: 3,
+                gap: 2,
+              }}
+            >
               {TEMA.map((t) => {
                 const on = tema === t.key;
                 return (
@@ -116,16 +196,53 @@ export function Profil() {
             </div>
           </div>
         </div>
-        <span style={{ fontSize: 12, color: "var(--muted)", paddingLeft: 16, lineHeight: 1.5 }}>{MEMBER_COPY["profil.tema.bantu"]}</span>
+        <span
+          style={{
+            fontSize: 12,
+            color: "var(--muted)",
+            paddingLeft: 16,
+            lineHeight: 1.5,
+          }}
+        >
+          {MEMBER_COPY["profil.tema.bantu"]}
+        </span>
       </section>
 
-      <section style={{ display: "flex", flexDirection: "column", gap: 8, ...rise(0.19) }}>
-        <SectionLabel style={{ paddingLeft: 16 }}>{MEMBER_COPY["profil.lainnya"]}</SectionLabel>
-        <div style={cardStyle({ borderRadius: 22, overflow: "hidden", boxShadow: SHADOW_SM })}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, minHeight: 56, padding: "8px 16px" }}>
+      <section
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 8,
+          ...rise(0.19),
+        }}
+      >
+        <SectionLabel style={{ paddingLeft: 16 }}>
+          {MEMBER_COPY["profil.lainnya"]}
+        </SectionLabel>
+        <div
+          style={cardStyle({
+            borderRadius: 22,
+            overflow: "hidden",
+            boxShadow: SHADOW_SM,
+          })}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 12,
+              minHeight: 56,
+              padding: "8px 16px",
+            }}
+          >
             <span style={{ display: "flex", flexDirection: "column", gap: 1 }}>
-              <span style={{ fontSize: 15 }}>{MEMBER_COPY["profil.notif.judul"]}</span>
-              <span style={{ fontSize: 12.5, color: "var(--muted)" }}>{MEMBER_COPY["profil.notif.sub"]}</span>
+              <span style={{ fontSize: 15 }}>
+                {MEMBER_COPY["profil.notif.judul"]}
+              </span>
+              <span style={{ fontSize: 12.5, color: "var(--muted)" }}>
+                {MEMBER_COPY["profil.notif.sub"]}
+              </span>
             </span>
             <button
               type="button"
@@ -133,7 +250,15 @@ export function Profil() {
               role="switch"
               aria-checked={notif}
               aria-label={MEMBER_COPY["profil.notif.judul"]}
-              style={{ width: 51, height: 31, borderRadius: 999, background: notif ? "var(--accent)" : "var(--border)", position: "relative", transition: "background 0.2s ease", flex: "none" }}
+              style={{
+                width: 51,
+                height: 31,
+                borderRadius: 999,
+                background: notif ? "var(--accent)" : "var(--border)",
+                position: "relative",
+                transition: "background 0.2s ease",
+                flex: "none",
+              }}
             >
               <span
                 style={{
@@ -157,10 +282,26 @@ export function Profil() {
               clicksweep hanya menyapu elemen interaktif). Upgrade: beri aksi/tautan
               saat kanal kontak resmi masuk scope. */}
           <div
-            style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, minHeight: 52, padding: "6px 16px", borderTop: "0.5px solid var(--border)", width: "100%", boxSizing: "border-box" }}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 12,
+              minHeight: 52,
+              padding: "6px 16px",
+              borderTop: "0.5px solid var(--border)",
+              width: "100%",
+              boxSizing: "border-box",
+            }}
           >
-            <span style={{ fontSize: 15 }}>{MEMBER_COPY["profil.hubungi"]}</span>
-            <IkonChevronKanan size={14} style={{ stroke: "var(--muted)" }} strokeWidth={2.2} />
+            <span style={{ fontSize: 15 }}>
+              {MEMBER_COPY["profil.hubungi"]}
+            </span>
+            <IkonChevronKanan
+              size={14}
+              style={{ stroke: "var(--muted)" }}
+              strokeWidth={2.2}
+            />
           </div>
         </div>
       </section>
@@ -186,16 +327,34 @@ export function Profil() {
             boxShadow: SHADOW_SM,
           }}
         >
-          <IkonKeluar size={16} style={{ stroke: "currentColor" }} strokeWidth={1.9} />
+          <IkonKeluar
+            size={16}
+            style={{ stroke: "currentColor" }}
+            strokeWidth={1.9}
+          />
           {MEMBER_COPY["profil.keluar"]}
         </button>
       </section>
-      <span style={{ textAlign: "center", fontSize: 12, color: "var(--muted)" }}>{MEMBER_COPY["profil.versi"]}</span>
+      <span
+        style={{ textAlign: "center", fontSize: 12, color: "var(--muted)" }}
+      >
+        {MEMBER_COPY["profil.versi"]}
+      </span>
     </main>
   );
 }
 
-function RowKV({ k, v, tnum, top }: { k: string; v: string; tnum?: boolean; top?: boolean }) {
+function RowKV({
+  k,
+  v,
+  tnum,
+  top,
+}: {
+  k: string;
+  v: string;
+  tnum?: boolean;
+  top?: boolean;
+}) {
   return (
     <div
       style={{
@@ -209,7 +368,17 @@ function RowKV({ k, v, tnum, top }: { k: string; v: string; tnum?: boolean; top?
       }}
     >
       <span style={{ fontSize: 15, flex: "none" }}>{k}</span>
-      <span className={tnum ? "tnum" : undefined} style={{ fontSize: 15, color: "var(--muted)", textAlign: "right", lineHeight: 1.4 }}>{v}</span>
+      <span
+        className={tnum ? "tnum" : undefined}
+        style={{
+          fontSize: 15,
+          color: "var(--muted)",
+          textAlign: "right",
+          lineHeight: 1.4,
+        }}
+      >
+        {v}
+      </span>
     </div>
   );
 }

@@ -103,7 +103,11 @@ describe("suaraAggregate", () => {
   });
   it("sorts by member count descending", () => {
     const out = suaraAggregate(items, new Set(["tmn-an2"]));
-    expect(out.map((q) => q.temuanId)).toEqual(["tmn-an1", "tmn-an4", "tmn-an2"]);
+    expect(out.map((q) => q.temuanId)).toEqual([
+      "tmn-an1",
+      "tmn-an4",
+      "tmn-an2",
+    ]);
   });
 });
 
@@ -210,11 +214,15 @@ describe("agentRows", () => {
 
 describe("keputusanTally", () => {
   it("adds the session vote onto the 9/3 baseline when the server has not recorded it", () => {
-    expect(keputusanTally({ hasil: null, sudahMemilih: false }, "setuju")).toEqual({
+    expect(
+      keputusanTally({ hasil: null, sudahMemilih: false }, "setuju"),
+    ).toEqual({
       setuju: 10,
       tidak: 3,
     });
-    expect(keputusanTally({ hasil: null, sudahMemilih: false }, "tidak")).toEqual({
+    expect(
+      keputusanTally({ hasil: null, sudahMemilih: false }, "tidak"),
+    ).toEqual({
       setuju: 9,
       tidak: 4,
     });
@@ -223,12 +231,18 @@ describe("keputusanTally", () => {
     // Full reload: server persisted the vote (sudahMemilih) and hasil already
     // includes it (10/3); the session still holds "setuju". Must stay 10/3.
     expect(
-      keputusanTally({ hasil: { setuju: 10, tidak: 3 }, sudahMemilih: true }, "setuju"),
+      keputusanTally(
+        { hasil: { setuju: 10, tidak: 3 }, sudahMemilih: true },
+        "setuju",
+      ),
     ).toEqual({ setuju: 10, tidak: 3 });
   });
   it("passes the server result through when there is no session choice", () => {
     expect(
-      keputusanTally({ hasil: { setuju: 10, tidak: 3 }, sudahMemilih: true }, undefined),
+      keputusanTally(
+        { hasil: { setuju: 10, tidak: 3 }, sudahMemilih: true },
+        undefined,
+      ),
     ).toEqual({ setuju: 10, tidak: 3 });
   });
 });

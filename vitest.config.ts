@@ -21,6 +21,15 @@ export default defineConfig({
       reporter: ["text", "json-summary", "lcov"],
       include: ["lib/**", "db/**", "app/api/**"],
       exclude: ["**/*.test.ts", "**/*.test.tsx"],
+      // AC-UNI-01: global >= 70; aturan warna dan denylist 100 persen branch.
+      thresholds: {
+        statements: 70,
+        branches: 70,
+        functions: 70,
+        lines: 70,
+        "lib/audit/verdict.ts": { branches: 100 },
+        "lib/registerGuard.ts": { branches: 100 },
+      },
     },
   },
 });

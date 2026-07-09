@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="31" failures="0" errors="0" time="0.019148001">
+    <testsuite name="lib/llm.contract.test.ts" timestamp="2026-07-09T16:52:37.339Z" hostname="Ghaisans-MacBook-Pro.local" tests="11" failures="0" errors="0" skipped="0" time="0.006390792">
+        <testcase classname="lib/llm.contract.test.ts" name="chatJSON (AC-LLM-01, AC-PERF-04) &gt; mengembalikan objek tervalidasi pada panggilan pertama yang sah" time="0.001940125">
+        </testcase>
+        <testcase classname="lib/llm.contract.test.ts" name="chatJSON (AC-LLM-01, AC-PERF-04) &gt; POST ke {BASE_URL}/chat/completions non-streaming dengan response_format json_object" time="0.000533625">
+        </testcase>
+        <testcase classname="lib/llm.contract.test.ts" name="chatJSON (AC-LLM-01, AC-PERF-04) &gt; JSON invalid lalu retry korektif yang sah = sukses (tepat 2 panggilan)" time="0.0002065">
+        </testcase>
+        <testcase classname="lib/llm.contract.test.ts" name="chatJSON (AC-LLM-01, AC-PERF-04) &gt; skema tidak cocok lalu retry korektif juga cacat = LLMUnavailable, tanpa retry tak berbatas" time="0.000695125">
+        </testcase>
+        <testcase classname="lib/llm.contract.test.ts" name="chatJSON (AC-LLM-01, AC-PERF-04) &gt; retry korektif menyisipkan pesan koreksi ke percakapan" time="0.000161583">
+        </testcase>
+        <testcase classname="lib/llm.contract.test.ts" name="chatJSON (AC-LLM-01, AC-PERF-04) &gt; status 500 = LLMUnavailable tanpa retry" time="0.00015625">
+        </testcase>
+        <testcase classname="lib/llm.contract.test.ts" name="chatJSON (AC-LLM-01, AC-PERF-04) &gt; status 429 = LLMUnavailable tanpa retry" time="0.000151667">
+        </testcase>
+        <testcase classname="lib/llm.contract.test.ts" name="chatJSON (AC-LLM-01, AC-PERF-04) &gt; kesalahan jaringan = LLMUnavailable" time="0.000224417">
+        </testcase>
+        <testcase classname="lib/llm.contract.test.ts" name="chatJSON (AC-LLM-01, AC-PERF-04) &gt; menghormati timeout default 30 detik lewat AbortSignal" time="0.001331375">
+        </testcase>
+        <testcase classname="lib/llm.contract.test.ts" name="chatJSON (AC-LLM-01, AC-PERF-04) &gt; envelope bukan JSON = LLMUnavailable" time="0.000174458">
+        </testcase>
+        <testcase classname="lib/llm.contract.test.ts" name="chatJSON (AC-LLM-01, AC-PERF-04) &gt; envelope tanpa konten teks = LLMUnavailable" time="0.000116125">
+        </testcase>
+    </testsuite>
+    <testsuite name="lib/audit/audit.an1.test.ts" timestamp="2026-07-09T16:52:37.340Z" hostname="Ghaisans-MacBook-Pro.local" tests="1" failures="0" errors="0" skipped="0" time="0.002483792">
+        <testcase classname="lib/audit/audit.an1.test.ts" name="runAudit fixture deterministik (AC-LLM-02) &gt; hasil akhir memuat AN-1: konflik_kepentingan, merah, Toko Berkah, kecocokan alamat" time="0.001861333">
+        </testcase>
+    </testsuite>
+    <testsuite name="lib/audit/audit.pipeline.test.ts" timestamp="2026-07-09T16:52:37.341Z" hostname="Ghaisans-MacBook-Pro.local" tests="7" failures="0" errors="0" skipped="0" time="0.004148709">
+        <testcase classname="lib/audit/audit.pipeline.test.ts" name="runAudit kegagalan agen + guard retry (6.4/6.5) &gt; mencatat agen gagal di metadata dan tetap melanjutkan" time="0.001999208">
+        </testcase>
+        <testcase classname="lib/audit/audit.pipeline.test.ts" name="runAudit kegagalan agen + guard retry (6.4/6.5) &gt; melempar LLMUnavailable bila seluruh agen forensik gagal" time="0.000455416">
+        </testcase>
+        <testcase classname="lib/audit/audit.pipeline.test.ts" name="runAudit kegagalan agen + guard retry (6.4/6.5) &gt; pass 1: retry korektif memperbaiki temuan yang melanggar (tanpa drop)" time="0.000427083">
+        </testcase>
+        <testcase classname="lib/audit/audit.pipeline.test.ts" name="runAudit kegagalan agen + guard retry (6.4/6.5) &gt; pass 1: temuan tetap melanggar setelah retry didrop dan dicatat" time="0.000152167">
+        </testcase>
+        <testcase classname="lib/audit/audit.pipeline.test.ts" name="runAudit kegagalan agen + guard retry (6.4/6.5) &gt; ringkasan melanggar setelah retry diganti copy fallback" time="0.000195541">
+        </testcase>
+        <testcase classname="lib/audit/audit.pipeline.test.ts" name="runAudit kegagalan agen + guard retry (6.4/6.5) &gt; pass 1: retry transport gagal -&gt; temuan melanggar didrop" time="0.000143708">
+        </testcase>
+        <testcase classname="lib/audit/audit.pipeline.test.ts" name="runAudit kegagalan agen + guard retry (6.4/6.5) &gt; pass 2: retry adjudikator transport gagal -&gt; temuan melanggar didrop" time="0.000131333">
+        </testcase>
+    </testsuite>
+    <testsuite name="lib/audit/snapshot.test.ts" timestamp="2026-07-09T16:52:37.341Z" hostname="Ghaisans-MacBook-Pro.local" tests="2" failures="0" errors="0" skipped="0" time="0.0026025">
+        <testcase classname="lib/audit/snapshot.test.ts" name="snapshot payload (6.9) &gt; membatasi transaksi payload forensik ke 500 baris" time="0.001608166">
+        </testcase>
+        <testcase classname="lib/audit/snapshot.test.ts" name="snapshot payload (6.9) &gt; ringkasan snapshot memuat hitungan, bukan seluruh baris" time="0.000332708">
+        </testcase>
+    </testsuite>
+    <testsuite name="lib/audit/verdict.rules.test.ts" timestamp="2026-07-09T16:52:37.341Z" hostname="Ghaisans-MacBook-Pro.local" tests="10" failures="0" errors="0" skipped="0" time="0.003522208">
+        <testcase classname="lib/audit/verdict.rules.test.ts" name="hitungWarna (aturan warna 6.1) &gt; merah bila ada &gt;= 1 temuan merah" time="0.000932542">
+        </testcase>
+        <testcase classname="lib/audit/verdict.rules.test.ts" name="hitungWarna (aturan warna 6.1) &gt; kuning bila ada kuning tanpa merah" time="0.000086667">
+        </testcase>
+        <testcase classname="lib/audit/verdict.rules.test.ts" name="hitungWarna (aturan warna 6.1) &gt; hijau bila hanya info" time="0.000067458">
+        </testcase>
+        <testcase classname="lib/audit/verdict.rules.test.ts" name="hitungWarna (aturan warna 6.1) &gt; hijau bila tidak ada temuan" time="0.000074917">
+        </testcase>
+        <testcase classname="lib/audit/verdict.rules.test.ts" name="hitungWarna (aturan warna 6.1) &gt; info tidak mengubah warna kuning" time="0.000065084">
+        </testcase>
+        <testcase classname="lib/audit/verdict.rules.test.ts" name="hitungWarna (aturan warna 6.1) &gt; merah menang atas kuning dan info" time="0.000060875">
+        </testcase>
+        <testcase classname="lib/audit/verdict.rules.test.ts" name="runAudit menegakkan warna server-side (AC-LLM-03, B6) &gt; server menetapkan merah meski adjudikator mengusulkan hijau" time="0.000900292">
+        </testcase>
+        <testcase classname="lib/audit/verdict.rules.test.ts" name="runAudit menegakkan warna server-side (AC-LLM-03, B6) &gt; kuning bila hanya temuan kuning" time="0.000155125">
+        </testcase>
+        <testcase classname="lib/audit/verdict.rules.test.ts" name="runAudit menegakkan warna server-side (AC-LLM-03, B6) &gt; hijau bila hanya temuan info" time="0.00013575">
+        </testcase>
+        <testcase classname="lib/audit/verdict.rules.test.ts" name="runAudit menegakkan warna server-side (AC-LLM-03, B6) &gt; warna dihitung ulang dari himpunan final setelah drop pass-2" time="0.000344833">
+        </testcase>
+    </testsuite>
+</testsuites>

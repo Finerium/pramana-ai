@@ -150,8 +150,10 @@ export const MEMBER_COPY = {
   // Kalimat dinamis (template {k}, diisi di titik render lewat isi()).
   // Dipusatkan di sini (ADR-11) agar tersapu check-register register 6.8.
   "beranda.simpanan.cicilan": "Cicilan {rp} jatuh tempo {tgl}",
-  "beranda.rat.agenda": "Belum dijadwalkan pengurus. {n} pertanyaan siap dibawa ke rapat.",
-  "beranda.rat.agendaKosong": "Belum dijadwalkan pengurus. Belum ada pertanyaan terkumpul.",
+  "beranda.rat.agenda":
+    "Belum dijadwalkan pengurus. {n} pertanyaan siap dibawa ke rapat.",
+  "beranda.rat.agendaKosong":
+    "Belum dijadwalkan pengurus. Belum ada pertanyaan terkumpul.",
   "beranda.pengawas.ariaPeriksa": "Sedang memeriksa",
   "uang.subjudul": "{nama}, No. Anggota {no}",
   "uang.diangsur": "Sudah diangsur {sudah} dari {total}",
@@ -164,7 +166,8 @@ export const MEMBER_COPY = {
   "suara.vote.lockPilih": "Pilihan Anda: {pilihan}. {lanjut}",
   "suara.vote.lockTersimpan": "Pilihan Anda tersimpan. {lanjut}",
   "suara.hasil.hitung": "{tot} dari {total} anggota sudah memilih",
-  "suara.hasil.aria": "{s} suara setuju, {t} suara tidak setuju, {b} belum memilih",
+  "suara.hasil.aria":
+    "{s} suara setuju, {t} suara tidak setuju, {b} belum memilih",
   "suara.legend.setuju": "{n} Setuju",
   "suara.legend.tidak": "{n} Tidak Setuju",
   "suara.legend.belum": "{n} belum memilih",
@@ -197,10 +200,30 @@ export const AGENT_PANEL: ReadonlyArray<{
   unit: string;
   time: string;
 }> = [
-  { id: "anomali_transaksi", target: 312, unit: "transaksi diperiksa", time: "07.02" },
-  { id: "konflik_kepentingan", target: 18, unit: "vendor dicocokkan", time: "07.03" },
-  { id: "kesehatan_finansial", target: 6, unit: "angka keuangan diperiksa", time: "07.04" },
-  { id: "kepatuhan_proses", target: 4, unit: "aturan koperasi diperiksa", time: "07.05" },
+  {
+    id: "anomali_transaksi",
+    target: 312,
+    unit: "transaksi diperiksa",
+    time: "07.02",
+  },
+  {
+    id: "konflik_kepentingan",
+    target: 18,
+    unit: "vendor dicocokkan",
+    time: "07.03",
+  },
+  {
+    id: "kesehatan_finansial",
+    target: 6,
+    unit: "angka keuangan diperiksa",
+    time: "07.04",
+  },
+  {
+    id: "kepatuhan_proses",
+    target: 4,
+    unit: "aturan koperasi diperiksa",
+    time: "07.05",
+  },
 ];
 
 /**
@@ -233,7 +256,22 @@ export const AKTIVITAS_TERBARU: ReadonlyArray<{
   jumlah: number;
   flag: "tidak" | "nonhijau" | "merah";
 }> = [
-  { tgl: "30 Jun", label: "Setoran simpanan anggota", jumlah: 4500000, flag: "tidak" },
-  { tgl: "20 Jun", label: "Lima pinjaman dicairkan", jumlah: 30000000, flag: "nonhijau" },
-  { tgl: "14 Jun", label: "Pembelian stok gerai", jumlah: 15000000, flag: "merah" },
+  {
+    tgl: "30 Jun",
+    label: "Setoran simpanan anggota",
+    jumlah: 4500000,
+    flag: "tidak",
+  },
+  {
+    tgl: "20 Jun",
+    label: "Lima pinjaman dicairkan",
+    jumlah: 30000000,
+    flag: "nonhijau",
+  },
+  {
+    tgl: "14 Jun",
+    label: "Pembelian stok gerai",
+    jumlah: 15000000,
+    flag: "merah",
+  },
 ];

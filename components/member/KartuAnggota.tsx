@@ -30,18 +30,49 @@ export function KartuAnggota({
         boxShadow: "0 2px 4px rgba(0,0,0,0.06),0 16px 40px rgba(0,0,0,0.14)",
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span style={{ fontSize: 11.5, fontWeight: 600, letterSpacing: 0.6, opacity: 0.85 }}>{koperasiCaps}</span>
-        <BelahKetupat size={12} color="var(--accent-on)" style={{ opacity: 0.9 }} />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <span
+          style={{
+            fontSize: 11.5,
+            fontWeight: 600,
+            letterSpacing: 0.6,
+            opacity: 0.85,
+          }}
+        >
+          {koperasiCaps}
+        </span>
+        <BelahKetupat
+          size={12}
+          color="var(--accent-on)"
+          style={{ opacity: 0.9 }}
+        />
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-        <span style={{ fontSize: 24, fontWeight: 750, letterSpacing: -0.3 }}>{nama}</span>
+        <span style={{ fontSize: 24, fontWeight: 750, letterSpacing: -0.3 }}>
+          {nama}
+        </span>
         <span style={{ fontSize: 14, opacity: 0.85 }}>Anggota</span>
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+        }}
+      >
         <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-          <span style={{ fontSize: 11, letterSpacing: 0.6, opacity: 0.8 }}>NO. ANGGOTA</span>
-          <span className="tnum" style={{ fontSize: 20, fontWeight: 700 }}>{noAnggota}</span>
+          <span style={{ fontSize: 11, letterSpacing: 0.6, opacity: 0.8 }}>
+            NO. ANGGOTA
+          </span>
+          <span className="tnum" style={{ fontSize: 20, fontWeight: 700 }}>
+            {noAnggota}
+          </span>
           <span style={{ fontSize: 12.5, opacity: 0.85 }}>{bergabung}</span>
         </div>
         <div
@@ -59,8 +90,20 @@ export function KartuAnggota({
           }}
         >
           <span style={{ background: "var(--accent)", borderRadius: 2 }} />
-          <span style={{ background: "var(--accent)", borderRadius: 2, opacity: 0.55 }} />
-          <span style={{ background: "var(--accent)", borderRadius: 2, opacity: 0.55 }} />
+          <span
+            style={{
+              background: "var(--accent)",
+              borderRadius: 2,
+              opacity: 0.55,
+            }}
+          />
+          <span
+            style={{
+              background: "var(--accent)",
+              borderRadius: 2,
+              opacity: 0.55,
+            }}
+          />
           <span style={{ background: "var(--accent)", borderRadius: 2 }} />
         </div>
       </div>

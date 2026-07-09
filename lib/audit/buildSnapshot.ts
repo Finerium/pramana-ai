@@ -8,7 +8,13 @@
  */
 import { and, asc, eq, gt, like, sql } from "drizzle-orm";
 import type { Db } from "../../db/client";
-import { anggota, koperasi, pengurus, pinjaman, transaksi } from "../../db/schema";
+import {
+  anggota,
+  koperasi,
+  pengurus,
+  pinjaman,
+  transaksi,
+} from "../../db/schema";
 import type { KoperasiSnapshot } from "./snapshot";
 
 /** Plafon pinjaman per anggota pada seed (6.6). */

@@ -48,7 +48,9 @@ export function sessionSecret(): string {
   }
   if (s.length === 0) return DEV_SECRET;
   if (s.length < MIN_LEN) {
-    throw new ConfigError("SESSION_SECRET terlalu pendek; minimal 32 karakter.");
+    throw new ConfigError(
+      "SESSION_SECRET terlalu pendek; minimal 32 karakter.",
+    );
   }
   return s;
 }

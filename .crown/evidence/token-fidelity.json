@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "strict": true,
+  "undocumentedDriftTotal": 0,
+  "missingApp": false,
+  "surfaces": {
+    "mobile": {
+      "status": "ok",
+      "bundleFile": "design-handoff/mobile/handoff/tokens.css",
+      "appFile": "styles/tokens/mobile.css",
+      "tokenCount": 39,
+      "driftCount": 0,
+      "undocumentedDrift": []
+    },
+    "dashboard": {
+      "status": "ok",
+      "bundleFile": "design-handoff/dashboard/pramana-tokens.css",
+      "appFile": "styles/tokens/dashboard.css",
+      "tokenCount": 58,
+      "driftCount": 0,
+      "undocumentedDrift": []
+    },
+    "landing": {
+      "status": "ok",
+      "bundleFile": "design-handoff/landing/tokens.css",
+      "appFile": "styles/tokens/landing.css",
+      "tokenCount": 45,
+      "driftCount": 26,
+      "undocumentedDrift": []
+    },
+    "subjek": {
+      "status": "ok",
+      "bundleFile": "design-handoff/subjek/handoff/tokens.css",
+      "appFile": "styles/tokens/subjek.css",
+      "tokenCount": 30,
+      "driftCount": 30,
+      "undocumentedDrift": []
+    }
+  }
+}

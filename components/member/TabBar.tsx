@@ -9,7 +9,12 @@ import { usePathname, useRouter } from "next/navigation";
 import type { CSSProperties, ReactNode } from "react";
 import { MEMBER_COPY } from "@/lib/copy/member";
 
-type Tab = { href: string; label: string; aktif: (p: string) => boolean; icon: (w: number) => ReactNode };
+type Tab = {
+  href: string;
+  label: string;
+  aktif: (p: string) => boolean;
+  icon: (w: number) => ReactNode;
+};
 
 function svg(w: number, children: ReactNode): ReactNode {
   const s: CSSProperties = {
@@ -33,19 +38,43 @@ const TABS: Tab[] = [
     href: "/beranda",
     label: MEMBER_COPY["tab.beranda"],
     aktif: (p) => p === "/beranda" || p === "/temuan",
-    icon: (w) => svg(w, <><path d="M4 10.5L12 4l8 6.5" /><path d="M5.5 9.5V20h13V9.5" /></>),
+    icon: (w) =>
+      svg(
+        w,
+        <>
+          <path d="M4 10.5L12 4l8 6.5" />
+          <path d="M5.5 9.5V20h13V9.5" />
+        </>,
+      ),
   },
   {
     href: "/uang",
     label: MEMBER_COPY["tab.uang"],
     aktif: (p) => p === "/uang",
-    icon: (w) => svg(w, <><rect x="3" y="6" width="18" height="13.5" rx="3.5" /><path d="M3 10.5h18" /><path d="M15.5 15.5h2.5" /></>),
+    icon: (w) =>
+      svg(
+        w,
+        <>
+          <rect x="3" y="6" width="18" height="13.5" rx="3.5" />
+          <path d="M3 10.5h18" />
+          <path d="M15.5 15.5h2.5" />
+        </>,
+      ),
   },
   {
     href: "/arus",
     label: MEMBER_COPY["tab.arus"],
     aktif: (p) => p === "/arus",
-    icon: (w) => svg(w, <><path d="M7 18V6" /><path d="M3.8 9.2L7 6l3.2 3.2" /><path d="M17 6v12" /><path d="M13.8 14.8L17 18l3.2-3.2" /></>),
+    icon: (w) =>
+      svg(
+        w,
+        <>
+          <path d="M7 18V6" />
+          <path d="M3.8 9.2L7 6l3.2 3.2" />
+          <path d="M17 6v12" />
+          <path d="M13.8 14.8L17 18l3.2-3.2" />
+        </>,
+      ),
   },
   {
     href: "/suara",

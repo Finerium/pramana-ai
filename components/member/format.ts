@@ -100,8 +100,12 @@ export function fmtTanggalPendek(iso: string): string {
  * dipusatkan di MEMBER_COPY (ADR-11) agar tetap tersapu check-register; helper
  * ini mengisinya di titik render.
  */
-export function isi(tpl: string, vars: Record<string, string | number>): string {
+export function isi(
+  tpl: string,
+  vars: Record<string, string | number>,
+): string {
   let out = tpl;
-  for (const k of Object.keys(vars)) out = out.split("{" + k + "}").join(String(vars[k]));
+  for (const k of Object.keys(vars))
+    out = out.split("{" + k + "}").join(String(vars[k]));
   return out;
 }

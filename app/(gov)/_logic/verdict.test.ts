@@ -6,7 +6,9 @@ describe("BENTUK verdict shapes (clip-path bundle verbatim)", () => {
     expect(BENTUK.hijau.clip).toBe("none");
     expect(BENTUK.hijau.radius).toBe("50%");
     expect(BENTUK.kuning.clip).toBe("polygon(50% 8%, 96% 92%, 4% 92%)");
-    expect(BENTUK.merah.clip).toBe("polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)");
+    expect(BENTUK.merah.clip).toBe(
+      "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
+    );
     expect(BENTUK.info.clip).toBe("none");
     expect(BENTUK.info.radius).toBe("2px");
   });

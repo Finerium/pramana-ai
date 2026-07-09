@@ -9,13 +9,26 @@
 import { useRouter } from "next/navigation";
 import type { CSSProperties } from "react";
 import type { VerdictResp, MemberSummary } from "@/lib/contracts";
-import type { MemberFinding, MemberFindingsResp } from "@/components/member/types";
+import type {
+  MemberFinding,
+  MemberFindingsResp,
+} from "@/components/member/types";
 import { COPY } from "@/lib/copy";
-import { MEMBER_COPY, MEMBER_IDENTITY, AKTIVITAS_TERBARU } from "@/lib/copy/member";
+import {
+  MEMBER_COPY,
+  MEMBER_IDENTITY,
+  AKTIVITAS_TERBARU,
+} from "@/lib/copy/member";
 import { useResource } from "@/components/member/data";
 import { useAgentRun } from "@/components/member/agents";
 import { deriveVerdict, agentRows } from "@/components/member/derive";
-import { fmtRp, fmtTanggalPanjang, fmtTanggalPendek, waktuSalam, isi } from "@/components/member/format";
+import {
+  fmtRp,
+  fmtTanggalPanjang,
+  fmtTanggalPendek,
+  waktuSalam,
+  isi,
+} from "@/components/member/format";
 import {
   Card,
   Banner,
@@ -52,7 +65,11 @@ export function Beranda() {
 
   const vstat = verdict.muat.status;
   const v =
-    vstat === "isi" ? verdict.muat.data : vstat === "gagal" ? verdict.muat.data : null;
+    vstat === "isi"
+      ? verdict.muat.data
+      : vstat === "gagal"
+        ? verdict.muat.data
+        : null;
 
   const sum =
     summary.muat.status === "isi"
@@ -108,8 +125,12 @@ export function Beranda() {
           >
             {fmtTanggalPanjang(now)}
           </span>
-          <span style={{ fontSize: 23, fontWeight: 750, letterSpacing: -0.4 }}>{sapaan}</span>
-          <span style={{ fontSize: 12.5, color: "var(--muted)" }}>{MEMBER_IDENTITY.koperasi}</span>
+          <span style={{ fontSize: 23, fontWeight: 750, letterSpacing: -0.4 }}>
+            {sapaan}
+          </span>
+          <span style={{ fontSize: 12.5, color: "var(--muted)" }}>
+            {MEMBER_IDENTITY.koperasi}
+          </span>
         </div>
         <button
           type="button"
@@ -200,11 +221,19 @@ function BerandaIsi({
   onOpenArus: () => void;
 }) {
   const dv = deriveVerdict(v);
-  const rows = agentRows(findingList, agStep, agCounts.length > 0 ? agRun : false, agCounts);
+  const rows = agentRows(
+    findingList,
+    agStep,
+    agCounts.length > 0 ? agRun : false,
+    agCounts,
+  );
   const showBanner = gagal || v.source === "cache";
 
   const simpanan = sum ? sum.uangAnda.totalSimpanan : 600000;
-  const cic = sum?.uangAnda.cicilanBerikut ?? { jumlah: 200000, tanggal: "2026-07-05" };
+  const cic = sum?.uangAnda.cicilanBerikut ?? {
+    jumlah: 200000,
+    tanggal: "2026-07-05",
+  };
   const cicilanLine = isi(MEMBER_COPY["beranda.simpanan.cicilan"], {
     rp: fmtRp(cic.jumlah),
     tgl: fmtTanggalPendek(cic.tanggal),
@@ -216,7 +245,9 @@ function BerandaIsi({
 
   return (
     <>
-      {showBanner ? <Banner tone="peringatan">{COPY["banner.cache"]}</Banner> : null}
+      {showBanner ? (
+        <Banner tone="peringatan">{COPY["banner.cache"]}</Banner>
+      ) : null}
 
       <section
         style={{
@@ -231,15 +262,46 @@ function BerandaIsi({
           ...rise(0.03),
         }}
       >
-        <span style={{ fontSize: 12, fontWeight: 650, letterSpacing: 0.8, opacity: 0.85 }}>
+        <span
+          style={{
+            fontSize: 12,
+            fontWeight: 650,
+            letterSpacing: 0.8,
+            opacity: 0.85,
+          }}
+        >
           {MEMBER_COPY["beranda.verdict.kicker"]}
         </span>
-        <div style={{ display: "flex", flexDirection: "column", gap: 13, padding: "6px 0 2px" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 13,
+            padding: "6px 0 2px",
+          }}
+        >
           <IkonVerdict warna={v.warna} size={58} />
-          <h2 style={{ margin: 0, fontSize: 37, lineHeight: 1.05, fontWeight: 750, letterSpacing: -0.9 }}>
+          <h2
+            style={{
+              margin: 0,
+              fontSize: 37,
+              lineHeight: 1.05,
+              fontWeight: 750,
+              letterSpacing: -0.9,
+            }}
+          >
             {dv.label}
           </h2>
-          <p style={{ margin: 0, fontSize: 16.5, lineHeight: 1.5, opacity: 0.94 }}>{dv.ringkasan}</p>
+          <p
+            style={{
+              margin: 0,
+              fontSize: 16.5,
+              lineHeight: 1.5,
+              opacity: 0.94,
+            }}
+          >
+            {dv.ringkasan}
+          </p>
         </div>
         <button
           type="button"
@@ -275,13 +337,33 @@ function BerandaIsi({
             ...rise(0.08),
           }}
         >
-          <IkonLonceng size={19} style={{ stroke: "var(--accent)", marginTop: 1 }} />
-          <span style={{ flex: 1, fontSize: 14, lineHeight: 1.5, textAlign: "left" }}>{dv.notif}</span>
-          <IkonChevronKanan size={15} style={{ stroke: "var(--muted)", marginTop: 2 }} />
+          <IkonLonceng
+            size={19}
+            style={{ stroke: "var(--accent)", marginTop: 1 }}
+          />
+          <span
+            style={{
+              flex: 1,
+              fontSize: 14,
+              lineHeight: 1.5,
+              textAlign: "left",
+            }}
+          >
+            {dv.notif}
+          </span>
+          <IkonChevronKanan
+            size={15}
+            style={{ stroke: "var(--muted)", marginTop: 2 }}
+          />
         </button>
       ) : null}
 
-      <PengawasPanel rows={rows} agRun={agRun} onRun={onRun} style={rise(0.13)} />
+      <PengawasPanel
+        rows={rows}
+        agRun={agRun}
+        onRun={onRun}
+        style={rise(0.13)}
+      />
 
       <button
         type="button"
@@ -299,12 +381,30 @@ function BerandaIsi({
         }}
       >
         <IkonDompet size={21} style={{ stroke: "var(--accent)" }} />
-        <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2, textAlign: "left" }}>
-          <span style={{ fontSize: 12.5, color: "var(--muted)" }}>{MEMBER_COPY["beranda.simpanan.label"]}</span>
-          <span className="tnum" style={{ fontSize: 22, fontWeight: 650, letterSpacing: -0.4 }}>
+        <span
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            textAlign: "left",
+          }}
+        >
+          <span style={{ fontSize: 12.5, color: "var(--muted)" }}>
+            {MEMBER_COPY["beranda.simpanan.label"]}
+          </span>
+          <span
+            className="tnum"
+            style={{ fontSize: 22, fontWeight: 650, letterSpacing: -0.4 }}
+          >
             {fmtRp(simpanan)}
           </span>
-          <span className="tnum" style={{ fontSize: 12.5, color: "var(--muted)" }}>{cicilanLine}</span>
+          <span
+            className="tnum"
+            style={{ fontSize: 12.5, color: "var(--muted)" }}
+          >
+            {cicilanLine}
+          </span>
         </span>
         <IkonChevronKanan size={15} style={{ stroke: "var(--muted)" }} />
       </button>
@@ -325,18 +425,46 @@ function BerandaIsi({
         }}
       >
         <IkonKalender size={21} style={{ stroke: "var(--accent)" }} />
-        <span style={{ flex: 1, display: "flex", flexDirection: "column", gap: 2, textAlign: "left" }}>
-          <span style={{ fontSize: 14.5, fontWeight: 650 }}>{MEMBER_COPY["beranda.rat.judul"]}</span>
-          <span style={{ fontSize: 12.5, color: "var(--muted)", lineHeight: 1.45 }}>{agendaLine}</span>
+        <span
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            textAlign: "left",
+          }}
+        >
+          <span style={{ fontSize: 14.5, fontWeight: 650 }}>
+            {MEMBER_COPY["beranda.rat.judul"]}
+          </span>
+          <span
+            style={{ fontSize: 12.5, color: "var(--muted)", lineHeight: 1.45 }}
+          >
+            {agendaLine}
+          </span>
         </span>
         <IkonChevronKanan size={15} style={{ stroke: "var(--muted)" }} />
       </button>
 
-      <Card style={{ padding: 18, display: "flex", flexDirection: "column", gap: 2, ...rise(0.28) }}>
-        <SectionLabel style={{ paddingBottom: 8 }}>{MEMBER_COPY["beranda.aktivitas.judul"]}</SectionLabel>
+      <Card
+        style={{
+          padding: 18,
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
+          ...rise(0.28),
+        }}
+      >
+        <SectionLabel style={{ paddingBottom: 8 }}>
+          {MEMBER_COPY["beranda.aktivitas.judul"]}
+        </SectionLabel>
         {AKTIVITAS_TERBARU.map((a, i) => {
           const flag =
-            a.flag === "merah" ? v.warna === "merah" : a.flag === "nonhijau" ? v.warna !== "hijau" : false;
+            a.flag === "merah"
+              ? v.warna === "merah"
+              : a.flag === "nonhijau"
+                ? v.warna !== "hijau"
+                : false;
           return (
             <div
               key={i}
@@ -348,10 +476,20 @@ function BerandaIsi({
                 borderTop: "0.5px solid var(--border)",
               }}
             >
-              <span className="tnum" style={{ width: 44, flex: "none", fontSize: 12, color: "var(--muted)" }}>
+              <span
+                className="tnum"
+                style={{
+                  width: 44,
+                  flex: "none",
+                  fontSize: 12,
+                  color: "var(--muted)",
+                }}
+              >
                 {a.tgl}
               </span>
-              <span style={{ flex: 1, fontSize: 13.5, lineHeight: 1.4 }}>{a.label}</span>
+              <span style={{ flex: 1, fontSize: 13.5, lineHeight: 1.4 }}>
+                {a.label}
+              </span>
               {flag ? (
                 <span
                   style={{
@@ -367,7 +505,10 @@ function BerandaIsi({
                   {MEMBER_COPY["beranda.aktivitas.diperiksa"]}
                 </span>
               ) : null}
-              <span className="tnum" style={{ fontSize: 13.5, fontWeight: 650, flex: "none" }}>
+              <span
+                className="tnum"
+                style={{ fontSize: 13.5, fontWeight: 650, flex: "none" }}
+              >
                 {fmtRp(a.jumlah)}
               </span>
             </div>
@@ -389,7 +530,11 @@ function BerandaIsi({
           }}
         >
           {MEMBER_COPY["beranda.aktivitas.lihatArus"]}
-          <IkonChevronKanan size={13} style={{ stroke: "currentColor" }} strokeWidth={2.4} />
+          <IkonChevronKanan
+            size={13}
+            style={{ stroke: "currentColor" }}
+            strokeWidth={2.4}
+          />
         </button>
       </Card>
     </>
@@ -422,14 +567,32 @@ function PengawasPanel({
         ...style,
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 10, paddingBottom: 10 }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          paddingBottom: 10,
+        }}
+      >
         <IkonPerisai size={21} style={{ stroke: "var(--accent)" }} />
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 1 }}>
-          <span style={{ fontSize: 16, fontWeight: 650 }}>{MEMBER_COPY["beranda.pengawas.judul"]}</span>
-          <span style={{ fontSize: 12.5, color: "var(--muted)" }}>{MEMBER_COPY["beranda.pengawas.sub"]}</span>
+        <div
+          style={{ flex: 1, display: "flex", flexDirection: "column", gap: 1 }}
+        >
+          <span style={{ fontSize: 16, fontWeight: 650 }}>
+            {MEMBER_COPY["beranda.pengawas.judul"]}
+          </span>
+          <span style={{ fontSize: 12.5, color: "var(--muted)" }}>
+            {MEMBER_COPY["beranda.pengawas.sub"]}
+          </span>
         </div>
-        <span className="tnum" style={{ fontSize: 12.5, fontWeight: 600, color: "var(--muted)" }}>
-          {agRun ? MEMBER_COPY["beranda.pengawas.busy"] : MEMBER_COPY["beranda.pengawas.selesai"]}
+        <span
+          className="tnum"
+          style={{ fontSize: 12.5, fontWeight: 600, color: "var(--muted)" }}
+        >
+          {agRun
+            ? MEMBER_COPY["beranda.pengawas.busy"]
+            : MEMBER_COPY["beranda.pengawas.selesai"]}
         </span>
       </div>
       {rows.map((g) => (
@@ -444,7 +607,11 @@ function PengawasPanel({
           }}
         >
           {g.isDone ? (
-            <IkonLingkaranCentang size={21} strokeWidth={1.9} style={{ stroke: "var(--hijau)" }} />
+            <IkonLingkaranCentang
+              size={21}
+              strokeWidth={1.9}
+              style={{ stroke: "var(--hijau)" }}
+            />
           ) : g.isActive ? (
             <span
               aria-label={MEMBER_COPY["beranda.pengawas.ariaPeriksa"]}
@@ -464,16 +631,42 @@ function PengawasPanel({
             <svg
               viewBox="0 0 24 24"
               aria-hidden="true"
-              style={{ width: 21, height: 21, flex: "none", fill: "none", stroke: "var(--border)", strokeWidth: 1.9 }}
+              style={{
+                width: 21,
+                height: 21,
+                flex: "none",
+                fill: "none",
+                stroke: "var(--border)",
+                strokeWidth: 1.9,
+              }}
             >
               <circle cx="12" cy="12" r="8.5" />
             </svg>
           )}
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 1, minWidth: 0 }}>
-            <span style={{ fontSize: 14, fontWeight: 600, color: g.isPending ? "var(--muted)" : "var(--ink)" }}>
+          <div
+            style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              gap: 1,
+              minWidth: 0,
+            }}
+          >
+            <span
+              style={{
+                fontSize: 14,
+                fontWeight: 600,
+                color: g.isPending ? "var(--muted)" : "var(--ink)",
+              }}
+            >
               {g.nama}
             </span>
-            <span className="tnum" style={{ fontSize: 12.5, color: "var(--muted)" }}>{g.metric}</span>
+            <span
+              className="tnum"
+              style={{ fontSize: 12.5, color: "var(--muted)" }}
+            >
+              {g.metric}
+            </span>
           </div>
           {g.showChip ? (
             <button
@@ -493,7 +686,12 @@ function PengawasPanel({
               {g.chip}
             </button>
           ) : g.showTime ? (
-            <span className="tnum" style={{ fontSize: 12.5, color: "var(--muted)", flex: "none" }}>{g.time}</span>
+            <span
+              className="tnum"
+              style={{ fontSize: 12.5, color: "var(--muted)", flex: "none" }}
+            >
+              {g.time}
+            </span>
           ) : null}
         </div>
       ))}
@@ -523,7 +721,9 @@ function PengawasPanel({
           <IkonSegar size={15} style={{ stroke: "currentColor" }} />
           {MEMBER_COPY["beranda.pengawas.caraKerja"]}
         </button>
-        <span style={{ fontSize: 12, color: "var(--muted)" }}>{MEMBER_COPY["beranda.pengawas.berikutnya"]}</span>
+        <span style={{ fontSize: 12, color: "var(--muted)" }}>
+          {MEMBER_COPY["beranda.pengawas.berikutnya"]}
+        </span>
       </div>
     </section>
   );

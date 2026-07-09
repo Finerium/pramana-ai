@@ -57,8 +57,18 @@ export type RecentData = {
 };
 
 const BULAN = [
-  "Jan", "Feb", "Mar", "Apr", "Mei", "Jun",
-  "Jul", "Agu", "Sep", "Okt", "Nov", "Des",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "Mei",
+  "Jun",
+  "Jul",
+  "Agu",
+  "Sep",
+  "Okt",
+  "Nov",
+  "Des",
 ];
 
 /** "Rp 15.000.000" (id-ID grouping, spasi setelah Rp). Deterministik, tanpa ICU. */
@@ -235,18 +245,84 @@ export const SEED_ANGGOTA: AnggotaOption[] = [
 ];
 
 export const SEED_TRANSAKSI: TransaksiEntry[] = [
-  { id: "s1", tanggal: "2026-06-20", jenis: "pencairan_pinjaman", jumlah: 6_000_000, pihak: "Rudi Hartono", sync: "tersinkron" },
-  { id: "s2", tanggal: "2026-06-18", jenis: "penjualan", jumlah: 1_250_000, pihak: "Gerai Sembako", sync: "tersinkron" },
-  { id: "s3", tanggal: "2026-06-14", jenis: "pembelian", jumlah: 15_000_000, pihak: "Toko Berkah", sync: "tersinkron" },
-  { id: "s4", tanggal: "2026-06-12", jenis: "angsuran", jumlah: 200_000, pihak: "Sari Rahayu", sync: "tersinkron" },
-  { id: "s5", tanggal: "2026-06-10", jenis: "gaji", jumlah: 2_500_000, pihak: "Budi Santoso", sync: "tersinkron" },
-  { id: "s6", tanggal: "2026-06-08", jenis: "setoran_simpanan", jumlah: 50_000, pihak: "Dewi Lestari", sync: "tersinkron" },
+  {
+    id: "s1",
+    tanggal: "2026-06-20",
+    jenis: "pencairan_pinjaman",
+    jumlah: 6_000_000,
+    pihak: "Rudi Hartono",
+    sync: "tersinkron",
+  },
+  {
+    id: "s2",
+    tanggal: "2026-06-18",
+    jenis: "penjualan",
+    jumlah: 1_250_000,
+    pihak: "Gerai Sembako",
+    sync: "tersinkron",
+  },
+  {
+    id: "s3",
+    tanggal: "2026-06-14",
+    jenis: "pembelian",
+    jumlah: 15_000_000,
+    pihak: "Toko Berkah",
+    sync: "tersinkron",
+  },
+  {
+    id: "s4",
+    tanggal: "2026-06-12",
+    jenis: "angsuran",
+    jumlah: 200_000,
+    pihak: "Sari Rahayu",
+    sync: "tersinkron",
+  },
+  {
+    id: "s5",
+    tanggal: "2026-06-10",
+    jenis: "gaji",
+    jumlah: 2_500_000,
+    pihak: "Budi Santoso",
+    sync: "tersinkron",
+  },
+  {
+    id: "s6",
+    tanggal: "2026-06-08",
+    jenis: "setoran_simpanan",
+    jumlah: 50_000,
+    pihak: "Dewi Lestari",
+    sync: "tersinkron",
+  },
 ];
 
 export const SEED_PINJAMAN: PinjamanEntry[] = [
-  { id: "p1", anggota: "Rudi Hartono", pokok: 12_000_000, cicilan: 1_000_000, jatuhTempo: "2026-07-20", dokumenLengkap: false, sync: "tersinkron" },
-  { id: "p2", anggota: "Sari Rahayu", pokok: 2_000_000, cicilan: 200_000, jatuhTempo: "2026-07-05", dokumenLengkap: true, sync: "tersinkron" },
-  { id: "p3", anggota: "Andi Pratama", pokok: 6_000_000, cicilan: 500_000, jatuhTempo: "2026-07-20", dokumenLengkap: true, sync: "tersinkron" },
+  {
+    id: "p1",
+    anggota: "Rudi Hartono",
+    pokok: 12_000_000,
+    cicilan: 1_000_000,
+    jatuhTempo: "2026-07-20",
+    dokumenLengkap: false,
+    sync: "tersinkron",
+  },
+  {
+    id: "p2",
+    anggota: "Sari Rahayu",
+    pokok: 2_000_000,
+    cicilan: 200_000,
+    jatuhTempo: "2026-07-05",
+    dokumenLengkap: true,
+    sync: "tersinkron",
+  },
+  {
+    id: "p3",
+    anggota: "Andi Pratama",
+    pokok: 6_000_000,
+    cicilan: 500_000,
+    jatuhTempo: "2026-07-20",
+    dokumenLengkap: true,
+    sync: "tersinkron",
+  },
 ];
 
 export const SEED_RECENT: RecentData = {

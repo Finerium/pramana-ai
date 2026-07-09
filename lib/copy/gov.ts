@@ -111,7 +111,8 @@ export const GOV_COPY = {
   "login.hint.email": "juri.pemerintah@pramana.id",
   "login.hint.sandi": "PramanaJuri2026",
   "login.hint.aksi": "Isi otomatis",
-  "login.footer.baris1": "Pramana AI · Purwarupa Digital Cooperatives Expo 2026",
+  "login.footer.baris1":
+    "Pramana AI · Purwarupa Digital Cooperatives Expo 2026",
   "login.footer.baris2": "Akses hanya untuk analis pemerintah yang terdaftar.",
 } as const;
 

@@ -13,7 +13,10 @@ afterAll(() => created.client.close());
 
 describe("buildSnapshot 6.9", () => {
   it("saldoKasPerBulan direkonstruksi walk-backward", async () => {
-    const { snapshot, periode } = await buildSnapshot(created.db, "kop-sukamaju");
+    const { snapshot, periode } = await buildSnapshot(
+      created.db,
+      "kop-sukamaju",
+    );
     expect(periode).toBe("2026-06");
     const saldos = snapshot.koperasi.saldoKasPerBulan;
     expect(saldos.map((s) => s.periode)).toEqual([
@@ -33,9 +36,9 @@ describe("buildSnapshot 6.9", () => {
     const { snapshot } = await buildSnapshot(created.db, "kop-sukamaju");
     expect(snapshot.transaksi.length).toBeLessThanOrEqual(500);
     expect(snapshot.transaksi.length).toBeGreaterThan(0);
-    expect(snapshot.transaksi.every((t) => t.tanggal.startsWith("2026-06"))).toBe(
-      true,
-    );
+    expect(
+      snapshot.transaksi.every((t) => t.tanggal.startsWith("2026-06")),
+    ).toBe(true);
   });
 
   it("pinjaman aktif, pengurus, plafon", async () => {
@@ -43,8 +46,8 @@ describe("buildSnapshot 6.9", () => {
     expect(snapshot.pinjaman.every((p) => p.sisa > 0)).toBe(true);
     expect(snapshot.plafonPerAnggota).toBe(10_000_000);
     expect(snapshot.pengurus.length).toBe(5);
-    expect(snapshot.pinjaman.find((p) => p.id === "pj-an5")?.disetujuiOleh).toBe(
-      "Budi Santoso",
-    );
+    expect(
+      snapshot.pinjaman.find((p) => p.id === "pj-an5")?.disetujuiOleh,
+    ).toBe("Budi Santoso");
   });
 });

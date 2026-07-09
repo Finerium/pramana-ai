@@ -16,7 +16,8 @@ export async function POST(req: NextRequest) {
   return runRoute(async () => {
     const s = await requireRole(req, "anggota");
     const anggotaId = s.anggotaId;
-    if (!anggotaId) throw new ApiError("INTERNAL", "Sesi anggota tidak lengkap.");
+    if (!anggotaId)
+      throw new ApiError("INTERNAL", "Sesi anggota tidak lengkap.");
     const parsed = Body.safeParse(await req.json().catch(() => null));
     if (!parsed.success)
       throw new ApiError("VALIDATION", "Pilihan suara tidak sah.");

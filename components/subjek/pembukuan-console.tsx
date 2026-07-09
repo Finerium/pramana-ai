@@ -1,5 +1,10 @@
 "use client";
-import { useEffect, useState, type CSSProperties, type ChangeEvent } from "react";
+import {
+  useEffect,
+  useState,
+  type CSSProperties,
+  type ChangeEvent,
+} from "react";
 import { useRouter } from "next/navigation";
 import { COPY } from "@/lib/copy";
 import { SUBJEK_COPY, JENIS_LABEL } from "@/lib/copy/subjek";
@@ -83,8 +88,7 @@ const mkRpWrap = (err: boolean): CSSProperties => ({
   display: "flex",
   alignItems: "stretch",
   border:
-    "1px solid " +
-    (err ? "var(--color-danger)" : "var(--color-border-strong)"),
+    "1px solid " + (err ? "var(--color-danger)" : "var(--color-border-strong)"),
   borderRadius: "10px",
   overflow: "hidden",
   background: err ? "var(--color-danger-soft)" : "var(--color-surface-sunken)",
@@ -257,7 +261,11 @@ const S: Record<string, CSSProperties> = {
     fontWeight: 600,
     fontFamily: SANS,
   },
-  container: { maxWidth: "1320px", margin: "0 auto", padding: "28px 32px 56px" },
+  container: {
+    maxWidth: "1320px",
+    margin: "0 auto",
+    padding: "28px 32px 56px",
+  },
   grid: {
     display: "grid",
     gridTemplateColumns: "minmax(0,1fr) 356px",
@@ -941,7 +949,8 @@ export function PembukuanConsole() {
     {
       idx: "3",
       label: COPY["subjek.preset.plafon"],
-      onClick: () => fillPin(presetPlafon(anggota), SUBJEK_COPY.preset.notePlafon),
+      onClick: () =>
+        fillPin(presetPlafon(anggota), SUBJEK_COPY.preset.notePlafon),
     },
     {
       idx: "4",
@@ -1568,9 +1577,7 @@ export function PembukuanConsole() {
                           </div>
                         </div>
                         <div style={S.entryRight}>
-                          <span
-                            style={mkChip(x.dokumenLengkap)}
-                          >
+                          <span style={mkChip(x.dokumenLengkap)}>
                             {x.dokumenLengkap
                               ? c.daftar.dokLengkap
                               : c.daftar.dokBelum}

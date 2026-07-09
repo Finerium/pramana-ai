@@ -28,7 +28,8 @@ export function verdictTokens(warna: VerdictColor): {
   on: string;
   cta: string;
 } {
-  if (warna === "kuning") return { bg: "--kuning", on: "--kuning-on", cta: "--ink" };
+  if (warna === "kuning")
+    return { bg: "--kuning", on: "--kuning-on", cta: "--ink" };
   return { bg: `--${warna}`, on: `--${warna}-on`, cta: `--${warna}` };
 }
 
@@ -75,7 +76,11 @@ export function voteDots(setuju: number, tidak: number, total = 30): DotKind[] {
   return dots;
 }
 
-export type SuaraItem = { temuanId: string; judul: string; jumlahAnggota: number };
+export type SuaraItem = {
+  temuanId: string;
+  judul: string;
+  jumlahAnggota: number;
+};
 
 /**
  * Agregat pertanyaan RAT. jumlahAnggota dari GET /api/member/voice adalah COUNT
@@ -91,7 +96,12 @@ export type SuaraItem = { temuanId: string; judul: string; jumlahAnggota: number
 export function suaraAggregate(
   items: ReadonlyArray<SuaraItem>,
   addedIds: ReadonlySet<string>,
-): Array<{ temuanId: string; judul: string; jumlahAnggota: number; milikAnda: boolean }> {
+): Array<{
+  temuanId: string;
+  judul: string;
+  jumlahAnggota: number;
+  milikAnda: boolean;
+}> {
   return items
     .map((q) => ({
       temuanId: q.temuanId,
@@ -123,7 +133,11 @@ export function keputusanTally(
 }
 
 /** Rincian simpanan pokok/wajib/sukarela: fallback seed 6.7 (kontrak minimal). */
-export const SIMPANAN_FALLBACK = { pokok: 100000, wajib: 350000, sukarela: 150000 };
+export const SIMPANAN_FALLBACK = {
+  pokok: 100000,
+  wajib: 350000,
+  sukarela: 150000,
+};
 /** Pinjaman awal untuk menghitung progres angsuran: fallback seed 6.7. */
 export const PINJAMAN_AWAL_FALLBACK = 2000000;
 
@@ -163,7 +177,10 @@ export function deriveVerdict(resp: VerdictResp) {
  * Tren kas tiga bulan (fallback seed 6.7 + F-01: Mei Rp 47.500.000). Tidak ada
  * di FlowResp; konsisten temuan AN-4 (April 58 jt, Juni 36,5 jt).
  */
-export const KAS_TREND_FALLBACK: ReadonlyArray<{ label: string; rupiah: number }> = [
+export const KAS_TREND_FALLBACK: ReadonlyArray<{
+  label: string;
+  rupiah: number;
+}> = [
   { label: "April", rupiah: 58000000 },
   { label: "Mei", rupiah: 47500000 },
   { label: "Juni", rupiah: 36500000 },
@@ -195,7 +212,9 @@ export function kasTurunRupiah(): number {
 }
 
 /** Bar kategori arus: lebar diskalakan ke kategori terbesar. */
-export function flowBars(items: ReadonlyArray<{ kategori: string; jumlah: number }>) {
+export function flowBars(
+  items: ReadonlyArray<{ kategori: string; jumlah: number }>,
+) {
   const max = items.length ? Math.max(...items.map((x) => x.jumlah)) : 0;
   return items.map((x) => ({
     label: x.kategori,

@@ -1,0 +1,140 @@
+
+> pramana-ai@1.0.0 test /Users/ghaisan/Documents/Pramana-AI
+> vitest run --coverage
+
+
+ RUN  v4.1.10 /Users/ghaisan/Documents/Pramana-AI
+      Coverage enabled with v8
+
+{"level":"error","requestId":"df4b4df3-6ae8-4092-a69d-25f003e856ee","code":"UNAUTHORIZED","msg":"Anda perlu masuk untuk melanjutkan."}
+{"level":"error","requestId":"c6f07ded-dd0a-41e9-b263-d489df562538","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"196902d0-cf2e-4679-bc7e-77992279cfe0","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"cbfad609-0336-422d-8084-28754df674d2","code":"UNAUTHORIZED","msg":"Anda perlu masuk untuk melanjutkan."}
+{"level":"error","requestId":"6d4c7f7f-8d08-41ef-8552-c3def42111ef","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"69171a29-b890-421b-815e-e93fd6db465b","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"67538dbe-fbce-42cc-82ae-aff8a7bb1d33","code":"UNAUTHORIZED","msg":"Anda perlu masuk untuk melanjutkan."}
+{"level":"error","requestId":"23c066b2-609a-4293-a6cf-1c6b9fb65c69","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"d3376dea-8d57-445b-bbbd-86a6c36a41f9","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"8594f92c-c22e-4643-82be-eaf0e19f5d20","code":"UNAUTHORIZED","msg":"Anda perlu masuk untuk melanjutkan."}
+{"level":"error","requestId":"2c33a363-0b73-49a5-8759-404ea741e2d1","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"19e4e00d-c70c-4659-be7c-9ffd206d34de","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"6bf3bede-394a-4a88-9f2a-a245331f4c12","code":"UNAUTHORIZED","msg":"Anda perlu masuk untuk melanjutkan."}
+{"level":"error","requestId":"3e3c9177-845d-497e-839f-bda083515619","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"ef85d77f-c81f-46b4-8454-9ef25f3f690f","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"4e955291-bc82-46c4-9db6-23257780bab5","code":"UNAUTHORIZED","msg":"Anda perlu masuk untuk melanjutkan."}
+{"level":"error","requestId":"be154167-0560-43db-8a88-fa2320968e93","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"21ccadce-73e9-4d7c-8551-a5a52fbb5798","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"7750586b-6cea-4bef-b18f-dd5daac7578b","code":"UNAUTHORIZED","msg":"Anda perlu masuk untuk melanjutkan."}
+{"level":"error","requestId":"f9fa1ab2-9e84-45a6-930b-e8f25c24b426","code":"VALIDATION","msg":"Pilihan suara tidak sah."}
+{"level":"error","requestId":"5464eb2e-6ff7-421d-9b51-ab009ca4a2d6","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"2aaab264-bf17-4e93-96c2-147fee025d51","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"8adc6e1f-7b41-420c-8056-dcf5b69c6297","code":"UNAUTHORIZED","msg":"Anda perlu masuk untuk melanjutkan."}
+{"level":"error","requestId":"206c2bbe-3e87-4974-9b82-9d59b848b739","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"5381bf90-15b4-42dd-96bf-cc6816bf64c9","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"d534a52e-00f7-4f3e-8785-8217cdd551e6","code":"VALIDATION","msg":"Data transaksi tidak lengkap atau tidak sah."}
+{"level":"error","requestId":"f3eae761-9a14-4463-8c86-6606b9e288a5","code":"UNAUTHORIZED","msg":"Anda perlu masuk untuk melanjutkan."}
+{"level":"error","requestId":"0c39ddd4-74e4-4985-b501-e2051dfd4734","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"0f6c3b0b-171c-418e-9998-6ad453010a49","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"683c2652-fb17-4afb-8459-9b4b13462edf","code":"VALIDATION","msg":"Data pinjaman tidak lengkap atau tidak sah."}
+{"level":"error","requestId":"3be6c5d7-2115-43fd-a043-e1f0033cf68f","code":"UNAUTHORIZED","msg":"Anda perlu masuk untuk melanjutkan."}
+{"level":"error","requestId":"8e92dc52-8c7c-4c2f-9ab3-a774f90a8741","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"e83e96b0-7c0d-4e6e-ac9f-dee790cde7ce","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"39e0420b-7192-4026-83c1-e308b96859bd","code":"VALIDATION","msg":"Status RAT tidak sah."}
+{"level":"error","requestId":"1ac51198-a15c-418d-92c3-d8837f6eb2cd","code":"UNAUTHORIZED","msg":"Anda perlu masuk untuk melanjutkan."}
+{"level":"error","requestId":"1a116a18-a6a9-4977-a1d6-123bd7fa5b5e","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"37df69a1-7327-4ff0-8599-39fb1b4d3ab6","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"8a0f99e0-2b77-4b76-a7bb-01468ad803d7","code":"UNAUTHORIZED","msg":"Anda perlu masuk untuk melanjutkan."}
+{"level":"error","requestId":"5cfe4439-ebc3-427a-80a8-89bb5984ea68","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"701b0a03-f501-4461-9677-292fff5b6ad3","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"042c5760-c7b1-461e-8780-e18d66622edb","code":"UNAUTHORIZED","msg":"Anda perlu masuk untuk melanjutkan."}
+{"level":"error","requestId":"4c1614e9-fd86-462b-88dd-5a591d940350","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"bd048a96-444f-4393-9167-07e4e7c9b477","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"fc49a3ee-d69d-4270-8a60-889b46f473b4","code":"UNAUTHORIZED","msg":"Anda perlu masuk untuk melanjutkan."}
+{"level":"error","requestId":"49efb966-eb0d-4c9e-84d8-7f2a4a53811f","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"352ca4b9-5adf-44bc-9255-6d50b0d8e6a3","code":"VALIDATION","msg":"koperasiId wajib diisi."}
+{"level":"error","requestId":"15309b49-10b7-4096-a623-c036b4d30abf","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"77547a25-ad1d-449e-97c4-f075a68680ad","code":"UNAUTHORIZED","msg":"Anda perlu masuk untuk melanjutkan."}
+{"level":"error","requestId":"1c383ac9-53e2-4506-8b42-a638f888ce8c","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"f3fbd860-a6bc-4219-a89e-5f70de87e9b1","code":"FORBIDDEN","msg":"Anda tidak memiliki akses ke sumber ini."}
+{"level":"error","requestId":"cc152e4d-41bf-4329-868d-d41dc7b4cece","code":"UNAUTHORIZED","msg":"Email atau kata sandi belum tepat. Silakan coba lagi."}
+{"level":"error","requestId":"e67d56fc-ba87-4002-84a7-cd25b45c02f5","code":"UNAUTHORIZED","msg":"Email atau kata sandi belum tepat. Silakan coba lagi."}
+{"level":"error","requestId":"0511e217-8ff9-4f49-91d2-816d25f460a5","code":"UNAUTHORIZED","msg":"Email atau kata sandi belum tepat. Silakan coba lagi."}
+{"level":"error","requestId":"9da7d8be-9d74-4c9e-b89c-9e3acd22d74d","code":"UNAUTHORIZED","msg":"Email atau kata sandi belum tepat. Silakan coba lagi."}
+{"level":"error","requestId":"25acf490-4049-4d76-87f2-b95bacf4e9cd","code":"UNAUTHORIZED","msg":"Email atau kata sandi belum tepat. Silakan coba lagi."}
+{"level":"error","requestId":"211e4938-3c5c-40f3-9ce7-9e5bf5f4d800","code":"UNAUTHORIZED","msg":"Email atau kata sandi belum tepat. Silakan coba lagi."}
+{"level":"error","requestId":"74d9b473-3e75-4a52-8dd0-f5fc59e0f8e6","code":"UNAUTHORIZED","msg":"Terlalu banyak percobaan masuk. Silakan coba lagi dalam satu menit."}
+{"level":"error","requestId":"42b09db6-aa2c-4a5d-98da-c538422dd6ee","code":"VALIDATION","msg":"Nomor NIK harus 16 angka. Silakan periksa kembali KTP Anda."}
+{"level":"error","requestId":"da4381df-c0a1-443d-903a-dd706975c65d","code":"VALIDATION","msg":"Pembelian wajib menyertakan nama dan alamat penjual."}
+{"level":"error","requestId":"a9b28703-df14-4ed6-9b2a-6e77069705d9","code":"NOT_FOUND","msg":"hilang"}
+{"level":"error","requestId":"0bdbe52f-56de-46ef-aca7-63f2cfc0795d","code":"INTERNAL","msg":"unhandled error","err":"Error"}
+
+ Test Files  30 passed (30)
+      Tests  315 passed (315)
+   Start at  23:51:54
+   Duration  15.40s (transform 265ms, setup 0ms, import 2.41s, tests 9.12s, environment 2ms)
+
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   89.26 |    74.85 |   80.72 |    90.6 |                   
+ ...it/[id]/status |   94.11 |    83.33 |     100 |   93.75 |                   
+  route.ts         |   94.11 |    83.33 |     100 |   93.75 | 44                
+ ...api/auth/login |   86.36 |       80 |   66.66 |   90.47 |                   
+  route.ts         |   86.36 |       80 |   66.66 |   90.47 | 40-41             
+ ...dings/[id]/rat |    92.3 |       50 |     100 |     100 |                   
+  route.ts         |    92.3 |       50 |     100 |     100 | 16-43             
+ .../gov/audit/run |   41.17 |       25 |      75 |   42.85 |                   
+  route.ts         |   41.17 |       25 |      75 |   42.85 | 19-37             
+ .../koperasi/[id] |   95.23 |     62.5 |     100 |     100 |                   
+  route.ts         |   95.23 |     62.5 |     100 |     100 | 52-60,94          
+ ...i/gov/overview |     100 |    81.25 |     100 |     100 |                   
+  route.ts         |     100 |    81.25 |     100 |     100 | 36-55             
+ app/api/health    |    87.5 |       25 |     100 |    87.5 |                   
+  route.ts         |    87.5 |       25 |     100 |    87.5 | 20                
+ ...ember/findings |      84 |     62.5 |   71.42 |   86.36 |                   
+  route.ts         |      84 |     62.5 |   71.42 |   86.36 | 24,54-55          
+ ...pi/member/flow |   97.67 |    82.14 |     100 |    97.5 |                   
+  route.ts         |   97.67 |    82.14 |     100 |    97.5 | 25                
+ ...member/summary |     100 |       50 |     100 |     100 |                   
+  route.ts         |     100 |       50 |     100 |     100 | 13-40             
+ ...member/verdict |   88.23 |       50 |     100 |   93.75 |                   
+  route.ts         |   88.23 |       50 |     100 |   93.75 | 18                
+ ...i/member/voice |   71.87 |       40 |     100 |   73.33 |                   
+  route.ts         |   71.87 |       40 |     100 |   73.33 | 18,56-67          
+ ...api/onboarding |   81.81 |       50 |      60 |      90 |                   
+  route.ts         |   81.81 |       50 |      60 |      90 | 29-30,49          
+ ...ubjek/pinjaman |   93.33 |       75 |     100 |   92.85 |                   
+  route.ts         |   93.33 |       75 |     100 |   92.85 | 23                
+ ...api/subjek/rat |   92.85 |    66.66 |     100 |    92.3 |                   
+  route.ts         |   92.85 |    66.66 |     100 |    92.3 | 19                
+ .../subjek/recent |   85.71 |       50 |     100 |    92.3 |                   
+  route.ts         |   85.71 |       50 |     100 |    92.3 | 13                
+ ...bjek/transaksi |   95.83 |     91.3 |     100 |   95.65 |                   
+  route.ts         |   95.83 |     91.3 |     100 |   95.65 | 38                
+ app/api/vote      |   95.83 |       75 |     100 |   95.45 |                   
+  route.ts         |   95.83 |       75 |     100 |   95.45 | 33                
+ db                |   65.45 |    81.81 |   32.14 |   65.45 |                   
+  client.ts        |     100 |       80 |     100 |     100 | 18-24             
+  schema.ts        |   51.28 |      100 |   20.83 |   51.28 | ...14,228-231,243 
+ lib               |    90.9 |       86 |    87.8 |   91.81 |                   
+  api.ts           |   81.81 |    83.33 |   66.66 |   81.81 | 66-69,91-92       
+  auth.ts          |   89.47 |     82.6 |     100 |   91.42 | 43,67,71          
+  env.ts           |   82.35 |    78.57 |     100 |   81.25 | 50-55             
+  facts.ts         |       0 |      100 |     100 |       0 | 18                
+  llm.ts           |     100 |    94.73 |     100 |     100 | 130               
+  logger.ts        |      70 |       50 |      50 |   83.33 | 18                
+  rateLimit.ts     |   93.75 |     62.5 |     100 |   92.85 | 40                
+  utils.ts         |       0 |      100 |       0 |       0 | 5                 
+ lib/audit         |   95.45 |    73.21 |   92.59 |   96.37 |                   
+  buildSnapshot.ts |   96.42 |       50 |     100 |     100 | 42-134            
+  index.ts         |     100 |       90 |     100 |     100 | 172-173,296       
+  persist.ts       |   76.92 |    42.85 |      75 |   78.26 | 119,122-126       
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 89.26% ( 732/820 )
+Branches     : 74.85% ( 253/338 )
+Functions    : 80.72% ( 134/166 )
+Lines        : 90.6% ( 685/756 )
+================================================================================

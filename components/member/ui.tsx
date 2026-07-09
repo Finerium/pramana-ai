@@ -6,8 +6,10 @@
 import type { CSSProperties, ReactNode } from "react";
 import { IkonSegitigaSeru, IkonKotakSilang, IkonChevronKiri } from "./icons";
 
-export const SHADOW_SM = "0 1px 2px rgba(0,0,0,0.04),0 6px 18px rgba(0,0,0,0.05)";
-export const SHADOW_MD = "0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05)";
+export const SHADOW_SM =
+  "0 1px 2px rgba(0,0,0,0.04),0 6px 18px rgba(0,0,0,0.05)";
+export const SHADOW_MD =
+  "0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05)";
 export const EASE = "cubic-bezier(0.2,0.7,0.2,1)";
 
 /** Animasi rise dengan delay (detik). */
@@ -44,7 +46,13 @@ export function Card({
   );
 }
 
-export function SectionLabel({ children, style }: { children: ReactNode; style?: CSSProperties }) {
+export function SectionLabel({
+  children,
+  style,
+}: {
+  children: ReactNode;
+  style?: CSSProperties;
+}) {
   return (
     <span
       style={{
@@ -61,7 +69,13 @@ export function SectionLabel({ children, style }: { children: ReactNode; style?:
 }
 
 /** Banner status/galat (tint + ikon bentuk + kata). */
-export function Banner({ tone, children }: { tone: "peringatan" | "galat"; children: ReactNode }) {
+export function Banner({
+  tone,
+  children,
+}: {
+  tone: "peringatan" | "galat";
+  children: ReactNode;
+}) {
   const galat = tone === "galat";
   return (
     <div
@@ -89,7 +103,10 @@ export function Banner({ tone, children }: { tone: "peringatan" | "galat"; child
 /** Blok skeleton pulse (tinggi per baris). */
 export function Skeleton({ heights }: { heights: number[] }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 14 }} aria-label="Memuat">
+    <div
+      style={{ display: "flex", flexDirection: "column", gap: 14 }}
+      aria-label="Memuat"
+    >
       {heights.map((h, i) => (
         <div
           key={i}
@@ -106,7 +123,13 @@ export function Skeleton({ heights }: { heights: number[] }) {
 }
 
 /** Tautan kembali (chevron kiri + label). */
-export function BackLink({ label, onClick }: { label: string; onClick: () => void }) {
+export function BackLink({
+  label,
+  onClick,
+}: {
+  label: string;
+  onClick: () => void;
+}) {
   return (
     <button
       type="button"
@@ -150,9 +173,13 @@ export function EmptyCard({
       })}
     >
       {icon}
-      <span style={{ fontSize: 16.5, fontWeight: 600, lineHeight: 1.45 }}>{judul}</span>
+      <span style={{ fontSize: 16.5, fontWeight: 600, lineHeight: 1.45 }}>
+        {judul}
+      </span>
       {sub ? (
-        <span style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.5 }}>{sub}</span>
+        <span style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.5 }}>
+          {sub}
+        </span>
       ) : null}
     </div>
   );

@@ -10,7 +10,8 @@ export async function GET(req: NextRequest) {
   return runRoute(async () => {
     const s = await requireRole(req, "anggota");
     const anggotaId = s.anggotaId;
-    if (!anggotaId) throw new ApiError("INTERNAL", "Sesi anggota tidak lengkap.");
+    if (!anggotaId)
+      throw new ApiError("INTERNAL", "Sesi anggota tidak lengkap.");
     const { db } = getDb();
 
     const simp = await db

@@ -5,8 +5,17 @@ import bcrypt from "bcryptjs";
 import { getDb } from "../../../../db/client";
 import { users } from "../../../../db/schema";
 import { ApiError, ok, runRoute } from "../../../../lib/api";
-import { REDIRECT, sealSession, setSessionCookie, type Role } from "../../../../lib/auth";
-import { clientIp, recordLoginFailure, tooManyLogins } from "../../../../lib/rateLimit";
+import {
+  REDIRECT,
+  sealSession,
+  setSessionCookie,
+  type Role,
+} from "../../../../lib/auth";
+import {
+  clientIp,
+  recordLoginFailure,
+  tooManyLogins,
+} from "../../../../lib/rateLimit";
 import { COPY } from "../../../../lib/copy";
 
 const Body = z.object({

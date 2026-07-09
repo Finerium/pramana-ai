@@ -1,7 +1,13 @@
 import type { Bentuk } from "@/app/(gov)/_logic/verdict";
 
 /** Ikon bentuk verdict (clip-path). Dekoratif; label teks menyertai di UI. */
-export function VerdictShape({ bentuk, size = 10 }: { bentuk: Bentuk; size?: number }) {
+export function VerdictShape({
+  bentuk,
+  size = 10,
+}: {
+  bentuk: Bentuk;
+  size?: number;
+}) {
   return (
     <span
       aria-hidden="true"

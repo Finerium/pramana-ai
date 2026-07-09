@@ -11,9 +11,15 @@ import { useReducedMotion } from "./data";
 
 const TARGETS = AGENT_PANEL.map((a) => a.target);
 
-export type AgentRunState = { agRun: boolean; agStep: number; agCounts: number[] };
+export type AgentRunState = {
+  agRun: boolean;
+  agStep: number;
+  agCounts: number[];
+};
 
-export function useAgentRun(autoStart = true): AgentRunState & { run: () => void } {
+export function useAgentRun(
+  autoStart = true,
+): AgentRunState & { run: () => void } {
   const reduced = useReducedMotion();
   const [st, setSt] = useState<AgentRunState>({
     agRun: false,

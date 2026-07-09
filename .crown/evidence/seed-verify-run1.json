@@ -1,0 +1,65 @@
+{
+  "generatedAt": "2026-07-09T16:52:32.149Z",
+  "seedMs": 277,
+  "verifyMs": 5,
+  "withinBudget": true,
+  "totalRows": 636,
+  "tables": {
+    "users": {
+      "count": 4,
+      "checksum": "43f0f00eee7e82717b1d285cf10b2de32b65bc4a1844c0fdaa970312c6d3b76d"
+    },
+    "koperasi": {
+      "count": 12,
+      "checksum": "2c9f3ebe0f2c51c08ee0b878234f0485f492f18c0e5c70283a1006ce085eb7c9"
+    },
+    "unit_usaha": {
+      "count": 4,
+      "checksum": "fbc636ce0e1307f728916ed95673561fc88cd45cb01894c8ef5807a55eab497d"
+    },
+    "pengurus": {
+      "count": 5,
+      "checksum": "6489be65dda34006fd899905c313d3f4dcc2c37a23d10956c5d5f87a71933683"
+    },
+    "anggota": {
+      "count": 30,
+      "checksum": "606605f3d8ea3f3e9a1400403306b863c6b5169676c167a05ddbcb4e212b2e84"
+    },
+    "simpanan": {
+      "count": 90,
+      "checksum": "b4246f6a28eed14c1aa2e9901c1a12d6358b5c515aac8fc347148f25f250674c"
+    },
+    "pinjaman": {
+      "count": 12,
+      "checksum": "f6acce013e68d64ce48d3323dca70eae3fb365344ab69cb049abd9d70a89f44e"
+    },
+    "transaksi": {
+      "count": 406,
+      "checksum": "df3388ac67f8f09e91d8dc9d983592634ef37d55d681e097ecc3d641816a4642"
+    },
+    "audit_run": {
+      "count": 17,
+      "checksum": "484d5dd384a98caa74195d982bc48e5aeecb767b4bc71a01f39151397c560c46"
+    },
+    "temuan": {
+      "count": 17,
+      "checksum": "5b8ac5199085b0e55006582d5e420c7bde2d5e4bc759fcbfef79a7f73e984e53"
+    },
+    "pertanyaan_rat": {
+      "count": 24,
+      "checksum": "b60db8822462e7d337a1cb34ff19482975e3a143b90a7b962688c3dd80a73572"
+    },
+    "keputusan": {
+      "count": 1,
+      "checksum": "fbf2a80a08c0a9add69996efd43a90f33a03a3e1ef372e85fef80c72407e2249"
+    },
+    "vote": {
+      "count": 12,
+      "checksum": "afaccbe5e638b02d31e9db8a85f3ee282283e38e70deaf66b7fbc7cbc0d461ab"
+    },
+    "notifikasi": {
+      "count": 2,
+      "checksum": "1f757a6a81ec0c4465779f1bce1960eb71e1d3b6a475577b6dc976d8d33840b8"
+    }
+  }
+}

@@ -16,7 +16,8 @@ export const SUBJEK_COPY = {
   },
   trx: {
     judul: "Catat Transaksi",
-    deskripsi: "Setiap entri langsung menjadi sumber data yang diperiksa Pramana.",
+    deskripsi:
+      "Setiap entri langsung menjadi sumber data yang diperiksa Pramana.",
     lJenis: "Jenis transaksi",
     lJumlah: "Jumlah",
     lTanggal: "Tanggal",
@@ -35,7 +36,8 @@ export const SUBJEK_COPY = {
     echoPrefix: "Terbaca: ",
     memuat: "Menyimpan...",
     bersihkan: "Bersihkan",
-    sukses: "Transaksi tercatat. Saldo kas diperbarui dan entri dikirim ke Pramana.",
+    sukses:
+      "Transaksi tercatat. Saldo kas diperbarui dan entri dikirim ke Pramana.",
   },
   pin: {
     judul: "Persetujuan Pinjaman",
@@ -60,12 +62,17 @@ export const SUBJEK_COPY = {
   optMark: "opsional",
   preset: {
     judul: "Preset skenario",
-    deskripsi: "Mengisi form dengan contoh. Tidak langsung tersimpan, Anda tetap menekan tombol.",
+    deskripsi:
+      "Mengisi form dengan contoh. Tidak langsung tersimpan, Anda tetap menekan tombol.",
     tag: "Contoh",
-    noteKonflik: "Alamat vendor sama dengan alamat pengurus. Setelah dicatat, Pramana dapat menandainya sebagai hal yang perlu dijelaskan pengurus.",
-    notePecah: "Pembelian dipecah menjadi beberapa nilai di bawah lima juta ke vendor yang sama dalam sepekan. Pola ini dapat ditanyakan Pramana.",
-    noteKas: "Pengeluaran besar yang menekan saldo kas. Tren kas yang menurun tajam dapat menjadi perhatian Pramana.",
-    notePlafon: "Pokok melebihi plafon sepuluh juta dan dokumen ditandai belum lengkap. Kombinasi ini dapat ditanyakan Pramana.",
+    noteKonflik:
+      "Alamat vendor sama dengan alamat pengurus. Setelah dicatat, Pramana dapat menandainya sebagai hal yang perlu dijelaskan pengurus.",
+    notePecah:
+      "Pembelian dipecah menjadi beberapa nilai di bawah lima juta ke vendor yang sama dalam sepekan. Pola ini dapat ditanyakan Pramana.",
+    noteKas:
+      "Pengeluaran besar yang menekan saldo kas. Tren kas yang menurun tajam dapat menjadi perhatian Pramana.",
+    notePlafon:
+      "Pokok melebihi plafon sepuluh juta dan dokumen ditandai belum lengkap. Kombinasi ini dapat ditanyakan Pramana.",
   },
   rat: {
     judul: "Status RAT",
@@ -83,7 +90,8 @@ export const SUBJEK_COPY = {
   },
   daftar: {
     judul: "Daftar Entri Terakhir",
-    deskripsi: "Sepuluh transaksi dan lima pinjaman terbaru, dengan status sinkronisasi ke Pramana.",
+    deskripsi:
+      "Sepuluh transaksi dan lima pinjaman terbaru, dengan status sinkronisasi ke Pramana.",
     segTerisi: "Terisi",
     segKosong: "Kosong",
     subTrx: "Transaksi",
@@ -96,11 +104,14 @@ export const SUBJEK_COPY = {
     pokok: "Pokok",
     cicilan: "cicilan",
     kosongTrxJudul: "Belum ada transaksi",
-    kosongTrxDesc: "Transaksi yang Anda catat akan muncul di sini dan langsung dikirim ke Pramana.",
+    kosongTrxDesc:
+      "Transaksi yang Anda catat akan muncul di sini dan langsung dikirim ke Pramana.",
     kosongPinJudul: "Belum ada pinjaman",
-    kosongPinDesc: "Pinjaman yang Anda setujui akan muncul di sini beserta status dokumennya.",
+    kosongPinDesc:
+      "Pinjaman yang Anda setujui akan muncul di sini beserta status dokumennya.",
   },
-  footNote: "Konsol ini mensimulasikan sistem pembukuan koperasi. Data yang Anda catat menjadi sumber yang diperiksa Pramana. Ini bukan bagian produk Pramana untuk pengurus.",
+  footNote:
+    "Konsol ini mensimulasikan sistem pembukuan koperasi. Data yang Anda catat menjadi sumber yang diperiksa Pramana. Ini bukan bagian produk Pramana untuk pengurus.",
   login: {
     kicker: "Simulasi Pembukuan Koperasi",
     judul: "Masuk sebagai bendahara",
@@ -117,7 +128,8 @@ export const SUBJEK_COPY = {
   },
   err: {
     jumlahKosong: "Jumlah wajib diisi.",
-    jumlahInvalid: "Jumlah harus berupa angka lebih dari nol. Masukkan tanpa titik.",
+    jumlahInvalid:
+      "Jumlah harus berupa angka lebih dari nol. Masukkan tanpa titik.",
     tanggalKosong: "Tanggal wajib diisi.",
     deskripsiKosong: "Deskripsi wajib diisi agar entri mudah ditelusuri.",
     unitKosong: "Unit usaha wajib dipilih untuk pembelian.",

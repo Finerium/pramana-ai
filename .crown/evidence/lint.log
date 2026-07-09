@@ -1,0 +1,4 @@
+
+> pramana-ai@1.0.0 lint /Users/ghaisan/Documents/Pramana-AI
+> eslint . --max-warnings 0
+

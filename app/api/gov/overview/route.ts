@@ -40,7 +40,9 @@ export async function GET(req: NextRequest) {
             .where(inArray(temuan.auditRunId, runIds))
             .groupBy(temuan.auditRunId)
         : [];
-    const countByRun = new Map(countRows.map((c) => [c.auditRunId, Number(c.n)]));
+    const countByRun = new Map(
+      countRows.map((c) => [c.auditRunId, Number(c.n)]),
+    );
 
     let hijau = 0;
     let kuning = 0;

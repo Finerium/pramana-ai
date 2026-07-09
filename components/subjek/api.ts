@@ -8,7 +8,10 @@
  * hidup; jalur upgrade = endpoint nyata yang mem-persist ke DB (loop lintas
  * surface). Pemetaan bentuk live bersifat best-effort sampai integrasi.
  */
-import type { SubjekTransaksiInput, SubjekPinjamanInput } from "@/lib/contracts";
+import type {
+  SubjekTransaksiInput,
+  SubjekPinjamanInput,
+} from "@/lib/contracts";
 import {
   SEED_RECENT,
   hitungSaldoBaru,
@@ -111,7 +114,10 @@ function mapRecent(raw: unknown): RecentData {
     Array.isArray(angRaw) && angRaw.length
       ? angRaw.map((x) => {
           const a = x as Dict;
-          return { value: asStr(a.value ?? a.id), label: asStr(a.label ?? a.nama) };
+          return {
+            value: asStr(a.value ?? a.id),
+            label: asStr(a.label ?? a.nama),
+          };
         })
       : SEED_RECENT.anggota;
   return {

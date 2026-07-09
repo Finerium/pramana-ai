@@ -32,6 +32,8 @@ Phase 0 progress per 2026-07-09:
 - P2-05 check-register scope: template member sudah dipusatkan ke MEMBER_COPY (fix d), tapi scanner belum menyapu components/**; perluas defaultFiles + isMemberSurface di scripts/check-register.mjs (file f, edit integrator).
 - P2-06 Smoke Gate 2: login 3 role + render verdict/overview/konsol.
 - P2-07 Verifikasi guard halaman: /pembukuan dan /pemerintah dengan sesi salah/kosong harus berujung /login (page-level UX; API sudah 401/403 by matrix c).
+- P2-08 components/gov/DetailClient.tsx: banner langsung/gagal_langsung di-guard status==="default" sehingga pemeriksaan pertama pada koperasi kosong yang gagal tidak menampilkan banner (temuan reviewer e); izinkan render pada status "kosong" atau flip ke default begitu auditRun ada.
+- P2-09 GOV_COPY me-mirror empat string beku 6.15 (impor melingkar index<->gov); tambah test kecil yang mengassert nilai mirror === COPY agar tidak bisa drift diam-diam.
 
 ## Latitude decisions (dicatat sambil jalan, konsolidasi ke docs/keputusan-teknis.md)
 - L-01 Repo publik: commit design-handoff/ (oracle fixture AC-UI-01/02) + .crown/ (evidence+ai-usage, dirujuk DISCLOSURE); ignore .claude/ (R2), *.zip (redundan), prompt-orchestrator & env-prep (operator-internal), .crown/compact & worktrees (junk).

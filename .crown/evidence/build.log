@@ -1,0 +1,57 @@
+
+> pramana-ai@1.0.0 build /Users/ghaisan/Documents/Pramana-AI
+> next build
+
+▲ Next.js 16.2.10 (Turbopack)
+- Environments: .env.local, .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1805ms
+  Running TypeScript ...
+  Finished TypeScript in 3.5s ...
+  Collecting page data using 9 workers ...
+  Generating static pages using 9 workers (0/28) ...
+  Generating static pages using 9 workers (7/28) 
+  Generating static pages using 9 workers (14/28) 
+  Generating static pages using 9 workers (21/28) 
+✓ Generating static pages using 9 workers (28/28) in 180ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/audit/[id]/status
+├ ƒ /api/auth/login
+├ ƒ /api/auth/logout
+├ ƒ /api/findings/[id]/rat
+├ ƒ /api/gov/audit/run
+├ ƒ /api/gov/koperasi/[id]
+├ ƒ /api/gov/overview
+├ ƒ /api/health
+├ ƒ /api/member/findings
+├ ƒ /api/member/flow
+├ ƒ /api/member/summary
+├ ƒ /api/member/verdict
+├ ƒ /api/member/voice
+├ ƒ /api/onboarding
+├ ƒ /api/subjek/pinjaman
+├ ƒ /api/subjek/rat
+├ ƒ /api/subjek/recent
+├ ƒ /api/subjek/transaksi
+├ ƒ /api/vote
+├ ○ /arus
+├ ○ /beranda
+├ ○ /daftar
+├ ○ /login
+├ ○ /pembukuan
+├ ○ /pemerintah
+├ ƒ /pemerintah/koperasi/[id]
+├ ○ /profil
+├ ○ /suara
+├ ○ /temuan
+└ ○ /uang
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

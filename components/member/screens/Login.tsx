@@ -82,10 +82,24 @@ export function Login() {
         animation: "m-fadein 0.28s ease",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, ...rise(0, 0.45) }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 10,
+          ...rise(0, 0.45),
+        }}
+      >
         <BelahKetupat size={36} color="var(--accent)" />
-        <span style={{ fontSize: 31, fontWeight: 750, letterSpacing: -0.6 }}>{MEMBER_COPY["login.judul"]}</span>
-        <span style={{ fontSize: 14.5, color: "var(--muted)", textAlign: "center" }}>{MEMBER_COPY["login.tagline"]}</span>
+        <span style={{ fontSize: 31, fontWeight: 750, letterSpacing: -0.6 }}>
+          {MEMBER_COPY["login.judul"]}
+        </span>
+        <span
+          style={{ fontSize: 14.5, color: "var(--muted)", textAlign: "center" }}
+        >
+          {MEMBER_COPY["login.tagline"]}
+        </span>
       </div>
 
       <form
@@ -106,7 +120,9 @@ export function Login() {
         }}
       >
         <label style={{ display: "flex", flexDirection: "column", gap: 7 }}>
-          <span style={{ fontSize: 13.5, fontWeight: 600 }}>{MEMBER_COPY["login.email"]}</span>
+          <span style={{ fontSize: 13.5, fontWeight: 600 }}>
+            {MEMBER_COPY["login.email"]}
+          </span>
           <input
             type="email"
             autoComplete="email"
@@ -117,7 +133,9 @@ export function Login() {
           />
         </label>
         <label style={{ display: "flex", flexDirection: "column", gap: 7 }}>
-          <span style={{ fontSize: 13.5, fontWeight: 600 }}>{MEMBER_COPY["login.sandi"]}</span>
+          <span style={{ fontSize: 13.5, fontWeight: 600 }}>
+            {MEMBER_COPY["login.sandi"]}
+          </span>
           <input
             type="password"
             autoComplete="current-password"
@@ -130,7 +148,15 @@ export function Login() {
         {err ? <Banner tone="galat">{COPY["login.err"]}</Banner> : null}
         <button
           type="submit"
-          style={{ height: 54, borderRadius: 999, background: "var(--accent)", color: "var(--accent-on)", fontSize: 17, fontWeight: 600, textAlign: "center" }}
+          style={{
+            height: 54,
+            borderRadius: 999,
+            background: "var(--accent)",
+            color: "var(--accent-on)",
+            fontSize: 17,
+            fontWeight: 600,
+            textAlign: "center",
+          }}
         >
           {busy ? MEMBER_COPY["login.busy"] : MEMBER_COPY["login.masuk"]}
         </button>
@@ -147,30 +173,91 @@ export function Login() {
           ...rise(0.12, 0.45),
         }}
       >
-        <span style={{ fontSize: 11.5, fontWeight: 700, letterSpacing: 0.8, textTransform: "uppercase", color: "var(--muted)" }}>
+        <span
+          style={{
+            fontSize: 11.5,
+            fontWeight: 700,
+            letterSpacing: 0.8,
+            textTransform: "uppercase",
+            color: "var(--muted)",
+          }}
+        >
           {MEMBER_COPY["login.hint.kicker"]}
         </span>
-        <span style={{ font: "13px ui-monospace,Menlo,monospace", color: "var(--ink)", lineHeight: 1.6 }}>
+        <span
+          style={{
+            font: "13px ui-monospace,Menlo,monospace",
+            color: "var(--ink)",
+            lineHeight: 1.6,
+          }}
+        >
           juri.anggota@pramana.id
           <br />
           PramanaJuri2026
         </span>
-        <button type="button" onClick={isiJuri} style={{ minHeight: 44, display: "flex", alignItems: "center", fontSize: 14.5, fontWeight: 600, color: "var(--accent)" }}>
+        <button
+          type="button"
+          onClick={isiJuri}
+          style={{
+            minHeight: 44,
+            display: "flex",
+            alignItems: "center",
+            fontSize: 14.5,
+            fontWeight: 600,
+            color: "var(--accent)",
+          }}
+        >
           {MEMBER_COPY["login.hint.isi"]}
         </button>
-        <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: 0.6, textTransform: "uppercase", color: "var(--muted)", paddingTop: 4 }}>
+        <span
+          style={{
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: 0.6,
+            textTransform: "uppercase",
+            color: "var(--muted)",
+            paddingTop: 4,
+          }}
+        >
           {MEMBER_COPY["login.hint.lain"]}
         </span>
-        <span style={{ font: "11.5px ui-monospace,Menlo,monospace", color: "var(--muted)", lineHeight: 1.7 }}>
+        <span
+          style={{
+            font: "11.5px ui-monospace,Menlo,monospace",
+            color: "var(--muted)",
+            lineHeight: 1.7,
+          }}
+        >
           juri.pemerintah@pramana.id / PramanaJuri2026
           <br />
           bendahara@pramana.id / PramanaBendahara2026
         </span>
       </div>
 
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 6, fontSize: 15, ...rise(0.18, 0.45) }}>
-        <span style={{ color: "var(--muted)" }}>{MEMBER_COPY["login.belum"]}</span>
-        <button type="button" onClick={() => router.push("/daftar")} style={{ minHeight: 44, display: "inline-flex", alignItems: "center", fontWeight: 600, color: "var(--accent)" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 6,
+          fontSize: 15,
+          ...rise(0.18, 0.45),
+        }}
+      >
+        <span style={{ color: "var(--muted)" }}>
+          {MEMBER_COPY["login.belum"]}
+        </span>
+        <button
+          type="button"
+          onClick={() => router.push("/daftar")}
+          style={{
+            minHeight: 44,
+            display: "inline-flex",
+            alignItems: "center",
+            fontWeight: 600,
+            color: "var(--accent)",
+          }}
+        >
           {MEMBER_COPY["login.daftar"]}
         </button>
       </div>
