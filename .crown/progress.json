@@ -30,8 +30,13 @@
       "passed": true,
       "commit": "106e2fb",
       "at": "2026-07-09T20:59:05.342Z"
+    },
+    "7": {
+      "passed": true,
+      "commit": "a24d079",
+      "at": "2026-07-09T23:22:38.827Z"
     }
   },
-  "spendNote": "Gate 0-3 passed. Phase 3: suite writer 830k + reviewer 200k + 4 grader 1.02M + 3 regrader 345k + fixer main-thread. Gate 4 tidak dibutuhkan (nol temuan resisten). Masuk Phase 5 perf.",
-  "lastPhase": 7
+  "spendNote": "Gate 0-7 passed. Phase 7 UAT dua putaran (441k+536k token) menemukan+menutup blocker pinjaman-jabatan. Deliverables Phase 8 sudah didraft di muka. Masuk Phase 8 finalisasi + push repo.",
+  "lastPhase": 8
 }

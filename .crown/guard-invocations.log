@@ -3325,3 +3325,15 @@
 {"at":"2026-07-09T23:21:56.951Z","tool":"Bash","path":"L=https://pramana-ai-puce.vercel.app; curl -sS $L/api/health; echo; curl -sS -c "}
 {"at":"2026-07-09T23:22:07.500Z","tool":"Bash","path":"L=https://pramana-ai-puce.vercel.app; curl -sS -b /tmp/pv.txt $L/api/member/voic"}
 {"at":"2026-07-09T23:22:38.493Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 sh -c '\nmkdir -p .crown/evidence/uat-anggota .crown/evidence/"}
+{"at":"2026-07-09T23:22:47.285Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/phase"}
+{"at":"2026-07-09T23:23:03.273Z","tool":"Bash","path":"grep -n \"juri.anggota@\\|juri.pemerintah@\\|sari@\\|bendahara@\\|PramanaJuri\\|SariSu"}
+{"at":"2026-07-09T23:23:22.513Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/tests/deliverables.test.ts"}
+{"at":"2026-07-09T23:24:13.021Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/check-deliverables.mjs"}
+{"at":"2026-07-09T23:24:20.371Z","tool":"Bash","path":"node scripts/check-deliverables.mjs && echo \"---\" && pnpm check-readme 2>&1 | ta"}
+{"at":"2026-07-09T23:24:33.665Z","tool":"Bash","path":"pnpm deck:build 2>&1 | tail -1 && node -e \"\nconst b=require('fs').readFileSync('"}
+{"at":"2026-07-09T23:24:39.584Z","tool":"Bash","path":"git log --all --diff-filter=A --name-only --pretty=format: 2>/dev/null | grep -x"}
+{"at":"2026-07-09T23:24:50.783Z","tool":"Bash","path":"node -e \"\nconst {execSync}=require('child_process');\nconst hist=execSync('git lo"}
+{"at":"2026-07-09T23:25:12.911Z","tool":"Bash","path":"echo \"tracked env files:\"; git ls-files -- '.env*'; echo \"---\"; echo \"env files "}
+{"at":"2026-07-09T23:25:24.561Z","tool":"Bash","path":"git add -A && git commit -q -m \"checkpoint(gate-8): deliverables + repo hygiene "}
+{"at":"2026-07-09T23:25:38.479Z","tool":"Write","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/commit-gate8.txt"}
+{"at":"2026-07-09T23:25:44.372Z","tool":"Bash","path":"git add -A && git commit -q -F /private/tmp/claude-501/-Users-ghaisan-Documents-"}
