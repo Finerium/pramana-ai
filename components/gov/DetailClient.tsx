@@ -7,6 +7,7 @@ import { GOV_COPY } from "@/lib/copy/gov";
 import { BENTUK } from "@/app/(gov)/_logic/verdict";
 import {
   formatProfilLokasi,
+  normalizeDetail,
   temuanRows,
   trenCells,
 } from "@/app/(gov)/_logic/detail";
@@ -80,7 +81,7 @@ export function DetailClient({ id }: { id: string }) {
         setStatus("gagal");
         return;
       }
-      const d = json.data as GovKoperasiDetail;
+      const d = normalizeDetail(json.data);
       setData(d);
       setStatus(d.auditRun ? "default" : "kosong");
     } catch {
@@ -99,6 +100,8 @@ export function DetailClient({ id }: { id: string }) {
     async (runId: string) => {
       if (Date.now() > deadline.current) {
         stopPoll();
+        // P2-08: refetch agar run tersimpan (bila ada) tampil bersama banner.
+        await muat();
         setPeri("gagal_langsung");
         return;
       }
@@ -116,6 +119,9 @@ export function DetailClient({ id }: { id: string }) {
           setPeri("langsung");
         } else if (st === "gagal_langsung") {
           stopPoll();
+          // P2-08: refetch; bila ada run tersimpan status flip ke default
+          // sehingga banner gagal_langsung terlihat, bukan diam di kosong.
+          await muat();
           setPeri("gagal_langsung");
         }
       } catch {

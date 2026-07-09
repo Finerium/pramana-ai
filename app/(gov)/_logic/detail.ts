@@ -4,7 +4,12 @@
  */
 import type { EvidenceRef, Severity } from "@/lib/contracts";
 import { BENTUK, severityToBentuk, type Bentuk } from "./verdict";
-import type { GovKoperasiProfil, GovTemuan, GovTrenPoint } from "./types";
+import type {
+  GovKoperasiDetail,
+  GovKoperasiProfil,
+  GovTemuan,
+  GovTrenPoint,
+} from "./types";
 
 const SEV_RANK: Record<Severity, number> = { merah: 3, kuning: 2, info: 1 };
 
@@ -70,6 +75,63 @@ export function trenCells(tren: GovTrenPoint[]): TrenCell[] {
 
 export function formatProfilLokasi(p: GovKoperasiProfil): string {
   return `Desa ${p.desa}, ${p.kabupaten}, ${p.provinsi} · ${p.jumlahAnggota} anggota · ${p.id}`;
+}
+
+/**
+ * Integrasi Gate 2: API mengembalikan auditRun sebagai BARIS audit_run flat
+ * (kolom 6.2: verdictWarna, ringkasan) dan profil.unitUsaha sebagai baris
+ * {id,nama,jenis}. Normalisasi ke bentuk UI (types.ts) di satu titik ini.
+ */
+export function normalizeDetail(raw: unknown): GovKoperasiDetail {
+  const d = (raw ?? {}) as Record<string, unknown>;
+  const profilRaw = (d.profil ?? {}) as Record<string, unknown>;
+  const unitRaw = profilRaw.unitUsaha;
+  const unitUsaha = Array.isArray(unitRaw)
+    ? unitRaw.map((u) =>
+        typeof u === "string"
+          ? u
+          : String((u as Record<string, unknown>).nama ?? ""),
+      )
+    : [];
+  const profil: GovKoperasiProfil = {
+    id: String(profilRaw.id ?? ""),
+    nama: String(profilRaw.nama ?? ""),
+    desa: String(profilRaw.desa ?? ""),
+    kabupaten: String(profilRaw.kabupaten ?? ""),
+    provinsi: String(profilRaw.provinsi ?? ""),
+    jumlahAnggota: Number(profilRaw.jumlahAnggota ?? 0),
+    unitUsaha,
+  };
+  const runRaw = d.auditRun as Record<string, unknown> | null | undefined;
+  const auditRun: GovKoperasiDetail["auditRun"] = runRaw
+    ? {
+        id: String(runRaw.id ?? ""),
+        koperasiId: String(runRaw.koperasiId ?? profil.id),
+        periode: String(runRaw.periode ?? ""),
+        source: (runRaw.source ?? "seed") as "seed" | "live" | "cache",
+        verdict: {
+          warna: (runRaw.verdictWarna ??
+            (runRaw.verdict as Record<string, unknown> | undefined)?.warna ??
+            "hijau") as "hijau" | "kuning" | "merah",
+          ringkasan: String(
+            runRaw.ringkasan ??
+              (runRaw.verdict as Record<string, unknown> | undefined)
+                ?.ringkasan ??
+              "",
+          ),
+          temuan: [],
+        },
+        dibuatPada: String(runRaw.dibuatPada ?? ""),
+        durasiMs: Number(runRaw.durasiMs ?? 0),
+      }
+    : null;
+  const temuan = Array.isArray(d.temuan)
+    ? (d.temuan as GovKoperasiDetail["temuan"])
+    : [];
+  const tren = Array.isArray(d.tren)
+    ? (d.tren as GovKoperasiDetail["tren"])
+    : [];
+  return { profil, auditRun, temuan, tren };
 }
 
 export type TemuanRow = {

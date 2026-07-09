@@ -1,5 +1,5 @@
 /**
- * Logika tema landing (murni, tanpa DOM) — dipakai toggle nav dan skrip
+ * Logika tema landing (murni, tanpa DOM), dipakai toggle nav dan skrip
  * apply-tema pre-paint. Tiga status: sistem (ikut OS), terang, gelap.
  * localStorage key "pramana-tema" menyimpan status verbatim.
  */

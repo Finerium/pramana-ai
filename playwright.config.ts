@@ -30,9 +30,12 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "pnpm start",
+    // Hermetik: e2e selalu memakai file:dev.db yang baru di-seed, tidak pernah
+    // Turso (env operator lokal berisi TURSO produksi; lihat notes L-09).
+    command: "pnpm seed && pnpm start",
     url: "http://localhost:3000/api/health",
     reuseExistingServer: true,
-    timeout: 120_000,
+    timeout: 180_000,
+    env: { TURSO_DATABASE_URL: "", TURSO_AUTH_TOKEN: "" },
   },
 });

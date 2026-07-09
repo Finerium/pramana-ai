@@ -24,7 +24,11 @@ const SKIP_FILES = ["lib/registerGuard.ts"];
 
 export function isMemberSurface(path) {
   const p = String(path).replace(/\\/g, "/");
-  return p.endsWith("lib/copy/member.ts") || p.includes("app/(member)/");
+  return (
+    p.endsWith("lib/copy/member.ts") ||
+    p.includes("app/(member)/") ||
+    p.includes("components/member/")
+  );
 }
 
 export function shouldSkip(path) {
@@ -89,6 +93,10 @@ export function defaultFiles(root = ".") {
   walk(`${root}/lib/copy`, EXT_CODE, out);
   walk(`${root}/lib/prompts`, EXT_CODE, out);
   walk(`${root}/scripts/fixtures`, EXT_CODE, out);
+  // P2-05: sapu juga komponen dan halaman supaya string inline yang lolos
+  // dari copy terpusat tetap tertangkap register 6.8.
+  walk(`${root}/components`, EXT_CODE, out);
+  walk(`${root}/app`, EXT_CODE, out);
   if (existsSync(`${root}/README.md`)) out.push(`${root}/README.md`);
   walk(`${root}/deck`, EXT_MD, out);
   walk(`${root}/deliverables`, EXT_MD, out);

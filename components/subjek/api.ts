@@ -29,6 +29,26 @@ const delay = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 // hidup; latensi fetch nyata menggantikannya begitu /api/subjek/* mendarat.
 const FALLBACK_MS = 700;
 
+// P2-02: fallback seed TIDAK boleh menutupi penolakan auth. 401/403 = sesi
+// salah/absen -> paksa ke /login, jangan render data simulasi.
+function tolakAuth(status: number): boolean {
+  if (status === 401 || status === 403) {
+    if (typeof window !== "undefined") window.location.assign("/login");
+    return true;
+  }
+  return false;
+}
+
+// Peta jenis unit usaha -> id baris DB untuk POST transaksi (form menyimpan
+// jenis; API butuh unitUsahaId FK). Diperbarui dari /api/subjek/recent.
+// ponytail: nilai awal = id fixture seed deterministik (AC-SEED-02).
+let UNIT_ID_BY_JENIS: Record<string, string> = {
+  sembako: "uu-gerai",
+  simpan_pinjam: "uu-sp",
+  apotek: "uu-apotek",
+  gudang: "uu-gudang",
+};
+
 type Dict = Record<string, unknown>;
 const asStr = (v: unknown, d = ""): string =>
   typeof v === "string" ? v : v == null ? d : String(v);
@@ -44,6 +64,7 @@ async function postJson(url: string, body: unknown): Promise<Dict | null> {
       headers: { "content-type": "application/json" },
       body: JSON.stringify(body),
     });
+    if (tolakAuth(res.status)) return null;
     const j = (await res.json()) as { ok?: boolean; data?: Dict };
     if (res.ok && j && j.ok) return j.data ?? {};
   } catch {
@@ -60,7 +81,9 @@ function toTransaksiInput(f: TransaksiForm): SubjekTransaksiInput {
     deskripsi: f.deskripsi,
   };
   if (f.jenis === "pembelian") {
-    base.unitUsahaId = f.unitUsaha;
+    // Form menyimpan JENIS unit ("sembako"); API/FK butuh id baris (uu-gerai).
+    const unitId = UNIT_ID_BY_JENIS[f.unitUsaha];
+    if (unitId) base.unitUsahaId = unitId;
     base.vendorNama = f.vendorNama;
     base.vendorAlamat = f.vendorAlamat;
   }
@@ -120,6 +143,17 @@ function mapRecent(raw: unknown): RecentData {
           };
         })
       : SEED_RECENT.anggota;
+  const unitRaw = d.unitUsaha;
+  if (Array.isArray(unitRaw) && unitRaw.length) {
+    const map: Record<string, string> = {};
+    for (const x of unitRaw) {
+      const u = x as Dict;
+      const jenis = asStr(u.jenis);
+      const id = asStr(u.id);
+      if (jenis && id) map[jenis] = id;
+    }
+    if (Object.keys(map).length) UNIT_ID_BY_JENIS = map;
+  }
   return {
     saldoKas: asNum(d.saldoKas, SEED_RECENT.saldoKas),
     transaksi,
@@ -133,6 +167,7 @@ function mapRecent(raw: unknown): RecentData {
 export async function fetchRecent(): Promise<RecentData> {
   try {
     const res = await fetch("/api/subjek/recent", { cache: "no-store" });
+    if (tolakAuth(res.status)) return SEED_RECENT;
     const j = (await res.json()) as { ok?: boolean; data?: unknown };
     if (res.ok && j && j.ok) return mapRecent(j.data);
   } catch {

@@ -1,7 +1,8 @@
 import type { NextRequest } from "next/server";
-import { and, asc, eq } from "drizzle-orm";
+import { and, asc, eq, sql } from "drizzle-orm";
 import { getDb } from "../../../../../db/client";
 import {
+  anggota,
   auditRun,
   koperasi,
   temuan,
@@ -89,8 +90,18 @@ export async function GET(
       warna: t.verdictWarna,
     }));
 
+    // Perluasan aditif: jumlah anggota untuk baris profil (bundle menampilkannya).
+    const jumlahAnggotaRows = await db
+      .select({ n: sql<number>`count(*)` })
+      .from(anggota)
+      .where(eq(anggota.koperasiId, id));
+
     return ok({
-      profil: { ...kop, unitUsaha: uu },
+      profil: {
+        ...kop,
+        unitUsaha: uu,
+        jumlahAnggota: jumlahAnggotaRows[0]?.n ?? 0,
+      },
       auditRun: run ? compact(run) : null,
       temuan: temuanOut,
       tren,

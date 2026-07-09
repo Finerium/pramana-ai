@@ -1,0 +1,7 @@
+{
+  "gate": 2,
+  "at": "2026-07-09T17:14:35Z",
+  "pass": true,
+  "note": "Smoke browser 23/23: login 3 role via satu rute /login (varian F-09 terpasang: mobile default, gov ?as=pemerintah, subjek ?as=bendahara); beranda verdict merah + ringkasan beku + notif n=5; overview KPI 12/6/4/2/17 + drill-down Sukamaju (banner tersimpan, Toko Berkah, tanggapan 24 Juni); konsol subjek hidup dengan loop nyata preset konflik -> catat -> saldo 36500000 -> 21500000 (persist DB, mapping unit jenis->id); guard halaman tanpa sesi -> /login; nol pageerror. Integrasi P2: normalizeDetail (bentuk flat c -> UI e), jumlahAnggota profil, fallback subjek tidak menutupi 401, check-register menyapu 107 berkas (1 pelanggaran nyata tertangkap+diperbaiki), mirror test GOV_COPY, webServer e2e hermetik.",
+  "screenshots": ".crown/evidence/gate-2/ (9 png: login 3 varian, beranda, overview, detail, konsol, preset, transaksi-tercatat)"
+}

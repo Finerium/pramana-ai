@@ -1,9 +1,44 @@
 import "@/styles/tokens/mobile.css";
-import { Geist } from "next/font/google";
+import "@/styles/tokens/subjek.css";
+import {
+  Archivo,
+  Geist,
+  Public_Sans,
+  Spline_Sans,
+  Spline_Sans_Mono,
+} from "next/font/google";
 
-// Login memakai desain mobile (palet Nila + Geist). ThemeScript sudah dirender
-// layout (publik) induk. Geist self-host di-wire ke --font-sans pada .m-app.
+// Satu rute /login melayani tiga varian visual (F-09): default anggota
+// (mobile, Geist), ?as=pemerintah (dashboard, Archivo + Public Sans),
+// ?as=bendahara (subjek, Spline Sans). Semua font self-host di sini; token
+// dashboard di-import oleh komponen variannya, token subjek di-import di atas
+// karena varian subjek mengandalkan token hadir pada halaman inang.
+// Wrapper surface (.m-app / .gov) dipasang oleh varian masing-masing.
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
+const archivo = Archivo({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-archivo",
+  display: "swap",
+});
+const publicSans = Public_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-public-sans",
+  display: "swap",
+});
+const splineSans = Spline_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-spline-sans",
+  display: "swap",
+});
+const splineMono = Spline_Sans_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-spline-sans-mono",
+  display: "swap",
+});
 
 export default function LoginLayout({
   children,
@@ -11,10 +46,11 @@ export default function LoginLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className={`m-app ${geist.variable}`} style={{ minHeight: "100dvh" }}>
-      <div style={{ maxWidth: 460, margin: "0 auto", minHeight: "100dvh" }}>
-        {children}
-      </div>
+    <div
+      className={`${geist.variable} ${archivo.variable} ${publicSans.variable} ${splineSans.variable} ${splineMono.variable}`}
+      style={{ minHeight: "100dvh" }}
+    >
+      {children}
     </div>
   );
 }

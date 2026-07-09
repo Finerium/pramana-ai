@@ -1,7 +1,13 @@
 import type { NextRequest } from "next/server";
 import { asc, desc, eq } from "drizzle-orm";
 import { getDb } from "../../../../db/client";
-import { anggota, koperasi, pinjaman, transaksi } from "../../../../db/schema";
+import {
+  anggota,
+  koperasi,
+  pinjaman,
+  transaksi,
+  unitUsaha,
+} from "../../../../db/schema";
 import { ApiError, ok, runRoute } from "../../../../lib/api";
 import { koperasiForPengurus, requireRole } from "../../../../lib/auth";
 
@@ -53,12 +59,24 @@ export async function GET(req: NextRequest) {
       .where(eq(anggota.koperasiId, koperasiId))
       .orderBy(asc(anggota.nama));
 
+    // Perluasan aditif [L-08]: unit usaha nyata agar form memetakan jenis -> id FK.
+    const unitList = await db
+      .select({
+        id: unitUsaha.id,
+        nama: unitUsaha.nama,
+        jenis: unitUsaha.jenis,
+      })
+      .from(unitUsaha)
+      .where(eq(unitUsaha.koperasiId, koperasiId))
+      .orderBy(asc(unitUsaha.nama));
+
     return ok({
       saldoKas: kop.saldoKas,
       transaksi: trx,
       pinjaman: pinj,
       ratStatus: kop.ratStatus,
       anggota: anggotaList,
+      unitUsaha: unitList,
     });
   });
 }
