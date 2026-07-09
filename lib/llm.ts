@@ -34,19 +34,10 @@ interface ChatMessage {
   content: string;
 }
 
-// Env 6.16 (default beku). Dibaca saat panggil agar test dapat menyetel env.
+// Env 6.16 (default beku). Dibaca di call-site (panggilSekali) agar test dapat
+// menyetel env sebelum memanggil.
 const DEFAULT_BASE_URL = "https://api.minimax.io/v1";
 const DEFAULT_MODEL = "MiniMax-M2.7";
-
-function baseUrl(): string {
-  return process.env.LLM_BASE_URL || DEFAULT_BASE_URL;
-}
-function modelName(): string {
-  return process.env.LLM_MODEL || DEFAULT_MODEL;
-}
-function apiKey(): string {
-  return process.env.LLM_API_KEY || "";
-}
 
 const PESAN_KOREKSI =
   "Keluaran sebelumnya bukan JSON yang valid sesuai skema yang diminta. " +
@@ -65,15 +56,18 @@ async function panggilSekali(
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   let res: Response;
+  const base = process.env.LLM_BASE_URL || DEFAULT_BASE_URL;
+  const model = process.env.LLM_MODEL || DEFAULT_MODEL;
+  const key = process.env.LLM_API_KEY || "";
   try {
-    res = await fetchImpl(`${baseUrl()}/chat/completions`, {
+    res = await fetchImpl(`${base}/chat/completions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey()}`,
+        Authorization: `Bearer ${key}`,
       },
       body: JSON.stringify({
-        model: modelName(),
+        model,
         messages,
         response_format: { type: "json_object" },
         // ponytail: temperature 0 agar audit dapat direproduksi; naikkan bila
