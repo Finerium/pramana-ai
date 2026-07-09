@@ -37,3 +37,8 @@ coverage/
 
 # OS noise
 .DS_Store
+
+# Artefak lokal tooling
+.playwright-mcp/
+/seed-verify.json
+/seed-timing.json
