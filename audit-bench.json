@@ -1,0 +1,9 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "generatedAt": "2026-07-09T19:27:53.755Z",
+  "runs": 5,
+  "ok": 0,
+  "p50": null,
+  "p95": null,
+  "durations": []
+}

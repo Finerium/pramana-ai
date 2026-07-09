@@ -1,0 +1,7 @@
+AC-LLM-04 HUMAN-GATED 2026-07-09T19:30:23Z
+Key MiniMax ADA (125 char) tetapi akun menjawab HTTP 429 rate_limit_error:
+"Token Plan usage limit reached: Upgrade your Token Plan or purchase Credits".
+Pipeline berperilaku sesuai kontrak 6.4/PJ3: 5/5 run live jatuh ke marker
+gagal_langsung + jalur cache (diverifikasi fallback.cache.spec deterministik).
+Retest setelah operator top-up: jalankan audit-bench dengan berkas env operator
+dimuat (node dengan flag env-file lalu import tsx scripts/audit-bench.ts).

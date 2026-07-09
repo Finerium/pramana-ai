@@ -1,0 +1,5 @@
+
+> pramana-ai@1.0.0 check-register /Users/ghaisan/Documents/Pramana-AI
+> node scripts/check-register.mjs
+
+check-register: LULUS (107 berkas diperiksa, 0 pelanggaran register 6.8).

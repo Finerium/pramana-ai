@@ -3,7 +3,7 @@
  */
 import { test, expect } from "./helpers/fixtures";
 
-test("AC-OBS-02 /api/health {ok, db:up, demoMode:true, version}", async ({ page }) => {
+test("@smoke AC-OBS-02 /api/health {ok, db:up, demoMode:true, version}", async ({ page }) => {
   const res = await page.request.get("/api/health");
   expect(res.ok()).toBeTruthy();
   const j = (await res.json()) as {

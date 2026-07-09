@@ -2443,3 +2443,82 @@
 {"at":"2026-07-09T19:23:15.426Z","tool":"Bash","path":"lsof -ti:3000 | xargs kill 2>/dev/null; lsof -ti:3100 | xargs kill 2>/dev/null; "}
 {"at":"2026-07-09T19:23:34.791Z","tool":"Bash","path":"lsof -ti:3000 | xargs kill 2>/dev/null; lsof -ti:3100 | xargs kill 2>/dev/null; "}
 {"at":"2026-07-09T19:26:48.931Z","tool":"Bash","path":"git add -A && git commit -m \"test(phase-3): suite hijau penuh di main, 18/18 dua"}
+{"at":"2026-07-09T19:27:09.552Z","tool":"Bash","path":"pnpm audit:bench 2>&1 | tail -8"}
+{"at":"2026-07-09T19:27:25.626Z","tool":"Bash","path":"node --env-file=.env --import tsx scripts/audit-bench.ts 2>&1 | tail -10"}
+{"at":"2026-07-09T19:27:43.409Z","tool":"Bash","path":"node --env-file=.env --import tsx scripts/audit-bench.ts"}
+{"at":"2026-07-09T19:28:05.830Z","tool":"Bash","path":"grep -E \"error|LLM|audit\" /tmp/next-gate3.log | tail -12; echo ---; cat audit-be"}
+{"at":"2026-07-09T19:28:18.838Z","tool":"Bash","path":"tail -20 /tmp/next-gate3.log; echo \"=== TRIGGER MANUAL ===\"; curl -sS -b /tmp/c2"}
+{"at":"2026-07-09T19:28:49.816Z","tool":"Bash","path":"node --env-file=.env - <<'EOF'\n(async () => {\n  const base = process.env.LLM_BAS"}
+{"at":"2026-07-09T19:29:03.632Z","tool":"Write","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/minimax-probe.js"}
+{"at":"2026-07-09T19:29:14.349Z","tool":"Bash","path":"node --env-file=.env /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI"}
+{"at":"2026-07-09T19:29:56.790Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 sh -c 'cp audit-bench.json .crown/evidence/audit-bench.json &"}
+{"at":"2026-07-09T19:30:22.993Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 sh -c 'cp audit-bench.json .crown/evidence/audit-bench.json &"}
+{"at":"2026-07-09T19:31:12.282Z","tool":"Bash","path":"bash scripts/ci-clean.sh > /tmp/ci-clean.log 2>&1 && echo \"CI_CLEAN_OK\" && tail "}
+{"at":"2026-07-09T19:32:18.504Z","tool":"Bash","path":"mkdir -p /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a4"}
+{"at":"2026-07-09T19:32:18.551Z","tool":"Bash","path":"tail -8 /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/473c1eb6-335"}
+{"at":"2026-07-09T19:32:18.848Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/design-inventory.md"}
+{"at":"2026-07-09T19:32:19.898Z","tool":"Bash","path":"mkdir -p /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a4"}
+{"at":"2026-07-09T19:32:20.124Z","tool":"Bash","path":"mkdir -p /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a4"}
+{"at":"2026-07-09T19:32:20.957Z","tool":"Bash","path":"ls design-handoff/subjek/screenshots/"}
+{"at":"2026-07-09T19:32:21.064Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/design-inventory.md"}
+{"at":"2026-07-09T19:32:21.065Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/design-inventory.md"}
+{"at":"2026-07-09T19:32:21.749Z","tool":"Bash","path":"ls -la /Users/ghaisan/Documents/Pramana-AI/design-handoff/mobile/handoff/screens"}
+{"at":"2026-07-09T19:32:26.710Z","tool":"Bash","path":"ls -la /Users/ghaisan/Documents/Pramana-AI/design-handoff/landing/ && echo \"---S"}
+{"at":"2026-07-09T19:32:27.048Z","tool":"Bash","path":"mkdir -p /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a4"}
+{"at":"2026-07-09T19:32:27.116Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/design-deviations.md"}
+{"at":"2026-07-09T19:32:27.392Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/notes.md"}
+{"at":"2026-07-09T19:32:28.095Z","tool":"Bash","path":"ls -la /Users/ghaisan/Documents/Pramana-AI/design-handoff/dashboard/screenshots/"}
+{"at":"2026-07-09T19:32:28.598Z","tool":"Bash","path":"cat /Users/ghaisan/Documents/Pramana-AI/.crown/design-inventory.md"}
+{"at":"2026-07-09T19:32:29.067Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/design-deviations.md"}
+{"at":"2026-07-09T19:32:29.889Z","tool":"Bash","path":"tail -25 ci-clean.log"}
+{"at":"2026-07-09T19:32:30.009Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/notes.md"}
+{"at":"2026-07-09T19:32:30.916Z","tool":"Bash","path":"TURSO_DATABASE_URL=file:.grader-m.db pnpm seed 2>&1 | tail -30"}
+{"at":"2026-07-09T19:32:34.720Z","tool":"Bash","path":"TURSO_DATABASE_URL=file:.grader-s.db pnpm seed 2>&1 | tail -20"}
+{"at":"2026-07-09T19:32:35.831Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/design-deviations.md"}
+{"at":"2026-07-09T19:32:35.831Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/notes.md"}
+{"at":"2026-07-09T19:32:36.323Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI/design-handoff/landing/screenshots\nfor d "}
+{"at":"2026-07-09T19:32:36.848Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/design-handoff/landing/HANDOFF.md"}
+{"at":"2026-07-09T19:32:37.719Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/design-handoff/landing/tokens.css"}
+{"at":"2026-07-09T19:32:41.486Z","tool":"Bash","path":"TURSO_DATABASE_URL=file:.grader-g.db pnpm seed 2>&1 | tail -30"}
+{"at":"2026-07-09T19:32:42.660Z","tool":"Bash","path":"cat /Users/ghaisan/Documents/Pramana-AI/.crown/design-deviations.md 2>/dev/null;"}
+{"at":"2026-07-09T19:32:42.836Z","tool":"Bash","path":"grep -rn \"@smoke\" e2e/ | head -5; echo \"hits: $(grep -rln '@smoke' e2e/ | wc -l)"}
+{"at":"2026-07-09T19:32:48.388Z","tool":"Bash","path":"TURSO_DATABASE_URL=file:.grader-s.db TURSO_AUTH_TOKEN= SESSION_SECRET=pramana-e2"}
+{"at":"2026-07-09T19:32:49.391Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/design-handoff/subjek/screenshots/login-default.png"}
+{"at":"2026-07-09T19:32:49.679Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/design-handoff/subjek/screenshots/login-error.png"}
+{"at":"2026-07-09T19:32:50.883Z","tool":"Bash","path":"TURSO_DATABASE_URL=file:.grader-m.db TURSO_AUTH_TOKEN= SESSION_SECRET=pramana-e2"}
+{"at":"2026-07-09T19:32:51.116Z","tool":"Bash","path":"echo \"=== .next exists? ===\" && ls -d .next 2>/dev/null && echo \"=== app structu"}
+{"at":"2026-07-09T19:32:51.875Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/design-handoff/mobile/handoff/screenshots/login-terang.png"}
+{"at":"2026-07-09T19:32:51.899Z","tool":"Bash","path":"grep -E '\"(start|build|seed|dev)\"' package.json"}
+{"at":"2026-07-09T19:32:52.151Z","tool":"Bash","path":"TURSO_DATABASE_URL=file:.grader-g.db TURSO_AUTH_TOKEN= SESSION_SECRET=pramana-e2"}
+{"at":"2026-07-09T19:32:52.377Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/design-handoff/mobile/handoff/screenshots/beranda-merah-terang.png"}
+{"at":"2026-07-09T19:32:53.700Z","tool":"Bash","path":"curl -s http://localhost:4545/health 2>/dev/null; echo \"---control-probe---\"; cu"}
+{"at":"2026-07-09T19:33:02.694Z","tool":"Bash","path":"TURSO_DATABASE_URL=file:.grader-l.db TURSO_AUTH_TOKEN= SESSION_SECRET=pramana-e2"}
+{"at":"2026-07-09T19:33:02.862Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/(publik)/page.tsx"}
+{"at":"2026-07-09T19:33:03.945Z","tool":"Bash","path":"find app/\\(gov\\) components/gov -type f 2>/dev/null | sort; echo \"=== login vari"}
+{"at":"2026-07-09T19:33:04.174Z","tool":"Bash","path":"sleep 3; curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3010/api/health"}
+{"at":"2026-07-09T19:33:05.159Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/design-handoff/subjek/screenshots/konsol-default.png"}
+{"at":"2026-07-09T19:33:05.377Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/design-handoff/subjek/screenshots/konsol-dark.png"}
+{"at":"2026-07-09T19:33:06.104Z","tool":"Bash","path":"for f in login-terang-default login-terang-gagal overview-terang-default overvie"}
+{"at":"2026-07-09T19:33:06.379Z","tool":"Bash","path":"node - <<'EOF'\nconst fs = require(\"node:fs\");\nconst edits = [\n  [\"e2e/health.spe"}
+{"at":"2026-07-09T19:33:07.318Z","tool":"Bash","path":"find app -type d | head -50 && echo \"---THEME---\" && grep -rl \"dark\" app/globals"}
+{"at":"2026-07-09T19:33:12.011Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/landing/ThemeToggle.tsx"}
+{"at":"2026-07-09T19:33:12.461Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/landing/MotionController.tsx"}
+{"at":"2026-07-09T19:33:12.976Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/landing/landing.css"}
+{"at":"2026-07-09T19:33:13.253Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/member/theme.ts"}
+{"at":"2026-07-09T19:33:13.430Z","tool":"Bash","path":"grep -n \"^test(\\|test(\" e2e/member.journey.spec.ts | head -3"}
+{"at":"2026-07-09T19:33:14.811Z","tool":"Bash","path":"cat \"app/(member)/layout.tsx\" 2>/dev/null; echo \"===PROFIL===\"; find \"app/(membe"}
+{"at":"2026-07-09T19:33:15.740Z","tool":"Bash","path":"sleep 3; curl -s -o /dev/null -w \"HTTP %{http_code}\\n\" http://localhost:3012/ 2>"}
+{"at":"2026-07-09T19:33:19.007Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-09T19:33:19.217Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/DetailClient.tsx"}
+{"at":"2026-07-09T19:33:21.580Z","tool":"Bash","path":"node - <<'EOF'\nconst fs = require(\"node:fs\");\nconst f = \"e2e/member.journey.spec"}
+{"at":"2026-07-09T19:33:30.670Z","tool":"Bash","path":"cat components/landing/tema.ts 2>/dev/null; echo \"===THEMESCRIPT===\"; cat compon"}
+{"at":"2026-07-09T19:33:30.685Z","tool":"Bash","path":"bash scripts/ci-clean.sh > /tmp/ci-clean2.log 2>&1 && echo \"CI_CLEAN_OK\" && tail"}
+{"at":"2026-07-09T19:33:31.233Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/design-handoff/subjek/screenshots/konsol-validasi.png"}
+{"at":"2026-07-09T19:33:31.829Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/design-handoff/subjek/screenshots/konsol-preset.png"}
+{"at":"2026-07-09T19:33:32.131Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/landing/ThemeScript.tsx"}
+{"at":"2026-07-09T19:33:32.632Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/landing/tema.ts"}
+{"at":"2026-07-09T19:33:33.113Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/(publik)/layout.tsx"}
+{"at":"2026-07-09T19:33:45.459Z","tool":"Bash","path":"TURSO_DATABASE_URL=file:.grader-l.db TURSO_AUTH_TOKEN= SESSION_SECRET=pramana-e2"}
+{"at":"2026-07-09T19:33:49.144Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/design-handoff/subjek/screenshots/konsol-sukses.png"}
+{"at":"2026-07-09T19:33:49.330Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/design-handoff/subjek/screenshots/konsol-saldo-updated.png"}
+{"at":"2026-07-09T19:33:49.826Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 sh -c '\npnpm check-register > .crown/evidence/register-scan.t"}

@@ -19,7 +19,7 @@ const AN1 = TEMUAN_SEED.find((t) => t.id === "an1")!;
 test.beforeAll(() => reseed());
 test.afterAll(() => reseed());
 
-test("B1 alur anggota: verdict merah, temuan AN-1, tambah RAT, agregat 12->13", async ({
+test("@smoke B1 alur anggota: verdict merah, temuan AN-1, tambah RAT, agregat 12->13", async ({
   page,
 }) => {
   await login(page, "anggota");

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="3" failures="0" errors="0" time="0.005865583">
+    <testsuite name="tests/obs.logger.test.ts" timestamp="2026-07-09T19:33:51.138Z" hostname="Ghaisans-MacBook-Pro.local" tests="3" failures="0" errors="0" skipped="0" time="0.005865583">
+        <testcase classname="tests/obs.logger.test.ts" name="AC-OBS-01 logger JSON terstruktur &gt; logInfo/logError emit JSON dengan level, requestId, code" time="0.001902458">
+        </testcase>
+        <testcase classname="tests/obs.logger.test.ts" name="AC-OBS-01 logger JSON terstruktur &gt; runRoute menyembunyikan pesan mentah error tak terduga (INTERNAL)" time="0.002928291">
+        </testcase>
+        <testcase classname="tests/obs.logger.test.ts" name="AC-OBS-01 logger JSON terstruktur &gt; runRoute ApiError -&gt; envelope beku + log dengan code" time="0.000362167">
+        </testcase>
+    </testsuite>
+</testsuites>

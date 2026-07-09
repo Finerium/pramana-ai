@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="4" failures="0" errors="0" time="0.00219">
+    <testsuite name="tests/subjek.presets.test.ts" timestamp="2026-07-09T19:33:52.069Z" hostname="Ghaisans-MacBook-Pro.local" tests="4" failures="0" errors="0" skipped="0" time="0.00219">
+        <testcase classname="tests/subjek.presets.test.ts" name="preset konsol memicu tipologi 6.6 (AC-SUBJ-04) &gt; konflik kepentingan: vendorAlamat sama dengan alamat bendahara seed dan nilai &gt;= Rp10.000.000 (merah)" time="0.001019083">
+        </testcase>
+        <testcase classname="tests/subjek.presets.test.ts" name="preset konsol memicu tipologi 6.6 (AC-SUBJ-04) &gt; anomali transaksi: pembelian di bawah ambang Rp5.000.000 ke vendor pola pemecahan seed (CV Sumber Rejeki)" time="0.000244125">
+        </testcase>
+        <testcase classname="tests/subjek.presets.test.ts" name="preset konsol memicu tipologi 6.6 (AC-SUBJ-04) &gt; kesehatan finansial: pengeluaran operasional besar menekan kas (arah keluar, nominal signifikan terhadap saldo 36.5jt)" time="0.000134167">
+        </testcase>
+        <testcase classname="tests/subjek.presets.test.ts" name="preset konsol memicu tipologi 6.6 (AC-SUBJ-04) &gt; kepatuhan proses: pinjaman melampaui plafon Rp10.000.000 dengan dokumen belum lengkap" time="0.000110959">
+        </testcase>
+    </testsuite>
+</testsuites>

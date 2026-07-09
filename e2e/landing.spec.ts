@@ -7,7 +7,7 @@ import { test, expect } from "./helpers/fixtures";
 import { shot, setTheme } from "./helpers/sesi";
 import { FACTS } from "../lib/facts";
 
-test("AC-E2E-06 landing: CTA href, statistik facts, nol API, 4 screenshot", async ({
+test("@smoke AC-E2E-06 landing: CTA href, statistik facts, nol API, 4 screenshot", async ({
   page,
 }) => {
   let apiCalls = 0;

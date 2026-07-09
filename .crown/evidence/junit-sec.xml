@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="82" failures="0" errors="0" time="6.9700975">
+    <testsuite name="app/api/routes.test.ts" timestamp="2026-07-09T19:34:00.099Z" hostname="Ghaisans-MacBook-Pro.local" tests="82" failures="0" errors="0" skipped="0" time="6.9700975">
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/summary: tanpa sesi -&gt; 401 UNAUTHORIZED" time="0.004584375">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/summary: role anggota -&gt; bukan 401/403" time="0.006501959">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/summary: role pemerintah -&gt; 403 FORBIDDEN" time="0.001077292">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/summary: role pengurus -&gt; 403 FORBIDDEN" time="0.000935834">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/verdict: tanpa sesi -&gt; 401 UNAUTHORIZED" time="0.000411292">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/verdict: role anggota -&gt; bukan 401/403" time="0.001403125">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/verdict: role pemerintah -&gt; 403 FORBIDDEN" time="0.0007375">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/verdict: role pengurus -&gt; 403 FORBIDDEN" time="0.000650458">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/findings: tanpa sesi -&gt; 401 UNAUTHORIZED" time="0.000348">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/findings: role anggota -&gt; bukan 401/403" time="0.009022708">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/findings: role pemerintah -&gt; 403 FORBIDDEN" time="0.000764875">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/findings: role pengurus -&gt; 403 FORBIDDEN" time="0.000719959">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; findings/[id]/rat: tanpa sesi -&gt; 401 UNAUTHORIZED" time="0.000338166">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; findings/[id]/rat: role anggota -&gt; bukan 401/403" time="0.002369584">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; findings/[id]/rat: role pemerintah -&gt; 403 FORBIDDEN" time="0.000691959">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; findings/[id]/rat: role pengurus -&gt; 403 FORBIDDEN" time="0.000492291">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/flow: tanpa sesi -&gt; 401 UNAUTHORIZED" time="0.000319458">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/flow: role anggota -&gt; bukan 401/403" time="0.001436459">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/flow: role pemerintah -&gt; 403 FORBIDDEN" time="0.000544042">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/flow: role pengurus -&gt; 403 FORBIDDEN" time="0.000432833">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/voice: tanpa sesi -&gt; 401 UNAUTHORIZED" time="0.000283667">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/voice: role anggota -&gt; bukan 401/403" time="0.001132084">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/voice: role pemerintah -&gt; 403 FORBIDDEN" time="0.000417416">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; member/voice: role pengurus -&gt; 403 FORBIDDEN" time="0.000375792">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; vote: tanpa sesi -&gt; 401 UNAUTHORIZED" time="0.000210917">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; vote: role anggota -&gt; bukan 401/403" time="0.000828042">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; vote: role pemerintah -&gt; 403 FORBIDDEN" time="0.00050975">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; vote: role pengurus -&gt; 403 FORBIDDEN" time="0.000530708">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; subjek/transaksi: tanpa sesi -&gt; 401 UNAUTHORIZED" time="0.000255458">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; subjek/transaksi: role anggota -&gt; 403 FORBIDDEN" time="0.000453083">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; subjek/transaksi: role pemerintah -&gt; 403 FORBIDDEN" time="0.000494875">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; subjek/transaksi: role pengurus -&gt; bukan 401/403" time="0.000664833">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; subjek/pinjaman: tanpa sesi -&gt; 401 UNAUTHORIZED" time="0.000201041">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; subjek/pinjaman: role anggota -&gt; 403 FORBIDDEN" time="0.000412459">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; subjek/pinjaman: role pemerintah -&gt; 403 FORBIDDEN" time="0.000513541">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; subjek/pinjaman: role pengurus -&gt; bukan 401/403" time="0.00059225">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; subjek/rat: tanpa sesi -&gt; 401 UNAUTHORIZED" time="0.000190292">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; subjek/rat: role anggota -&gt; 403 FORBIDDEN" time="0.000435542">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; subjek/rat: role pemerintah -&gt; 403 FORBIDDEN" time="0.000468917">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; subjek/rat: role pengurus -&gt; bukan 401/403" time="0.000635875">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; subjek/recent: tanpa sesi -&gt; 401 UNAUTHORIZED" time="0.000243625">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; subjek/recent: role anggota -&gt; 403 FORBIDDEN" time="0.000479583">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; subjek/recent: role pemerintah -&gt; 403 FORBIDDEN" time="0.000409">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; subjek/recent: role pengurus -&gt; bukan 401/403" time="0.001474792">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; gov/overview: tanpa sesi -&gt; 401 UNAUTHORIZED" time="0.000272792">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; gov/overview: role anggota -&gt; 403 FORBIDDEN" time="0.000482834">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; gov/overview: role pemerintah -&gt; bukan 401/403" time="0.001304917">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; gov/overview: role pengurus -&gt; 403 FORBIDDEN" time="0.000501125">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; gov/koperasi/[id]: tanpa sesi -&gt; 401 UNAUTHORIZED" time="0.000230833">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; gov/koperasi/[id]: role anggota -&gt; 403 FORBIDDEN" time="0.000437417">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; gov/koperasi/[id]: role pemerintah -&gt; bukan 401/403" time="0.001160042">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; gov/koperasi/[id]: role pengurus -&gt; 403 FORBIDDEN" time="0.000477458">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; gov/audit/run: tanpa sesi -&gt; 401 UNAUTHORIZED" time="0.000183709">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; gov/audit/run: role anggota -&gt; 403 FORBIDDEN" time="0.000411792">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; gov/audit/run: role pemerintah -&gt; bukan 401/403" time="0.00048775">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; gov/audit/run: role pengurus -&gt; 403 FORBIDDEN" time="0.000383125">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; audit/[id]/status: tanpa sesi -&gt; 401 UNAUTHORIZED" time="0.000181584">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; audit/[id]/status: role anggota -&gt; 403 FORBIDDEN" time="0.000404959">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; audit/[id]/status: role pemerintah -&gt; bukan 401/403" time="0.000497167">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="role guard matrix (AC-SEC-01/02, AC-SUBJ-03) &gt; audit/[id]/status: role pengurus -&gt; 403 FORBIDDEN" time="0.000388291">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; login benar -&gt; 200 {role, redirectTo} + set-cookie" time="0.346399375">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; login salah -&gt; 401 tanpa membocorkan detail" time="0.340899834">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; rate limit: percobaan ke-6 -&gt; 429 (AC-SEC-07)" time="0.601945333">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; onboarding NIK 15 digit -&gt; VALIDATION onboard.nik.err" time="0.275149167">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; onboarding NIK 16 digit -&gt; kartu + sesi anggota" time="0.345338792">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; vote idempoten: setuju -&gt; 10/3, ulang tetap 10/3 (B2)" time="0.280301709">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; rat idempoten: agregat 12 -&gt; 13, ulang tetap 13 (B1)" time="0.27905025">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; flow Juni: kategori kanonik + total dari DB nyata" time="0.276098167">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; subjek transaksi mengubah saldoKas sesuai arah" time="0.280986833">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; subjek transaksi pembelian tanpa vendor -&gt; VALIDATION" time="0.27773075">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; member/verdict: merah + jumlahTemuan seed" time="0.276460125">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; member/findings: enam temuan, an1 pertama, belum ditambahkan" time="0.276667291">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; member/voice: agregat terurut + keputusan belum memilih" time="0.277573375">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; member/summary: uang anggota juri" time="0.275722959">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; koperasiForAnggota: ang-juri -&gt; kop-sukamaju, tak dikenal -&gt; null" time="0.27454925">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; gov/overview: KPI seed (12 koperasi, 17 temuan)" time="0.277648166">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; gov/koperasi/[id]: tren 6 periode + temuan" time="0.276946125">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; live audit tanpa key -&gt; marker gagal_langsung + status baca cache" time="0.280022792">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; persistLiveRun -&gt; status selesai membaca run live" time="0.27862825">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; audit/status id tak dikenal -&gt; berjalan" time="0.276275042">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; logout -&gt; loggedOut true + hapus cookie" time="0.27452325">
+        </testcase>
+        <testcase classname="app/api/routes.test.ts" name="perilaku endpoint &gt; subjek pinjaman + rat + recent" time="0.280194208">
+        </testcase>
+    </testsuite>
+</testsuites>

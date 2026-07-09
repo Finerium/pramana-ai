@@ -1,0 +1,5 @@
+
+> pramana-ai@1.0.0 check-env /Users/ghaisan/Documents/Pramana-AI
+> node scripts/check-env-example.mjs
+
+check-env: LULUS (.env.example cocok set 6.16; tidak ada env liar).
