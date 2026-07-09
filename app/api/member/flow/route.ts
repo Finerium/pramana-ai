@@ -2,8 +2,8 @@ import type { NextRequest } from "next/server";
 import { and, eq, like, sql } from "drizzle-orm";
 import { getDb } from "../../../../db/client";
 import { temuan, transaksi } from "../../../../db/schema";
-import { ok, runRoute } from "../../../../lib/api";
-import { requireRole } from "../../../../lib/auth";
+import { ApiError, ok, runRoute } from "../../../../lib/api";
+import { koperasiForAnggota, requireRole } from "../../../../lib/auth";
 import { latestRun } from "../../../../lib/audit/persist";
 import {
   JENIS_KE_KATEGORI,
@@ -12,13 +12,17 @@ import {
   type FlowResp,
 } from "../../../../lib/contracts";
 
-const KOPERASI_ID = "kop-sukamaju";
-
 type Bukti = { jenis: string; id: string; label: string };
 
 export async function GET(req: NextRequest) {
   return runRoute(async () => {
-    await requireRole(req, "anggota");
+    const s = await requireRole(req, "anggota");
+    const anggotaId = s.anggotaId;
+    if (!anggotaId)
+      throw new ApiError("INTERNAL", "Sesi anggota tidak lengkap.");
+    const koperasiId = await koperasiForAnggota(anggotaId);
+    if (!koperasiId)
+      throw new ApiError("INTERNAL", "Koperasi anggota tidak ditemukan.");
     const { db } = getDb();
 
     let periode = new URL(req.url).searchParams.get("periode") ?? "";
@@ -26,7 +30,7 @@ export async function GET(req: NextRequest) {
       const mx = await db
         .select({ p: sql<string>`max(substr(${transaksi.tanggal}, 1, 7))` })
         .from(transaksi)
-        .where(eq(transaksi.koperasiId, KOPERASI_ID));
+        .where(eq(transaksi.koperasiId, koperasiId));
       periode = mx[0]?.p ?? "2026-06";
     }
 
@@ -40,7 +44,7 @@ export async function GET(req: NextRequest) {
       .from(transaksi)
       .where(
         and(
-          eq(transaksi.koperasiId, KOPERASI_ID),
+          eq(transaksi.koperasiId, koperasiId),
           like(transaksi.tanggal, `${periode}%`),
         ),
       )
@@ -74,7 +78,7 @@ export async function GET(req: NextRequest) {
     // ponytail: satu sorotan per transaksi; upgrade simpan banyak alasan bila UI
     // butuh lebih dari satu label per transaksi.
     const sorotan: FlowResp["sorotan"] = [];
-    const run = await latestRun(db, KOPERASI_ID);
+    const run = await latestRun(db, koperasiId);
     if (run) {
       const trows = await db
         .select({ id: temuan.id, buktiJson: temuan.buktiJson })

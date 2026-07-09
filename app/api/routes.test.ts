@@ -3,7 +3,12 @@ import { describe, it, expect, beforeAll, beforeEach, vi } from "vitest";
 import { ulid } from "ulid";
 import { createDb, resolveDbUrl, type Db } from "../../db/client";
 import { seed } from "../../scripts/seed/index";
-import { SESSION_COOKIE, sealSession, type SessionData } from "../../lib/auth";
+import {
+  SESSION_COOKIE,
+  sealSession,
+  koperasiForAnggota,
+  type SessionData,
+} from "../../lib/auth";
 import { resetRateLimit } from "../../lib/rateLimit";
 import {
   latestRun,
@@ -447,6 +452,11 @@ describe("perilaku endpoint", () => {
       tanggal: "2026-07-05",
     });
     expect(d.notifikasiBelumDibaca).toBe(1);
+  });
+
+  it("koperasiForAnggota: ang-juri -> kop-sukamaju, tak dikenal -> null", async () => {
+    expect(await koperasiForAnggota("ang-juri")).toBe("kop-sukamaju");
+    expect(await koperasiForAnggota("tidak-ada")).toBeNull();
   });
 
   it("gov/overview: KPI seed (12 koperasi, 17 temuan)", async () => {

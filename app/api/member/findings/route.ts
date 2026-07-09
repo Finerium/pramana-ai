@@ -3,21 +3,28 @@ import { eq } from "drizzle-orm";
 import { getDb } from "../../../../db/client";
 import { pertanyaanRat, temuan } from "../../../../db/schema";
 import { ApiError, ok, runRoute } from "../../../../lib/api";
-import { requireRole } from "../../../../lib/auth";
+import { koperasiForAnggota, requireRole } from "../../../../lib/auth";
 import { latestRun } from "../../../../lib/audit/persist";
-import type { AgentFinding, EvidenceRef, Severity } from "../../../../lib/contracts";
+import type {
+  AgentFinding,
+  EvidenceRef,
+  Severity,
+} from "../../../../lib/contracts";
 
-const KOPERASI_ID = "kop-sukamaju";
 const RANK: Record<Severity, number> = { merah: 0, kuning: 1, info: 2 };
 
 export async function GET(req: NextRequest) {
   return runRoute(async () => {
     const s = await requireRole(req, "anggota");
     const anggotaId = s.anggotaId;
-    if (!anggotaId) throw new ApiError("INTERNAL", "Sesi anggota tidak lengkap.");
+    if (!anggotaId)
+      throw new ApiError("INTERNAL", "Sesi anggota tidak lengkap.");
+    const koperasiId = await koperasiForAnggota(anggotaId);
+    if (!koperasiId)
+      throw new ApiError("INTERNAL", "Koperasi anggota tidak ditemukan.");
     const { db } = getDb();
 
-    const run = await latestRun(db, KOPERASI_ID);
+    const run = await latestRun(db, koperasiId);
     if (!run) return ok({ temuan: [], sudahDitambahkan: [] });
 
     const rows = await db

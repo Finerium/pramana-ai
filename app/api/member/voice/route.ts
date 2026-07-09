@@ -3,20 +3,22 @@ import { and, desc, eq, sql } from "drizzle-orm";
 import { getDb } from "../../../../db/client";
 import { keputusan, pertanyaanRat, temuan, vote } from "../../../../db/schema";
 import { ApiError, ok, runRoute } from "../../../../lib/api";
-import { requireRole } from "../../../../lib/auth";
+import { koperasiForAnggota, requireRole } from "../../../../lib/auth";
 import { latestRun } from "../../../../lib/audit/persist";
 import type { VoiceResp } from "../../../../lib/contracts";
-
-const KOPERASI_ID = "kop-sukamaju";
 
 export async function GET(req: NextRequest) {
   return runRoute(async () => {
     const s = await requireRole(req, "anggota");
     const anggotaId = s.anggotaId;
-    if (!anggotaId) throw new ApiError("INTERNAL", "Sesi anggota tidak lengkap.");
+    if (!anggotaId)
+      throw new ApiError("INTERNAL", "Sesi anggota tidak lengkap.");
+    const koperasiId = await koperasiForAnggota(anggotaId);
+    if (!koperasiId)
+      throw new ApiError("INTERNAL", "Koperasi anggota tidak ditemukan.");
     const { db } = getDb();
 
-    const run = await latestRun(db, KOPERASI_ID);
+    const run = await latestRun(db, koperasiId);
     let pertanyaanAgregat: VoiceResp["pertanyaanAgregat"] = [];
     if (run) {
       const rows = await db
@@ -40,7 +42,7 @@ export async function GET(req: NextRequest) {
     const kRows = await db
       .select()
       .from(keputusan)
-      .where(eq(keputusan.koperasiId, KOPERASI_ID));
+      .where(eq(keputusan.koperasiId, koperasiId));
     const keputusanList: VoiceResp["keputusan"] = [];
     for (const k of kRows) {
       const mine = await db

@@ -3,18 +3,21 @@ import { eq, sql } from "drizzle-orm";
 import { getDb } from "../../../../db/client";
 import { temuan } from "../../../../db/schema";
 import { ApiError, ok, runRoute } from "../../../../lib/api";
-import { requireRole } from "../../../../lib/auth";
+import { koperasiForAnggota, requireRole } from "../../../../lib/auth";
 import { latestRun } from "../../../../lib/audit/persist";
-import type { Severity } from "../../../../lib/contracts";
-import type { VerdictResp } from "../../../../lib/contracts";
-
-const KOPERASI_ID = "kop-sukamaju";
+import type { Severity, VerdictResp } from "../../../../lib/contracts";
 
 export async function GET(req: NextRequest) {
   return runRoute(async () => {
-    await requireRole(req, "anggota");
+    const s = await requireRole(req, "anggota");
+    const anggotaId = s.anggotaId;
+    if (!anggotaId)
+      throw new ApiError("INTERNAL", "Sesi anggota tidak lengkap.");
+    const koperasiId = await koperasiForAnggota(anggotaId);
+    if (!koperasiId)
+      throw new ApiError("INTERNAL", "Koperasi anggota tidak ditemukan.");
     const { db } = getDb();
-    const run = await latestRun(db, KOPERASI_ID);
+    const run = await latestRun(db, koperasiId);
     if (!run) throw new ApiError("NOT_FOUND", "Belum ada hasil pemeriksaan.");
 
     const counts = await db

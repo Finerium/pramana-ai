@@ -9,7 +9,7 @@ import { sealData, unsealData } from "iron-session";
 import type { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 import { getDb } from "../db/client";
-import { pengurus, users } from "../db/schema";
+import { anggota, pengurus, users } from "../db/schema";
 import { ApiError } from "./api";
 import { isProduction, sessionSecret } from "./env";
 
@@ -104,6 +104,23 @@ export async function koperasiForPengurus(
     .from(users)
     .innerJoin(pengurus, eq(users.pengurusId, pengurus.id))
     .where(eq(users.id, userId))
+    .limit(1);
+  return rows[0]?.koperasiId ?? null;
+}
+
+/**
+ * Scope koperasi untuk anggota yang sedang masuk (anggota.koperasiId).
+ * Dipakai route member agar membaca koperasi milik anggota itu sendiri, bukan
+ * konstanta ter-hardcode. Null bila anggotaId tak dikenal.
+ */
+export async function koperasiForAnggota(
+  anggotaId: string,
+): Promise<string | null> {
+  const { db } = getDb();
+  const rows = await db
+    .select({ koperasiId: anggota.koperasiId })
+    .from(anggota)
+    .where(eq(anggota.id, anggotaId))
     .limit(1);
   return rows[0]?.koperasiId ?? null;
 }
