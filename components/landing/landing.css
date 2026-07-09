@@ -1,0 +1,129 @@
+/*
+  Landing component styles — hal yang tidak bisa diekspresikan inline:
+  base wrapper, link/selection/fokus/reset tombol, keyframes, reduced-motion,
+  dan breakpoint container (899 / 519) DIPORT VERBATIM dari prototype
+  (@container pg). Semua diruang-lingkupkan ke .landing agar tidak bocor ke
+  rute lain (globals.css shadcn tetap utuh). Warna hanya via token landing.
+*/
+
+.landing {
+  container-type: inline-size;
+  container-name: pg;
+  min-height: 100vh;
+  overflow-x: clip;
+  background: var(--latar);
+  color: var(--tinta);
+  font-family: var(--font-teks);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.landing a {
+  color: var(--aksen);
+}
+.landing a:hover {
+  color: var(--aksen-kuat);
+}
+.landing ::selection {
+  background: var(--aksen);
+  color: var(--aksen-teks);
+}
+.landing :where(a, button):focus-visible {
+  outline: 2px solid var(--cincin);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+.landing button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Pil interaktif: base + hover di CSS agar hover menang (inline akan
+   mengunci nilai dan mematikan :hover). */
+.l-cta-aksen {
+  background: var(--aksen);
+  color: var(--aksen-teks);
+}
+.l-cta-aksen:hover {
+  background: var(--aksen-kuat);
+  color: var(--aksen-teks);
+}
+.l-pil-garis {
+  box-shadow: inset 0 0 0 1.5px var(--garis-kuat);
+  color: var(--tinta);
+}
+.l-pil-garis:hover {
+  box-shadow: inset 0 0 0 1.5px var(--tinta-3);
+  color: var(--tinta);
+}
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.65;
+  }
+}
+
+/* prefers-reduced-motion = statis penuh (bukan sekadar lebih cepat).
+   MotionController juga tidak dijalankan; ini menetralkan pulseDot. */
+@media (prefers-reduced-motion: reduce) {
+  .landing *,
+  .landing *::before,
+  .landing *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Breakpoint container (setara viewport di lebar sama; wrapper = lebar penuh).
+   Diport verbatim dari @container pg prototype. */
+@container pg (max-width: 899px) {
+  [data-cq="devices"] {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+  [data-cq="phone"] {
+    margin: 0 !important;
+    transform: none !important;
+  }
+  [data-cq="captions"] {
+    grid-template-columns: 1fr !important;
+  }
+  [data-cq="connectors"] {
+    display: none !important;
+  }
+  [data-cq="spine"] {
+    display: block !important;
+  }
+  [data-cq="cards"] {
+    grid-template-columns: 1fr !important;
+    max-width: 430px;
+    margin-inline: auto;
+  }
+  [data-cq="footgrid"] {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+  [data-cq="herocta"] {
+    flex-direction: column;
+    align-items: stretch !important;
+    max-width: 340px;
+    margin-inline: auto;
+  }
+}
+@container pg (max-width: 519px) {
+  [data-cq="navcta"] {
+    display: none !important;
+  }
+}
