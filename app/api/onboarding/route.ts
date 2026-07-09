@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
       .select({ n: sql<number>`count(*)` })
       .from(anggota)
       .where(eq(anggota.koperasiId, KOPERASI_ID));
-    const noAnggota = `SKM-${String(Number(countRows[0]?.n ?? 0) + 1).padStart(2, "0")}`;
+    const noAnggota = `KDS-${String(Number(countRows[0]?.n ?? 0) + 1).padStart(4, "0")}`;
     const anggotaId = ulid();
     const userId = ulid();
     const bergabungPada = new Date().toISOString().slice(0, 10);

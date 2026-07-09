@@ -447,7 +447,7 @@ export function buildSeedData(): SeedData {
       koperasiId: "kop-sukamaju",
       nama,
       nik,
-      noAnggota: `SKM-${pad2(i + 1)}`,
+      noAnggota: `KDS-${String(i + 1).padStart(4, "0")}`,
       alamat: `Kampung Sukamaju RT ${pad2(intBetween(rng, 1, 8))} RW ${pad2(intBetween(rng, 1, 4))}`,
       bergabungPada: bergabung(monthsAgo),
     });

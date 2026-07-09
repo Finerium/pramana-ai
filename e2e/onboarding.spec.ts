@@ -45,7 +45,7 @@ test("AC-E2E-03 NIK 15 ditolak tanpa akun; NIK 16 membuat kartu + sesi aktif", a
 
   await expect(page.getByText(SUKSES)).toBeVisible();
   await expect(page.getByText("Uji Enam Belas")).toBeVisible();
-  await expect(page.getByText(/SKM-\d+/)).toBeVisible(); // noAnggota
+  await expect(page.getByText(/KDS-\d{4}/)).toBeVisible(); // noAnggota
   await shot(page, "daftar", "02-kartu-anggota");
 
   // --- Sesi aktif: /beranda sukses -----------------------------------------

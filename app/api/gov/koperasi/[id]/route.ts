@@ -81,13 +81,18 @@ export async function GET(
       .select({
         periode: auditRun.periode,
         verdictWarna: auditRun.verdictWarna,
+        dibuatPada: auditRun.dibuatPada,
       })
       .from(auditRun)
       .where(and(eq(auditRun.koperasiId, id), bukanMarker))
-      .orderBy(asc(auditRun.periode));
-    const tren = trenRows.map((t) => ({
-      periode: t.periode,
-      warna: t.verdictWarna,
+      .orderBy(asc(auditRun.periode), asc(auditRun.dibuatPada));
+    // Collapse per periode (run live menambah baris Juni baru): sel tren = run
+    // TERBARU tiap bulan, bingkai tetap 6 bulan seperti bundle.
+    const perPeriode = new Map<string, string>();
+    for (const t of trenRows) perPeriode.set(t.periode, t.verdictWarna);
+    const tren = [...perPeriode.entries()].map(([periode, warna]) => ({
+      periode,
+      warna,
     }));
 
     // Perluasan aditif: jumlah anggota untuk baris profil (bundle menampilkannya).

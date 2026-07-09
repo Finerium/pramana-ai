@@ -34,7 +34,8 @@ export async function GET(req: NextRequest) {
     rows.sort(
       (a, b) => RANK[a.severity] - RANK[b.severity] || a.id.localeCompare(b.id),
     );
-    const temuanList: AgentFinding[] = rows.map((r) => ({
+    const temuanList: (AgentFinding & { tanggapanPengurus: string | null })[] =
+      rows.map((r) => ({
       id: r.id,
       agent: r.agent,
       severity: r.severity,
@@ -43,6 +44,7 @@ export async function GET(req: NextRequest) {
       kenapa_penting: r.kenapaPenting,
       bukti: JSON.parse(r.buktiJson) as EvidenceRef[],
       pertanyaan_rat: r.pertanyaanRat,
+      tanggapanPengurus: r.tanggapanPengurus,
     }));
 
     const runTemuanIds = new Set(rows.map((r) => r.id));

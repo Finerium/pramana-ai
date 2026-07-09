@@ -302,7 +302,7 @@ describe("perilaku endpoint", () => {
       noAnggota: string;
       koperasi: string;
     };
-    expect(kartu.noAnggota).toMatch(/^SKM-/);
+    expect(kartu.noAnggota).toMatch(/^KDS-\d{4}$/);
     expect(kartu.koperasi).toContain("Sukamaju");
     expect(res.headers.get("set-cookie") ?? "").toContain(SESSION_COOKIE);
   });

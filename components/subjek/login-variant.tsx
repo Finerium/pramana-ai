@@ -251,7 +251,15 @@ export function LoginVariant({ onSubmit, busy, error }: LoginVariantProps) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={c.phEmail}
-              style={S.input}
+              style={
+                error
+                  ? {
+                      ...S.input,
+                      borderColor: "var(--color-danger)",
+                      background: "var(--color-danger-soft)",
+                    }
+                  : S.input
+              }
               autoComplete="username"
             />
           </div>
@@ -262,7 +270,15 @@ export function LoginVariant({ onSubmit, busy, error }: LoginVariantProps) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder={c.phSandi}
-              style={S.input}
+              style={
+                error
+                  ? {
+                      ...S.input,
+                      borderColor: "var(--color-danger)",
+                      background: "var(--color-danger-soft)",
+                    }
+                  : S.input
+              }
               autoComplete="current-password"
             />
           </div>
