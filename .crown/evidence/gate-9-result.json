@@ -1,0 +1,11 @@
+{
+  "gate": 9,
+  "at": "2026-07-09T23:30:43Z",
+  "pass": true,
+  "results": [
+    {"id": "AC-DEP-01", "pass": true, "note": "vercel --prod deploy exit 0 dari HEAD ter-tag v1.0.0; alias pramana-ai-puce dipertahankan (deploy.log)"},
+    {"id": "AC-DEP-02", "pass": true, "note": "health 200 ok:true demoMode:true + Playwright live 3 role (anggota verdict merah, pemerintah KPI 17, bendahara konsol) semua PASS, nol pageerror"},
+    {"id": "AC-DEP-03", "pass": true, "note": "DEMO_MODE=true di production; audit langsung tersedia dengan fallback cache saat MiniMax kuota habis"},
+    {"id": "AC-DEL-07", "pass": true, "note": "URL produksi di README bagian Demo + deck slide Penutup; health-check hijau 200"}
+  ]
+}

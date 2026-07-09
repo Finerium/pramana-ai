@@ -3345,3 +3345,64 @@
 {"at":"2026-07-09T23:27:10.795Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 sh -c '\ncp deck/pramana-deck.pdf .crown/evidence/pramana-deck"}
 {"at":"2026-07-09T23:27:32.197Z","tool":"Bash","path":"git log --oneline -3 | cat; echo \"=== origin ===\"; git log --oneline origin/main"}
 {"at":"2026-07-09T23:27:50.034Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 node -e \"\nconst fs=require('fs'); const p=JSON.parse(fs.readF"}
+{"at":"2026-07-09T23:27:58.990Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/phase"}
+{"at":"2026-07-09T23:28:14.953Z","tool":"Bash","path":"echo \"vercel whoami:\"; vercel whoami 2>&1 | tail -1; echo \"=== TURSO di producti"}
+{"at":"2026-07-09T23:28:36.876Z","tool":"Bash","path":"git tag -a v1.0.0 -m \"Pramana AI v1.0.0 - purwarupa Hackathon Digital Cooperativ"}
+{"at":"2026-07-09T23:28:48.946Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 cat > .crown/evidence/manifest-gate-9.json <<'EOF'\n{\n  \"gate\""}
+{"at":"2026-07-09T23:29:00.022Z","tool":"Bash","path":"tail -4 /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/473c1eb6-335"}
+{"at":"2026-07-09T23:29:08.425Z","tool":"Bash","path":"cat .crown/progress.json | node -e \"let s='';process.stdin.on('data',d=>s+=d).on"}
+{"at":"2026-07-09T23:29:16.618Z","tool":"Bash","path":"node -e \"\nconst fs=require('fs');\nconst p=JSON.parse(fs.readFileSync('.crown/pro"}
+{"at":"2026-07-09T23:29:34.895Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 node -e \"\nconst fs=require('fs');\nconst p=JSON.parse(fs.readF"}
+{"at":"2026-07-09T23:29:43.397Z","tool":"Bash","path":"grep -iE \"Aliased\" /tmp/prod-final.log | tail -1; L=https://pramana-ai-puce.verc"}
+{"at":"2026-07-09T23:30:06.519Z","tool":"Bash","path":"NODE_PATH=/Users/ghaisan/Documents/Pramana-AI/node_modules node - <<'EOF'\nconst "}
+{"at":"2026-07-09T23:30:43.055Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 sh -c '\ncp /tmp/prod-final.log .crown/evidence/deploy.log 2>/"}
+{"at":"2026-07-09T23:30:55.635Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/ai-usage.md"}
+{"at":"2026-07-09T23:31:12.108Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/ai-usage.md"}
+{"at":"2026-07-09T23:32:28.543Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/Report.md"}
+{"at":"2026-07-09T23:32:36.816Z","tool":"Bash","path":"node scripts/check-register.mjs --file Report.md 2>&1 | tail -2"}
+{"at":"2026-07-09T23:33:08.877Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/Report.md"}
+{"at":"2026-07-09T23:33:09.332Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/progress.json"}
+{"at":"2026-07-09T23:33:22.787Z","tool":"Bash","path":"ls -la /Users/ghaisan/Documents/Pramana-AI/.crown/evidence/ 2>&1; echo \"---SPECS"}
+{"at":"2026-07-09T23:33:23.724Z","tool":"Bash","path":"git tag -l 2>&1; echo \"---REMOTE---\"; git remote -v 2>&1"}
+{"at":"2026-07-09T23:33:37.167Z","tool":"Bash","path":"find /Users/ghaisan/Documents/Pramana-AI/.crown -maxdepth 2 -type f 2>&1 | sort"}
+{"at":"2026-07-09T23:33:37.678Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/evidence/gate-9-result.json"}
+{"at":"2026-07-09T23:33:38.690Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/evidence/gate-1-result.json"}
+{"at":"2026-07-09T23:33:38.852Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/evidence/gate-3-result.json"}
+{"at":"2026-07-09T23:34:19.056Z","tool":"Bash","path":"pnpm test 2>&1 | tail -40"}
+{"at":"2026-07-09T23:34:19.865Z","tool":"Bash","path":"pnpm audit --prod 2>&1 | tail -40"}
+{"at":"2026-07-09T23:34:23.261Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/evidence/gate-0-result.json"}
+{"at":"2026-07-09T23:34:23.764Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/evidence/gate-2-result.json"}
+{"at":"2026-07-09T23:34:24.824Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/evidence/gate-5-result.json"}
+{"at":"2026-07-09T23:34:25.318Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/evidence/gate-6-result.json"}
+{"at":"2026-07-09T23:34:25.840Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/evidence/gate-7-result.json"}
+{"at":"2026-07-09T23:34:26.254Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/evidence/gate-8-result.json"}
+{"at":"2026-07-09T23:35:08.072Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/473c1eb6-3356-4981-9856-5d976fe340d9/tasks/be2yini9k.output"}
+{"at":"2026-07-09T23:35:08.574Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/evidence/perf-api.json"}
+{"at":"2026-07-09T23:35:09.596Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/evidence/perf-bundle.json"}
+{"at":"2026-07-09T23:35:10.058Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/evidence/sec-audit.json"}
+{"at":"2026-07-09T23:35:10.556Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/evidence/demo-hash.txt"}
+{"at":"2026-07-09T23:35:11.133Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/evidence/audit-bench-note.txt"}
+{"at":"2026-07-09T23:35:11.612Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/evidence/depaudit.txt"}
+{"at":"2026-07-09T23:35:32.670Z","tool":"Bash","path":"grep -Ei \"test files|tests|test \" /private/tmp/claude-501/-Users-ghaisan-Documen"}
+{"at":"2026-07-09T23:35:33.677Z","tool":"Bash","path":"curl -sS --max-time 25 https://pramana-ai-puce.vercel.app/api/health 2>&1"}
+{"at":"2026-07-09T23:35:35.680Z","tool":"Bash","path":"gh repo view Finerium/pramana-ai --json visibility,name,pushedAt,isPrivate 2>&1"}
+{"at":"2026-07-09T23:35:36.368Z","tool":"Bash","path":"node scripts/check-tokens.mjs --strict 2>&1 | tail -30; echo \"EXIT: $?\""}
+{"at":"2026-07-09T23:35:45.551Z","tool":"Bash","path":"tail -25 /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/473c1eb6-33"}
+{"at":"2026-07-09T23:36:05.802Z","tool":"Bash","path":"tr '\\r' '\\n' < /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/473c1"}
+{"at":"2026-07-09T23:36:12.677Z","tool":"Bash","path":"wc -l /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/473c1eb6-3356-"}
+{"at":"2026-07-09T23:36:29.730Z","tool":"Bash","path":"pnpm test 2>&1 | tr '\\r' '\\n' | grep -iE \"Test Files|Tests +[0-9]|Tests +.*passe"}
+{"at":"2026-07-09T23:36:30.717Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/design-deviations.md"}
+{"at":"2026-07-09T23:36:32.822Z","tool":"Bash","path":"echo \"=== e2e spec files ===\"; ls e2e/*.spec.ts 2>/dev/null; echo \"=== count tes"}
+{"at":"2026-07-09T23:36:35.654Z","tool":"Bash","path":"echo \"=== unique AC- ids in blueprint ===\"; grep -oE \"AC-[A-Z0-9]+-[0-9]+\" bluep"}
+{"at":"2026-07-09T23:37:11.874Z","tool":"Bash","path":"echo \"=== unique AC- ids defined in blueprint ===\"; grep -oE \"AC-[A-Z0-9]+-[0-9]"}
+{"at":"2026-07-09T23:37:12.165Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/subjek/pinjaman/route.ts"}
+{"at":"2026-07-09T23:38:31.853Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/473c1eb6-3356-4981-9856-5d976fe340d9/scratchpad/testcount.txt"}
+{"at":"2026-07-09T23:38:33.725Z","tool":"Bash","path":"echo \"=== jabatan/pinjaman regression tests in routes.test.ts ===\"; grep -nEi \"j"}
+{"at":"2026-07-09T23:39:26.088Z","tool":"Bash","path":"find /Users/ghaisan/Documents/Pramana-AI -name '*.spec.ts' -not -path '*worktree"}
+{"at":"2026-07-09T23:39:45.007Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/playwright.config.ts"}
+{"at":"2026-07-09T23:40:10.922Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; echo \"=== unique AC-IDs across all gate "}
+{"at":"2026-07-09T23:43:12.320Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/Report.md"}
+{"at":"2026-07-09T23:43:17.365Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/Report.md"}
+{"at":"2026-07-09T23:43:30.704Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/Report.md"}
+{"at":"2026-07-09T23:43:40.120Z","tool":"Bash","path":"node scripts/check-register.mjs --file Report.md 2>&1 | tail -1 && CROWN_GATE_WR"}
+{"at":"2026-07-09T23:43:53.511Z","tool":"Bash","path":"SHA_PRE=$(git rev-parse --short HEAD); git add -A && git commit -q -m \"checkpoin"}

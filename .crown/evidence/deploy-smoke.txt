@@ -1,0 +1,14 @@
+AC-DEP + AC-DEL-07 smoke live 2026-07-09T23:30:43Z
+URL produksi: https://pramana-ai-puce.vercel.app (tercantum di README + deck slide 12)
+
+AC-DEL-07 / AC-DEP-02 health: HTTP 200 {"ok":true,"db":"up","llm":"down","demoMode":true,"version":"1.0.0"}
+AC-DEP-03: DEMO_MODE=true di env production terkonfirmasi (health demoMode:true); audit langsung tetap tersedia, fallback cache saat kuota MiniMax (429).
+
+Playwright live smoke tiga role (semua PASS):
+- anggota mobile: verdict merah + ringkasan seed + nol pageerror
+- pemerintah desktop: KPI 12 koperasi + 17 temuan + tabel Sukamaju
+- bendahara: konsol Simulasi Pembukuan + saldo kas 36.500.000
+LIVE_SMOKE_ALL_PASS
+
+Deploy dari commit ter-tag v1.0.0 (main HEAD, push memicu build); alias produksi dipertahankan.
+State Turso di-reseed bersih untuk penjurian (AN-1=12, freezer belum dipilih).

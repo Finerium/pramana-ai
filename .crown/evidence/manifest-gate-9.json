@@ -1,0 +1,9 @@
+{
+  "gate": 9,
+  "entries": [
+    {"id": "AC-DEP-01", "check": "vercel --prod deploy sukses dari commit ter-tag v1.0.0", "expect": "exit 0", "artifact": ".crown/evidence/deploy.log"},
+    {"id": "AC-DEP-02", "check": "smoke live GET {URL}/api/health ok:true demoMode:true + login juri-anggota Playwright terhadap URL live -> verdict tampil", "expect": "pass", "artifact": ".crown/evidence/deploy-smoke.txt"},
+    {"id": "AC-DEP-03", "check": "DEMO_MODE=true di env production; trigger audit langsung tetap berfungsi (fallback cache bila key kuota)", "expect": "pass", "artifact": ".crown/evidence/deploy-smoke.txt"},
+    {"id": "AC-DEL-07", "check": "URL produksi tercantum di README dan health-check hijau", "expect": "200 + ok:true", "artifact": ".crown/evidence/deploy-smoke.txt"}
+  ]
+}

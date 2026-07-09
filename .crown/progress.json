@@ -40,8 +40,13 @@
       "passed": true,
       "commit": "7650921",
       "at": "2026-07-09T23:27:50.111Z"
+    },
+    "9": {
+      "passed": true,
+      "commit": "4806d2e",
+      "at": "2026-07-09T23:43:53.761Z"
     }
   },
-  "spendNote": "Gate 0-8 passed. Deliverables machine-gated + repo publik pushed. Masuk Phase 9: deploy final + Report.",
+  "spendNote": "SELESAI. Gate 0-9 lulus (gate 4 kondisional tak terpicu). Report.md ditulis + grounded audit. v1.0.0 ter-tag, produksi live terverifikasi.",
   "lastPhase": 9
 }

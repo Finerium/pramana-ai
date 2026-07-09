@@ -1,0 +1,13 @@
+{
+  "at": "2026-07-09T23:43:40Z",
+  "verdict_awal": "perlu-koreksi",
+  "verdict_akhir": "grounded (2 overstatement dikoreksi)",
+  "supported": 15,
+  "overstated_dikoreksi": 2,
+  "unsupported": 0,
+  "koreksi": [
+    "Section 1: kesepuluh gate -> sembilan gate lulus + gate 4 kondisional tak terpicu",
+    "Section 6: lolos seluruh 328 test -> lolos test yang ada saat itu + regresi kini ditambahkan",
+    "Section 2: 82 diverifikasi -> 81 verified + 1 HUMAN-GATED (AC-LLM-04)"
+  ]
+}
