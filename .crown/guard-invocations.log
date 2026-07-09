@@ -2184,3 +2184,33 @@
 {"at":"2026-07-09T17:14:51.970Z","tool":"Bash","path":"lsof -ti:3000 | xargs kill 2>/dev/null; git add -A && git commit -m \"checkpoint("}
 {"at":"2026-07-09T17:16:00.347Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/phase"}
 {"at":"2026-07-09T17:16:02.106Z","tool":"Bash","path":"pnpm add -D @axe-core/playwright 2>&1 | tail -3 && git add -A && git commit -m \""}
+{"at":"2026-07-09T17:18:02.496Z","tool":"Bash","path":"pwd && git branch --show-current && git log --oneline -3"}
+{"at":"2026-07-09T17:18:03.676Z","tool":"Bash","path":"pnpm install --prefer-offline 2>&1 | tail -20"}
+{"at":"2026-07-09T17:18:15.394Z","tool":"Bash","path":"pnpm seed 2>&1 | tail -15"}
+{"at":"2026-07-09T17:18:17.826Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/blueprint-pramana-ai.md"}
+{"at":"2026-07-09T17:18:23.108Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/contracts.ts"}
+{"at":"2026-07-09T17:18:24.175Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/fixtures/temuan-seed.ts"}
+{"at":"2026-07-09T17:18:24.390Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/playwright.config.ts"}
+{"at":"2026-07-09T17:18:30.280Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/copy/index.ts"}
+{"at":"2026-07-09T17:18:30.847Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/subjek/api.ts"}
+{"at":"2026-07-09T17:18:31.457Z","tool":"Bash","path":"pnpm typecheck 2>&1 | tail -15"}
+{"at":"2026-07-09T17:18:40.445Z","tool":"Bash","path":"echo \"=== APP ROUTES ===\" && find app -type f \\( -name \"*.tsx\" -o -name \"*.ts\" \\"}
+{"at":"2026-07-09T17:18:45.951Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 cat > .crown/evidence/manifest-gate-3.json <<'EOF'\n{\n  \"gate\""}
+{"at":"2026-07-09T17:18:47.410Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/auth/login/route.ts"}
+{"at":"2026-07-09T17:18:47.918Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/health/route.ts"}
+{"at":"2026-07-09T17:18:48.403Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/vote/route.ts"}
+{"at":"2026-07-09T17:18:48.775Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/onboarding/route.ts"}
+{"at":"2026-07-09T17:18:53.619Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/llm.ts"}
+{"at":"2026-07-09T17:18:54.129Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/env.ts"}
+{"at":"2026-07-09T17:18:55.563Z","tool":"Bash","path":"echo \"=== lib/audit ===\" && find lib/audit -type f | sort && echo \"\" && echo \"=="}
+{"at":"2026-07-09T17:19:01.482Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/index.ts"}
+{"at":"2026-07-09T17:19:02.059Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/persist.ts"}
+{"at":"2026-07-09T17:19:02.239Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/prompts/index.ts"}
+{"at":"2026-07-09T17:19:09.025Z","tool":"Bash","path":"sed -n 180,240p components/subjek/logic.ts"}
+{"at":"2026-07-09T17:19:12.357Z","tool":"Bash","path":"for f in konflik-kepentingan anomali-transaksi kesehatan-finansial kepatuhan-pro"}
+{"at":"2026-07-09T17:19:12.564Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/snapshot.ts"}
+{"at":"2026-07-09T17:19:21.388Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/prompts/bersama.ts"}
+{"at":"2026-07-09T17:19:21.542Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/buildSnapshot.ts"}
+{"at":"2026-07-09T17:19:27.560Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/tests/subjek.presets.test.ts"}
+{"at":"2026-07-09T17:19:35.957Z","tool":"Bash","path":"pnpm exec vitest run tests/subjek.presets.test.ts --coverage=false 2>&1 | tail -"}
+{"at":"2026-07-09T17:19:46.680Z","tool":"Bash","path":"git add -A && git commit -m \"chore(phase-3): manifest gate-3 (34 AC) + test tipo"}
