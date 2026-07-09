@@ -162,8 +162,8 @@
 /* ---- Base bundle (blok style prototype), di-scope ke .gov ---- */
 .gov a { color: var(--primary); }
 .gov a:hover { color: var(--primary-hover); }
-.gov button { font: inherit; border: 0; background: none; padding: 0; margin: 0; cursor: pointer; color: inherit; text-align: left; }
-.gov input { font: inherit; border: 0; background: none; outline: none; color: inherit; }
+:where(.gov) button { font: inherit; border: 0; background: none; padding: 0; margin: 0; cursor: pointer; color: inherit; text-align: left; }
+:where(.gov) input { font: inherit; border: 0; background: none; outline: none; color: inherit; }
 .gov input::placeholder { color: var(--muted-foreground); opacity: 1; }
 .gov abbr { text-decoration: underline dotted; text-underline-offset: 3px; cursor: help; }
 .gov button:focus-visible,
