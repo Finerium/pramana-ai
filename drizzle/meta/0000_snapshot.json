@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "eb9bd822-fc69-4a52-b342-5f9c972a1feb",
+  "id": "581622ab-ef1a-4336-be49-5688afc477fa",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "anggota": {
