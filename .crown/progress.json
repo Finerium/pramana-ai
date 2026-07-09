@@ -1,6 +1,6 @@
 {
   "project": "pramana-ai",
   "gates": {},
-  "spendNote": "Phase 0 in progress: recon+bundle inventory+full blueprint/prototype reads done; foundation files being written.",
+  "spendNote": "Phase 0: foundation+inventory done (commit 33ffa09); hooks written+unit-tested, awaiting session restart for activation; resume at probe\u2192scaffold.",
   "lastPhase": 0
 }

@@ -1,5 +1,11 @@
 # Orchestrator Notes — Pramana AI
 
+## RESUME STATE (relaunch recon: baca ini duluan)
+Phase 0 progress per 2026-07-09:
+- DONE: recon (fresh) · 4 bundle verified+unzipped · blueprint 909 lines dibaca penuh · SEMUA token/README/prototype produksi 4 bundle dibaca penuh · design-inventory + flags F-01..F-08 ditulis · Task DAG gate 0-9 dibuat · .claude/ lengkap (settings + 5 hooks, unit test guard 8/8 PASS) · .crown/ init · git init + .gitignore · commit 33ffa09.
+- BLOCKED-THEN-RESTARTED: hook wiring tidak bisa aktif mid-session (probe Write ke design-handoff tembus 3x, guard-invocations.log kosong, /hooks approval tidak propagate). Restart sesi = jalur aktivasi. SETELAH RESTART: (1) jalankan ulang PROBE (Write tool ke design-handoff/.probe → HARUS denied; cek .crown/guard-invocations.log terisi), (2) lanjut Phase 0 step 5: scaffold Next.js 16 + toolchain + frozen scripts 6.18 + /api/health + .env.example 6.16 → vercel link + deploy → step 6: architecture doc + adversarial ADR re-derivation → docs/keputusan-teknis.md → fresh reviewer → GATE 0 commit.
+- Task DAG hidup di Claude Code Tasks (gate 0-9; #1 in_progress). Model rule: semua worker/subagent = Opus 4.8 max effort.
+
 ## Run log
 - 2026-07-09: Phase 0 start. Fresh tree (no git, no checkpoints). 4 bundles verified OK + unzipped. Blueprint (909 lines) + semua token/README/prototype produksi dibaca penuh. Toolchain: node 25.6, pnpm 10.33, vercel=finerium, gh=Finerium, docker up.
 
