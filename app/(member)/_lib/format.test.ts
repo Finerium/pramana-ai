@@ -12,6 +12,7 @@ import {
   fmtTanggalPendek,
   barWidth,
   kasHeight,
+  isi,
 } from "../../../components/member/format";
 
 describe("fmtRp", () => {
@@ -108,5 +109,21 @@ describe("fmtTanggalPendek", () => {
   it("drops the year", () => {
     expect(fmtTanggalPendek("2026-07-05")).toBe("5 Juli");
     expect(fmtTanggalPendek("2026-06-14")).toBe("14 Juni");
+  });
+});
+
+describe("isi", () => {
+  it("fills named placeholders and leaves unknown tokens intact", () => {
+    expect(isi("Turun {persen}%", { persen: 37 })).toBe("Turun 37%");
+    expect(
+      isi("Sudah diangsur {sudah} dari {total}", {
+        sudah: "Rp 800.000",
+        total: "Rp 2.000.000",
+      }),
+    ).toBe("Sudah diangsur Rp 800.000 dari Rp 2.000.000");
+    expect(isi("{n} anggota menanyakan hal yang sama", { n: 12 })).toBe(
+      "12 anggota menanyakan hal yang sama",
+    );
+    expect(isi("halo {x}", {})).toBe("halo {x}");
   });
 });

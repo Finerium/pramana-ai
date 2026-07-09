@@ -93,3 +93,15 @@ export function fmtTanggalPendek(iso: string): string {
   if (!m) return iso;
   return `${Number(m[3])} ${BULAN[Number(m[2]) - 1]}`;
 }
+
+/**
+ * Isi template "{kunci}" pada teks MEMBER_COPY: setiap token {k} diganti
+ * nilainya, token tak dikenal dibiarkan utuh. Kalimat dinamis surface anggota
+ * dipusatkan di MEMBER_COPY (ADR-11) agar tetap tersapu check-register; helper
+ * ini mengisinya di titik render.
+ */
+export function isi(tpl: string, vars: Record<string, string | number>): string {
+  let out = tpl;
+  for (const k of Object.keys(vars)) out = out.split("{" + k + "}").join(String(vars[k]));
+  return out;
+}

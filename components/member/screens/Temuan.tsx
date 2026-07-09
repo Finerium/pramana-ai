@@ -13,6 +13,7 @@ import { MEMBER_COPY } from "@/lib/copy/member";
 import type { MemberFinding, MemberFindingsResp } from "@/components/member/types";
 import { useResource, useRatSet, tambahRat, semaiRat, postJson } from "@/components/member/data";
 import { chipSeverity } from "@/components/member/derive";
+import { isi } from "@/components/member/format";
 import { Banner, Skeleton, cardStyle, rise, BackLink, EmptyCard } from "@/components/member/ui";
 import { IkonSeverity, IkonChevronBawah, IkonDokumen, IkonLingkaranCentang } from "@/components/member/icons";
 
@@ -90,7 +91,7 @@ export function Temuan() {
         <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
           <h1 style={{ margin: 0, fontSize: 25, fontWeight: 750, letterSpacing: -0.5 }}>{MEMBER_COPY["temuan.judul"]}</h1>
           <p style={{ margin: 0, fontSize: 13, color: "var(--muted)" }}>
-            Pemeriksaan Juni 2026, {list.length} temuan
+            {isi(MEMBER_COPY["temuan.hitung"], { n: list.length })}
           </p>
         </div>
       </header>

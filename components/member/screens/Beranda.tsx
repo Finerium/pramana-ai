@@ -15,7 +15,7 @@ import { MEMBER_COPY, MEMBER_IDENTITY, AKTIVITAS_TERBARU } from "@/lib/copy/memb
 import { useResource } from "@/components/member/data";
 import { useAgentRun } from "@/components/member/agents";
 import { deriveVerdict, agentRows } from "@/components/member/derive";
-import { fmtRp, fmtTanggalPanjang, fmtTanggalPendek, waktuSalam } from "@/components/member/format";
+import { fmtRp, fmtTanggalPanjang, fmtTanggalPendek, waktuSalam, isi } from "@/components/member/format";
 import {
   Card,
   Banner,
@@ -205,11 +205,14 @@ function BerandaIsi({
 
   const simpanan = sum ? sum.uangAnda.totalSimpanan : 600000;
   const cic = sum?.uangAnda.cicilanBerikut ?? { jumlah: 200000, tanggal: "2026-07-05" };
-  const cicilanLine = `Cicilan ${fmtRp(cic.jumlah)} jatuh tempo ${fmtTanggalPendek(cic.tanggal)}`;
+  const cicilanLine = isi(MEMBER_COPY["beranda.simpanan.cicilan"], {
+    rp: fmtRp(cic.jumlah),
+    tgl: fmtTanggalPendek(cic.tanggal),
+  });
   const agendaLine =
     dv.n > 0
-      ? `Belum dijadwalkan pengurus. ${dv.n} pertanyaan siap dibawa ke rapat.`
-      : "Belum dijadwalkan pengurus. Belum ada pertanyaan terkumpul.";
+      ? isi(MEMBER_COPY["beranda.rat.agenda"], { n: dv.n })
+      : MEMBER_COPY["beranda.rat.agendaKosong"];
 
   return (
     <>
@@ -444,7 +447,7 @@ function PengawasPanel({
             <IkonLingkaranCentang size={21} strokeWidth={1.9} style={{ stroke: "var(--hijau)" }} />
           ) : g.isActive ? (
             <span
-              aria-label="Sedang memeriksa"
+              aria-label={MEMBER_COPY["beranda.pengawas.ariaPeriksa"]}
               style={{
                 width: 17,
                 height: 17,

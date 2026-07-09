@@ -9,7 +9,7 @@ import type { MemberSummary } from "@/lib/contracts";
 import { MEMBER_COPY, MEMBER_IDENTITY } from "@/lib/copy/member";
 import { useResource } from "@/components/member/data";
 import { deriveUang } from "@/components/member/derive";
-import { fmtRp, fmtTanggal } from "@/components/member/format";
+import { fmtRp, fmtTanggal, isi } from "@/components/member/format";
 import { CountUp } from "@/components/member/anim";
 import { Banner, Skeleton, EmptyCard, cardStyle, rise } from "@/components/member/ui";
 import { IkonDompet, IkonKalender } from "@/components/member/icons";
@@ -52,7 +52,7 @@ export function Uang() {
       >
         <h1 style={{ margin: 0, fontSize: 25, fontWeight: 750, letterSpacing: -0.5 }}>{MEMBER_COPY["uang.judul"]}</h1>
         <p style={{ margin: 0, fontSize: 13, color: "var(--muted)" }}>
-          {MEMBER_IDENTITY.nama}, No. Anggota {MEMBER_IDENTITY.noAnggota}
+          {isi(MEMBER_COPY["uang.subjudul"], { nama: MEMBER_IDENTITY.nama, no: MEMBER_IDENTITY.noAnggota })}
         </p>
       </header>
 
@@ -129,7 +129,7 @@ function UangIsi({ s, gagal }: { s: MemberSummary; gagal: boolean }) {
           />
         </div>
         <span className="tnum" style={{ fontSize: 13, color: "var(--muted)" }}>
-          Sudah diangsur {fmtRp(u.diangsur)} dari {fmtRp(u.pinjamanAwal)}
+          {isi(MEMBER_COPY["uang.diangsur"], { sudah: fmtRp(u.diangsur), total: fmtRp(u.pinjamanAwal) })}
         </span>
       </section>
 
@@ -141,7 +141,7 @@ function UangIsi({ s, gagal }: { s: MemberSummary; gagal: boolean }) {
           </span>
           <div style={{ display: "flex", gap: 9, alignItems: "center" }}>
             <IkonKalender size={16} style={{ stroke: "var(--muted)" }} strokeWidth={1.9} />
-            <span style={{ fontSize: 14.5, fontWeight: 600 }}>Jatuh tempo {fmtTanggal(u.cicilan.tanggal)}</span>
+            <span style={{ fontSize: 14.5, fontWeight: 600 }}>{isi(MEMBER_COPY["uang.cicilan.tempo"], { tgl: fmtTanggal(u.cicilan.tanggal) })}</span>
           </div>
           <span style={{ fontSize: 13, color: "var(--muted)" }}>{MEMBER_COPY["uang.cicilan.tempat"]}</span>
         </section>

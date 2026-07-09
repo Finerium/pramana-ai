@@ -147,6 +147,29 @@ export const MEMBER_COPY = {
   "profil.keluar": "Keluar",
   "profil.versi": "Pramana purwarupa, v1.0",
 
+  // Kalimat dinamis (template {k}, diisi di titik render lewat isi()).
+  // Dipusatkan di sini (ADR-11) agar tersapu check-register register 6.8.
+  "beranda.simpanan.cicilan": "Cicilan {rp} jatuh tempo {tgl}",
+  "beranda.rat.agenda": "Belum dijadwalkan pengurus. {n} pertanyaan siap dibawa ke rapat.",
+  "beranda.rat.agendaKosong": "Belum dijadwalkan pengurus. Belum ada pertanyaan terkumpul.",
+  "beranda.pengawas.ariaPeriksa": "Sedang memeriksa",
+  "uang.subjudul": "{nama}, No. Anggota {no}",
+  "uang.diangsur": "Sudah diangsur {sudah} dari {total}",
+  "uang.cicilan.tempo": "Jatuh tempo {tgl}",
+  "arus.kas.turunChip": "Turun {persen}%",
+  "arus.kas.turunTeks":
+    "Kas turun {rp} sejak April. Pengawas menandai penurunan ini sebagai temuan.",
+  "arus.selisih": "Kas koperasi berkurang {rp} pada bulan Juni.",
+  "suara.pertanyaan.hitung": "{n} anggota menanyakan hal yang sama",
+  "suara.vote.lockPilih": "Pilihan Anda: {pilihan}. {lanjut}",
+  "suara.vote.lockTersimpan": "Pilihan Anda tersimpan. {lanjut}",
+  "suara.hasil.hitung": "{tot} dari {total} anggota sudah memilih",
+  "suara.hasil.aria": "{s} suara setuju, {t} suara tidak setuju, {b} belum memilih",
+  "suara.legend.setuju": "{n} Setuju",
+  "suara.legend.tidak": "{n} Tidak Setuju",
+  "suara.legend.belum": "{n} belum memilih",
+  "temuan.hitung": "Pemeriksaan Juni 2026, {n} temuan",
+
   // Tab bar
   "tab.aria": "Navigasi utama",
   "tab.beranda": "Beranda",

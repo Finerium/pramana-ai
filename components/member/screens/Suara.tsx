@@ -11,7 +11,7 @@ import type { VoiceResp } from "@/lib/contracts";
 import { MEMBER_COPY } from "@/lib/copy/member";
 import { useResource, useRatSet, useVotes, simpanVote, postJson } from "@/components/member/data";
 import { suaraAggregate, voteDots, keputusanTally } from "@/components/member/derive";
-import { fmtRp } from "@/components/member/format";
+import { fmtRp, isi } from "@/components/member/format";
 import { Banner, Skeleton, EmptyCard, cardStyle, SectionLabel, rise, SHADOW_SM, SHADOW_MD } from "@/components/member/ui";
 import { IkonCentang, IkonChevronKanan, IkonGembok } from "@/components/member/icons";
 
@@ -126,7 +126,7 @@ function SuaraIsi({
               style={cardStyle({ borderRadius: 20, padding: 17, display: "flex", flexDirection: "column", gap: 9, boxShadow: SHADOW_SM, ...rise(0.05 + i * 0.04) })}
             >
               <span className="tnum" style={{ fontSize: 15.5, fontWeight: 650, lineHeight: 1.4 }}>
-                {q.jumlahAnggota} anggota menanyakan hal yang sama
+                {isi(MEMBER_COPY["suara.pertanyaan.hitung"], { n: q.jumlahAnggota })}
               </span>
               <span style={{ fontSize: 13.5, color: "var(--muted)", lineHeight: 1.5 }}>{q.judul}</span>
               {q.milikAnda ? (
@@ -183,8 +183,11 @@ function KeputusanCard({
   const dots = voteDots(sCount, tCount, TOTAL_ANGGOTA);
   const belum = dots.length - tot;
   const lock = chosen
-    ? `Pilihan Anda: ${chosen === "setuju" ? "Setuju" : "Tidak Setuju"}. ${MEMBER_COPY["suara.vote.terkunci"]}`
-    : `Pilihan Anda tersimpan. ${MEMBER_COPY["suara.vote.terkunci"]}`;
+    ? isi(MEMBER_COPY["suara.vote.lockPilih"], {
+        pilihan: chosen === "setuju" ? MEMBER_COPY["suara.vote.setuju"] : MEMBER_COPY["suara.vote.tidak"],
+        lanjut: MEMBER_COPY["suara.vote.terkunci"],
+      })
+    : isi(MEMBER_COPY["suara.vote.lockTersimpan"], { lanjut: MEMBER_COPY["suara.vote.terkunci"] });
 
   return (
     <section style={{ display: "flex", flexDirection: "column", gap: 10, ...rise(0.14) }}>
@@ -227,11 +230,11 @@ function KeputusanCard({
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: 14, animation: "m-fadein 0.25s ease" }}>
             <span className="tnum" style={{ fontSize: 15, fontWeight: 650 }}>
-              {tot} dari {TOTAL_ANGGOTA} anggota sudah memilih
+              {isi(MEMBER_COPY["suara.hasil.hitung"], { tot, total: TOTAL_ANGGOTA })}
             </span>
             <div
               role="img"
-              aria-label={`${sCount} suara setuju, ${tCount} suara tidak setuju, ${belum} belum memilih`}
+              aria-label={isi(MEMBER_COPY["suara.hasil.aria"], { s: sCount, t: tCount, b: belum })}
               style={{ display: "grid", gridTemplateColumns: "repeat(10,1fr)", gap: 8 }}
             >
               {dots.map((d, i) => (
@@ -248,9 +251,9 @@ function KeputusanCard({
               ))}
             </div>
             <div className="tnum" style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
-              <Legend color="var(--accent)" label={`${sCount} Setuju`} />
-              <Legend color="var(--muted)" label={`${tCount} Tidak Setuju`} />
-              <Legend border label={`${belum} belum memilih`} />
+              <Legend color="var(--accent)" label={isi(MEMBER_COPY["suara.legend.setuju"], { n: sCount })} />
+              <Legend color="var(--muted)" label={isi(MEMBER_COPY["suara.legend.tidak"], { n: tCount })} />
+              <Legend border label={isi(MEMBER_COPY["suara.legend.belum"], { n: belum })} />
             </div>
             <div style={{ display: "flex", gap: 9, alignItems: "flex-start", background: "var(--bg)", borderRadius: 14, padding: "12px 13px" }}>
               <IkonGembok size={15} style={{ stroke: "var(--muted)", marginTop: 1 }} strokeWidth={1.9} />

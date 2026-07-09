@@ -11,7 +11,7 @@ import { COPY } from "@/lib/copy";
 import { MEMBER_COPY } from "@/lib/copy/member";
 import { useResource } from "@/components/member/data";
 import { kasBarsFallback, kasTurunPersen, kasTurunRupiah, flowBars } from "@/components/member/derive";
-import { fmtRp } from "@/components/member/format";
+import { fmtRp, isi } from "@/components/member/format";
 import { CountUp } from "@/components/member/anim";
 import { Banner, Skeleton, EmptyCard, cardStyle, SectionLabel, rise, SHADOW_SM } from "@/components/member/ui";
 import { IkonSegitigaSeru, IkonPanahAtas, IkonPanahBawah, IkonChevronKanan } from "@/components/member/icons";
@@ -118,7 +118,7 @@ function ArusIsi({ f, gagal, onOpen }: { f: FlowResp; gagal: boolean; onOpen: (t
             }}
           >
             <IkonSegitigaSeru size={12} strokeWidth={2.4} />
-            Turun {kasTurunPersen()}%
+            {isi(MEMBER_COPY["arus.kas.turunChip"], { persen: kasTurunPersen() })}
           </button>
         </div>
         <div style={{ display: "flex", alignItems: "flex-end", gap: 16, height: 150, padding: "0 4px" }}>
@@ -147,7 +147,7 @@ function ArusIsi({ f, gagal, onOpen }: { f: FlowResp; gagal: boolean; onOpen: (t
           ))}
         </div>
         <p style={{ margin: 0, fontSize: 13, lineHeight: 1.5, color: "var(--muted)", borderTop: "0.5px solid var(--border)", paddingTop: 12 }}>
-          Kas turun {fmtRp(kasTurunRupiah())} sejak April. Pengawas menandai penurunan ini sebagai temuan.
+          {isi(MEMBER_COPY["arus.kas.turunTeks"], { rp: fmtRp(kasTurunRupiah()) })}
         </p>
       </section>
 
@@ -169,7 +169,7 @@ function ArusIsi({ f, gagal, onOpen }: { f: FlowResp; gagal: boolean; onOpen: (t
       </div>
       {selisih > 0 ? (
         <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.5, color: "var(--muted)", ...rise(0.12) }}>
-          Kas koperasi berkurang {fmtRp(selisih)} pada bulan Juni.
+          {isi(MEMBER_COPY["arus.selisih"], { rp: fmtRp(selisih) })}
         </p>
       ) : null}
 
