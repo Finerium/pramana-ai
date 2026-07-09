@@ -25,10 +25,8 @@ export function CountUp({
   const [n, setN] = useState(0);
 
   useEffect(() => {
-    if (reduced) {
-      setN(value);
-      return;
-    }
+    // reduced-motion: nilai akhir dipakai langsung lewat derivasi, tanpa animasi.
+    if (reduced) return;
     let raf = 0;
     const t0 = performance.now();
     const step = (t: number) => {
@@ -42,7 +40,7 @@ export function CountUp({
 
   return (
     <span className={className} style={style}>
-      {format(n)}
+      {format(reduced ? value : n)}
     </span>
   );
 }

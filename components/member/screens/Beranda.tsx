@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import type { CSSProperties } from "react";
 import type { VerdictResp, MemberSummary } from "@/lib/contracts";
 import type { MemberFinding } from "@/components/member/types";
-import { COPY, AGENT_LABELS } from "@/lib/copy";
+import { COPY } from "@/lib/copy";
 import { MEMBER_COPY, MEMBER_IDENTITY, AKTIVITAS_TERBARU } from "@/lib/copy/member";
 import { useResource } from "@/components/member/data";
 import { useAgentRun } from "@/components/member/agents";

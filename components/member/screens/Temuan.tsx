@@ -28,11 +28,11 @@ export function Temuan() {
   const list: MemberFinding[] = Array.isArray(raw) ? raw : [];
 
   useEffect(() => {
-    if (openParam) {
-      setOpen((s) => (s.has(openParam) ? s : new Set(s).add(openParam)));
-      const el = document.getElementById(openParam);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    if (!openParam) return;
+    // Efek hanya menggulir ke temuan tertaut (sinkron ke DOM); status buka
+    // sudah disemai di initializer useState agar tidak setState di dalam efek.
+    const el = document.getElementById(openParam);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [openParam, muat.status]);
 
   function toggle(id: string) {

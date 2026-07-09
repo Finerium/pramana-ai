@@ -76,7 +76,6 @@ export function useResource<T>(
   useEffect(() => {
     if (url === null) return;
     let alive = true;
-    setMuat({ status: "memuat" });
     fetchJson<T>(url)
       .then((data) => {
         if (!alive) return;
