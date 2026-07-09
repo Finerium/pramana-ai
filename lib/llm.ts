@@ -107,10 +107,10 @@ async function panggilSekali(
   return content;
 }
 
-function parseValidasi<T>(
+function parseValidasi<S extends z.ZodType>(
   raw: string,
-  schema: z.ZodType<T>,
-): { ok: true; value: T } | { ok: false } {
+  schema: S,
+): { ok: true; value: z.infer<S> } | { ok: false } {
   let json: unknown;
   try {
     json = JSON.parse(raw);

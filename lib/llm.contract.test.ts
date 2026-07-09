@@ -30,11 +30,12 @@ describe("chatJSON (AC-LLM-01, AC-PERF-04)", () => {
   });
 
   it("POST ke {BASE_URL}/chat/completions non-streaming dengan response_format json_object", async () => {
-    const fetch = vi.fn(async () => valid());
+    const fetch = vi.fn().mockResolvedValue(valid());
     await chatJSON({ system: "s", user: "u", schema, fetch });
-    const [url, init] = fetch.mock.calls[0]!;
-    expect(String(url)).toMatch(/\/chat\/completions$/);
-    const body = JSON.parse((init as RequestInit).body as string);
+    const call = fetch.mock.calls[0]!;
+    const init = call[1] as RequestInit;
+    expect(String(call[0])).toMatch(/\/chat\/completions$/);
+    const body = JSON.parse(init.body as string);
     expect(body.response_format).toEqual({ type: "json_object" });
     expect(body.stream).toBeFalsy();
     expect(body.model).toBe("MiniMax-M2.7");
@@ -121,5 +122,29 @@ describe("chatJSON (AC-LLM-01, AC-PERF-04)", () => {
     const assertion = expect(p).rejects.toBeInstanceOf(LLMUnavailable);
     await vi.advanceTimersByTimeAsync(30_000);
     await assertion;
+  });
+
+  it("envelope bukan JSON = LLMUnavailable", async () => {
+    const fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => {
+        throw new Error("bukan json");
+      },
+    });
+    await expect(
+      chatJSON({ system: "s", user: "u", schema, fetch }),
+    ).rejects.toBeInstanceOf(LLMUnavailable);
+  });
+
+  it("envelope tanpa konten teks = LLMUnavailable", async () => {
+    const fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      status: 200,
+      json: async () => ({ choices: [] }),
+    });
+    await expect(
+      chatJSON({ system: "s", user: "u", schema, fetch }),
+    ).rejects.toBeInstanceOf(LLMUnavailable);
   });
 });
