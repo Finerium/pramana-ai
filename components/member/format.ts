@@ -86,3 +86,10 @@ export function kasHeight(v: number, max: number): string {
   if (max <= 0) return "0%";
   return Math.round((v / max) * 100) + "%";
 }
+
+/** ISO "2026-07-05" -> "5 Juli" (tanpa tahun; untuk baris cicilan ringkas). */
+export function fmtTanggalPendek(iso: string): string {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  if (!m) return iso;
+  return `${Number(m[3])} ${BULAN[Number(m[2]) - 1]}`;
+}

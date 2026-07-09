@@ -9,6 +9,7 @@ import {
   countAt,
   nikValid,
   nikDigits,
+  fmtTanggalPendek,
   barWidth,
   kasHeight,
 } from "../../../components/member/format";
@@ -100,5 +101,12 @@ describe("bar geometry", () => {
   it("kasHeight is proportional without floor", () => {
     expect(kasHeight(58000000, 58000000)).toBe("100%");
     expect(kasHeight(36500000, 58000000)).toBe("63%");
+  });
+});
+
+describe("fmtTanggalPendek", () => {
+  it("drops the year", () => {
+    expect(fmtTanggalPendek("2026-07-05")).toBe("5 Juli");
+    expect(fmtTanggalPendek("2026-06-14")).toBe("14 Juni");
   });
 });

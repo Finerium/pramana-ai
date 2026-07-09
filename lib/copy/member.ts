@@ -197,3 +197,20 @@ export const MEMBER_IDENTITY = {
   alamat: "Dusun Krajan RT 04, Sukamaju",
   bergabung: "Bergabung 12 Maret 2025",
 } as const;
+
+/**
+ * Aktivitas terbaru beranda (fallback purwarupa): kontrak 6.10 tidak membekukan
+ * endpoint aktivitas anggota; baris ini data seed Sukamaju. flag menandai baris
+ * yang sedang diperiksa Pengawas: "nonhijau" tampil bila verdict bukan hijau,
+ * "merah" hanya saat verdict merah.
+ */
+export const AKTIVITAS_TERBARU: ReadonlyArray<{
+  tgl: string;
+  label: string;
+  jumlah: number;
+  flag: "tidak" | "nonhijau" | "merah";
+}> = [
+  { tgl: "30 Jun", label: "Setoran simpanan anggota", jumlah: 4500000, flag: "tidak" },
+  { tgl: "20 Jun", label: "Lima pinjaman dicairkan", jumlah: 30000000, flag: "nonhijau" },
+  { tgl: "14 Jun", label: "Pembelian stok gerai", jumlah: 15000000, flag: "merah" },
+];
