@@ -35,8 +35,13 @@
       "passed": true,
       "commit": "a24d079",
       "at": "2026-07-09T23:22:38.827Z"
+    },
+    "8": {
+      "passed": true,
+      "commit": "7650921",
+      "at": "2026-07-09T23:27:50.111Z"
     }
   },
-  "spendNote": "Gate 0-7 passed. Phase 7 UAT dua putaran (441k+536k token) menemukan+menutup blocker pinjaman-jabatan. Deliverables Phase 8 sudah didraft di muka. Masuk Phase 8 finalisasi + push repo.",
-  "lastPhase": 8
+  "spendNote": "Gate 0-8 passed. Deliverables machine-gated + repo publik pushed. Masuk Phase 9: deploy final + Report.",
+  "lastPhase": 9
 }

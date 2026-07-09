@@ -3337,3 +3337,11 @@
 {"at":"2026-07-09T23:25:24.561Z","tool":"Bash","path":"git add -A && git commit -q -m \"checkpoint(gate-8): deliverables + repo hygiene "}
 {"at":"2026-07-09T23:25:38.479Z","tool":"Write","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/commit-gate8.txt"}
 {"at":"2026-07-09T23:25:44.372Z","tool":"Bash","path":"git add -A && git commit -q -F /private/tmp/claude-501/-Users-ghaisan-Documents-"}
+{"at":"2026-07-09T23:25:52.126Z","tool":"Bash","path":"git remote -v | head -2; echo \"---\"; gh repo create Finerium/pramana-ai --public"}
+{"at":"2026-07-09T23:26:01.122Z","tool":"Bash","path":"git remote -v | head -2; echo \"=== PUSH ===\"; git push -u origin main 2>&1 | tai"}
+{"at":"2026-07-09T23:26:18.981Z","tool":"Bash","path":"gh repo view Finerium/pramana-ai --json name,visibility,url,defaultBranchRef 2>&"}
+{"at":"2026-07-09T23:26:25.964Z","tool":"Bash","path":"gh repo view Finerium/pramana-ai --json name,visibility,url 2>&1 | node -e \"let "}
+{"at":"2026-07-09T23:26:48.053Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/deck/pramana-deck.pdf"}
+{"at":"2026-07-09T23:27:10.795Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 sh -c '\ncp deck/pramana-deck.pdf .crown/evidence/pramana-deck"}
+{"at":"2026-07-09T23:27:32.197Z","tool":"Bash","path":"git log --oneline -3 | cat; echo \"=== origin ===\"; git log --oneline origin/main"}
+{"at":"2026-07-09T23:27:50.034Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 node -e \"\nconst fs=require('fs'); const p=JSON.parse(fs.readF"}

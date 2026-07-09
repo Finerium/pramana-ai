@@ -1,0 +1,18 @@
+{
+  "gate": 8,
+  "at": "2026-07-09T23:27:10Z",
+  "pass": true,
+  "results": [
+    {"id": "AC-REP-01", "pass": true, "note": "README semua section 6.12 berurutan (check-readme LULUS)"},
+    {"id": "AC-REP-02", "pass": true, "note": "LICENSE MIT + CHANGELOG + CONTRIBUTING; versi 1.0.0; tag v1.0.0 di Gate 9"},
+    {"id": "AC-REP-03", "pass": true, "note": "gitignore mencakup env; hanya .env.example tracked; nol env di git history"},
+    {"id": "AC-DEL-01", "pass": true, "note": "DISCLOSURE-AI teks kanonik 6.12 + gagasan inti + Claude Opus 4.8 + MiniMax + rujukan ai-usage"},
+    {"id": "AC-DEL-02", "pass": true, "note": "deck 12 slide, semua H1 wajib 6.11; 3 screenshot e2e demo asli crisp"},
+    {"id": "AC-DEL-03", "pass": true, "note": "pramana-deck.pdf 12 halaman (marp-cli), slide 12 Penutup terakhir"},
+    {"id": "AC-DEL-04", "pass": true, "note": "video-script 7 scene total 180 detik (check-deliverables)"},
+    {"id": "AC-DEL-05", "pass": true, "note": "submission-checklist memetakan 7 syarat panitia, tercentang"},
+    {"id": "AC-DEL-06", "pass": true, "note": "kredensial juri README identik seed (4 akun; check-deliverables)"},
+    {"id": "AC-DEL-08", "pass": true, "note": "docs/keputusan-teknis.md 6 heading + alternatif ditolak (check-keputusan LULUS)"},
+    {"id": "GATE8-PUSH", "pass": true, "note": "repo publik https://github.com/Finerium/pramana-ai dibuat via gh + push main; .env.example saja, nol .claude/, nol .env"}
+  ]
+}
