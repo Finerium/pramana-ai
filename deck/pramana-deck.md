@@ -57,25 +57,28 @@ Pengawas koperasi desa, di genggaman setiap anggota.
 
 # Demo: Temuan
 
-- Layar Temuan anggota, hasil e2e asli.
+![w:520](assets/demo-temuan.png)
+
 - Contoh AN-1: pembelian ke Toko Berkah Rp15 juta, alamat sama dengan rumah bendahara.
-- Placeholder screenshot Phase 8.
+- Bahasa awam, bukti transaksi, dan satu pertanyaan siap dibawa ke rapat.
 
 ---
 
 # Demo: Dari Temuan ke Rapat
 
+![w:520](assets/demo-suara.png)
+
 - Layar Suara Anda: pertanyaan yang sama diajukan banyak anggota.
 - RAT berubah dari seremoni menjadi pengawasan yang nyata.
-- Placeholder screenshot Phase 8.
 
 ---
 
 # Dua Antarmuka
 
+![h:300](assets/antarmuka-anggota.png) ![h:300](assets/antarmuka-pemerintah.png)
+
 - Beranda anggota di ponsel, dasbor pemerintah di desktop.
 - Satu basis kode, empat permukaan berbeda register visual.
-- Placeholder screenshot Phase 8.
 
 ---
 
@@ -105,6 +108,7 @@ Pengawas koperasi desa, di genggaman setiap anggota.
 
 # Penutup
 
-- URL demo: diisi Phase 9.
-- Kredensial juri tersedia di README.
-- Repositori publik dan ajakan mencoba.
+- URL demo: https://pramana-ai-puce.vercel.app
+- Kredensial juri tersedia di halaman masuk dan README.
+- Repositori publik: https://github.com/Finerium/pramana-ai
+- Pramana bertanya, tidak menuduh. Silakan coba.
