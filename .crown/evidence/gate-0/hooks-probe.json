@@ -1,0 +1,18 @@
+{
+  "id": "hooks-probe",
+  "at": "2026-07-09T10:23:52Z",
+  "verdict": "pass",
+  "layers": {
+    "settings_deny_file_tools": "Write tool to design-handoff and to .crown progress.json denied for both main thread and worker (permission settings)",
+    "pretooluse_deny_guard": "Bash redirect append to .crown progress.json blocked with DENY-GUARD exit 2 from worker; same guard blocked a main-thread read-only command that combined redirect with a .claude mention (false-positive, proves matcher live)",
+    "worker_bash_allowlist": "non-allowlisted bash command (touch into design-handoff) auto-denied in worker context without user prompt",
+    "hook_files_integrity": "settings.json plus 5 hooks (deny-guard, post-lint, stop-check, snapshot, inject) present and inspected; SessionStart inject observed at session start; guard-invocations.log appending on every tool call"
+  },
+  "worker_probe_results": [
+    {"op": "write-design-handoff", "outcome": "denied", "layer": "settings"},
+    {"op": "write-progress-json", "outcome": "denied", "layer": "settings"},
+    {"op": "bash-redirect-progress", "outcome": "denied", "layer": "deny-guard hook"},
+    {"op": "bash-touch-design-handoff", "outcome": "denied", "layer": "bash allowlist"}
+  ],
+  "residue": "none: probe file absent, tracked files unchanged"
+}

@@ -1,0 +1,111 @@
+{"at":"2026-07-09T10:09:57.793Z","tool":"Bash","path":"echo \"node: $(node -v)\"; echo \"pnpm: $(pnpm -v)\"; echo \"vercel: $(vercel whoami "}
+{"at":"2026-07-09T10:10:45.487Z","tool":"Read","path":"/Users/ghaisan/.claude/plugins/cache/superpowers-marketplace/superpowers/5.0.7/skills/subagent-driven-development/implementer-prompt.md"}
+{"at":"2026-07-09T10:10:46.419Z","tool":"Read","path":"/Users/ghaisan/.claude/plugins/cache/superpowers-marketplace/superpowers/5.0.7/skills/subagent-driven-development/spec-reviewer-prompt.md"}
+{"at":"2026-07-09T10:10:46.859Z","tool":"Read","path":"/Users/ghaisan/.claude/plugins/cache/superpowers-marketplace/superpowers/5.0.7/skills/subagent-driven-development/code-quality-reviewer-prompt.md"}
+{"at":"2026-07-09T10:11:07.286Z","tool":"Read","path":"/Users/ghaisan/.claude/plugins/cache/superpowers-marketplace/superpowers/5.0.7/skills/requesting-code-review/code-reviewer.md"}
+{"at":"2026-07-09T10:13:36.655Z","tool":"Bash","path":"git log --oneline -15 && echo \"---STATUS---\" && git status --short && echo \"---R"}
+{"at":"2026-07-09T10:13:37.271Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/progress.json"}
+{"at":"2026-07-09T10:13:37.276Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/notes.md"}
+{"at":"2026-07-09T10:14:33.627Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/blueprint-pramana-ai.md"}
+{"at":"2026-07-09T10:14:34.101Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/design-inventory.md"}
+{"at":"2026-07-09T10:14:36.038Z","tool":"Bash","path":"ls -la .crown/ .claude/ && find .claude -type f | head -30 && echo \"---DESIGN-HA"}
+{"at":"2026-07-09T10:15:16.126Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/blueprint-pramana-ai.md"}
+{"at":"2026-07-09T10:15:16.226Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.claude/settings.json"}
+{"at":"2026-07-09T10:15:40.425Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/blueprint-pramana-ai.md"}
+{"at":"2026-07-09T10:15:40.976Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.claude/hooks/deny-guard.mjs"}
+{"at":"2026-07-09T10:15:42.434Z","tool":"Bash","path":"ls design-handoff/mobile/ design-handoff/dashboard/ design-handoff/landing/ desi"}
+{"at":"2026-07-09T10:17:35.312Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.claude/hooks/stop-check.mjs"}
+{"at":"2026-07-09T10:17:38.053Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.claude/hooks/post-lint.mjs"}
+{"at":"2026-07-09T10:17:38.748Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.claude/hooks/inject.mjs"}
+{"at":"2026-07-09T10:17:39.458Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.claude/hooks/snapshot.mjs"}
+{"at":"2026-07-09T10:17:43.418Z","tool":"Bash","path":"ls -R scripts/ docs/ deck/ deliverables/ && ls .claude/hooks/ && ls .crown/"}
+{"at":"2026-07-09T10:22:18.911Z","tool":"Bash","path":"printf probe >> .crown/progress.json"}
+{"at":"2026-07-09T10:22:34.651Z","tool":"Bash","path":"touch design-handoff/.probe-gate0"}
+{"at":"2026-07-09T10:23:52.192Z","tool":"Bash","path":"test -f design-handoff/.probe-gate0 && echo \"RESIDUE: probe file EXISTS (bad)\" |"}
+{"at":"2026-07-09T10:23:52.386Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.gitignore"}
+{"at":"2026-07-09T10:26:29.985Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/package.json"}
+{"at":"2026-07-09T10:26:32.700Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/tsconfig.json"}
+{"at":"2026-07-09T10:26:34.103Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/next.config.ts"}
+{"at":"2026-07-09T10:26:36.997Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/postcss.config.mjs"}
+{"at":"2026-07-09T10:26:37.411Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/eslint.config.mjs"}
+{"at":"2026-07-09T10:26:37.867Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/.prettierrc"}
+{"at":"2026-07-09T10:26:39.310Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/.prettierignore"}
+{"at":"2026-07-09T10:26:41.656Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/vitest.config.ts"}
+{"at":"2026-07-09T10:26:45.387Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/playwright.config.ts"}
+{"at":"2026-07-09T10:26:46.799Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/app/layout.tsx"}
+{"at":"2026-07-09T10:26:48.706Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/app/page.tsx"}
+{"at":"2026-07-09T10:26:49.799Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/app/globals.css"}
+{"at":"2026-07-09T10:26:53.939Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/health/route.ts"}
+{"at":"2026-07-09T10:27:24.371Z","tool":"Bash","path":"cat > .env.example <<'EOF'\n# Runtime model: MiniMax (OpenAI-compatible), satu-sa"}
+{"at":"2026-07-09T10:28:02.864Z","tool":"Bash","path":"node - <<'NODEEOF'\nconst fs = require(\"node:fs\");\nconst content = [\n  \"# Runtime"}
+{"at":"2026-07-09T10:28:11.951Z","tool":"Bash","path":"pnpm add next react react-dom @libsql/client drizzle-orm zod iron-session bcrypt"}
+{"at":"2026-07-09T10:29:05.850Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/package.json"}
+{"at":"2026-07-09T10:29:11.712Z","tool":"Bash","path":"pnpm install && pnpm exec tsc --version && pnpm exec eslint --version"}
+{"at":"2026-07-09T10:29:30.003Z","tool":"Bash","path":"pnpm dlx shadcn@latest init --yes --defaults --base-color neutral 2>&1 | tail -1"}
+{"at":"2026-07-09T10:29:47.471Z","tool":"Bash","path":"pnpm dlx shadcn@latest init --yes --defaults 2>&1 | tail -12"}
+{"at":"2026-07-09T10:30:15.677Z","tool":"Bash","path":"pnpm build 2>&1 | tail -25"}
+{"at":"2026-07-09T10:30:30.964Z","tool":"Bash","path":"pnpm typecheck && echo \"TYPECHECK OK\" && pnpm lint && echo \"LINT OK\" && pnpm tes"}
+{"at":"2026-07-09T10:30:54.365Z","tool":"Bash","path":"node -e \"const p=require('eslint-config-next/package.json'); console.log(JSON.st"}
+{"at":"2026-07-09T10:31:01.956Z","tool":"Bash","path":"head -40 node_modules/eslint-config-next/package.json && echo \"---FILES---\" && l"}
+{"at":"2026-07-09T10:31:07.670Z","tool":"Bash","path":"sed -n 40,75p node_modules/eslint-config-next/package.json && ls node_modules/es"}
+{"at":"2026-07-09T10:31:15.510Z","tool":"Bash","path":"head -30 node_modules/eslint-config-next/dist/core-web-vitals.js && echo \"---TS-"}
+{"at":"2026-07-09T10:31:29.212Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/eslint.config.mjs"}
+{"at":"2026-07-09T10:31:37.923Z","tool":"Bash","path":"pnpm remove @eslint/eslintrc && pnpm lint && echo \"LINT OK\" && pnpm test 2>&1 | "}
+{"at":"2026-07-09T10:38:16.291Z","tool":"Bash","path":"pnpm remove @eslint/eslintrc && pnpm lint && echo \"LINT OK\" && pnpm test 2>&1 | "}
+{"at":"2026-07-09T10:38:42.296Z","tool":"Bash","path":"vercel link --yes 2>&1 | tail -4 && vercel deploy --prod --yes 2>&1 | tail -6"}
+{"at":"2026-07-09T10:38:43.800Z","tool":"Bash","path":"grep -c \"Toko Berkah\" \"design-handoff/mobile/Pramana App.dc.html\"; grep -n \"Toko"}
+{"at":"2026-07-09T10:38:53.069Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/design-handoff/mobile/Pramana App.dc.html"}
+{"at":"2026-07-09T10:39:50.964Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/473c1eb6-3356-4981-9856-5d976fe340d9/tasks/bdjpxqcit.output"}
+{"at":"2026-07-09T10:40:00.369Z","tool":"Bash","path":"vercel link --yes --project pramana-ai 2>&1 | tail -3"}
+{"at":"2026-07-09T10:40:14.744Z","tool":"Bash","path":"git diff .gitignore | head -15; ls .vercel/ && head -c 200 .vercel/project.json;"}
+{"at":"2026-07-09T10:40:26.552Z","tool":"Bash","path":"git diff .gitignore | head -15; ls .vercel/ && head -c 200 .vercel/project.json;"}
+{"at":"2026-07-09T10:40:52.624Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.gitignore"}
+{"at":"2026-07-09T10:41:05.689Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/.gitignore"}
+{"at":"2026-07-09T10:41:18.358Z","tool":"Bash","path":"git check-ignore .env.example && echo \"STILL IGNORED (bad)\" || echo \".env.exampl"}
+{"at":"2026-07-09T10:41:25.989Z","tool":"Bash","path":"vercel deploy --prod --yes > /tmp/vercel-deploy.log 2>&1 && echo \"DEPLOY_EXIT_OK"}
+{"at":"2026-07-09T10:42:08.316Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/fixtures/temuan-seed.ts"}
+{"at":"2026-07-09T10:44:59.349Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/docs/arsitektur-implementasi.md"}
+{"at":"2026-07-09T10:45:10.659Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/473c1eb6-3356-4981-9856-5d976fe340d9/tasks/bbzg13vfu.output"}
+{"at":"2026-07-09T10:45:21.376Z","tool":"Bash","path":"cat /tmp/vercel-deploy.log"}
+{"at":"2026-07-09T10:45:59.379Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/.vercelignore"}
+{"at":"2026-07-09T10:46:09.037Z","tool":"Bash","path":"vercel deploy --prod --yes > /tmp/vercel-deploy2.log 2>&1 && echo \"DEPLOY_OK\" &&"}
+{"at":"2026-07-09T10:48:03.931Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/docs/keputusan-teknis.md"}
+{"at":"2026-07-09T10:48:13.698Z","tool":"Bash","path":"cat /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/473c1eb6-3356-49"}
+{"at":"2026-07-09T10:49:00.061Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/ai-usage.md"}
+{"at":"2026-07-09T10:49:15.678Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/notes.md"}
+{"at":"2026-07-09T10:49:22.824Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/notes.md"}
+{"at":"2026-07-09T10:49:33.489Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/notes.md"}
+{"at":"2026-07-09T10:49:37.720Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/ai-usage.md"}
+{"at":"2026-07-09T10:50:19.794Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/blueprint-pramana-ai.md"}
+{"at":"2026-07-09T10:50:19.994Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/docs/arsitektur-implementasi.md"}
+{"at":"2026-07-09T10:50:25.450Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/blueprint-pramana-ai.md"}
+{"at":"2026-07-09T10:50:25.738Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/docs/keputusan-teknis.md"}
+{"at":"2026-07-09T10:50:31.354Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/blueprint-pramana-ai.md"}
+{"at":"2026-07-09T10:50:32.359Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.env.example"}
+{"at":"2026-07-09T10:50:33.093Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/package.json"}
+{"at":"2026-07-09T10:50:33.114Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/fixtures/temuan-seed.ts"}
+{"at":"2026-07-09T10:50:56.246Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/health/route.ts"}
+{"at":"2026-07-09T10:50:58.403Z","tool":"Bash","path":"echo \"=== EM DASH (U+2014) in arsitektur ===\" && grep -n '—' docs/arsitektur-imp"}
+{"at":"2026-07-09T10:51:11.571Z","tool":"Bash","path":"for f in docs/arsitektur-implementasi.md docs/keputusan-teknis.md; do echo \"=== "}
+{"at":"2026-07-09T10:56:54.049Z","tool":"Bash","path":"echo \"=== arsitektur sec3 audit flow (registerGuard placement) ===\"; grep -n \"re"}
+{"at":"2026-07-09T10:58:15.104Z","tool":"Write","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/gate0-review.json"}
+{"at":"2026-07-09T10:58:27.978Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/gate0-review.json"}
+{"at":"2026-07-09T10:58:57.599Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/docs/arsitektur-implementasi.md"}
+{"at":"2026-07-09T10:59:29.108Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/docs/arsitektur-implementasi.md"}
+{"at":"2026-07-09T10:59:30.993Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/docs/arsitektur-implementasi.md"}
+{"at":"2026-07-09T10:59:34.755Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/docs/arsitektur-implementasi.md"}
+{"at":"2026-07-09T10:59:38.172Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/docs/arsitektur-implementasi.md"}
+{"at":"2026-07-09T10:59:54.482Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/docs/arsitektur-implementasi.md"}
+{"at":"2026-07-09T10:59:55.903Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/docs/arsitektur-implementasi.md"}
+{"at":"2026-07-09T11:00:21.394Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/docs/arsitektur-implementasi.md"}
+{"at":"2026-07-09T11:00:23.705Z","tool":"Bash","path":"echo \"=== non-ASCII in arsitektur ===\" && grep -nP '[^\\x00-\\x7F]' docs/arsitektu"}
+{"at":"2026-07-09T11:00:31.712Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 sh -c 'pnpm build > .crown/evidence/gate-0/build.log 2>&1 && "}
+{"at":"2026-07-09T11:00:55.609Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 cat > .crown/evidence/manifest-gate-0.json <<'EOF'\n{\n  \"gate\""}
+{"at":"2026-07-09T11:01:13.948Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/473c1eb6-3356-4981-9856-5d976fe340d9/tasks/acc66819cf23b015e.output"}
+{"at":"2026-07-09T11:01:27.242Z","tool":"Bash","path":"tail -c 600 /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/473c1eb6"}
+{"at":"2026-07-09T11:01:31.611Z","tool":"Bash","path":"grep -n \"F-05\\|F-09\" .crown/notes.md | head -20"}
+{"at":"2026-07-09T11:02:15.869Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/gate0-review.json"}
+{"at":"2026-07-09T11:03:08.841Z","tool":"Write","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/gate0-review.json"}
+{"at":"2026-07-09T11:03:37.062Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/gate0-review.json"}
+{"at":"2026-07-09T11:04:32.325Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/docs/arsitektur-implementasi.md"}
+{"at":"2026-07-09T11:04:53.589Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 cp /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-A"}

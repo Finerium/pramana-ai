@@ -1,0 +1,12 @@
+node_modules
+.next
+out
+design-handoff
+.crown
+.claude
+coverage
+test-results
+playwright-report
+pnpm-lock.yaml
+deck/*.pdf
+*.zip

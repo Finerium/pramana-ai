@@ -3,3 +3,6 @@
 {"at":"2026-07-09T09:58:13.445Z","tool":"Edit","reason":"path contains protected segment 'design-handoff'","detail":"/tmp/wt/pramana/design-handoff/x.css"}
 {"at":"2026-07-09T09:58:13.506Z","tool":"Bash","reason":"rm -rf is denied","detail":"rm -rf node_modules"}
 {"at":"2026-07-09T09:58:13.566Z","tool":"Bash","reason":"reading .env via bash is denied (secrets)","detail":"cat .env"}
+{"at":"2026-07-09T10:14:36.040Z","tool":"Bash","reason":"bash write into protected .claude/","detail":"ls -la .crown/ .claude/ && find .claude -type f | head -30 && echo \"---DESIGN-HANDOFF---\" && ls design-handoff/ && for d in mobile dashboard landing subjek; do echo \"== $d ==\"; ls design-handoff/$d/ 2"}
+{"at":"2026-07-09T10:22:18.912Z","tool":"Bash","reason":"bash write into protected .crown/progress.json","detail":"printf probe >> .crown/progress.json"}
+{"at":"2026-07-09T10:40:14.754Z","tool":"Bash","reason":"bash write into protected env file","detail":"git diff .gitignore | head -15; ls .vercel/ && head -c 200 .vercel/project.json; echo; ls -la .env.local 2>&1 | head -2"}

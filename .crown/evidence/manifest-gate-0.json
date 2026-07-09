@@ -1,0 +1,35 @@
+{
+  "gate": 0,
+  "entries": [
+    {
+      "id": "G0-HOOKS",
+      "check": "probe write-and-revert 4 vektor dari konteks worker + integrity hooks",
+      "expect": "semua vektor denied; hooks file utuh; log guard bertambah",
+      "artifact": ".crown/evidence/gate-0/hooks-probe.json"
+    },
+    {
+      "id": "G0-BUNDLES",
+      "check": "empat bundle terverifikasi, ter-unzip ke design-handoff/{mobile,dashboard,landing,subjek}, terinventaris",
+      "expect": "4 direktori berisi prototype+tokens+README+screenshots; inventaris lengkap",
+      "artifact": ".crown/design-inventory.md"
+    },
+    {
+      "id": "G0-SCAFFOLD",
+      "check": "pnpm build",
+      "expect": "exit 0",
+      "artifact": ".crown/evidence/gate-0/build.log"
+    },
+    {
+      "id": "G0-DEPLOY",
+      "check": "curl https://pramana-ai-puce.vercel.app/api/health",
+      "expect": "HTTP 200 + ok:true",
+      "artifact": ".crown/evidence/gate-0/deploy-smoke.txt"
+    },
+    {
+      "id": "G0-ARCH",
+      "check": "reviewer fresh-context memvalidasi docs/arsitektur-implementasi.md vs seluruh kontrak section 6 dengan sitasi baris",
+      "expect": "pass true, nol blocker",
+      "artifact": ".crown/evidence/gate-0/arch-review.json"
+    }
+  ]
+}

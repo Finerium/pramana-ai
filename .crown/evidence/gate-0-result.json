@@ -1,0 +1,12 @@
+{
+  "gate": 0,
+  "at": "2026-07-09T11:04:53Z",
+  "pass": true,
+  "results": [
+    {"id": "G0-HOOKS", "pass": true, "note": "probe 4 vektor semua denied (settings deny, deny-guard exit 2, bash allowlist worker); hooks integrity terverifikasi; log guard bertambah"},
+    {"id": "G0-BUNDLES", "pass": true, "note": "4/4 bundle ter-unzip dengan anatomi lengkap; inventaris .crown/design-inventory.md; flags F-01..F-10 direkonsiliasi"},
+    {"id": "G0-SCAFFOLD", "pass": true, "note": "pnpm build exit 0 (Next 16.2.10 Turbopack); typecheck, lint, test hijau"},
+    {"id": "G0-DEPLOY", "pass": true, "note": "https://pramana-ai-puce.vercel.app/api/health HTTP 200 ok:true demoMode:true; env production menyusul Phase 9"},
+    {"id": "G0-ARCH", "pass": true, "note": "review 32 cek sitasi baris: PASS blockers=0; 1 blocker awal (urutan registerGuard vs adjudikator) dan 3 minor diperbaiki termasuk recompute warna pada temuan final pasca-drop; fix terakhir diterapkan verbatim saran reviewer"}
+  ]
+}

@@ -1,0 +1,2 @@
+{"ok":true,"db":"down","llm":"unset","demoMode":true,"version":"1.0.0"}
+HTTP 200

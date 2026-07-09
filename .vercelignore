@@ -1,0 +1,19 @@
+# Secrets: env produksi diatur via vercel env, bukan file upload
+.env
+.env.*
+!.env.example
+
+# Bukan bagian build produk
+.crown
+design-handoff
+*.zip
+e2e
+tests
+coverage
+test-results
+playwright-report
+deck
+deliverables
+prompt-orchestrator-pramana-ai.md
+env-prep-pramana-ai.md
+.DS_Store
