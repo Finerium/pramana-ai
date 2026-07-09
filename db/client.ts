@@ -24,6 +24,9 @@ export function createDb(url: string, authToken?: string): Created {
   const client = createClient(authToken ? { url, authToken } : { url });
   // Di-queue pertama pada koneksi persisten sehingga query berikutnya melihat FK ON.
   void client.execute("PRAGMA foreign_keys = ON");
+  // File SQLite dipakai lintas proses (server dev + vitest + tooling); tunggu
+  // lock transien alih-alih langsung SQLITE_BUSY. No-op di Turso remote.
+  void client.execute("PRAGMA busy_timeout = 5000");
   const db = drizzle(client, { schema });
   return { db, client };
 }
