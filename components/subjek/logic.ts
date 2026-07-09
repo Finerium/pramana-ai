@@ -71,10 +71,11 @@ export function formatRp(n: number): string {
 /** "2026-06-14" -> "14 Jun 2026"; kosong -> "". */
 export function formatTanggal(iso: string): string {
   if (!iso) return "";
-  const p = iso.split("-");
-  if (p.length < 3) return iso;
-  const mo = BULAN[parseInt(p[1], 10) - 1] ?? p[1];
-  return `${parseInt(p[2], 10)} ${mo} ${p[0]}`;
+  const parts = iso.split("-");
+  if (parts.length < 3) return iso;
+  const [y, m, dd] = parts as [string, string, string];
+  const mo = BULAN[parseInt(m, 10) - 1] ?? m;
+  return `${parseInt(dd, 10)} ${mo} ${y}`;
 }
 
 export const ARAH_MASUK: ReadonlySet<string> = new Set([
