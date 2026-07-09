@@ -45,3 +45,9 @@ coverage/
 
 # DB test terpisah (vitest)
 .vitest-*.db
+
+# Artefak runtime lokal (grader db, laporan bench, log ci)
+.grader-*.db
+/audit-bench.json
+/ci-clean.log
+/demo-hash.txt
