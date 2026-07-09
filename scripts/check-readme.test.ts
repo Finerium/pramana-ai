@@ -1,5 +1,4 @@
 import { describe, it, expect } from "vitest";
-// @ts-expect-error - .mjs checker, no type declarations by design
 import { checkReadme } from "./check-readme.mjs";
 
 const good = [

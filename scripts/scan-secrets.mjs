@@ -11,13 +11,13 @@ import { pathToFileURL } from "node:url";
 // Patterns require a realistic suffix length so benign words (task-, disk-, risky)
 // never match a bare "sk-".
 const PATTERNS = [
-  ["openai-key", /\bsk-[A-Za-z0-9]{20,}\b/],
-  ["google-api-key", /\bAIza[0-9A-Za-z_-]{20,}\b/],
-  ["github-token", /\bgh[pousr]_[0-9A-Za-z]{20,}\b/],
-  ["slack-token", /\bxox[baprs]-[0-9A-Za-z-]{10,}\b/],
-  ["aws-access-key", /\bAKIA[0-9A-Z]{16}\b/],
-  ["private-key", /-----BEGIN [A-Z0-9 ]*PRIVATE KEY-----/],
-  ["jwt", /\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b/],
+  { label: "openai-key", re: /\bsk-[A-Za-z0-9]{20,}\b/ },
+  { label: "google-api-key", re: /\bAIza[0-9A-Za-z_-]{20,}\b/ },
+  { label: "github-token", re: /\bgh[pousr]_[0-9A-Za-z]{20,}\b/ },
+  { label: "slack-token", re: /\bxox[baprs]-[0-9A-Za-z-]{10,}\b/ },
+  { label: "aws-access-key", re: /\bAKIA[0-9A-Z]{16}\b/ },
+  { label: "private-key", re: /-----BEGIN [A-Z0-9 ]*PRIVATE KEY-----/ },
+  { label: "jwt", re: /\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b/ },
 ];
 
 const SKIP_DIRS = new Set([
@@ -33,7 +33,7 @@ export function findSecrets(text) {
   const hits = [];
   const lines = String(text).split(/\r?\n/);
   for (let i = 0; i < lines.length; i++) {
-    for (const [label, re] of PATTERNS) {
+    for (const { label, re } of PATTERNS) {
       if (re.test(lines[i])) hits.push({ line: i + 1, pattern: label });
     }
   }
@@ -93,7 +93,7 @@ function scanHistory() {
       commit = m[1].slice(0, 10);
       continue;
     }
-    for (const [label, re] of PATTERNS) {
+    for (const { label, re } of PATTERNS) {
       if (re.test(line)) findings.push({ where: `history@${commit}`, pattern: label });
     }
   }

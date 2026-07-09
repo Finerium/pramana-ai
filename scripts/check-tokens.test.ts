@@ -1,12 +1,8 @@
 import { describe, it, expect } from "vitest";
 import {
-  // @ts-expect-error - .mjs checker, no type declarations by design
   parseTokens,
-  // @ts-expect-error - .mjs checker, no type declarations by design
   compareTokens,
-  // @ts-expect-error - .mjs checker, no type declarations by design
   documentedTokenNames,
-  // @ts-expect-error - .mjs checker, no type declarations by design
   evaluateSurface,
 } from "./check-tokens.mjs";
 
@@ -32,20 +28,13 @@ describe("check-tokens compareTokens", () => {
   it("flags a bundle value the app file lacks", () => {
     const app = parseTokens(":root{--a:1px;}");
     const drift = compareTokens(bundle, app, new Set());
-    expect(
-      drift.some(
-        (d: { name: string; value: string }) =>
-          d.name === "--a" && d.value === "2px",
-      ),
-    ).toBe(true);
+    expect(drift.some((d) => d.name === "--a" && d.value === "2px")).toBe(true);
   });
 
   it("marks drift as documented when the variable is named in deviations", () => {
     const app = parseTokens(":root{--a:1px;}");
     const drift = compareTokens(bundle, app, new Set(["--a"]));
-    expect(drift.every((d: { documented: boolean }) => d.documented)).toBe(
-      true,
-    );
+    expect(drift.every((d) => d.documented)).toBe(true);
   });
 
   it("returns no drift when app carries every bundle value", () => {

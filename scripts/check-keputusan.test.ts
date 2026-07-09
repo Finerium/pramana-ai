@@ -1,6 +1,5 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
-// @ts-expect-error - .mjs checker, no type declarations by design
 import { checkKeputusan } from "./check-keputusan.mjs";
 
 const good = [
