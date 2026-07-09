@@ -9,7 +9,7 @@
 import { useRouter } from "next/navigation";
 import type { CSSProperties } from "react";
 import type { VerdictResp, MemberSummary } from "@/lib/contracts";
-import type { MemberFinding } from "@/components/member/types";
+import type { MemberFinding, MemberFindingsResp } from "@/components/member/types";
 import { COPY } from "@/lib/copy";
 import { MEMBER_COPY, MEMBER_IDENTITY, AKTIVITAS_TERBARU } from "@/lib/copy/member";
 import { useResource } from "@/components/member/data";
@@ -44,7 +44,7 @@ export function Beranda() {
   const router = useRouter();
   const verdict = useResource<VerdictResp>("/api/member/verdict", OPTS_VERDICT);
   const summary = useResource<MemberSummary>("/api/member/summary");
-  const findings = useResource<MemberFinding[]>("/api/member/findings");
+  const findings = useResource<MemberFindingsResp>("/api/member/findings");
   const { agRun, agStep, agCounts, run } = useAgentRun(true);
 
   const now = new Date();
@@ -60,12 +60,13 @@ export function Beranda() {
       : summary.muat.status === "gagal"
         ? summary.muat.data
         : null;
-  const findingList: MemberFinding[] =
+  const fr =
     findings.muat.status === "isi"
       ? findings.muat.data
       : findings.muat.status === "gagal"
-        ? (findings.muat.data ?? [])
-        : [];
+        ? findings.muat.data
+        : null;
+  const findingList: MemberFinding[] = fr?.temuan ?? [];
 
   return (
     <main

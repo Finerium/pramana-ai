@@ -159,6 +159,19 @@ function makeSetStore(key: string) {
       }
       for (const l of listeners) l();
     },
+    addMany(ids: readonly string[]) {
+      if (!ids || ids.length === 0) return;
+      const s = read();
+      const before = s.size;
+      for (const id of ids) s.add(id);
+      if (s.size === before) return; // idempoten: tak ada perubahan
+      try {
+        sessionStorage.setItem(key, JSON.stringify([...s]));
+      } catch {
+        /* penyimpanan tidak tersedia */
+      }
+      for (const l of listeners) l();
+    },
     has(id: string) {
       return read().has(id);
     },
@@ -180,6 +193,11 @@ const ratStore = makeSetStore("pramana-rat");
 /** Tandai pertanyaan temuan sudah ditambahkan ke RAT pada sesi ini. */
 export function tambahRat(temuanId: string) {
   ratStore.add(temuanId);
+}
+
+/** Semai id temuan yang sudah ditambahkan menurut server ke toko sesi (idempoten). */
+export function semaiRat(ids: readonly string[]) {
+  ratStore.addMany(ids);
 }
 
 /** Set id temuan yang sudah ditambahkan (reaktif). */

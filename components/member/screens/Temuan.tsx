@@ -10,8 +10,8 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { COPY, AGENT_LABELS } from "@/lib/copy";
 import { MEMBER_COPY } from "@/lib/copy/member";
-import type { MemberFinding } from "@/components/member/types";
-import { useResource, useRatSet, tambahRat, postJson } from "@/components/member/data";
+import type { MemberFinding, MemberFindingsResp } from "@/components/member/types";
+import { useResource, useRatSet, tambahRat, semaiRat, postJson } from "@/components/member/data";
 import { chipSeverity } from "@/components/member/derive";
 import { Banner, Skeleton, cardStyle, rise, BackLink, EmptyCard } from "@/components/member/ui";
 import { IkonSeverity, IkonChevronBawah, IkonDokumen, IkonLingkaranCentang } from "@/components/member/icons";
@@ -20,12 +20,18 @@ export function Temuan() {
   const router = useRouter();
   const params = useSearchParams();
   const openParam = params.get("open");
-  const { muat } = useResource<MemberFinding[]>("/api/member/findings");
+  const { muat } = useResource<MemberFindingsResp>("/api/member/findings");
   const ratSet = useRatSet();
   const [open, setOpen] = useState<Set<string>>(() => new Set(openParam ? [openParam] : []));
 
-  const raw = muat.status === "isi" ? muat.data : muat.status === "gagal" ? muat.data : null;
-  const list: MemberFinding[] = Array.isArray(raw) ? raw : [];
+  const data = muat.status === "isi" ? muat.data : muat.status === "gagal" ? muat.data : null;
+  const list: MemberFinding[] = data?.temuan ?? [];
+
+  // Semai status "sudah ditambahkan" yang persisten di server (kontrak 6.3:
+  // sudahDitambahkan) ke toko sesi agar tampil saat load.
+  useEffect(() => {
+    if (data) semaiRat(data.sudahDitambahkan);
+  }, [data]);
 
   useEffect(() => {
     if (!openParam) return;
