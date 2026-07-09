@@ -7,7 +7,7 @@
  * state: memuat/kosong/gagal(cache)/isi. Data fetch nyata ke endpoint 6.3.
  */
 import { useRouter } from "next/navigation";
-import type { CSSProperties } from "react";
+import { type CSSProperties, useEffect, useState } from "react";
 import type { VerdictResp, MemberSummary } from "@/lib/contracts";
 import type {
   MemberFinding,
@@ -60,8 +60,17 @@ export function Beranda() {
   const findings = useResource<MemberFindingsResp>("/api/member/findings");
   const { agRun, agStep, agCounts, run } = useAgentRun(true);
 
-  const now = new Date();
-  const sapaan = `${MEMBER_COPY[`salam.${waktuSalam(now.getHours())}`]}, ${MEMBER_IDENTITY.sapaanNama}`;
+  // Sapaan dan tanggal bergantung waktu klien; dihitung HANYA setelah mount
+  // agar HTML SSR (waktu server UTC) tidak berbeda dari render klien pertama
+  // (hydration error #418). Pra-mount menampilkan bentuk netral SSR-deterministik.
+  const [now, setNow] = useState<Date | null>(null);
+  // Sengaja: nilai bergantung waktu klien di-defer ke pasca-mount agar render
+  // klien pertama identik HTML SSR (anti hydration #418).
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => setNow(new Date()), []);
+  const sapaan = now
+    ? `${MEMBER_COPY[`salam.${waktuSalam(now.getHours())}`]}, ${MEMBER_IDENTITY.sapaanNama}`
+    : MEMBER_IDENTITY.sapaanNama;
 
   const vstat = verdict.muat.status;
   const v =
@@ -123,7 +132,7 @@ export function Beranda() {
               color: "var(--muted)",
             }}
           >
-            {fmtTanggalPanjang(now)}
+            {now ? fmtTanggalPanjang(now) : " "}
           </span>
           <span style={{ fontSize: 23, fontWeight: 750, letterSpacing: -0.4 }}>
             {sapaan}

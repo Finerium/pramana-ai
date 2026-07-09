@@ -723,6 +723,21 @@ function ErrText({ msg }: { msg: string }) {
   );
 }
 
+// Kotak kegagalan submit (endpoint menolak): warna danger token subjek.
+const FAIL_BOX: CSSProperties = {
+  display: "flex",
+  gap: "10px",
+  alignItems: "flex-start",
+  background: "var(--color-danger-soft)",
+  border: "1px solid var(--color-danger)",
+  borderRadius: "10px",
+  padding: "12px 14px",
+  fontSize: "13px",
+  color: "var(--color-on-danger-soft)",
+  lineHeight: 1.45,
+  marginTop: "18px",
+};
+
 const SUBJEK_CSS = `
 @keyframes subjekSpin { to { transform: rotate(360deg); } }
 .subjek-root .spin { animation: subjekSpin .7s linear infinite; }
@@ -747,6 +762,7 @@ export function PembukuanConsole() {
   const [trxLoading, setTrxLoading] = useState(false);
   const [trxSuccess, setTrxSuccess] = useState(false);
   const [trxNote, setTrxNote] = useState("");
+  const [trxFail, setTrxFail] = useState<string | null>(null);
 
   const [pin, setPin] = useState<PinjamanForm>(emptyPinjaman());
   const [pinErr, setPinErr] = useState<
@@ -755,9 +771,11 @@ export function PembukuanConsole() {
   const [pinLoading, setPinLoading] = useState(false);
   const [pinSuccess, setPinSuccess] = useState(false);
   const [pinNote, setPinNote] = useState("");
+  const [pinFail, setPinFail] = useState<string | null>(null);
 
   const [rat, setRat] = useState<RatForm>({ status: "belum", tanggal: "" });
   const [ratSuccess, setRatSuccess] = useState(false);
+  const [ratFail, setRatFail] = useState<string | null>(null);
 
   const [trxList, setTrxList] = useState<TransaksiEntry[]>(SEED_TRANSAKSI);
   const [pinList, setPinList] = useState<PinjamanEntry[]>(SEED_PINJAMAN);
@@ -830,8 +848,18 @@ export function PembukuanConsole() {
     setTrxLoading(true);
     setTrxErr({});
     setTrxSuccess(false);
+    setTrxFail(null);
     const captured = trx;
-    const { transaksiId, saldoKasBaru } = await postTransaksi(captured, saldo);
+    let transaksiId: string, saldoKasBaru: number;
+    try {
+      ({ transaksiId, saldoKasBaru } = await postTransaksi(captured, saldo));
+    } catch {
+      setTrxLoading(false);
+      setTrxFail(
+        "Transaksi gagal disimpan. Silakan periksa data lalu coba lagi.",
+      );
+      return;
+    }
     const amt = parseInt(captured.jumlah, 10);
     const pihak =
       captured.vendorNama ||
@@ -876,8 +904,19 @@ export function PembukuanConsole() {
     setPinLoading(true);
     setPinErr({});
     setPinSuccess(false);
+    setPinFail(null);
     const captured = pin;
-    const { pinjamanId } = await postPinjaman(captured);
+    let pinjamanId: string;
+    try {
+      ({ pinjamanId } = await postPinjaman(captured));
+    } catch {
+      // Endpoint menolak: tampilkan kegagalan jujur, jangan sukses palsu.
+      setPinLoading(false);
+      setPinFail(
+        "Pinjaman gagal disimpan. Silakan periksa data lalu coba lagi.",
+      );
+      return;
+    }
     const entry: PinjamanEntry = {
       id: pinjamanId,
       anggota: anggotaLabel(captured.anggota) || "Anggota",
@@ -905,7 +944,13 @@ export function PembukuanConsole() {
   };
 
   const submitRat = async () => {
-    await postRat(rat);
+    setRatFail(null);
+    try {
+      await postRat(rat);
+    } catch {
+      setRatFail("Status RAT gagal diperbarui. Silakan coba lagi.");
+      return;
+    }
     setRatSuccess(true);
   };
 
@@ -1201,6 +1246,11 @@ export function PembukuanConsole() {
                   <span>{c.trx.sukses}</span>
                 </div>
               )}
+              {trxFail && (
+                <div role="alert" style={FAIL_BOX}>
+                  <span>{trxFail}</span>
+                </div>
+              )}
 
               <div style={S.formActions}>
                 <button
@@ -1374,6 +1424,11 @@ export function PembukuanConsole() {
                   <span>{c.pin.sukses}</span>
                 </div>
               )}
+              {pinFail && (
+                <div role="alert" style={FAIL_BOX}>
+                  <span>{pinFail}</span>
+                </div>
+              )}
 
               <div style={S.formActions}>
                 <button
@@ -1469,6 +1524,11 @@ export function PembukuanConsole() {
                 <div style={S.successBox}>
                   <span style={S.okIcon}>{"\u2713"}</span>
                   <span>{c.rat.sukses}</span>
+                </div>
+              )}
+              {ratFail && (
+                <div role="alert" style={FAIL_BOX}>
+                  <span>{ratFail}</span>
                 </div>
               )}
               <div style={S.formActions}>

@@ -596,6 +596,39 @@ describe("perilaku endpoint", () => {
     expect(pinj.status).toBe(200);
     expect(typeof (await asEnv(pinj)).data?.pinjamanId).toBe("string");
 
+    // Konsol mengirim JABATAN (bukan id pengurus); route memetakannya ke FK
+    // pengurus.id. Regresi UAT: sebelumnya 500 (FK violation).
+    const pinjJabatan = await subjekPinjaman(
+      await mkReq(SESS.pengurus, {
+        method: "POST",
+        body: {
+          anggotaId: "ang-g02",
+          pokok: 3_000_000,
+          cicilanBulanan: 300_000,
+          jatuhTempoBerikut: "2026-08-10",
+          disetujuiOleh: "bendahara",
+          dokumenLengkap: true,
+        },
+      }),
+    );
+    expect(pinjJabatan.status).toBe(200);
+
+    // Penyetuju tak dikenal (bukan id maupun jabatan valid) -> VALIDATION, bukan 500.
+    const pinjSalah = await subjekPinjaman(
+      await mkReq(SESS.pengurus, {
+        method: "POST",
+        body: {
+          anggotaId: "ang-g02",
+          pokok: 3_000_000,
+          cicilanBulanan: 300_000,
+          jatuhTempoBerikut: "2026-08-10",
+          disetujuiOleh: "orang-asing",
+          dokumenLengkap: true,
+        },
+      }),
+    );
+    expect(pinjSalah.status).toBe(400);
+
     const rat = await subjekRat(
       await mkReq(SESS.pengurus, {
         method: "POST",

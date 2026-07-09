@@ -91,7 +91,7 @@ export function LoginVariant({
         }}
       />
 
-      <div style={{ position: "absolute", top: 26, right: 48 }}>
+      <div style={{ position: "absolute", top: 26, right: 48, zIndex: 10 }}>
         <ThemeToggle />
       </div>
 

@@ -131,7 +131,9 @@ export function Temuan() {
             {MEMBER_COPY["temuan.judul"]}
           </h1>
           <p style={{ margin: 0, fontSize: 13, color: "var(--muted)" }}>
-            {isi(MEMBER_COPY["temuan.hitung"], { n: list.length })}
+            {muat.status === "memuat"
+              ? " "
+              : isi(MEMBER_COPY["temuan.hitung"], { n: list.length })}
           </p>
         </div>
       </header>

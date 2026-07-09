@@ -45,6 +45,7 @@ const S: Record<string, CSSProperties> = {
     top: "24px",
     left: 0,
     right: 0,
+    zIndex: 10,
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",

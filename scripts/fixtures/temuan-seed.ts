@@ -70,7 +70,7 @@ export const TEMUAN_SEED: readonly TemuanSeed[] = [
     penjelasan_awam:
       "Pada 20 Juni 2026 ada lima pinjaman disetujui sekaligus dengan total Rp 30.000.000. Biasanya koperasi menyetujui satu sampai dua pinjaman per minggu.",
     kenapa_penting:
-      "Persetujuan yang menumpuk dalam satu hari bisa berarti antrean biasa, bisa juga berarti pemeriksaan yang terburu buru. Anggota berhak tahu prosesnya tetap teliti.",
+      "Persetujuan yang menumpuk dalam satu hari bisa berarti antrean biasa, bisa juga berarti pemeriksaan yang terburu-buru. Anggota berhak tahu prosesnya tetap teliti.",
     bukti: [
       {
         jenis: "pinjaman",
@@ -94,7 +94,7 @@ export const TEMUAN_SEED: readonly TemuanSeed[] = [
     severity: "kuning",
     judul: "Satu pembelian besar dipecah menjadi tiga pembelian kecil",
     penjelasan_awam:
-      "Dalam lima hari ada tiga pembelian ke CV Sumber Rejeki, masing masing Rp 4.900.000, sedikit di bawah batas Rp 5.000.000 yang memerlukan persetujuan tambahan.",
+      "Dalam lima hari ada tiga pembelian ke CV Sumber Rejeki, masing-masing Rp 4.900.000, sedikit di bawah batas Rp 5.000.000 yang memerlukan persetujuan tambahan.",
     kenapa_penting:
       "Memecah satu pembelian besar menjadi beberapa pembelian kecil dapat membuat pembelian lolos tanpa pemeriksaan yang seharusnya. Ini pola yang wajar untuk ditanyakan.",
     bukti: [

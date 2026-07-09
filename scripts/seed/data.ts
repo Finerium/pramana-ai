@@ -912,7 +912,7 @@ export function buildSeedData(): SeedData {
       koperasiId: "kop-sukamaju",
       judul: "Pembelian freezer untuk gerai sembako",
       deskripsi:
-        "Pengurus mengusulkan pembelian satu unit freezer untuk gerai sembako senilai Rp8.500.000. Anda dapat menyatakan setuju atau tidak.",
+        "Pengurus mengusulkan pembelian satu unit freezer untuk gerai sembako senilai Rp 8.500.000. Anda dapat menyatakan setuju atau tidak.",
       nominal: 8_500_000,
       status: "terbuka",
       dibukaPada: "2026-06-10T09:00:00.000Z",

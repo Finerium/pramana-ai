@@ -57,20 +57,34 @@ const asNum = (v: unknown, d = 0): number => {
   return Number.isFinite(n) ? n : d;
 };
 
+/** Error dari respons endpoint yang HADIR tetapi menolak (mis. 500/VALIDATION). */
+export class SubjekApiError extends Error {}
+
+/**
+ * POST ke endpoint subjek. Mengembalikan data pada sukses; null HANYA saat
+ * endpoint benar-benar tak terjangkau (fetch melempar / jaringan absen) supaya
+ * konsol tetap hidup demo-proof; MELEMPAR SubjekApiError bila endpoint hadir
+ * tetapi menolak, sehingga UI menampilkan kegagalan alih-alih sukses palsu.
+ */
 async function postJson(url: string, body: unknown): Promise<Dict | null> {
+  let res: Response;
   try {
-    const res = await fetch(url, {
+    res = await fetch(url, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(body),
     });
-    if (tolakAuth(res.status)) return null;
-    const j = (await res.json()) as { ok?: boolean; data?: Dict };
-    if (res.ok && j && j.ok) return j.data ?? {};
   } catch {
-    /* fallback below */
+    return null; // jaringan absen: fallback demo
   }
-  return null;
+  if (tolakAuth(res.status)) return null;
+  const j = (await res.json().catch(() => null)) as {
+    ok?: boolean;
+    data?: Dict;
+    error?: { message?: string };
+  } | null;
+  if (res.ok && j && j.ok) return j.data ?? {};
+  throw new SubjekApiError(j?.error?.message ?? "Permintaan gagal diproses.");
 }
 
 function toTransaksiInput(f: TransaksiForm): SubjekTransaksiInput {
