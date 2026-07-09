@@ -92,7 +92,9 @@ function Wordmark() {
       </span>
       <span
         style={{
-          font: "800 16px/1 var(--font-teks)",
+          fontWeight: 800,
+          fontSize: "16px",
+          lineHeight: 1,
           letterSpacing: "-0.02em",
         }}
       >
@@ -100,7 +102,11 @@ function Wordmark() {
       </span>
       <span
         style={{
-          font: "600 9px/1 var(--font-mono)",
+          fontWeight: 600,
+          fontSize: "9px",
+          lineHeight: 1,
+          fontFamily:
+            "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
           letterSpacing: ".1em",
           color: "var(--tinta-3)",
           border: "1px solid var(--garis-kuat)",
@@ -150,6 +156,7 @@ function Nav() {
           <ThemeToggle />
           <Link
             href="/login"
+            prefetch={false}
             data-cq="navcta"
             className="l-cta-aksen"
             style={{
@@ -158,7 +165,9 @@ function Nav() {
               height: "40px",
               padding: "0 18px",
               borderRadius: "999px",
-              font: "600 13px/1 var(--font-teks)",
+              fontWeight: 600,
+              fontSize: "13px",
+              lineHeight: 1,
               textDecoration: "none",
               whiteSpace: "nowrap",
             }}
@@ -198,7 +207,11 @@ function Hero() {
           <Mark warna="merah" kind="belah" w={6} />
           <span
             style={{
-              font: "600 10.5px/1 var(--font-mono)",
+              fontWeight: 600,
+              fontSize: "10.5px",
+              lineHeight: 1,
+              fontFamily:
+                "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
               letterSpacing: ".18em",
               color: "var(--tinta-2)",
             }}
@@ -210,7 +223,9 @@ function Hero() {
           style={{
             margin: "24px auto 0",
             maxWidth: "1060px",
-            font: "800 clamp(38px, 6.6cqw, 96px)/1.04 var(--font-teks)",
+            fontWeight: 800,
+            fontSize: "clamp(38px, 6.6cqw, 96px)",
+            lineHeight: 1.04,
             letterSpacing: "-0.035em",
             textWrap: "balance",
           }}
@@ -221,7 +236,9 @@ function Hero() {
           style={{
             margin: "26px auto 0",
             maxWidth: "640px",
-            font: "400 clamp(15.5px, 1.35cqw, 18.5px)/1.65 var(--font-teks)",
+            fontWeight: 400,
+            fontSize: "clamp(15.5px, 1.35cqw, 18.5px)",
+            lineHeight: 1.65,
             color: "var(--tinta-2)",
             textWrap: "pretty",
           }}
@@ -241,6 +258,7 @@ function Hero() {
         >
           <Link
             href="/login"
+            prefetch={false}
             className="l-cta-aksen"
             style={{
               display: "inline-flex",
@@ -250,7 +268,9 @@ function Hero() {
               padding: "0 27px",
               borderRadius: "999px",
               whiteSpace: "nowrap",
-              font: "600 15.5px/1 var(--font-teks)",
+              fontWeight: 600,
+              fontSize: "15.5px",
+              lineHeight: 1,
               textDecoration: "none",
             }}
           >
@@ -258,6 +278,7 @@ function Hero() {
           </Link>
           <Link
             href="/login?as=pemerintah"
+            prefetch={false}
             className="l-pil-garis"
             style={{
               display: "inline-flex",
@@ -267,7 +288,9 @@ function Hero() {
               padding: "0 27px",
               borderRadius: "999px",
               whiteSpace: "nowrap",
-              font: "600 15.5px/1 var(--font-teks)",
+              fontWeight: 600,
+              fontSize: "15.5px",
+              lineHeight: 1,
               textDecoration: "none",
             }}
           >
@@ -277,8 +300,11 @@ function Hero() {
         <div style={{ marginTop: "20px" }}>
           <Link
             href="/daftar"
+            prefetch={false}
             style={{
-              font: "600 14.5px/1 var(--font-teks)",
+              fontWeight: 600,
+              fontSize: "14.5px",
+              lineHeight: 1,
               color: "var(--aksen)",
               textDecoration: "underline",
               textUnderlineOffset: "4px",
@@ -290,7 +316,11 @@ function Hero() {
         <p
           style={{
             margin: "26px 0 0",
-            font: "400 11.5px/1.5 var(--font-mono)",
+            fontWeight: 400,
+            fontSize: "11.5px",
+            lineHeight: 1.5,
+            fontFamily:
+              "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
             color: "var(--tinta-3)",
           }}
         >
@@ -302,7 +332,11 @@ function Hero() {
 }
 
 const kartuMono = {
-  font: "500 8px/1.3 var(--font-mono)",
+  fontWeight: 500,
+  fontSize: "8px",
+  lineHeight: 1.3,
+  fontFamily:
+    "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
   letterSpacing: ".08em",
   color: "var(--tinta-3)",
 } as const;
@@ -343,7 +377,11 @@ function PhoneUI() {
       >
         <span
           style={{
-            font: "600 10px/1 var(--font-mono)",
+            fontWeight: 600,
+            fontSize: "10px",
+            lineHeight: 1,
+            fontFamily:
+              "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
             color: "var(--tinta-2)",
           }}
         >
@@ -408,7 +446,9 @@ function PhoneUI() {
       </div>
       <div
         style={{
-          font: "700 14px/1.3 var(--font-teks)",
+          fontWeight: 700,
+          fontSize: "14px",
+          lineHeight: 1.3,
           letterSpacing: "-0.01em",
           flex: "none",
         }}
@@ -426,7 +466,9 @@ function PhoneUI() {
         <p
           style={{
             margin: 0,
-            font: "500 10px/1.55 var(--font-teks)",
+            fontWeight: 500,
+            fontSize: "10px",
+            lineHeight: 1.55,
             color: "var(--tinta-2)",
           }}
         >
@@ -450,7 +492,11 @@ function PhoneUI() {
           <Mark warna="merah" kind="belah" w={9} />
           <span
             style={{
-              font: "600 8.5px/1 var(--font-mono)",
+              fontWeight: 600,
+              fontSize: "8.5px",
+              lineHeight: 1,
+              fontFamily:
+                "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
               letterSpacing: ".14em",
               color: "var(--merah)",
             }}
@@ -461,7 +507,9 @@ function PhoneUI() {
         <p
           style={{
             margin: 0,
-            font: "700 13px/1.45 var(--font-teks)",
+            fontWeight: 700,
+            fontSize: "13px",
+            lineHeight: 1.45,
             letterSpacing: "-0.01em",
           }}
         >
@@ -469,7 +517,11 @@ function PhoneUI() {
         </p>
         <span
           style={{
-            font: "400 9px/1.4 var(--font-mono)",
+            fontWeight: 400,
+            fontSize: "9px",
+            lineHeight: 1.4,
+            fontFamily:
+              "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
             color: "var(--tinta-3)",
           }}
         >
@@ -484,7 +536,9 @@ function PhoneUI() {
             borderRadius: "999px",
             background: "var(--tinta)",
             color: "var(--latar)",
-            font: "600 10.5px/1 var(--font-teks)",
+            fontWeight: 600,
+            fontSize: "10.5px",
+            lineHeight: 1,
           }}
         >
           {COPY["verdict.cta"]}
@@ -504,19 +558,25 @@ function PhoneUI() {
       >
         <span
           style={{
-            font: "600 8px/1 var(--font-mono)",
+            fontWeight: 600,
+            fontSize: "8px",
+            lineHeight: 1,
+            fontFamily:
+              "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
             letterSpacing: ".14em",
             color: "var(--tinta-3)",
           }}
         >
           {p.temuanEyebrow}
         </span>
-        <span style={{ font: "700 11.5px/1.4 var(--font-teks)" }}>
+        <span style={{ fontWeight: 700, fontSize: "11.5px", lineHeight: 1.4 }}>
           {p.temuanJudul}
         </span>
         <span
           style={{
-            font: "400 10px/1.5 var(--font-teks)",
+            fontWeight: 400,
+            fontSize: "10px",
+            lineHeight: 1.5,
             color: "var(--tinta-2)",
           }}
         >
@@ -532,7 +592,9 @@ function PhoneUI() {
         >
           <span
             style={{
-              font: "600 9.5px/1 var(--font-teks)",
+              fontWeight: 600,
+              fontSize: "9.5px",
+              lineHeight: 1,
               color: "var(--aksen)",
               textDecoration: "underline",
               textUnderlineOffset: "3px",
@@ -549,7 +611,9 @@ function PhoneUI() {
             height: "30px",
             borderRadius: "999px",
             boxShadow: "inset 0 0 0 1px var(--garis-kuat)",
-            font: "600 9.5px/1 var(--font-teks)",
+            fontWeight: 600,
+            fontSize: "9.5px",
+            lineHeight: 1,
             color: "var(--tinta)",
           }}
         >
@@ -585,7 +649,9 @@ function PhoneUI() {
           />
           <span
             style={{
-              font: "600 7.5px/1 var(--font-teks)",
+              fontWeight: 600,
+              fontSize: "7.5px",
+              lineHeight: 1,
               color: "var(--aksen)",
             }}
           >
@@ -611,7 +677,9 @@ function PhoneUI() {
           />
           <span
             style={{
-              font: "500 7.5px/1 var(--font-teks)",
+              fontWeight: 500,
+              fontSize: "7.5px",
+              lineHeight: 1,
               color: "var(--tinta-3)",
             }}
           >
@@ -638,7 +706,9 @@ function PhoneUI() {
           />
           <span
             style={{
-              font: "500 7.5px/1 var(--font-teks)",
+              fontWeight: 500,
+              fontSize: "7.5px",
+              lineHeight: 1,
               color: "var(--tinta-3)",
             }}
           >
@@ -675,7 +745,9 @@ function PhoneUI() {
           </span>
           <span
             style={{
-              font: "500 7.5px/1 var(--font-teks)",
+              fontWeight: 500,
+              fontSize: "7.5px",
+              lineHeight: 1,
               color: "var(--tinta-3)",
             }}
           >
@@ -727,7 +799,9 @@ function DasborUI() {
         />
         <span
           style={{
-            font: "700 11.5px/1 var(--font-teks)",
+            fontWeight: 700,
+            fontSize: "11.5px",
+            lineHeight: 1,
             letterSpacing: "-0.01em",
           }}
         >
@@ -736,7 +810,11 @@ function DasborUI() {
         <span
           style={{
             marginLeft: "auto",
-            font: "500 8.5px/1 var(--font-mono)",
+            fontWeight: 500,
+            fontSize: "8.5px",
+            lineHeight: 1,
+            fontFamily:
+              "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
             letterSpacing: ".1em",
             color: "var(--tinta-3)",
             border: "1px solid var(--garis)",
@@ -767,7 +845,9 @@ function DasborUI() {
             {k.tanda === "none" ? (
               <div
                 style={{
-                  font: "800 18px/1.1 var(--font-teks)",
+                  fontWeight: 800,
+                  fontSize: "18px",
+                  lineHeight: 1.1,
                   fontVariantNumeric: "tabular-nums",
                 }}
               >
@@ -779,7 +859,9 @@ function DasborUI() {
               >
                 <span
                   style={{
-                    font: "800 18px/1.1 var(--font-teks)",
+                    fontWeight: 800,
+                    fontSize: "18px",
+                    lineHeight: 1.1,
                     fontVariantNumeric: "tabular-nums",
                   }}
                 >
@@ -795,7 +877,11 @@ function DasborUI() {
       <div>
         <div
           style={{
-            font: "500 8px/1 var(--font-mono)",
+            fontWeight: 500,
+            fontSize: "8px",
+            lineHeight: 1,
+            fontFamily:
+              "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
             letterSpacing: ".12em",
             color: "var(--tinta-3)",
             marginBottom: "6px",
@@ -831,7 +917,11 @@ function DasborUI() {
             gridTemplateColumns: barisCols,
             gap: "8px",
             padding: "8px 12px",
-            font: "500 8px/1 var(--font-mono)",
+            fontWeight: 500,
+            fontSize: "8px",
+            lineHeight: 1,
+            fontFamily:
+              "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
             letterSpacing: ".1em",
             color: "var(--tinta-3)",
           }}
@@ -851,7 +941,9 @@ function DasborUI() {
               padding: "9px 12px",
               borderTop: "1px solid var(--garis)",
               alignItems: "center",
-              font: "400 10.5px/1.35 var(--font-teks)",
+              fontWeight: 400,
+              fontSize: "10.5px",
+              lineHeight: 1.35,
             }}
           >
             <span style={{ fontWeight: 600 }}>{b.koperasi}</span>
@@ -864,7 +956,7 @@ function DasborUI() {
               }}
             >
               {barisMark(b.warna)}
-              <span style={{ font: "600 9px/1 var(--font-teks)" }}>
+              <span style={{ fontWeight: 600, fontSize: "9px", lineHeight: 1 }}>
                 {b.verdict}
               </span>
             </span>
@@ -1015,7 +1107,11 @@ function PreviewProduk() {
           >
             <span
               style={{
-                font: "600 10px/1 var(--font-mono)",
+                fontWeight: 600,
+                fontSize: "10px",
+                lineHeight: 1,
+                fontFamily:
+                  "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
                 letterSpacing: ".16em",
                 color: "var(--tinta-3)",
               }}
@@ -1025,7 +1121,9 @@ function PreviewProduk() {
             <p
               style={{
                 margin: "7px 0 0",
-                font: "400 13.5px/1.6 var(--font-teks)",
+                fontWeight: 400,
+                fontSize: "13.5px",
+                lineHeight: 1.6,
                 color: "var(--tinta-2)",
               }}
             >
@@ -1043,7 +1141,11 @@ function EyebrowLine({ teks }: { teks: string }) {
     <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
       <span
         style={{
-          font: "600 11px/1 var(--font-mono)",
+          fontWeight: 600,
+          fontSize: "11px",
+          lineHeight: 1,
+          fontFamily:
+            "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
           letterSpacing: ".18em",
           color: "var(--tinta-3)",
           flex: "none",
@@ -1059,7 +1161,9 @@ function EyebrowLine({ teks }: { teks: string }) {
 const h2Style = {
   margin: "22px 0 0",
   maxWidth: "780px",
-  font: "800 clamp(30px, 4.4cqw, 54px)/1.08 var(--font-teks)",
+  fontWeight: 800,
+  fontSize: "clamp(30px, 4.4cqw, 54px)",
+  lineHeight: 1.08,
   letterSpacing: "-0.03em",
   textWrap: "balance",
 } as const;
@@ -1076,7 +1180,9 @@ function Masalah() {
           style={{
             margin: "18px 0 0",
             maxWidth: "620px",
-            font: "400 15.5px/1.65 var(--font-teks)",
+            fontWeight: 400,
+            fontSize: "15.5px",
+            lineHeight: 1.65,
             color: "var(--tinta-2)",
             textWrap: "pretty",
           }}
@@ -1112,7 +1218,11 @@ function Masalah() {
                   style={
                     s.eyebrow
                       ? {
-                          font: "600 11px/1 var(--font-mono)",
+                          fontWeight: 600,
+                          fontSize: "11px",
+                          lineHeight: 1,
+                          fontFamily:
+                            "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
                           letterSpacing: ".14em",
                           color: "var(--tinta-3)",
                         }
@@ -1123,19 +1233,27 @@ function Masalah() {
                 </span>
                 <span
                   style={{
-                    font: "800 clamp(46px, 5.4cqw, 82px)/1 var(--font-teks)",
+                    fontWeight: 800,
+                    fontSize: "clamp(46px, 5.4cqw, 82px)",
+                    lineHeight: 1,
                     letterSpacing: "-0.04em",
                     fontVariantNumeric: "tabular-nums",
                   }}
                 >
                   {f.tampil}
                 </span>
-                <span style={{ font: "600 15px/1.4 var(--font-teks)" }}>
+                <span
+                  style={{ fontWeight: 600, fontSize: "15px", lineHeight: 1.4 }}
+                >
                   {s.label}
                 </span>
                 <span
                   style={{
-                    font: "400 10px/1.5 var(--font-mono)",
+                    fontWeight: 400,
+                    fontSize: "10px",
+                    lineHeight: 1.5,
+                    fontFamily:
+                      "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
                     letterSpacing: ".08em",
                     color: "var(--tinta-3)",
                     textTransform: "uppercase",
@@ -1156,7 +1274,9 @@ function Wawasan() {
   const w = C.wawasan;
   const wawasanText = {
     margin: 0,
-    font: "600 clamp(24px, 3.4cqw, 42px)/1.25 var(--font-teks)",
+    fontWeight: 600,
+    fontSize: "clamp(24px, 3.4cqw, 42px)",
+    lineHeight: 1.25,
     letterSpacing: "-0.025em",
     color: "var(--tinta-2)",
     textWrap: "balance",
@@ -1190,7 +1310,9 @@ function Wawasan() {
           style={{
             ...wawasanText,
             margin: "8px 0 0",
-            font: "800 clamp(24px, 3.4cqw, 42px)/1.25 var(--font-teks)",
+            fontWeight: 800,
+            fontSize: "clamp(24px, 3.4cqw, 42px)",
+            lineHeight: 1.25,
             color: "var(--tinta)",
           }}
         >
@@ -1228,7 +1350,9 @@ function CaraKerja() {
           style={{
             margin: "18px 0 0",
             maxWidth: "640px",
-            font: "400 15.5px/1.65 var(--font-teks)",
+            fontWeight: 400,
+            fontSize: "15.5px",
+            lineHeight: 1.65,
             color: "var(--tinta-2)",
             textWrap: "pretty",
           }}
@@ -1271,7 +1395,11 @@ function CaraKerja() {
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <span
                     style={{
-                      font: "600 10.5px/1 var(--font-mono)",
+                      fontWeight: 600,
+                      fontSize: "10.5px",
+                      lineHeight: 1,
+                      fontFamily:
+                        "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
                       letterSpacing: ".14em",
                       color: "var(--tinta-3)",
                     }}
@@ -1291,7 +1419,9 @@ function CaraKerja() {
                 <div
                   style={{
                     marginTop: "12px",
-                    font: "800 16.5px/1.25 var(--font-teks)",
+                    fontWeight: 800,
+                    fontSize: "16.5px",
+                    lineHeight: 1.25,
                     letterSpacing: "-0.015em",
                   }}
                 >
@@ -1300,7 +1430,9 @@ function CaraKerja() {
                 <p
                   style={{
                     margin: "8px 0 0",
-                    font: "400 13px/1.55 var(--font-teks)",
+                    fontWeight: 400,
+                    fontSize: "13px",
+                    lineHeight: 1.55,
                     color: "var(--tinta-2)",
                   }}
                 >
@@ -1397,7 +1529,11 @@ function CaraKerja() {
               />
               <span
                 style={{
-                  font: "600 10.5px/1 var(--font-mono)",
+                  fontWeight: 600,
+                  fontSize: "10.5px",
+                  lineHeight: 1,
+                  fontFamily:
+                    "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
                   letterSpacing: ".18em",
                   color: "var(--aksen)",
                 }}
@@ -1408,7 +1544,9 @@ function CaraKerja() {
             <p
               style={{
                 margin: "10px 0 0",
-                font: "400 13.5px/1.6 var(--font-teks)",
+                fontWeight: 400,
+                fontSize: "13.5px",
+                lineHeight: 1.6,
                 color: "var(--tinta-2)",
               }}
             >
@@ -1463,7 +1601,9 @@ function CaraKerja() {
                 }}
               >
                 {chipMark(c.warna)}
-                <span style={{ font: "700 13px/1 var(--font-teks)" }}>
+                <span
+                  style={{ fontWeight: 700, fontSize: "13px", lineHeight: 1 }}
+                >
                   {c.label}
                 </span>
               </span>
@@ -1476,7 +1616,11 @@ function CaraKerja() {
               zIndex: 1,
               margin: "20px 0 0",
               textAlign: "center",
-              font: "400 11px/1.6 var(--font-mono)",
+              fontWeight: 400,
+              fontSize: "11px",
+              lineHeight: 1.6,
+              fontFamily:
+                "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
               color: "var(--tinta-3)",
             }}
           >
@@ -1613,7 +1757,9 @@ function FiturInti() {
               <h3
                 style={{
                   margin: "14px 0 0",
-                  font: "800 17px/1.3 var(--font-teks)",
+                  fontWeight: 800,
+                  fontSize: "17px",
+                  lineHeight: 1.3,
                   letterSpacing: "-0.015em",
                 }}
               >
@@ -1622,7 +1768,9 @@ function FiturInti() {
               <p
                 style={{
                   margin: "8px 0 0",
-                  font: "400 13.5px/1.6 var(--font-teks)",
+                  fontWeight: 400,
+                  fontSize: "13.5px",
+                  lineHeight: 1.6,
                   color: "var(--tinta-2)",
                 }}
               >
@@ -1668,7 +1816,9 @@ function Footer() {
               style={{
                 margin: "14px 0 0",
                 maxWidth: "300px",
-                font: "400 13.5px/1.6 var(--font-teks)",
+                fontWeight: 400,
+                fontSize: "13.5px",
+                lineHeight: 1.6,
                 color: "var(--tinta-2)",
               }}
             >
@@ -1677,7 +1827,11 @@ function Footer() {
             <p
               style={{
                 margin: "16px 0 0",
-                font: "400 11px/1.6 var(--font-mono)",
+                fontWeight: 400,
+                fontSize: "11px",
+                lineHeight: 1.6,
+                fontFamily:
+                  "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
                 color: "var(--tinta-3)",
               }}
             >
@@ -1687,7 +1841,11 @@ function Footer() {
           <div>
             <span
               style={{
-                font: "600 10px/1 var(--font-mono)",
+                fontWeight: 600,
+                fontSize: "10px",
+                lineHeight: 1,
+                fontFamily:
+                  "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
                 letterSpacing: ".16em",
                 color: "var(--tinta-3)",
               }}
@@ -1697,7 +1855,9 @@ function Footer() {
             <p
               style={{
                 margin: "12px 0 0",
-                font: "600 14.5px/1.5 var(--font-teks)",
+                fontWeight: 600,
+                fontSize: "14.5px",
+                lineHeight: 1.5,
               }}
             >
               {f.tim.nama}
@@ -1705,7 +1865,9 @@ function Footer() {
             <p
               style={{
                 margin: "4px 0 0",
-                font: "400 13.5px/1.6 var(--font-teks)",
+                fontWeight: 400,
+                fontSize: "13.5px",
+                lineHeight: 1.6,
                 color: "var(--tinta-2)",
               }}
             >
@@ -1715,7 +1877,11 @@ function Footer() {
           <div>
             <span
               style={{
-                font: "600 10px/1 var(--font-mono)",
+                fontWeight: 600,
+                fontSize: "10px",
+                lineHeight: 1,
+                fontFamily:
+                  "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
                 letterSpacing: ".16em",
                 color: "var(--tinta-3)",
               }}
@@ -1725,7 +1891,9 @@ function Footer() {
             <p
               style={{
                 margin: "12px 0 0",
-                font: "600 14.5px/1.5 var(--font-teks)",
+                fontWeight: 600,
+                fontSize: "14.5px",
+                lineHeight: 1.5,
               }}
             >
               {f.ajang.nama}
@@ -1734,7 +1902,9 @@ function Footer() {
               <a
                 href={f.ajang.repoHref}
                 style={{
-                  font: "600 13.5px/1.5 var(--font-teks)",
+                  fontWeight: 600,
+                  fontSize: "13.5px",
+                  lineHeight: 1.5,
                   color: "var(--aksen)",
                   textDecoration: "underline",
                   textUnderlineOffset: "4px",
@@ -1752,7 +1922,9 @@ function Footer() {
           <div
             style={{
               textAlign: "center",
-              font: "800 clamp(88px, 14cqw, 188px)/0.92 var(--font-teks)",
+              fontWeight: 800,
+              fontSize: "clamp(88px, 14cqw, 188px)",
+              lineHeight: 0.92,
               letterSpacing: "-0.05em",
               color: "color-mix(in oklch, var(--tinta) 8%, var(--permukaan))",
               userSelect: "none",
@@ -1774,7 +1946,11 @@ function Footer() {
         >
           <span
             style={{
-              font: "400 10.5px/1.6 var(--font-mono)",
+              fontWeight: 400,
+              fontSize: "10.5px",
+              lineHeight: 1.6,
+              fontFamily:
+                "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
               color: "var(--tinta-3)",
             }}
           >
@@ -1782,7 +1958,11 @@ function Footer() {
           </span>
           <span
             style={{
-              font: "400 10.5px/1.6 var(--font-mono)",
+              fontWeight: 400,
+              fontSize: "10.5px",
+              lineHeight: 1.6,
+              fontFamily:
+                "var(--font-jetbrains), 'JetBrains Mono', ui-monospace, Menlo, monospace",
               color: "var(--tinta-3)",
             }}
           >

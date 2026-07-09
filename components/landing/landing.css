@@ -13,7 +13,11 @@
   overflow-x: clip;
   background: var(--latar);
   color: var(--tinta);
-  font-family: var(--font-teks);
+  /* Pakai variabel next/font langsung: Tailwind v4 melucuti custom property
+     bernamespace --font-* (--font-teks/--font-mono) dari file token, jadi
+     token itu kosong saat runtime. --font-jakarta di-set via className
+     next/font pada wrapper layout sehingga aman. */
+  font-family: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -43,20 +47,21 @@
 }
 
 /* Pil interaktif: base + hover di CSS agar hover menang (inline akan
-   mengunci nilai dan mematikan :hover). */
-.l-cta-aksen {
+   mengunci nilai dan mematikan :hover). Diruang-lingkupkan di bawah .landing
+   agar spesifisitas menang atas ".landing a" (warna link) pada CTA anchor. */
+.landing .l-cta-aksen {
   background: var(--aksen);
   color: var(--aksen-teks);
 }
-.l-cta-aksen:hover {
+.landing .l-cta-aksen:hover {
   background: var(--aksen-kuat);
   color: var(--aksen-teks);
 }
-.l-pil-garis {
+.landing .l-pil-garis {
   box-shadow: inset 0 0 0 1.5px var(--garis-kuat);
   color: var(--tinta);
 }
-.l-pil-garis:hover {
+.landing .l-pil-garis:hover {
   box-shadow: inset 0 0 0 1.5px var(--tinta-3);
   color: var(--tinta);
 }

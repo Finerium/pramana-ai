@@ -71,7 +71,9 @@ export function ThemeToggle() {
         height: "40px",
         padding: "0 14px",
         borderRadius: "999px",
-        font: "600 12.5px/1 var(--font-teks)",
+        fontWeight: 600,
+        fontSize: "12.5px",
+        lineHeight: 1,
         whiteSpace: "nowrap",
       }}
     >
