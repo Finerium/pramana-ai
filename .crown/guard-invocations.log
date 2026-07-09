@@ -3012,3 +3012,18 @@
 {"at":"2026-07-09T20:57:14.395Z","tool":"Bash","path":"pnpm typecheck && pnpm lint && pnpm test 2>&1 | grep -E \"Test Files|Tests \" && p"}
 {"at":"2026-07-09T20:58:02.313Z","tool":"Bash","path":"lsof -ti:3000 | xargs kill 2>/dev/null; lsof -ti:3100 | xargs kill 2>/dev/null; "}
 {"at":"2026-07-09T20:58:56.184Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 sh -c '\ncp /private/tmp/claude-501/-Users-ghaisan-Documents-P"}
+{"at":"2026-07-09T20:59:13.535Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/phase"}
+{"at":"2026-07-09T20:59:51.350Z","tool":"Write","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/env-check.js"}
+{"at":"2026-07-09T20:59:56.061Z","tool":"Bash","path":"node --env-file=.env /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI"}
+{"at":"2026-07-09T21:00:34.747Z","tool":"Bash","path":"printf 'true' | vercel env add DEMO_MODE preview --force 2>&1 | tail -4"}
+{"at":"2026-07-09T21:00:58.905Z","tool":"Write","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/push-env.js"}
+{"at":"2026-07-09T21:01:06.640Z","tool":"Bash","path":"node --env-file=.env /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI"}
+{"at":"2026-07-09T21:01:47.000Z","tool":"Bash","path":"node --env-file=.env --import tsx scripts/seed/index.ts 2>&1 | tail -2 && echo \""}
+{"at":"2026-07-09T21:01:57.002Z","tool":"Bash","path":"node --env-file=.env --import tsx scripts/seed/index.ts"}
+{"at":"2026-07-09T21:02:33.768Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/db/client.ts"}
+{"at":"2026-07-09T21:02:43.652Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/db/client.ts"}
+{"at":"2026-07-09T21:02:48.663Z","tool":"Bash","path":"pnpm typecheck && pnpm test 2>&1 | grep -E \"Test Files|Tests \" && echo \"=== SEED"}
+{"at":"2026-07-09T21:02:54.648Z","tool":"Bash","path":"pnpm typecheck && pnpm test 2>&1 | grep -E \"Test Files|Tests \""}
+{"at":"2026-07-09T21:03:18.844Z","tool":"Bash","path":"node --env-file=.env --import tsx scripts/seed/index.ts"}
+{"at":"2026-07-09T21:03:30.949Z","tool":"Bash","path":"node --env-file=.env --import tsx scripts/seed/verify.ts"}
+{"at":"2026-07-09T21:03:49.216Z","tool":"Bash","path":"git add -A && git commit -m \"fix(db): PRAGMA hanya untuk file lokal, tidak untuk"}

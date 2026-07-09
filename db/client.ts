@@ -22,11 +22,15 @@ export function resolveDbUrl(): { url: string; authToken?: string } {
 
 export function createDb(url: string, authToken?: string): Created {
   const client = createClient(authToken ? { url, authToken } : { url });
-  // Di-queue pertama pada koneksi persisten sehingga query berikutnya melihat FK ON.
-  void client.execute("PRAGMA foreign_keys = ON");
-  // File SQLite dipakai lintas proses (server dev + vitest + tooling); tunggu
-  // lock transien alih-alih langsung SQLITE_BUSY. No-op di Turso remote.
-  void client.execute("PRAGMA busy_timeout = 5000");
+  // PRAGMA hanya untuk file SQLite lokal. Turso remote (libsql/hrana) menolak
+  // busy_timeout (SQL_PARSE_ERROR) dan mengelola FK/konkurensi di sisi server;
+  // .catch menjaga rejection tidak menjadi unhandled.
+  if (url.startsWith("file:")) {
+    // FK aktif (SQLite off by default); busy_timeout menahan lock lintas-proses
+    // (server dev + vitest + tooling) alih-alih langsung SQLITE_BUSY.
+    void client.execute("PRAGMA foreign_keys = ON").catch(() => {});
+    void client.execute("PRAGMA busy_timeout = 5000").catch(() => {});
+  }
   const db = drizzle(client, { schema });
   return { db, client };
 }
