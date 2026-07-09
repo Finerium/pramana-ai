@@ -1,0 +1,11 @@
+{
+  "gate": 5,
+  "at": "2026-07-09T20:41:49Z",
+  "pass": true,
+  "results": [
+    {"id": "AC-PERF-01", "pass": true, "note": "p95 1.6-2.1ms pada 7 endpoint kunci, 50 req masing-masing, production build lokal (ambang 500ms); perf-api.json"},
+    {"id": "AC-PERF-02", "pass": true, "note": "first-load /beranda 157.6 kB transfer nyata (9 chunk; Turbopack tanpa tabel ukuran, diukur empiris via network) <= 250 kB; perf-bundle.json"},
+    {"id": "AC-PERF-03", "pass": true, "note": "fixture 5.000 baris: recent max 10, flow agregasi SQL (total menjangkau 5.406 baris, respons hanya kategori), snapshot LIMIT 500; junit-perf.xml"},
+    {"id": "AC-PERF-04", "pass": true, "note": "timeout 30s + max 1 retry korektif + tanpa fallback, teruji mock transport; junit-llm.xml (Gate 1/3)"}
+  ]
+}

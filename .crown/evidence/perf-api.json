@@ -1,0 +1,93 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "generatedAt": "2026-07-09T20:41:26.034Z",
+  "runsPerEndpoint": 50,
+  "threshold_p95_ms": 500,
+  "allWithinThreshold": true,
+  "endpoints": [
+    {
+      "name": "member.summary",
+      "method": "GET",
+      "path": "/api/member/summary",
+      "n": 50,
+      "p50": 1.1701249999999845,
+      "p95": 2.0613329999999905,
+      "min": 0.9106660000000488,
+      "max": 2.5166250000000048,
+      "errors": 0,
+      "withinThreshold": true
+    },
+    {
+      "name": "member.verdict",
+      "method": "GET",
+      "path": "/api/member/verdict",
+      "n": 50,
+      "p50": 1.0042080000000055,
+      "p95": 1.578458000000012,
+      "min": 0.8502090000000067,
+      "max": 1.6743339999999876,
+      "errors": 0,
+      "withinThreshold": true
+    },
+    {
+      "name": "member.findings",
+      "method": "GET",
+      "path": "/api/member/findings",
+      "n": 50,
+      "p50": 1.1228750000000218,
+      "p95": 1.587541999999985,
+      "min": 0.9217500000000314,
+      "max": 3.1495419999999967,
+      "errors": 0,
+      "withinThreshold": true
+    },
+    {
+      "name": "member.flow",
+      "method": "GET",
+      "path": "/api/member/flow?periode=2026-06",
+      "n": 50,
+      "p50": 1.1328750000000127,
+      "p95": 1.6480829999999855,
+      "min": 0.9860840000000053,
+      "max": 3.19662500000004,
+      "errors": 0,
+      "withinThreshold": true
+    },
+    {
+      "name": "member.voice",
+      "method": "GET",
+      "path": "/api/member/voice",
+      "n": 50,
+      "p50": 1.097500000000025,
+      "p95": 1.703416999999945,
+      "min": 0.9427499999999327,
+      "max": 2.386000000000024,
+      "errors": 0,
+      "withinThreshold": true
+    },
+    {
+      "name": "gov.overview",
+      "method": "GET",
+      "path": "/api/gov/overview",
+      "n": 50,
+      "p50": 1.2447909999999638,
+      "p95": 1.708291000000031,
+      "min": 1.005125000000021,
+      "max": 3.023832999999968,
+      "errors": 0,
+      "withinThreshold": true
+    },
+    {
+      "name": "gov.koperasi",
+      "method": "GET",
+      "path": "/api/gov/koperasi/kop-sukamaju",
+      "n": 50,
+      "p50": 1.2623330000000124,
+      "p95": 1.9370000000000118,
+      "min": 1.1262500000000273,
+      "max": 3.335833999999977,
+      "errors": 0,
+      "withinThreshold": true
+    }
+  ]
+}

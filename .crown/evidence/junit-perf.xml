@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="4" failures="0" errors="0" time="0.700173458">
+    <testsuite name="tests/bounded.query.test.ts" timestamp="2026-07-09T20:41:49.665Z" hostname="Ghaisans-MacBook-Pro.local" tests="4" failures="0" errors="0" skipped="0" time="0.700173458">
+        <testcase classname="tests/bounded.query.test.ts" name="kueri berbatas dengan 5.000+ transaksi (AC-PERF-03) &gt; subjek/recent tetap mengembalikan maksimal 10 transaksi (batas &lt;= 50)" time="0.012137833">
+        </testcase>
+        <testcase classname="tests/bounded.query.test.ts" name="kueri berbatas dengan 5.000+ transaksi (AC-PERF-03) &gt; member/flow beragregasi via SQL: respons ringkas, total mencakup 5.406 baris" time="0.004660042">
+        </testcase>
+        <testcase classname="tests/bounded.query.test.ts" name="kueri berbatas dengan 5.000+ transaksi (AC-PERF-03) &gt; buildSnapshot membatasi transaksi periode berjalan ke 500 baris" time="0.006761291">
+        </testcase>
+        <testcase classname="tests/bounded.query.test.ts" name="kueri berbatas dengan 5.000+ transaksi (AC-PERF-03) &gt; reseed memulihkan state (idempoten, baris bulk hilang)" time="0.274276458">
+        </testcase>
+    </testsuite>
+</testsuites>

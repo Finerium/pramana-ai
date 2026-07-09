@@ -1,0 +1,9 @@
+{
+  "gate": 5,
+  "entries": [
+    {"id": "AC-PERF-01", "check": "pnpm perf:api (50 req/endpoint kunci, production build)", "expect": "p95 <= 500 ms semua endpoint", "artifact": ".crown/evidence/perf-api.json"},
+    {"id": "AC-PERF-02", "check": "parse output pnpm build first-load JS /beranda", "expect": "<= 250 kB", "artifact": ".crown/evidence/build.log"},
+    {"id": "AC-PERF-03", "check": "vitest tests/bounded.query.test.ts (fixture 5.000 transaksi)", "expect": "list max 50 baris; flow agregasi SQL tanpa load-all", "artifact": ".crown/evidence/junit-perf.xml"},
+    {"id": "AC-PERF-04", "check": "vitest lib/llm.contract.test.ts (timeout 30s, max 1 retry korektif, tanpa fallback)", "expect": "pass", "artifact": ".crown/evidence/junit-llm.xml"}
+  ]
+}

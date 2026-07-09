@@ -1,0 +1,7 @@
+{
+  "route": "/beranda",
+  "chunks": 9,
+  "transferKb": 157.6,
+  "threshold": 250,
+  "pass": true
+}

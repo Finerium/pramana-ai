@@ -2909,3 +2909,17 @@
 {"at":"2026-07-09T20:37:41.053Z","tool":"Bash","path":"lsof -ti:3010 | xargs kill 2>/dev/null; lsof -ti:3011 | xargs kill 2>/dev/null; "}
 {"at":"2026-07-09T20:37:56.815Z","tool":"Bash","path":"git add -A && git commit -m \"checkpoint(gate-3): matrix verifikasi sentral lulus"}
 {"at":"2026-07-09T20:38:20.229Z","tool":"Bash","path":"rm -f subjek-login-default.png subjek-login-error-dark.png subjek-login-error-li"}
+{"at":"2026-07-09T20:38:33.263Z","tool":"Bash","path":"sed -n 40,70p app/api/routes.test.ts; grep -n \"sealSession\\|cookie\\|NextRequest\\"}
+{"at":"2026-07-09T20:39:11.223Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/tests/bounded.query.test.ts"}
+{"at":"2026-07-09T20:39:21.025Z","tool":"Bash","path":"pnpm exec vitest run tests/bounded.query.test.ts --coverage=false 2>&1 | tail -1"}
+{"at":"2026-07-09T20:39:34.282Z","tool":"Bash","path":"pnpm exec vitest run tests/bounded.query.test.ts --coverage=false 2>&1 | grep -B"}
+{"at":"2026-07-09T20:39:42.501Z","tool":"Bash","path":"sed -n 32,45p lib/audit/buildSnapshot.ts"}
+{"at":"2026-07-09T20:39:48.955Z","tool":"Bash","path":"grep -n \"BuiltSnapshot\" -A 8 lib/audit/buildSnapshot.ts | head -12"}
+{"at":"2026-07-09T20:39:58.458Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/tests/bounded.query.test.ts"}
+{"at":"2026-07-09T20:40:06.821Z","tool":"Bash","path":"pnpm exec vitest run tests/bounded.query.test.ts --coverage=false 2>&1 | tail -4"}
+{"at":"2026-07-09T20:40:25.201Z","tool":"Bash","path":"grep -A 24 \"Route (app)\" /tmp/build-perf.log | head -28"}
+{"at":"2026-07-09T20:40:42.327Z","tool":"Bash","path":"node - <<'EOF'\nconst fs = require(\"node:fs\");\nconst zlib = require(\"node:zlib\");"}
+{"at":"2026-07-09T20:40:49.005Z","tool":"Bash","path":"ls .next/ | head -12; find .next -maxdepth 2 -name \"*manifest*\" | head -8"}
+{"at":"2026-07-09T20:41:06.226Z","tool":"Bash","path":"lsof -ti:3000 | xargs kill 2>/dev/null; sleep 1; (TURSO_DATABASE_URL= TURSO_AUTH"}
+{"at":"2026-07-09T20:41:25.014Z","tool":"Bash","path":"pnpm perf:api 2>&1 | tail -14"}
+{"at":"2026-07-09T20:41:47.981Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 sh -c '\ncp perf-api.json .crown/evidence/perf-api.json\ncp /tm"}

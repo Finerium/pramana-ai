@@ -51,3 +51,4 @@ coverage/
 /audit-bench.json
 /ci-clean.log
 /demo-hash.txt
+/.vitest-perf.db
