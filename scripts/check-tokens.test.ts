@@ -4,6 +4,7 @@ import {
   compareTokens,
   documentedTokenNames,
   evaluateSurface,
+  buildReport,
 } from "./check-tokens.mjs";
 
 describe("check-tokens parseTokens", () => {
@@ -62,5 +63,21 @@ describe("check-tokens evaluateSurface", () => {
     );
     expect(r.status).toBe("missing-app");
     expect(r.tokenCount).toBeGreaterThan(10);
+  });
+});
+
+describe("check-tokens buildReport strict mode (AC-UI-01, no vacuous pass)", () => {
+  it("tolerates unwritten app token files by default (wave 1 stays green)", () => {
+    const r = buildReport(false);
+    // Wave 1: styles/tokens/*.css not ported yet -> missing-app, but ok holds.
+    expect(r.missingApp).toBe(true);
+    expect(r.ok).toBe(true);
+  });
+
+  it("fails when a surface still lacks its app token file under --strict", () => {
+    const r = buildReport(true);
+    expect(r.strict).toBe(true);
+    expect(r.missingApp).toBe(true);
+    expect(r.ok).toBe(false);
   });
 });

@@ -1,10 +1,14 @@
 #!/usr/bin/env node
 // scripts/check-tokens.mjs — design-token fidelity checker (AC-UI-01, kontrak 6.19).
 // Every custom property in each design-handoff bundle must appear in the matching
-// styles/tokens/<surface>.css with an identical (whitespace-normalized) value.
-// Drift is only legitimate when the variable name is cited in .crown/design-deviations.md.
-// Emits a JSON report to stdout. App files not yet written are reported "missing-app"
-// (wave 2 fills them; the gate re-runs then) and do not fail the run.
+// styles/tokens/<surface>.css — the FROZEN token location (arsitektur-implementasi
+// section 1 folder map + section 4 invariant) — with an identical (whitespace-
+// normalized) value. Drift is only legitimate when the variable name is cited in
+// .crown/design-deviations.md.
+// Emits a JSON report to stdout. In wave 1 the app token files are not written yet,
+// so a surface is reported "missing-app" and by default does NOT fail the run. After
+// wave 2 has ported the tokens, run with --strict: a still-missing app file then
+// FAILS the gate instead of passing vacuously (AC-UI-01), rather than staying green.
 
 import { readFileSync, existsSync } from "node:fs";
 import { pathToFileURL } from "node:url";
@@ -72,28 +76,34 @@ export function evaluateSurface(bundlePath, appPath, documented) {
   };
 }
 
-export function buildReport() {
+// strict=true makes a still-missing app token file fail the run (post-wave-2 gate).
+export function buildReport(strict = false) {
   const documented = existsSync(DEVIATIONS)
     ? documentedTokenNames(readFileSync(DEVIATIONS, "utf8"))
     : new Set();
   const surfaces = {};
   let undocumentedTotal = 0;
   let missingBundle = false;
+  let missingApp = false;
   for (const [name, bundlePath, appPath] of SURFACES) {
     const r = evaluateSurface(bundlePath, appPath, documented);
     surfaces[name] = r;
     if (r.status === "drift") undocumentedTotal += r.undocumentedDrift.length;
     if (r.status === "missing-bundle") missingBundle = true;
+    if (r.status === "missing-app") missingApp = true;
   }
   return {
-    ok: undocumentedTotal === 0 && !missingBundle,
+    ok: undocumentedTotal === 0 && !missingBundle && !(strict && missingApp),
+    strict,
     undocumentedDriftTotal: undocumentedTotal,
+    missingApp,
     surfaces,
   };
 }
 
 function main() {
-  const report = buildReport();
+  const strict = process.argv.includes("--strict");
+  const report = buildReport(strict);
   process.stdout.write(JSON.stringify(report, null, 2) + "\n");
   process.exit(report.ok ? 0 : 1);
 }
