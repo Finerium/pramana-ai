@@ -41,12 +41,19 @@ describe("perf-api ENDPOINTS", () => {
       "/api/member/summary",
       "/api/member/verdict",
       "/api/member/findings",
-      "/api/member/flow",
+      "/api/member/flow?periode=2026-06",
       "/api/member/voice",
       "/api/gov/overview",
       "/api/gov/koperasi/kop-sukamaju",
     ]) {
       expect(paths).toContain(p);
     }
+  });
+
+  it("fires member.flow with the required periode query (blueprint 6.3)", () => {
+    const flow = ENDPOINTS.find(
+      (e: { name: string; path: string }) => e.name === "member.flow",
+    );
+    expect(flow?.path).toBe("/api/member/flow?periode=2026-06");
   });
 });

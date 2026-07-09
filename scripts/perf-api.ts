@@ -40,7 +40,10 @@ export const ENDPOINTS: Endpoint[] = [
   {
     name: "member.flow",
     method: "GET",
-    path: "/api/member/flow",
+    // Flow requires the periode query (blueprint 6.3); without it the endpoint
+    // returns VALIDATION and the sample would be all errors. 2026-06 = seed's
+    // current period (6.7b), the only period perf runs against under DEMO seed.
+    path: "/api/member/flow?periode=2026-06",
     role: "anggota",
   },
   {
