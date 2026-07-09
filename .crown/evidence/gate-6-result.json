@@ -1,0 +1,15 @@
+{
+  "gate": 6,
+  "at": "2026-07-09T20:59:05Z",
+  "pass": true,
+  "results": [
+    {"id": "AC-SEC-01", "pass": true, "note": "matrix 401 seluruh route non-publik; requireRole deny-by-default; auditor independen ok"},
+    {"id": "AC-SEC-02", "pass": true, "note": "isolasi role 403 anggota/pemerintah/pengurus; auditor ok"},
+    {"id": "AC-SEC-03", "pass": true, "note": "Zod boundary + injeksi inert (query parameterized Drizzle) + XSS render-safe React; injection.test + e2e"},
+    {"id": "AC-SEC-04", "pass": true, "note": "scan-secrets tree + git log -p = 0; .env tidak ter-track"},
+    {"id": "AC-SEC-05", "pass": true, "note": "0 high/critical; 1 moderate postcss build-path via next internal (dep langsung 8.5.16), dicatat"},
+    {"id": "AC-SEC-06", "pass": true, "note": "bcrypt compareSync + cookie httpOnly/secure(prod)/sameSite lax/pramana_session/7hari; logger tanpa PII"},
+    {"id": "AC-SEC-07", "pass": true, "note": "rate limit login >= 5 gagal/menit -> 429 (in-memory sliding window; kelas demo per 6.18)"},
+    {"id": "SEC-AUDIT", "pass": true, "note": "auditor independen PASS high=0 crit=0 medium=0; 3 low: XFF spoof (diakui 6.18, XFF diset proxy Vercel), timing enumeration + IDOR ringan KEDUANYA DIPERBAIKI (dummy bcrypt konstan; scope temuan/anggota ke koperasi sesi via anggotaMilikKoperasi + join auditRun)"}
+  ]
+}

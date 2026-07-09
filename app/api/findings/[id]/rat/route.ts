@@ -1,10 +1,10 @@
 import type { NextRequest } from "next/server";
-import { eq, sql } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { ulid } from "ulid";
 import { getDb } from "../../../../../db/client";
-import { pertanyaanRat, temuan } from "../../../../../db/schema";
+import { auditRun, pertanyaanRat, temuan } from "../../../../../db/schema";
 import { ApiError, ok, runRoute } from "../../../../../lib/api";
-import { requireRole } from "../../../../../lib/auth";
+import { koperasiForAnggota, requireRole } from "../../../../../lib/auth";
 
 export async function POST(
   req: NextRequest,
@@ -18,10 +18,16 @@ export async function POST(
     const { id: temuanId } = await ctx.params;
     const { db } = getDb();
 
+    // Scope ke koperasi sesi: temuan milik koperasi lain diperlakukan tidak ada
+    // (anti IDOR; anggota hanya mengangkat temuan koperasinya sendiri).
+    const koperasiId = await koperasiForAnggota(anggotaId);
     const exists = await db
       .select({ id: temuan.id })
       .from(temuan)
-      .where(eq(temuan.id, temuanId))
+      .innerJoin(auditRun, eq(temuan.auditRunId, auditRun.id))
+      .where(
+        and(eq(temuan.id, temuanId), eq(auditRun.koperasiId, koperasiId ?? "")),
+      )
       .limit(1);
     if (!exists[0]) throw new ApiError("NOT_FOUND", "Temuan tidak ditemukan.");
 

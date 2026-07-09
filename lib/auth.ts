@@ -7,7 +7,7 @@
  */
 import { sealData, unsealData } from "iron-session";
 import type { NextResponse } from "next/server";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { getDb } from "../db/client";
 import { anggota, pengurus, users } from "../db/schema";
 import { ApiError } from "./api";
@@ -123,6 +123,23 @@ export async function koperasiForAnggota(
     .where(eq(anggota.id, anggotaId))
     .limit(1);
   return rows[0]?.koperasiId ?? null;
+}
+
+/**
+ * True bila anggotaId benar milik koperasiId. Dipakai konsol subjek untuk
+ * menolak anggota lintas-koperasi pada form transaksi/pinjaman (anti IDOR).
+ */
+export async function anggotaMilikKoperasi(
+  anggotaId: string,
+  koperasiId: string,
+): Promise<boolean> {
+  const { db } = getDb();
+  const rows = await db
+    .select({ id: anggota.id })
+    .from(anggota)
+    .where(and(eq(anggota.id, anggotaId), eq(anggota.koperasiId, koperasiId)))
+    .limit(1);
+  return rows.length > 0;
 }
 
 function cookieOptions() {

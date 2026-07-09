@@ -20,11 +20,12 @@ function ipPerSpec(file: string): string {
 }
 
 export const test = base.extend<{ errorSink: ErrorSink }>({
-  context: async ({ context }, use, testInfo) => {
+  // Param injektor dinamai `run` (bukan `use`) agar tidak dikira React hook.
+  context: async ({ context }, run, testInfo) => {
     await context.setExtraHTTPHeaders({
       "x-forwarded-for": ipPerSpec(testInfo.file),
     });
-    await use(context);
+    await run(context);
   },
   errorSink: [
     async ({ page }, use) => {

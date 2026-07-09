@@ -23,6 +23,11 @@ const Body = z.object({
   password: z.string().min(1),
 });
 
+// Hash bcrypt konstan untuk perbandingan waktu-seragam saat email tak dikenal
+// (anti user-enumeration via timing). Bukan kredensial: tidak pernah cocok.
+const DUMMY_HASH =
+  "$2b$10$4lHAElqEgioG3Ml0u8VFzeH3nCLB/xFO3uOM8q.J09UIbh80XpBVW";
+
 export async function POST(req: NextRequest) {
   return runRoute(async () => {
     const ip = clientIp(req);
@@ -48,7 +53,13 @@ export async function POST(req: NextRequest) {
       .where(eq(users.email, email))
       .limit(1);
     const user = rows[0];
-    if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
+    // Selalu jalankan satu bcrypt.compareSync (hash dummy bila user tak ada)
+    // agar waktu respons seragam: menutup enumerasi user via timing.
+    const cocok = bcrypt.compareSync(
+      password,
+      user?.passwordHash ?? DUMMY_HASH,
+    );
+    if (!user || !cocok) {
       recordLoginFailure(ip);
       throw new ApiError("UNAUTHORIZED", COPY["login.err"]);
     }

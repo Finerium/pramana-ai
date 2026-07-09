@@ -5,7 +5,11 @@ import { ulid } from "ulid";
 import { getDb } from "../../../../db/client";
 import { koperasi, transaksi } from "../../../../db/schema";
 import { ApiError, ok, runRoute } from "../../../../lib/api";
-import { koperasiForPengurus, requireRole } from "../../../../lib/auth";
+import {
+  anggotaMilikKoperasi,
+  koperasiForPengurus,
+  requireRole,
+} from "../../../../lib/auth";
 
 const Body = z.object({
   jenis: z.enum([
@@ -48,6 +52,13 @@ export async function POST(req: NextRequest) {
       throw new ApiError(
         "VALIDATION",
         "Pembelian wajib menyertakan nama dan alamat penjual.",
+      );
+    }
+    // Anti IDOR: anggota terkait wajib milik koperasi pengurus sesi.
+    if (b.anggotaId && !(await anggotaMilikKoperasi(b.anggotaId, koperasiId))) {
+      throw new ApiError(
+        "VALIDATION",
+        "Anggota tidak terdaftar di koperasi ini.",
       );
     }
     const arah: "masuk" | "keluar" = MASUK.has(b.jenis) ? "masuk" : "keluar";

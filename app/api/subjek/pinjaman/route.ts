@@ -4,7 +4,11 @@ import { ulid } from "ulid";
 import { getDb } from "../../../../db/client";
 import { pinjaman } from "../../../../db/schema";
 import { ApiError, ok, runRoute } from "../../../../lib/api";
-import { koperasiForPengurus, requireRole } from "../../../../lib/auth";
+import {
+  anggotaMilikKoperasi,
+  koperasiForPengurus,
+  requireRole,
+} from "../../../../lib/auth";
 
 const Body = z.object({
   anggotaId: z.string().min(1),
@@ -29,6 +33,13 @@ export async function POST(req: NextRequest) {
         "Data pinjaman tidak lengkap atau tidak sah.",
       );
     const b = parsed.data;
+    // Anti IDOR: pinjaman hanya untuk anggota koperasi pengurus sesi.
+    if (!(await anggotaMilikKoperasi(b.anggotaId, koperasiId))) {
+      throw new ApiError(
+        "VALIDATION",
+        "Anggota tidak terdaftar di koperasi ini.",
+      );
+    }
     const pinjamanId = ulid();
     const { db } = getDb();
     await db.insert(pinjaman).values({

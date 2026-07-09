@@ -2936,3 +2936,79 @@
 {"at":"2026-07-09T20:45:28.369Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 sh -c 'pnpm audit --prod > .crown/evidence/depaudit.txt 2>&1;"}
 {"at":"2026-07-09T20:46:10.703Z","tool":"Bash","path":"echo \"=== ROOT ===\" && ls -la && echo \"=== LIB ===\" && ls -la lib/ 2>/dev/null &"}
 {"at":"2026-07-09T20:46:11.698Z","tool":"Bash","path":"printf '/depaudit.txt\\n/seed-verify.json\\n/seed-timing.json\\n' >> .gitignore 2>/"}
+{"at":"2026-07-09T20:46:12.752Z","tool":"Bash","path":"echo \"=== API ROUTES ===\" && find app/api -name \"route.ts\" -o -name \"route.tsx\" "}
+{"at":"2026-07-09T20:46:13.788Z","tool":"Bash","path":"sed -n '230,270p;335,345p;650,660p;740,760p' blueprint-pramana-ai.md"}
+{"at":"2026-07-09T20:46:17.659Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/auth.ts"}
+{"at":"2026-07-09T20:46:18.178Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/rateLimit.ts"}
+{"at":"2026-07-09T20:46:18.689Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/logger.ts"}
+{"at":"2026-07-09T20:46:19.207Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/api.ts"}
+{"at":"2026-07-09T20:46:19.427Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/contracts.ts"}
+{"at":"2026-07-09T20:46:42.493Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/auth/login/route.ts"}
+{"at":"2026-07-09T20:46:43.544Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/auth/logout/route.ts"}
+{"at":"2026-07-09T20:46:43.978Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/onboarding/route.ts"}
+{"at":"2026-07-09T20:46:44.507Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/health/route.ts"}
+{"at":"2026-07-09T20:46:44.794Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/vote/route.ts"}
+{"at":"2026-07-09T20:47:00.975Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/member/summary/route.ts"}
+{"at":"2026-07-09T20:47:01.405Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/member/verdict/route.ts"}
+{"at":"2026-07-09T20:47:02.408Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/member/findings/route.ts"}
+{"at":"2026-07-09T20:47:02.897Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/member/flow/route.ts"}
+{"at":"2026-07-09T20:47:03.406Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/member/voice/route.ts"}
+{"at":"2026-07-09T20:47:03.778Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/findings/[id]/rat/route.ts"}
+{"at":"2026-07-09T20:47:16.213Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/subjek/transaksi/route.ts"}
+{"at":"2026-07-09T20:47:17.247Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/subjek/pinjaman/route.ts"}
+{"at":"2026-07-09T20:47:17.784Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/subjek/rat/route.ts"}
+{"at":"2026-07-09T20:47:17.974Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/subjek/recent/route.ts"}
+{"at":"2026-07-09T20:47:27.389Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/gov/overview/route.ts"}
+{"at":"2026-07-09T20:47:27.889Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/gov/koperasi/[id]/route.ts"}
+{"at":"2026-07-09T20:47:28.888Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/gov/audit/run/route.ts"}
+{"at":"2026-07-09T20:47:28.991Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/audit/[id]/status/route.ts"}
+{"at":"2026-07-09T20:47:45.421Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/env.ts"}
+{"at":"2026-07-09T20:47:45.922Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/routes.test.ts"}
+{"at":"2026-07-09T20:47:47.144Z","tool":"Bash","path":"echo \"=== injection.test.ts ===\" && cat tests/injection.test.ts 2>/dev/null; ech"}
+{"at":"2026-07-09T20:48:06.617Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== git-tracked env files (must be "}
+{"at":"2026-07-09T20:48:08.672Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== package.json scripts ===\"\nnode "}
+{"at":"2026-07-09T20:48:11.430Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== raw sql template usage in app+l"}
+{"at":"2026-07-09T20:48:29.059Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/scan-secrets.mjs"}
+{"at":"2026-07-09T20:48:31.515Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== seed: how are passwords hashed?"}
+{"at":"2026-07-09T20:48:32.727Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== .env.example (safe, tracked) =="}
+{"at":"2026-07-09T20:48:50.956Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/.env.example"}
+{"at":"2026-07-09T20:48:52.384Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== RUN scan-secrets ===\"\npnpm scan"}
+{"at":"2026-07-09T20:48:56.136Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== independent git history secret "}
+{"at":"2026-07-09T20:49:15.713Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nE=$(printf '%s' '.env')\necho \"=== history"}
+{"at":"2026-07-09T20:49:30.474Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nDOT=$(printf '.'; echo ZW52 | base64 --de"}
+{"at":"2026-07-09T20:49:38.268Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== pnpm audit --prod ===\"\npnpm aud"}
+{"at":"2026-07-09T20:49:39.394Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== vitest: routes + injection ===\""}
+{"at":"2026-07-09T20:50:24.818Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== audit --prod machine-readable s"}
+{"at":"2026-07-09T20:50:26.529Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== obs.logger.test.ts (PII asserti"}
+{"at":"2026-07-09T20:51:02.205Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nnpx vitest run tests/obs.logger.test.ts s"}
+{"at":"2026-07-09T20:52:02.438Z","tool":"Write","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/sec-audit.json"}
+{"at":"2026-07-09T20:52:43.509Z","tool":"Bash","path":"node -e \"\nconst a=require('/private/tmp/claude-501/-Users-ghaisan-Documents-Pram"}
+{"at":"2026-07-09T20:53:16.238Z","tool":"Bash","path":"node -e \"const a=require('/private/tmp/claude-501/-Users-ghaisan-Documents-Prama"}
+{"at":"2026-07-09T20:53:26.589Z","tool":"Bash","path":"sed -n 44,58p app/api/auth/login/route.ts; echo \"=== RAT ===\"; sed -n 1,45p app/"}
+{"at":"2026-07-09T20:53:38.487Z","tool":"Bash","path":"grep -n \"koperasiForAnggota\\|koperasiForPengurus\" lib/auth.ts; echo \"=== TRANSAK"}
+{"at":"2026-07-09T20:54:03.455Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/auth/login/route.ts"}
+{"at":"2026-07-09T20:54:07.871Z","tool":"Bash","path":"grep -n \"^import\\|^const Body\\|const Body\" app/api/auth/login/route.ts | head -6"}
+{"at":"2026-07-09T20:54:15.115Z","tool":"Bash","path":"node -e \"const b=require('bcryptjs'); console.log(b.hashSync('x', 10))\""}
+{"at":"2026-07-09T20:54:21.502Z","tool":"Bash","path":"grep -n \"^const Body = z.object\" app/api/auth/login/route.ts"}
+{"at":"2026-07-09T20:54:30.653Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/auth/login/route.ts"}
+{"at":"2026-07-09T20:54:40.313Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/auth/login/route.ts"}
+{"at":"2026-07-09T20:54:55.312Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/findings/[id]/rat/route.ts"}
+{"at":"2026-07-09T20:55:05.719Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/findings/[id]/rat/route.ts"}
+{"at":"2026-07-09T20:55:12.040Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/auth.ts"}
+{"at":"2026-07-09T20:55:24.316Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/lib/auth.ts"}
+{"at":"2026-07-09T20:55:32.302Z","tool":"Bash","path":"grep -n \"^import\\|from \\\"drizzle-orm\\\"\\|koperasiForPengurus\\|and\\b\" lib/auth.ts "}
+{"at":"2026-07-09T20:55:39.286Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/lib/auth.ts"}
+{"at":"2026-07-09T20:55:44.757Z","tool":"Bash","path":"sed -n 1,55p app/api/subjek/transaksi/route.ts | grep -n \"koperasiId\\|requireRol"}
+{"at":"2026-07-09T20:55:50.387Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/subjek/transaksi/route.ts"}
+{"at":"2026-07-09T20:55:59.309Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/subjek/transaksi/route.ts"}
+{"at":"2026-07-09T20:56:02.743Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/subjek/transaksi/route.ts"}
+{"at":"2026-07-09T20:56:10.485Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/subjek/pinjaman/route.ts"}
+{"at":"2026-07-09T20:56:20.816Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/subjek/pinjaman/route.ts"}
+{"at":"2026-07-09T20:56:23.150Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/subjek/pinjaman/route.ts"}
+{"at":"2026-07-09T20:56:28.932Z","tool":"Bash","path":"pnpm typecheck && pnpm lint && pnpm test 2>&1 | grep -E \"Test Files|Tests \" && p"}
+{"at":"2026-07-09T20:56:49.270Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/e2e/helpers/fixtures.ts"}
+{"at":"2026-07-09T20:56:59.833Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/e2e/helpers/fixtures.ts"}
+{"at":"2026-07-09T20:57:09.973Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/e2e/helpers/fixtures.ts"}
+{"at":"2026-07-09T20:57:14.395Z","tool":"Bash","path":"pnpm typecheck && pnpm lint && pnpm test 2>&1 | grep -E \"Test Files|Tests \" && p"}
+{"at":"2026-07-09T20:58:02.313Z","tool":"Bash","path":"lsof -ti:3000 | xargs kill 2>/dev/null; lsof -ti:3100 | xargs kill 2>/dev/null; "}
+{"at":"2026-07-09T20:58:56.184Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 sh -c '\ncp /private/tmp/claude-501/-Users-ghaisan-Documents-P"}

@@ -1,0 +1,77 @@
+{
+  "pass": true,
+  "gate": "Gate 6 — Security (AC-SEC-01..07)",
+  "repo": "/Users/ghaisan/Documents/Pramana-AI",
+  "ran_this_session": [
+    "pnpm scan-secrets -> LULUS (0 tree+history)",
+    "pnpm audit --prod --json -> {info:0,low:0,moderate:1,high:0,critical:0}",
+    "npx vitest run app/api/routes.test.ts tests/injection.test.ts -> 83 passed",
+    "npx vitest run tests/obs.logger.test.ts scripts/scan-secrets.test.ts -> 9 passed",
+    "git log -p secret-pattern scan -> 0 hits; only .env.example ever committed"
+  ],
+  "checks": [
+    {
+      "id": "AC-SEC-01",
+      "status": "ok",
+      "bukti": "lib/auth.ts:79-91 requireRole = deny-by-default (401 tanpa sesi). Semua 15 route non-publik memanggil requireRole sebagai statement PERTAMA di dalam runRoute sebelum query apa pun: vote/route.ts:17, member/summary:11, member/verdict:12, member/findings:18, member/flow:19, member/voice:12, findings/[id]/rat:14, subjek/transaksi:35, subjek/pinjaman:20, subjek/rat:16, subjek/recent:16, gov/overview:14, gov/koperasi/[id]:43, gov/audit/run:15, audit/[id]/status:26. Route publik yang benar tanpa guard: auth/login, auth/logout, onboarding, health. routes.test.ts:196-201 matrix mengassert 401 UNAUTHORIZED tanpa sesi untuk ke-15 route; RUN: 83 passed."
+    },
+    {
+      "id": "AC-SEC-02",
+      "status": "ok",
+      "bukti": "lib/auth.ts:87-89 s.role !== role -> FORBIDDEN 403 (exact-match, deny wrong role). Role diambil dari payload sesi ter-seal (iron-session), bukan body. routes.test.ts:202-216 matrix menguji SETIAP kombinasi silang role -> 403 FORBIDDEN (anggota->gov/subjek, pemerintah->member/subjek, pengurus->gov/member). RUN: log memperlihatkan FORBIDDEN untuk tiap silang, 83 passed."
+    },
+    {
+      "id": "AC-SUBJ-03",
+      "status": "ok",
+      "bukti": "subjek/*/route.ts semua requireRole(req,'pengurus') lalu koperasiForPengurus(s.userId) (auth.ts:98-109) untuk scope koperasi dari sesi, bukan body. Anggota & pemerintah -> 403 (matrix). RUN passed."
+    },
+    {
+      "id": "AC-SEC-03",
+      "status": "ok",
+      "bukti": "Semua boundary pakai Zod safeParse: login/route.ts:21-24, onboarding:16-22 (+regex NIK 16 digit :39), vote:10-13, subjek/transaksi:10-28, subjek/pinjaman:9-16, subjek/rat:9-12, gov/audit/run:11. member/flow:29 memvalidasi periode /^\\d{4}-\\d{2}$/ lalu dipakai via like() parameterized. Grep sql`` (18 lokasi) hanya fungsi agregat dengan referensi KOLOM Drizzle + satu numerik server-derived (transaksi/route.ts:74 delta dari z.number().int().positive()); TIDAK ada konkатenasi string user. tests/injection.test.ts: XSS di nama + SQLi di alamat tersimpan verbatim (parameterized), users table selamat, nama dikembalikan inert. RUN: passed."
+    },
+    {
+      "id": "AC-SEC-04",
+      "status": "ok",
+      "bukti": "pnpm scan-secrets -> 'LULUS (0 pola rahasia di working tree dan git log -p)' exit 0 (scripts/scan-secrets.mjs memindai tracked+untracked non-gitignored DAN git log -p). Independen: git log -p | grep secret-patterns = 0 hits; git history diff-filter=A hanya .env.example yang pernah di-commit (.env/.env.local gitignored via .gitignore:'.env','.env.*','!.env.example'). git ls-files|grep env -> hanya .env.example + source/tooling. .env.example semua nilai secret KOSONG (hanya GIT_REMOTE_URL publik)."
+    },
+    {
+      "id": "AC-SEC-05",
+      "status": "ok",
+      "bukti": "pnpm audit --prod --json -> metadata.vulnerabilities {info:0,low:0,moderate:1,high:0,critical:0}. Satu moderate = postcss <8.5.10 XSS (GHSA-qx2v-qp2m-jg93) via path '.>next>postcss' = dependency build/CSS-pipeline Next (bukan handler runtime), moderate benar (bukan high/critical yang disalahklasifikasi). 0 high/critical."
+    },
+    {
+      "id": "AC-SEC-06",
+      "status": "ok",
+      "bukti": "Password: seed pakai bcrypt.hashSync (scripts/seed/data.ts:59, salt tetap utk determinisme akun demo), onboarding pakai bcrypt.hashSync(pw, genSaltSync(10)) salt acak (onboarding/route.ts:86), login pakai bcrypt.compareSync (login/route.ts:51). Bukan plaintext/md5/sha. Cookie (auth.ts:128-136): httpOnly:true, secure:isProduction(), sameSite:'lax', name 'pramana_session' (auth.ts:24), maxAge 7 hari (auth.ts:25). Sesi di-seal iron-session dgn SESSION_SECRET; env.ts:39-56 production WAJIB >=32 char else ConfigError (tak ada default-secret di prod -> tak bisa forge role/sesi). Logger (logger.ts) hanya field aman; runRoute (api.ts:83-102) menyembunyikan pesan mentah error tak terduga -> INTERNAL generik, log hanya err.name. tests/obs.logger.test.ts mengassert raw error berisi 'user@contoh.id' TIDAK bocor ke log maupun response. RUN: 9 passed. Tak ada route yang menaruh input user (email/nik/nama) ke pesan ApiError."
+    },
+    {
+      "id": "AC-SEC-07",
+      "status": "ok",
+      "bukti": "lib/rateLimit.ts: WINDOW_MS 60000, LIMIT 5, tooManyLogins >=5 -> blokir ke-6; sliding window per IP. login/route.ts:28-37 cek tooManyLogins SEBELUM parse; recordLoginFailure pada body invalid (:40) & kredensial salah (:52); 429 via ApiError('UNAUTHORIZED',...,429). routes.test.ts:256-266 percobaan ke-6 -> 429. RUN: passed."
+    }
+  ],
+  "findings": [
+    {
+      "severity": "low",
+      "judul": "Rate limit login dapat dielakkan lewat spoofing header X-Forwarded-For",
+      "lokasi": "lib/rateLimit.ts:37-41 clientIp() -> xff.split(',')[0]",
+      "reproduksi": "clientIp memakai entri PALING KIRI x-forwarded-for yang dikontrol klien. Penyerang mengirim header X-Forwarded-For berbeda tiap request (mis. 1.1.1.1, 1.1.1.2, ...) sehingga tiap percobaan gagal dihitung ke bucket IP berbeda -> tak pernah mencapai 5/menit/IP, throttle 429 terlewati. Di belakang proxy yang меng-append (bukan replace) XFF, nilai kiri tetap milik penyerang.",
+      "fix": "Turunkan IP dari sumber tepercaya platform (Vercel x-real-ip / request.ip) atau ambil hop KANAN (terakhir) dari XFF yang disetel proxy tepercaya, bukan entri kiri. Catatan: blueprint 6.18 sudah menandai rate limit sebagai kelas-demo in-memory; bcrypt + kredensial wajib memperlambat brute force, jadi dampak terbatas."
+    },
+    {
+      "severity": "low",
+      "judul": "Enumerasi user via timing side-channel pada login",
+      "lokasi": "app/api/auth/login/route.ts:51 (!user || !bcrypt.compareSync(...))",
+      "reproduksi": "Short-circuit: untuk email tak dikenal bcrypt.compareSync TIDAK dijalankan (respons lebih cepat), sedangkan email dikenal menjalankan bcrypt (lebih lambat). Pesan & kode identik (UNAUTHORIZED, COPY['login.err']) sehingga tak ada kebocoran via body, tapi selisih waktu respons membocorkan keberadaan email.",
+      "fix": "Selalu jalankan satu bcrypt.compareSync terhadap hash dummy konstan bila user tidak ditemukan agar waktu seragam."
+    },
+    {
+      "severity": "low",
+      "judul": "id lintas-koperasi tidak di-scope ke sesi pada rat/pinjaman/transaksi (IDOR ringan)",
+      "lokasi": "app/api/findings/[id]/rat/route.ts:21-26; app/api/subjek/pinjaman/route.ts:34-44; app/api/subjek/transaksi/route.ts:59-71",
+      "reproduksi": "findings/[id]/rat memeriksa temuan ADA tetapi tidak memverifikasi temuan milik koperasi si anggota -> anggota bisa menaikkan agregat pertanyaan_rat pada temuan koperasi lain (ULID tak tertebak; prototipe anggota single-koperasi kop-sukamaju -> dampak dapat diabaikan). subjek/pinjaman & subjek/transaksi menerima anggotaId dari body tanpa cek anggota tsb milik koperasi pengurus (FK valid tapi bisa lintas-koperasi); pengurus = peran tepercaya.",
+      "fix": "Scope lookup ke koperasi sesi: gabungkan temuan->auditRun->koperasiId = koperasiForAnggota(sesi) sebelum insert pertanyaan_rat; validasi anggota.koperasiId === koperasiForPengurus(sesi) di pinjaman/transaksi."
+    }
+  ]
+}
