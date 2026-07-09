@@ -1,37 +1,34 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@libsql/client";
-import pkg from "@/package.json";
+import { getDb } from "../../../db/client";
+import { demoMode, hasLlmKey } from "../../../lib/env";
+import { llmProbeOk } from "../../../lib/api";
+import pkg from "../../../package.json";
 
 export const dynamic = "force-dynamic";
 
-async function dbStatus(): Promise<"up" | "down"> {
-  try {
-    const url = process.env.TURSO_DATABASE_URL || "file:./dev.db";
-    const client = createClient(
-      url.startsWith("file:")
-        ? { url }
-        : { url, authToken: process.env.TURSO_AUTH_TOKEN },
-    );
-    await client.execute("select 1");
-    client.close();
-    return "up";
-  } catch {
-    return "down";
-  }
-}
-
+/**
+ * Health flat {ok, db, llm, demoMode, version} (L-04, 6.3). TIDAK memanggil
+ * provider (catatan 6.18): llm "unset" tanpa key, "up" bila ada memo probe
+ * sukses (diset jalur live audit), selain itu "down".
+ */
 export async function GET() {
-  const db = await dbStatus();
-  // "unset" tanpa key; "up" setelah probe ringan sukses (diisi lib/llm pada
-  // fase build); "down" selainnya, sesuai catatan 6.18.
-  const llm: "up" | "down" | "unset" = process.env.LLM_API_KEY
-    ? "down"
-    : "unset";
+  let db: "up" | "down" = "down";
+  try {
+    await getDb().client.execute("select 1");
+    db = "up";
+  } catch {
+    db = "down";
+  }
+  const llm: "up" | "down" | "unset" = !hasLlmKey()
+    ? "unset"
+    : llmProbeOk()
+      ? "up"
+      : "down";
   return NextResponse.json({
     ok: true,
     db,
     llm,
-    demoMode: (process.env.DEMO_MODE ?? "true") === "true",
+    demoMode: demoMode(),
     version: pkg.version,
   });
 }
