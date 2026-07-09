@@ -2839,3 +2839,10 @@
 {"at":"2026-07-09T20:09:21.574Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/design-deviations.md"}
 {"at":"2026-07-09T20:09:22.407Z","tool":"Bash","path":"pnpm typecheck && pnpm lint && pnpm test 2>&1 | grep -E \"Test Files|Tests \" && p"}
 {"at":"2026-07-09T20:10:08.513Z","tool":"Bash","path":"lsof -ti:3000 | xargs kill 2>/dev/null; lsof -ti:3100 | xargs kill 2>/dev/null; "}
+{"at":"2026-07-09T20:11:35.548Z","tool":"Bash","path":"lsof -ti:3000 | xargs kill 2>/dev/null; lsof -ti:3100 | xargs kill 2>/dev/null; "}
+{"at":"2026-07-09T20:13:11.075Z","tool":"Bash","path":"lsof -ti:3000 | xargs kill 2>/dev/null; lsof -ti:3100 | xargs kill 2>/dev/null; "}
+{"at":"2026-07-09T20:14:59.486Z","tool":"Bash","path":"grep -n \"clientIp\" -A 10 lib/rateLimit.ts | head -16; grep -rn \"x-forwarded\\|cli"}
+{"at":"2026-07-09T20:15:19.409Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/e2e/helpers/fixtures.ts"}
+{"at":"2026-07-09T20:15:32.103Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/e2e/helpers/fixtures.ts"}
+{"at":"2026-07-09T20:15:44.566Z","tool":"Bash","path":"pnpm typecheck && lsof -ti:3000 | xargs kill 2>/dev/null; lsof -ti:3100 | xargs "}
+{"at":"2026-07-09T20:18:46.241Z","tool":"Bash","path":"git add -A && git commit -m \"fix(e2e): bucket rate-limit per file spec via X-For"}

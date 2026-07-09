@@ -9,7 +9,23 @@ import { test as base, expect } from "@playwright/test";
 
 type ErrorSink = { pageErrors: string[]; consoleErrors: string[] };
 
+// Bucket rate-limit login TERPISAH per file spec: kegagalan login yang
+// disengaja (clicksweep submit kosong, login.spec sandi salah) tidak boleh
+// menjegal spec lain lewat jendela 60 detik bersama. clientIp menghormati
+// X-Forwarded-For; limiter tetap aktif dan teruji unit (AC-SEC-07).
+function ipPerSpec(file: string): string {
+  let h = 0;
+  for (let i = 0; i < file.length; i++) h = (h * 31 + file.charCodeAt(i)) >>> 0;
+  return `10.77.${(h >>> 8) % 256}.${h % 256}`;
+}
+
 export const test = base.extend<{ errorSink: ErrorSink }>({
+  context: async ({ context }, use, testInfo) => {
+    await context.setExtraHTTPHeaders({
+      "x-forwarded-for": ipPerSpec(testInfo.file),
+    });
+    await use(context);
+  },
   errorSink: [
     async ({ page }, use) => {
       const sink: ErrorSink = { pageErrors: [], consoleErrors: [] };
