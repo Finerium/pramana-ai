@@ -3027,3 +3027,17 @@
 {"at":"2026-07-09T21:03:18.844Z","tool":"Bash","path":"node --env-file=.env --import tsx scripts/seed/index.ts"}
 {"at":"2026-07-09T21:03:30.949Z","tool":"Bash","path":"node --env-file=.env --import tsx scripts/seed/verify.ts"}
 {"at":"2026-07-09T21:03:49.216Z","tool":"Bash","path":"git add -A && git commit -m \"fix(db): PRAGMA hanya untuk file lokal, tidak untuk"}
+{"at":"2026-07-09T21:04:10.131Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 cat > .crown/evidence/manifest-gate-7.json <<'EOF'\n{\n  \"gate\""}
+{"at":"2026-07-09T21:04:24.816Z","tool":"Bash","path":"tail -6 /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/473c1eb6-335"}
+{"at":"2026-07-09T21:04:32.700Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/473c1eb6-3356-4981-9856-5d976fe340d9/tasks/bj9arw6qu.output"}
+{"at":"2026-07-09T21:04:43.356Z","tool":"Bash","path":"sleep 20; tail -8 /tmp/preview-deploy.log 2>/dev/null || echo \"log belum ada\""}
+{"at":"2026-07-09T21:05:11.522Z","tool":"Bash","path":"grep -iE \"Preview:|Production:|https://pramana\" /tmp/preview-deploy.log | head -"}
+{"at":"2026-07-09T21:05:18.106Z","tool":"Bash","path":"PREVIEW=https://pramana-djfrgj5gg-fineriums-projects.vercel.app; curl -sS -o /de"}
+{"at":"2026-07-09T21:05:43.826Z","tool":"Bash","path":"vercel deploy --prod --yes > /tmp/prod-deploy.log 2>&1 && echo \"PROD_DEPLOY_OK\" "}
+{"at":"2026-07-09T21:05:54.866Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 sh -c 'cp seed-verify.json .crown/evidence/seed-verify.json 2"}
+{"at":"2026-07-09T21:06:01.814Z","tool":"Bash","path":"tail -6 /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/473c1eb6-335"}
+{"at":"2026-07-09T21:06:50.661Z","tool":"Bash","path":"grep -iE \"Aliased\" /tmp/prod-deploy.log | tail -2; echo \"=== SMOKE LIVE ===\"; cu"}
+{"at":"2026-07-09T21:07:08.108Z","tool":"Bash","path":"L=https://pramana-ai-puce.vercel.app; curl -sS -c /tmp/pc.txt -X POST $L/api/aut"}
+{"at":"2026-07-09T21:08:56.762Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 sh -c '\nmkdir -p .crown/evidence/deck-shots\ncp \".crown/eviden"}
+{"at":"2026-07-09T21:08:59.935Z","tool":"Bash","path":"curl -s -o /dev/null -w \"%{http_code}\" https://pramana-ai-puce.vercel.app/ ; ech"}
+{"at":"2026-07-09T21:09:07.521Z","tool":"Bash","path":"git add -A && git commit -m \"evidence(gate-7): manifest + deck-shots kanonik + d"}

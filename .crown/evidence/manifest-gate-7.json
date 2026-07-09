@@ -1,0 +1,12 @@
+{
+  "gate": 7,
+  "entries": [
+    {"id": "AC-DEMO-01", "check": "pnpm demo:hash 2x pada state seed segar", "expect": "hash byte-identik", "artifact": ".crown/evidence/demo-hash.txt"},
+    {"id": "AC-DEMO-02", "check": "timing reseed seed-verify", "expect": "<= 60000 ms", "artifact": ".crown/evidence/seed-verify.json"},
+    {"id": "AC-DEMO-03", "check": "pnpm e2e project nollm (LLM_API_KEY kosong, hits mock = 0)", "expect": "journey lengkap dari seed, nol panggilan keluar", "artifact": ".crown/evidence/e2e-nollm/"},
+    {"id": "AC-UAT-01", "check": "persona juri-anggota operasikan preview URL layar demi layar", "expect": "2 pass bersih beruntun", "artifact": ".crown/evidence/uat-anggota/"},
+    {"id": "AC-UAT-02", "check": "persona juri-pemerintah operasikan preview URL", "expect": "2 pass bersih beruntun", "artifact": ".crown/evidence/uat-pemerintah/"},
+    {"id": "AC-UAT-03", "check": "persona bendahara operasikan konsol subjek preview URL", "expect": "2 pass bersih beruntun", "artifact": ".crown/evidence/uat-bendahara/"},
+    {"id": "GATE7-SHOTS", "check": "screenshot e2e kanonik untuk deck", "expect": "3+ screenshot layar demo kunci", "artifact": ".crown/evidence/deck-shots/"}
+  ]
+}

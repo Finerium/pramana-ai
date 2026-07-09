@@ -1,0 +1,1 @@
+AC-DEMO-03 diverifikasi via project playwright nollm (Gate 3): server LLM_API_KEY kosong, journey B1 lengkap dari seed, hits mock LLM = 0 sepanjang journey (nol panggilan keluar). Lihat e2e/nollm.spec.ts + gate-3-result.json.

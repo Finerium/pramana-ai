@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-09T16:52:33.666Z",
-  "seedMs": 278,
-  "verifyMs": 5,
+  "generatedAt": "2026-07-09T21:03:33.194Z",
+  "seedMs": 4857,
+  "verifyMs": 2039,
   "withinBudget": true,
   "totalRows": 636,
   "tables": {
@@ -23,7 +23,7 @@
     },
     "anggota": {
       "count": 30,
-      "checksum": "606605f3d8ea3f3e9a1400403306b863c6b5169676c167a05ddbcb4e212b2e84"
+      "checksum": "febefea49afe00d107f23c78d0daaa621f526ea188b01c8410e5b7f104d097ea"
     },
     "simpanan": {
       "count": 90,

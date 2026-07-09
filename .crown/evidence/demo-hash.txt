@@ -1,0 +1,7 @@
+
+> pramana-ai@1.0.0 demo:hash /Users/ghaisan/Documents/Pramana-AI
+> tsx scripts/demo-hash.ts
+
+hash-1: 4ec829e2af7567d8b995c57ca4438404ccc78487f6e6ba1d302b7f1018fa53aa
+hash-2: 4ec829e2af7567d8b995c57ca4438404ccc78487f6e6ba1d302b7f1018fa53aa
+SAMA: verdict + findings byte-identik antar-run (AC-DEMO-01 lulus).
