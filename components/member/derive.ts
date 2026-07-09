@@ -10,6 +10,7 @@ import type {
   VerdictColor,
   Severity,
   AgentId,
+  VoiceResp,
 } from "@/lib/contracts";
 import { VERDICT_LABELS, COPY, AGENT_LABELS } from "../../lib/copy";
 import { SEVERITY_CHIP, AGENT_PANEL, MEMBER_COPY } from "../../lib/copy/member";
@@ -96,6 +97,26 @@ export function suaraAggregate(
       };
     })
     .sort((a, b) => b.jumlahAnggota - a.jumlahAnggota);
+}
+
+/**
+ * Suara setuju/tidak untuk kartu keputusan (model prototipe: angka server +
+ * pilihan sesi). Fallback 9/3 sebelum server punya hasil. Bila server SUDAH
+ * mencatat suara anggota ini (sudahMemilih), hasil server sudah termasuk
+ * suaranya, jadi pilihan sesi tidak ditambahkan lagi (anti hitung ganda saat
+ * reload penuh).
+ */
+export function keputusanTally(
+  k: Pick<VoiceResp["keputusan"][number], "hasil" | "sudahMemilih">,
+  chosen: "setuju" | "tidak" | undefined,
+): { setuju: number; tidak: number } {
+  const baseS = k.hasil?.setuju ?? 9;
+  const baseT = k.hasil?.tidak ?? 3;
+  const dariSesi = !k.sudahMemilih;
+  return {
+    setuju: baseS + (dariSesi && chosen === "setuju" ? 1 : 0),
+    tidak: baseT + (dariSesi && chosen === "tidak" ? 1 : 0),
+  };
 }
 
 /** Rincian simpanan pokok/wajib/sukarela: fallback seed 6.7 (kontrak minimal). */

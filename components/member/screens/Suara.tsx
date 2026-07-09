@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import type { VoiceResp } from "@/lib/contracts";
 import { MEMBER_COPY } from "@/lib/copy/member";
 import { useResource, useRatSet, useVotes, simpanVote, postJson } from "@/components/member/data";
-import { suaraAggregate, voteDots } from "@/components/member/derive";
+import { suaraAggregate, voteDots, keputusanTally } from "@/components/member/derive";
 import { fmtRp } from "@/components/member/format";
 import { Banner, Skeleton, EmptyCard, cardStyle, SectionLabel, rise, SHADOW_SM, SHADOW_MD } from "@/components/member/ui";
 import { IkonCentang, IkonChevronKanan, IkonGembok } from "@/components/member/icons";
@@ -178,10 +178,7 @@ function KeputusanCard({
   onVote: (kid: string, pilihan: "setuju" | "tidak") => void;
 }) {
   const sudahVote = !!chosen || k.sudahMemilih;
-  const baseS = k.hasil?.setuju ?? 9;
-  const baseT = k.hasil?.tidak ?? 3;
-  const sCount = baseS + (chosen === "setuju" ? 1 : 0);
-  const tCount = baseT + (chosen === "tidak" ? 1 : 0);
+  const { setuju: sCount, tidak: tCount } = keputusanTally(k, chosen);
   const tot = sCount + tCount;
   const dots = voteDots(sCount, tCount, TOTAL_ANGGOTA);
   const belum = dots.length - tot;

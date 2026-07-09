@@ -11,6 +11,7 @@ import {
   kasTurunPersen,
   flowBars,
   agentRows,
+  keputusanTally,
 } from "../../../components/member/derive";
 import type { VerdictResp, MemberSummary } from "../../../lib/contracts";
 
@@ -190,5 +191,30 @@ describe("agentRows", () => {
     expect(transaksi.showChip).toBe(false);
     expect(transaksi.showTime).toBe(true);
     expect(transaksi.metric).toContain("transaksi diperiksa");
+  });
+});
+
+describe("keputusanTally", () => {
+  it("adds the session vote onto the 9/3 baseline when the server has not recorded it", () => {
+    expect(keputusanTally({ hasil: null, sudahMemilih: false }, "setuju")).toEqual({
+      setuju: 10,
+      tidak: 3,
+    });
+    expect(keputusanTally({ hasil: null, sudahMemilih: false }, "tidak")).toEqual({
+      setuju: 9,
+      tidak: 4,
+    });
+  });
+  it("does not double-count once the server already recorded this member's vote", () => {
+    // Full reload: server persisted the vote (sudahMemilih) and hasil already
+    // includes it (10/3); the session still holds "setuju". Must stay 10/3.
+    expect(
+      keputusanTally({ hasil: { setuju: 10, tidak: 3 }, sudahMemilih: true }, "setuju"),
+    ).toEqual({ setuju: 10, tidak: 3 });
+  });
+  it("passes the server result through when there is no session choice", () => {
+    expect(
+      keputusanTally({ hasil: { setuju: 10, tidak: 3 }, sudahMemilih: true }, undefined),
+    ).toEqual({ setuju: 10, tidak: 3 });
   });
 });
