@@ -76,6 +76,8 @@ Alternatif yang dipertimbangkan:
 
 Postur rahasia: .env di-deny-read/write untuk seluruh agen pembangun termasuk orchestrator (hook + settings); .env tidak ikut upload deploy (.vercelignore); env production diatur lewat vercel env; scan rahasia mencakup riwayat git (AC-SEC-04).
 
+SESSION_SECRET dan boot 6.16: kontrak menuntut boot gagal bila SESSION_SECRET kosong di production. Model serverless Vercel tidak punya proses boot yang berlangsung lama, sehingga validasi ditegakkan fail-fast pada pemakaian pertama sessionSecret() (login dan getSession): ConfigError berpesan jelas di-log tanpa PII, sementara klien menerima INTERNAL generik. Properti keamanan 6.16 tetap terjaga penuh, yakni production tidak pernah menandatangani sesi dengan secret kosong atau kurang dari 32 karakter, dan jalur build tidak membutuhkan secret sama sekali. Alternatif berupa assertion boot terpisah di luar jalur import dipertimbangkan; pada model serverless ia tidak menambah keamanan namun menambah permukaan dan risiko build, maka ditolak untuk saat ini dan dicatat sebagai jalur upgrade bila kelak ada proses long-running non-build.
+
 ## Mode Demo dan Keandalan
 
 Keputusan: DEMO_MODE=true sebagai default deployment. Seed menanam hasil audit lengkap (verdict merah Sukamaju dengan temuan AN-1 sampai AN-6 dari fixture beku scripts/fixtures/temuan-seed.ts, riwayat enam periode, 11 koperasi ringkas) sehingga seluruh alur juri berjalan 100 persen dari database tanpa satu pun panggilan model. Live audit tetap tersedia sebagai bukti mesin nyata: trigger dari dasbor pemerintah menulis run baru bertanda live; kegagalannya jatuh otomatis ke hasil tersimpan dengan banner sumber data.
