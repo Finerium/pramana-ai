@@ -1,6 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const PROC_ENV = process["env"];
+const PROC_ENV = process.env;
 // Mock boleh reuse (stateless per /control). Server next TIDAK reuse: server
 // yatim di port 3000/3100 membuat run memakai binary/state basi (sumber run
 // kacau reviewer). false = fail-fast bila port terpakai + selalu mulai dari
@@ -60,7 +60,10 @@ export default defineConfig({
     {
       name: "desktop",
       testMatch: DESKTOP_SPECS,
-      use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } },
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 1440, height: 900 },
+      },
     },
     {
       // AC-DEMO-03: server TANPA kunci model (port 3100). Journey demo tidak
