@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:oklch(0.968 0.006 75);--surface:oklch(0.995 0.002 75);--ink:oklch(0.255 0.02 275);--muted:oklch(0.50 0.022 270);--border:oklch(0.905 0.008 75);
+--accent:oklch(0.45 0.085 265);--accent-on:oklch(1 0 0);
+--hijau:oklch(0.53 0.115 152);--hijau-on:oklch(1 0 0);
+--kuning:oklch(0.79 0.135 82);--kuning-on:oklch(0.255 0.02 275);
+--merah:oklch(0.53 0.165 27);--merah-on:oklch(1 0 0);
+--hijau-tint:oklch(0.93 0.04 152);--hijau-tint-ink:oklch(0.38 0.10 152);
+--kuning-tint:oklch(0.94 0.05 90);--kuning-tint-ink:oklch(0.44 0.10 75);
+--merah-tint:oklch(0.93 0.035 25);--merah-tint-ink:oklch(0.42 0.13 27);
+}
+[data-tema="gelap"]{
+--bg:oklch(0.215 0.015 275);--surface:oklch(0.262 0.016 275);--ink:oklch(0.94 0.006 80);--muted:oklch(0.67 0.015 270);--border:oklch(0.335 0.015 272);
+--accent:oklch(0.73 0.085 265);--accent-on:oklch(0.215 0.015 275);
+--hijau:oklch(0.68 0.115 152);--hijau-on:oklch(0.215 0.015 275);
+--kuning:oklch(0.80 0.13 82);--kuning-on:oklch(0.215 0.015 275);
+--merah:oklch(0.64 0.15 30);--merah-on:oklch(0.215 0.015 275);
+--hijau-tint:oklch(0.31 0.045 152);--hijau-tint-ink:oklch(0.86 0.09 150);
+--kuning-tint:oklch(0.31 0.04 85);--kuning-tint-ink:oklch(0.88 0.10 90);
+--merah-tint:oklch(0.31 0.05 28);--merah-tint-ink:oklch(0.87 0.07 25);
+}
+html,body{margin:0;padding:0}
+button{font:inherit;color:inherit;background:none;border:none;padding:0;margin:0;text-align:inherit;cursor:pointer}
+input{font:inherit}
+::placeholder{color:var(--muted);opacity:0.7}
+a{color:var(--accent)}a:hover{opacity:0.85}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+[data-scroller]{scrollbar-width:none}
+[data-scroller]::-webkit-scrollbar{display:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.45}}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes growX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes growY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important}}
+</style>
+</helmet>
+<div style="min-height:100dvh;background:{{deskBg}};display:{{deskDisplay}};align-items:{{deskAlign}};justify-content:{{deskJustify}};padding:{{deskPad}};box-sizing:border-box;font-family:Geist,ui-sans-serif,system-ui,sans-serif">
+<div style="width:{{scW}};height:{{scH}};flex:none;overflow:visible">
+<div style="width:402px;height:874px;transform:scale({{sc}});transform-origin:top left">
+<x-import component-from-global-scope="IOSDevice" dark="{{isDark}}" from="./ios-frame.jsx" hint-size="402px,874px">
+
+<div data-tema="{{temaAttr}}" style="width:100%;height:100%;position:relative;background:var(--bg);color:var(--ink);font-family:Geist,ui-sans-serif,system-ui,sans-serif;border-radius:48px;overflow:hidden">
+<div data-scroller="1" ref="{{scrRef}}" style="position:absolute;inset:0;overflow-y:auto;overflow-x:hidden">
+
+<sc-if value="{{sLogin}}" hint-placeholder-val="{{true}}">
+<main data-screen-label="Login" style="min-height:100%;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:24px;padding:88px 24px 48px;animation:fadein 0.28s ease">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px;animation:rise 0.45s cubic-bezier(0.2,0.7,0.2,1) both">
+    <span style="width:36px;height:36px;background:var(--accent);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)"></span>
+    <span style="font-size:31px;font-weight:750;letter-spacing:-0.6px">Pramana</span>
+    <span style="font-size:14.5px;color:var(--muted);text-align:center">Pengawas yang bekerja untuk anggota koperasi</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px;background:var(--surface);border:0.5px solid var(--border);border-radius:22px;padding:22px 20px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05);animation:rise 0.45s cubic-bezier(0.2,0.7,0.2,1) 0.06s both">
+    <label style="display:flex;flex-direction:column;gap:7px">
+      <span style="font-size:13.5px;font-weight:600">Email</span>
+      <input type="email" value="{{email}}" onChange="{{onEmail}}" placeholder="nama@contoh.id" style="width:100%;box-sizing:border-box;height:50px;padding:0 14px;border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--ink);font-size:16px">
+    </label>
+    <label style="display:flex;flex-direction:column;gap:7px">
+      <span style="font-size:13.5px;font-weight:600">Kata sandi</span>
+      <input type="password" value="{{pass}}" onChange="{{onPass}}" placeholder="Kata sandi Anda" style="width:100%;box-sizing:border-box;height:50px;padding:0 14px;border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--ink);font-size:16px">
+    </label>
+    <sc-if value="{{loginErr}}" hint-placeholder-val="{{false}}">
+      <div role="alert" style="display:flex;gap:9px;align-items:flex-start;background:var(--merah-tint);color:var(--merah-tint-ink);border-radius:14px;padding:12px 14px">
+        <svg viewBox="0 0 24 24" style="width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><rect x="4" y="4" width="16" height="16" rx="5"></rect><path d="M9.2 9.2l5.6 5.6M14.8 9.2l-5.6 5.6"></path></svg>
+        <span style="font-size:13.5px;line-height:1.5">Email atau kata sandi belum tepat. Silakan coba lagi.</span>
+      </div>
+    </sc-if>
+    <button onClick="{{onLogin}}" style-active="transform:scale(0.98)" style="height:54px;border-radius:999px;background:var(--accent);color:var(--accent-on);font-size:17px;font-weight:600;text-align:center;transition:transform 0.15s ease">{{btnMasuk}}</button>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px;border:1px dashed var(--border);border-radius:18px;padding:15px 18px;animation:rise 0.45s cubic-bezier(0.2,0.7,0.2,1) 0.12s both">
+    <span style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted)">Akun uji juri</span>
+    <span style="font:13px ui-monospace,Menlo,monospace;color:var(--ink);line-height:1.6">juri.anggota@pramana.id<br>PramanaJuri2026</span>
+    <button onClick="{{fillJuri}}" style="min-height:44px;display:flex;align-items:center;font-size:14.5px;font-weight:600;color:var(--accent)">Isi otomatis</button>
+  </div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:6px;font-size:15px;animation:rise 0.45s cubic-bezier(0.2,0.7,0.2,1) 0.18s both">
+    <span style="color:var(--muted)">Belum menjadi anggota?</span>
+    <button onClick="{{goDaftar}}" style="min-height:44px;display:inline-flex;align-items:center;font-weight:600;color:var(--accent)">Daftar</button>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{sDaftar}}" hint-placeholder-val="{{false}}">
+<main data-screen-label="Daftar" style="min-height:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:18px;padding:76px 24px 48px;animation:fadein 0.28s ease">
+  <sc-if value="{{dFormShown}}" hint-placeholder-val="{{true}}">
+    <button onClick="{{goLogin}}" style="min-height:44px;display:flex;align-items:center;gap:7px;font-size:15px;font-weight:600;color:var(--accent)">
+      <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M14.5 5l-7 7 7 7"></path></svg>
+      Masuk
+    </button>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <h1 style="margin:0;font-size:27px;font-weight:750;letter-spacing:-0.5px">Menjadi anggota</h1>
+      <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--muted)">Koperasi Desa Merah Putih Sukamaju</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;background:var(--surface);border:0.5px solid var(--border);border-radius:22px;padding:22px 20px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05)">
+      <label style="display:flex;flex-direction:column;gap:7px">
+        <span style="font-size:13.5px;font-weight:600">Nama lengkap</span>
+        <input value="{{nama}}" onChange="{{onNama}}" placeholder="Sesuai KTP" style="width:100%;box-sizing:border-box;height:50px;padding:0 14px;border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--ink);font-size:16px">
+      </label>
+      <label style="display:flex;flex-direction:column;gap:7px">
+        <span style="font-size:13.5px;font-weight:600">NIK, 16 angka</span>
+        <input inputMode="numeric" maxLength="16" value="{{nik}}" onChange="{{onNik}}" placeholder="Nomor pada KTP Anda" style="width:100%;box-sizing:border-box;height:50px;padding:0 14px;border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--ink);font-size:16px;font-variant-numeric:tabular-nums">
+      </label>
+      <sc-if value="{{nikErr}}" hint-placeholder-val="{{false}}">
+        <div role="alert" style="display:flex;gap:9px;align-items:flex-start;background:var(--merah-tint);color:var(--merah-tint-ink);border-radius:14px;padding:12px 14px">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><rect x="4" y="4" width="16" height="16" rx="5"></rect><path d="M9.2 9.2l5.6 5.6M14.8 9.2l-5.6 5.6"></path></svg>
+          <span style="font-size:13.5px;line-height:1.5">Nomor NIK harus 16 angka. Silakan periksa kembali KTP Anda.</span>
+        </div>
+      </sc-if>
+      <label style="display:flex;flex-direction:column;gap:7px">
+        <span style="font-size:13.5px;font-weight:600">Alamat</span>
+        <input value="{{alamat}}" onChange="{{onAlamat}}" placeholder="Dusun, desa, kecamatan" style="width:100%;box-sizing:border-box;height:50px;padding:0 14px;border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--ink);font-size:16px">
+      </label>
+      <label style="display:flex;flex-direction:column;gap:7px">
+        <span style="font-size:13.5px;font-weight:600">Email</span>
+        <input type="email" value="{{dEmail}}" onChange="{{onDEmail}}" placeholder="nama@contoh.id" style="width:100%;box-sizing:border-box;height:50px;padding:0 14px;border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--ink);font-size:16px">
+      </label>
+      <label style="display:flex;flex-direction:column;gap:7px">
+        <span style="font-size:13.5px;font-weight:600">Kata sandi</span>
+        <input type="password" value="{{dPass}}" onChange="{{onDPass}}" placeholder="Minimal 8 karakter" style="width:100%;box-sizing:border-box;height:50px;padding:0 14px;border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--ink);font-size:16px">
+      </label>
+      <button onClick="{{onDaftar}}" style-active="transform:scale(0.98)" style="height:54px;border-radius:999px;background:var(--accent);color:var(--accent-on);font-size:17px;font-weight:600;text-align:center;transition:transform 0.15s ease">{{btnDaftar}}</button>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;justify-content:center">
+      <span style="width:9px;height:9px;background:var(--muted);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);flex:none"></span>
+      <span style="font-size:12.5px;color:var(--muted)">Verifikasi simulasi untuk purwarupa</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{dOk}}" hint-placeholder-val="{{false}}">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:22px">
+      <p style="margin:0;font-size:16.5px;line-height:1.5;text-align:center;font-weight:600;animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) both">Selamat, Anda resmi menjadi anggota. Ini kartu anggota digital Anda.</p>
+      <div style="background:var(--accent);color:var(--accent-on);border-radius:26px;padding:24px 22px;display:flex;flex-direction:column;gap:20px;box-shadow:0 2px 4px rgba(0,0,0,0.06),0 16px 40px rgba(0,0,0,0.14);animation:rise 0.6s cubic-bezier(0.2,0.7,0.2,1) 0.1s both">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:11.5px;font-weight:600;letter-spacing:0.6px;opacity:0.85">KOPERASI DESA MERAH PUTIH SUKAMAJU</span>
+          <span style="width:12px;height:12px;background:var(--accent-on);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);opacity:0.9"></span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <span style="font-size:24px;font-weight:750;letter-spacing:-0.3px">{{kartuNama}}</span>
+          <span style="font-size:14px;opacity:0.85">Anggota</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end">
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <span style="font-size:11px;letter-spacing:0.6px;opacity:0.8">NO. ANGGOTA</span>
+            <span style="font-size:20px;font-weight:700;font-variant-numeric:tabular-nums">KDS-0031</span>
+            <span style="font-size:12.5px;opacity:0.85">Bergabung 8 Juli 2026</span>
+          </div>
+          <div style="width:58px;height:58px;background:var(--accent-on);border-radius:12px;display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px;box-sizing:border-box">
+            <span style="background:var(--accent);border-radius:2px"></span>
+            <span style="background:var(--accent);border-radius:2px;opacity:0.55"></span>
+            <span style="background:var(--accent);border-radius:2px;opacity:0.55"></span>
+            <span style="background:var(--accent);border-radius:2px"></span>
+          </div>
+        </div>
+      </div>
+      <button onClick="{{masukDariKartu}}" style-active="transform:scale(0.98)" style="height:54px;border-radius:999px;background:var(--accent);color:var(--accent-on);font-size:17px;font-weight:600;text-align:center;transition:transform 0.15s ease;animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.22s both">Masuk ke Beranda</button>
+      <div style="display:flex;gap:8px;align-items:center;justify-content:center;animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.3s both">
+        <span style="width:9px;height:9px;background:var(--muted);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);flex:none"></span>
+        <span style="font-size:12.5px;color:var(--muted)">Verifikasi simulasi untuk purwarupa</span>
+      </div>
+    </div>
+  </sc-if>
+</main>
+</sc-if>
+
+<sc-if value="{{sBeranda}}" hint-placeholder-val="{{false}}">
+<main data-screen-label="Beranda" style="min-height:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:14px;padding:0 20px 130px;animation:fadein 0.28s ease">
+  <header style="position:sticky;top:0;z-index:30;margin:0 -20px;padding:66px 20px 12px;display:flex;justify-content:space-between;align-items:center;gap:12px;background:color-mix(in srgb, var(--bg) 82%, transparent);backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6)">
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <span style="font-size:12px;font-weight:650;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted)">{{tanggalHariIni}}</span>
+      <span style="font-size:23px;font-weight:750;letter-spacing:-0.4px">{{sapaan}}</span>
+      <span style="font-size:12.5px;color:var(--muted)">Koperasi Desa Merah Putih Sukamaju</span>
+    </div>
+    <button onClick="{{goProfil}}" aria-label="Buka profil" style-active="transform:scale(0.94)" style="width:46px;height:46px;border-radius:50%;background:var(--surface);border:0.5px solid var(--border);box-shadow:0 1px 2px rgba(0,0,0,0.05),0 4px 12px rgba(0,0,0,0.05);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:var(--accent);transition:transform 0.15s ease;flex:none">SR</button>
+  </header>
+
+  <sc-if value="{{kGagal}}" hint-placeholder-val="{{false}}">
+    <div role="status" style="display:flex;gap:9px;align-items:flex-start;background:var(--kuning-tint);color:var(--kuning-tint-ink);border-radius:14px;padding:12px 14px">
+      <svg viewBox="0 0 24 24" style="width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M12 3.5L2.5 20.5h19L12 3.5z"></path><path d="M12 10v4.5"></path><path d="M12 17.6v0.01"></path></svg>
+      <span style="font-size:13px;line-height:1.5">Menampilkan hasil pemeriksaan tersimpan. Pemeriksaan langsung sedang tidak tersedia.</span>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{kMuat}}" hint-placeholder-val="{{false}}">
+    <div style="display:flex;flex-direction:column;gap:14px" aria-label="Memuat">
+      <div style="height:320px;border-radius:26px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:150px;border-radius:22px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:88px;border-radius:22px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:88px;border-radius:22px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{kKosong}}" hint-placeholder-val="{{false}}">
+    <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:26px;padding:36px 26px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05)">
+      <svg viewBox="0 0 24 24" style="width:48px;height:48px;fill:none;stroke:var(--muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 8v4.5l3 2"></path></svg>
+      <span style="font-size:16.5px;font-weight:650;line-height:1.4">Pengawas belum menyelesaikan pemeriksaan pertama untuk koperasi Anda.</span>
+      <span style="font-size:14px;color:var(--muted);line-height:1.5">Hasil pemeriksaan akan muncul di sini.</span>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{kIsi}}" hint-placeholder-val="{{false}}">
+    <section style="background:var({{vTok}});color:var({{vOn}});border-radius:26px;padding:26px 24px 22px;display:flex;flex-direction:column;gap:16px;box-shadow:0 2px 4px rgba(0,0,0,0.05),0 14px 36px rgba(0,0,0,0.10);animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.03s both">
+      <span style="font-size:12px;font-weight:650;letter-spacing:0.8px;opacity:0.85">PEMERIKSAAN JUNI 2026</span>
+      <div style="display:flex;flex-direction:column;gap:13px;padding:6px 0 2px">
+        <sc-if value="{{isMerah}}" hint-placeholder-val="{{false}}">
+          <svg viewBox="0 0 24 24" role="img" aria-label="Kotak silang" style="width:58px;height:58px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round"><rect x="3.5" y="3.5" width="17" height="17" rx="5"></rect><path d="M9 9l6 6M15 9l-6 6"></path></svg>
+        </sc-if>
+        <sc-if value="{{isKuning}}" hint-placeholder-val="{{false}}">
+          <svg viewBox="0 0 24 24" role="img" aria-label="Segitiga seru" style="width:58px;height:58px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round"><path d="M12 3.5L2.5 20.5h19L12 3.5z"></path><path d="M12 10v4.5"></path><path d="M12 17.6v0.01"></path></svg>
+        </sc-if>
+        <sc-if value="{{isHijau}}" hint-placeholder-val="{{false}}">
+          <svg viewBox="0 0 24 24" role="img" aria-label="Lingkaran centang" style="width:58px;height:58px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="8.5"></circle><path d="M8.2 12.4l2.6 2.6 5-5.4"></path></svg>
+        </sc-if>
+        <h2 style="margin:0;font-size:37px;line-height:1.05;font-weight:750;letter-spacing:-0.9px">{{vLabel}}</h2>
+        <p style="margin:0;font-size:16.5px;line-height:1.5;opacity:0.94">{{vRingkasan}}</p>
+      </div>
+      <button onClick="{{goTemuan}}" style-active="transform:scale(0.98)" style="height:56px;border-radius:999px;background:var(--surface);color:var({{vCta}});font-size:16.5px;font-weight:650;text-align:center;transition:transform 0.15s ease">Lihat yang perlu Anda tahu</button>
+    </section>
+
+    <sc-if value="{{showNotif}}" hint-placeholder-val="{{false}}">
+      <button onClick="{{goTemuan}}" style-active="transform:scale(0.98)" style="display:flex;gap:11px;align-items:flex-start;background:var(--surface);border:0.5px solid var(--border);border-radius:18px;padding:15px 16px;min-height:44px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 6px 18px rgba(0,0,0,0.05);transition:transform 0.15s ease;animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.08s both">
+        <svg viewBox="0 0 24 24" style="width:19px;height:19px;flex:none;margin-top:1px;fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M6.5 9.5a5.5 5.5 0 0 1 11 0c0 4.2 1.8 5.3 1.8 5.3H4.7s1.8-1.1 1.8-5.3z"></path><path d="M10.2 18.5a1.9 1.9 0 0 0 3.6 0"></path></svg>
+        <span style="flex:1;font-size:14px;line-height:1.5">{{notifText}}</span>
+        <svg viewBox="0 0 24 24" style="width:15px;height:15px;flex:none;margin-top:2px;fill:none;stroke:var(--muted);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M9.5 5l7 7-7 7"></path></svg>
+      </button>
+    </sc-if>
+
+    <section aria-label="Pengawas" style="background:var(--surface);border:0.5px solid var(--border);border-radius:22px;padding:19px 18px;display:flex;flex-direction:column;gap:4px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05);animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.13s both">
+      <div style="display:flex;align-items:center;gap:10px;padding-bottom:10px">
+        <svg viewBox="0 0 24 24" style="width:21px;height:21px;flex:none;fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><path d="M12 3l7 2.8v5.6c0 4.3-2.9 7.2-7 8.9-4.1-1.7-7-4.6-7-8.9V5.8L12 3z"></path></svg>
+        <div style="flex:1;display:flex;flex-direction:column;gap:1px">
+          <span style="font-size:16px;font-weight:650">Pengawas</span>
+          <span style="font-size:12.5px;color:var(--muted)">Empat pemeriksa bekerja untuk Anda setiap pagi</span>
+        </div>
+        <span style="font-size:12.5px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums">{{agHeadStatus}}</span>
+      </div>
+      <sc-for list="{{agRows}}" as="g" hint-placeholder-count="4">
+        <div style="display:flex;align-items:center;gap:11px;padding:10px 0;border-top:0.5px solid var(--border)">
+          <sc-if value="{{g.isDone}}" hint-placeholder-val="{{true}}">
+            <svg viewBox="0 0 24 24" style="width:21px;height:21px;flex:none;fill:none;stroke:var(--hijau);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="8.5"></circle><path d="M8.4 12.3l2.5 2.5 4.7-5"></path></svg>
+          </sc-if>
+          <sc-if value="{{g.isActive}}" hint-placeholder-val="{{false}}">
+            <span aria-label="Sedang memeriksa" style="width:17px;height:17px;flex:none;margin:2px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;box-sizing:border-box"></span>
+          </sc-if>
+          <sc-if value="{{g.isPending}}" hint-placeholder-val="{{false}}">
+            <svg viewBox="0 0 24 24" style="width:21px;height:21px;flex:none;fill:none;stroke:var(--border);stroke-width:1.9"><circle cx="12" cy="12" r="8.5"></circle></svg>
+          </sc-if>
+          <div style="flex:1;display:flex;flex-direction:column;gap:1px;min-width:0">
+            <span style="font-size:14px;font-weight:600;color:{{g.nameColor}}">{{g.nama}}</span>
+            <span style="font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums">{{g.metric}}</span>
+          </div>
+          <sc-if value="{{g.showChip}}" hint-placeholder-val="{{false}}">
+            <button onClick="{{g.onChip}}" style-active="transform:scale(0.95)" style="padding:7px 11px;border-radius:999px;background:var(--kuning-tint);color:var(--kuning-tint-ink);font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;transition:transform 0.15s ease;flex:none">{{g.chip}}</button>
+          </sc-if>
+          <sc-if value="{{g.showTime}}" hint-placeholder-val="{{true}}">
+            <span style="font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;flex:none">{{g.time}}</span>
+          </sc-if>
+        </div>
+      </sc-for>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:0.5px solid var(--border);padding-top:6px">
+        <button onClick="{{runAgents}}" style="min-height:44px;display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:650;color:var(--accent)">
+          <svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round"><path d="M4.5 12a7.5 7.5 0 1 1 2.2 5.3"></path><path d="M4.5 17.5V12H10"></path></svg>
+          Lihat cara Pengawas bekerja
+        </button>
+        <span style="font-size:12px;color:var(--muted)">Berikutnya besok 07.00</span>
+      </div>
+    </section>
+
+    <button onClick="{{goUang}}" style-active="transform:scale(0.98)" style="display:flex;align-items:center;gap:13px;background:var(--surface);border:0.5px solid var(--border);border-radius:22px;padding:17px 18px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05);transition:transform 0.15s ease;animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.18s both">
+      <svg viewBox="0 0 24 24" style="width:21px;height:21px;flex:none;fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><rect x="3" y="6" width="18" height="13.5" rx="3.5"></rect><path d="M3 10.5h18"></path><path d="M15.5 15.5h2.5"></path></svg>
+      <span style="flex:1;display:flex;flex-direction:column;gap:2px;text-align:left">
+        <span style="font-size:12.5px;color:var(--muted)">Simpanan Anda</span>
+        <span style="font-size:22px;font-weight:650;letter-spacing:-0.4px;font-variant-numeric:tabular-nums">Rp 600.000</span>
+        <span style="font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums">Cicilan Rp 200.000 jatuh tempo 5 Juli</span>
+      </span>
+      <svg viewBox="0 0 24 24" style="width:15px;height:15px;flex:none;fill:none;stroke:var(--muted);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M9.5 5l7 7-7 7"></path></svg>
+    </button>
+
+    <button onClick="{{goSuara}}" style-active="transform:scale(0.98)" style="display:flex;align-items:center;gap:13px;background:var(--surface);border:0.5px solid var(--border);border-radius:22px;padding:17px 18px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05);transition:transform 0.15s ease;animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.23s both">
+      <svg viewBox="0 0 24 24" style="width:21px;height:21px;flex:none;fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><rect x="3.5" y="5" width="17" height="15" rx="3.5"></rect><path d="M8 3.5v3M16 3.5v3M3.5 10.5h17"></path></svg>
+      <span style="flex:1;display:flex;flex-direction:column;gap:2px;text-align:left">
+        <span style="font-size:14.5px;font-weight:650">Rapat Anggota Tahunan</span>
+        <span style="font-size:12.5px;color:var(--muted);line-height:1.45">{{agendaLine}}</span>
+      </span>
+      <svg viewBox="0 0 24 24" style="width:15px;height:15px;flex:none;fill:none;stroke:var(--muted);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M9.5 5l7 7-7 7"></path></svg>
+    </button>
+
+    <section style="background:var(--surface);border:0.5px solid var(--border);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:2px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05);animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.28s both">
+      <span style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;color:var(--muted);padding-bottom:8px">AKTIVITAS TERBARU</span>
+      <sc-for list="{{aktivitas}}" as="a" hint-placeholder-count="3">
+        <div style="display:flex;align-items:center;gap:11px;padding:9px 0;border-top:0.5px solid var(--border)">
+          <span style="width:44px;flex:none;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums">{{a.tgl}}</span>
+          <span style="flex:1;font-size:13.5px;line-height:1.4">{{a.label}}</span>
+          <sc-if value="{{a.flag}}" hint-placeholder-val="{{false}}">
+            <span style="padding:4px 8px;border-radius:999px;background:var(--kuning-tint);color:var(--kuning-tint-ink);font-size:10.5px;font-weight:700;flex:none">Diperiksa</span>
+          </sc-if>
+          <span style="font-size:13.5px;font-weight:650;font-variant-numeric:tabular-nums;flex:none">{{a.amt}}</span>
+        </div>
+      </sc-for>
+      <button onClick="{{goArus}}" style="min-height:44px;display:flex;align-items:center;gap:5px;font-size:13.5px;font-weight:650;color:var(--accent);border-top:0.5px solid var(--border);margin-top:2px">Lihat Arus Dana
+        <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"><path d="M9.5 5l7 7-7 7"></path></svg>
+      </button>
+    </section>
+  </sc-if>
+</main>
+</sc-if>
+
+<sc-if value="{{sTemuan}}" hint-placeholder-val="{{false}}">
+<main data-screen-label="Temuan" style="min-height:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:14px;padding:0 20px 130px;animation:fadein 0.28s ease">
+  <header style="position:sticky;top:0;z-index:30;margin:0 -20px;padding:64px 20px 12px;display:flex;flex-direction:column;gap:8px;background:color-mix(in srgb, var(--bg) 82%, transparent);backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6)">
+    <button onClick="{{goBeranda}}" style="min-height:44px;display:flex;align-items:center;gap:7px;font-size:15px;font-weight:600;color:var(--accent)">
+      <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M14.5 5l-7 7 7 7"></path></svg>
+      Beranda
+    </button>
+    <div style="display:flex;flex-direction:column;gap:3px">
+      <h1 style="margin:0;font-size:25px;font-weight:750;letter-spacing:-0.5px">Yang Perlu Anda Tahu</h1>
+      <p style="margin:0;font-size:13px;color:var(--muted)">{{temuanSub}}</p>
+    </div>
+  </header>
+  <sc-if value="{{kGagal}}" hint-placeholder-val="{{false}}">
+    <div role="status" style="display:flex;gap:9px;align-items:flex-start;background:var(--kuning-tint);color:var(--kuning-tint-ink);border-radius:14px;padding:12px 14px">
+      <svg viewBox="0 0 24 24" style="width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M12 3.5L2.5 20.5h19L12 3.5z"></path><path d="M12 10v4.5"></path><path d="M12 17.6v0.01"></path></svg>
+      <span style="font-size:13px;line-height:1.5">Menampilkan hasil pemeriksaan tersimpan. Pemeriksaan langsung sedang tidak tersedia.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{kMuat}}" hint-placeholder-val="{{false}}">
+    <div style="display:flex;flex-direction:column;gap:14px" aria-label="Memuat">
+      <div style="height:190px;border-radius:22px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:190px;border-radius:22px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:190px;border-radius:22px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{temuanKosong}}" hint-placeholder-val="{{false}}">
+    <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:26px;padding:40px 26px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05)">
+      <svg viewBox="0 0 24 24" style="width:50px;height:50px;fill:none;stroke:var(--hijau);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="8.5"></circle><path d="M8.2 12.4l2.6 2.6 5-5.4"></path></svg>
+      <span style="font-size:16.5px;font-weight:600;line-height:1.5">Tidak ada hal yang perlu ditanyakan bulan ini. Koperasi Anda dalam keadaan baik.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{temuanIsi}}" hint-placeholder-val="{{false}}">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <sc-for list="{{findings}}" as="f" hint-placeholder-count="3">
+        <article id="{{f.id}}" style="background:var(--surface);border:0.5px solid var(--border);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:13px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05);animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) {{f.delay}} both">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+            <span style="display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;background:var({{f.tint}});color:var({{f.tintInk}})">
+              <sc-if value="{{f.isMerah}}" hint-placeholder-val="{{false}}">
+                <svg viewBox="0 0 24 24" style="width:12px;height:12px;flex:none;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"><rect x="4" y="4" width="16" height="16" rx="4.5"></rect><path d="M9.2 9.2l5.6 5.6M14.8 9.2l-5.6 5.6"></path></svg>
+              </sc-if>
+              <sc-if value="{{f.isKuning}}" hint-placeholder-val="{{false}}">
+                <svg viewBox="0 0 24 24" style="width:12px;height:12px;flex:none;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"><path d="M12 3.5L2.5 20.5h19L12 3.5z"></path><path d="M12 10.5v4"></path></svg>
+              </sc-if>
+              <sc-if value="{{f.isInfo}}" hint-placeholder-val="{{false}}">
+                <svg viewBox="0 0 24 24" style="width:12px;height:12px;flex:none;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"><path d="M12 2.5l9.5 9.5-9.5 9.5L2.5 12 12 2.5z"></path></svg>
+              </sc-if>
+              <span style="font-size:12px;font-weight:700">{{f.chip}}</span>
+            </span>
+            <span style="font-size:11.5px;color:var(--muted);text-align:right">{{f.agent}}</span>
+          </div>
+          <h3 style="margin:0;font-size:16.5px;font-weight:650;line-height:1.35">{{f.judul}}</h3>
+          <p style="margin:0;font-size:14.5px;line-height:1.55">{{f.penjelasan}}</p>
+          <div style="display:flex;flex-direction:column;gap:7px;background:var(--bg);border-radius:14px;padding:12px 13px">
+            <span style="font-size:11.5px;font-weight:700;letter-spacing:0.5px;color:var(--muted)">BUKTI</span>
+            <sc-for list="{{f.bukti}}" as="b" hint-placeholder-count="2">
+              <div style="display:flex;gap:8px;align-items:flex-start">
+                <svg viewBox="0 0 24 24" style="width:13px;height:13px;flex:none;margin-top:2.5px;fill:none;stroke:var(--muted);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round"><path d="M7 3.5h7l4 4v13H7v-17z"></path><path d="M14 3.5v4h4"></path></svg>
+                <span style="font-size:13px;line-height:1.5;color:var(--ink);font-variant-numeric:tabular-nums">{{b.t}}</span>
+              </div>
+            </sc-for>
+          </div>
+          <button onClick="{{f.onToggle}}" aria-expanded="{{f.open}}" style="min-height:46px;display:flex;align-items:center;justify-content:space-between;font-size:15px;font-weight:650;color:var(--accent)">
+            <span>Kenapa ini penting?</span>
+            <svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform 0.2s ease;transform:{{f.chevRot}}"><path d="M5 9.5l7 7 7-7"></path></svg>
+          </button>
+          <sc-if value="{{f.open}}" hint-placeholder-val="{{false}}">
+            <p style="margin:0;font-size:14.5px;line-height:1.6;background:var(--bg);border-radius:14px;padding:13px 14px;animation:fadein 0.2s ease">{{f.kenapa}}</p>
+          </sc-if>
+          <div style="border:1px solid var(--border);border-radius:14px;padding:12px 13px;display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:11.5px;font-weight:700;letter-spacing:0.5px;color:var(--muted)">PERTANYAAN UNTUK RAPAT</span>
+            <span style="font-size:14.5px;font-weight:600;line-height:1.5">{{f.tanya}}</span>
+          </div>
+          <sc-if value="{{f.notAdded}}" hint-placeholder-val="{{true}}">
+            <button onClick="{{f.onAdd}}" style-active="transform:scale(0.98)" style="height:52px;border-radius:999px;background:var(--accent);color:var(--accent-on);font-size:15.5px;font-weight:650;text-align:center;transition:transform 0.15s ease">Tambahkan ke pertanyaan rapat</button>
+          </sc-if>
+          <sc-if value="{{f.added}}" hint-placeholder-val="{{false}}">
+            <div role="status" style="display:flex;gap:9px;align-items:flex-start;background:var(--hijau-tint);color:var(--hijau-tint-ink);border-radius:14px;padding:13px 14px;animation:fadein 0.2s ease">
+              <svg viewBox="0 0 24 24" style="width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="8.5"></circle><path d="M8.2 12.4l2.6 2.6 5-5.4"></path></svg>
+              <span style="font-size:13.5px;line-height:1.5;font-weight:600">Tersimpan. Pertanyaan ini akan dibawa ke Rapat Anggota Tahunan.</span>
+            </div>
+          </sc-if>
+          <sc-if value="{{f.hasTanggapan}}" hint-placeholder-val="{{false}}">
+            <div style="background:var(--bg);border-radius:14px;padding:13px 14px;display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:11.5px;font-weight:700;letter-spacing:0.5px;color:var(--muted)">TANGGAPAN PENGURUS, 24 JUNI 2026</span>
+              <span style="font-size:13.5px;line-height:1.55">{{f.tanggapan}}</span>
+            </div>
+          </sc-if>
+        </article>
+      </sc-for>
+    </div>
+  </sc-if>
+</main>
+</sc-if>
+
+<sc-if value="{{sUang}}" hint-placeholder-val="{{false}}">
+<main data-screen-label="Uang Anda" style="min-height:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:14px;padding:0 20px 130px;animation:fadein 0.28s ease">
+  <header style="position:sticky;top:0;z-index:30;margin:0 -20px;padding:66px 20px 12px;display:flex;flex-direction:column;gap:3px;background:color-mix(in srgb, var(--bg) 82%, transparent);backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6)">
+    <h1 style="margin:0;font-size:25px;font-weight:750;letter-spacing:-0.5px">Uang Anda</h1>
+    <p style="margin:0;font-size:13px;color:var(--muted)">Sari Rahayu, No. Anggota KDS-0007</p>
+  </header>
+  <sc-if value="{{kGagal}}" hint-placeholder-val="{{false}}">
+    <div role="status" style="display:flex;gap:9px;align-items:flex-start;background:var(--kuning-tint);color:var(--kuning-tint-ink);border-radius:14px;padding:12px 14px">
+      <svg viewBox="0 0 24 24" style="width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M12 3.5L2.5 20.5h19L12 3.5z"></path><path d="M12 10v4.5"></path><path d="M12 17.6v0.01"></path></svg>
+      <span style="font-size:13px;line-height:1.5">Menampilkan catatan tersimpan. Pembaruan sedang tidak tersedia.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{kMuat}}" hint-placeholder-val="{{false}}">
+    <div style="display:flex;flex-direction:column;gap:14px" aria-label="Memuat">
+      <div style="height:220px;border-radius:22px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:140px;border-radius:22px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:140px;border-radius:22px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{kKosong}}" hint-placeholder-val="{{false}}">
+    <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:26px;padding:36px 26px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05)">
+      <svg viewBox="0 0 24 24" style="width:48px;height:48px;fill:none;stroke:var(--muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><rect x="3" y="6" width="18" height="13.5" rx="3.5"></rect><path d="M3 10.5h18"></path></svg>
+      <span style="font-size:16.5px;font-weight:600;line-height:1.5">Belum ada catatan simpanan untuk akun Anda.</span>
+      <span style="font-size:14px;color:var(--muted);line-height:1.5">Setoran pertama Anda akan tercatat di sini.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{kIsi}}" hint-placeholder-val="{{false}}">
+    <section style="background:var(--surface);border:0.5px solid var(--border);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05);animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.03s both">
+      <span style="font-size:14px;color:var(--muted)">Total simpanan Anda</span>
+      <span style="font-size:52px;font-weight:600;letter-spacing:-1.8px;font-variant-numeric:tabular-nums;line-height:1">{{uangSimpTxt}}</span>
+      <div style="height:0.5px;background:var(--border)"></div>
+      <div style="display:flex;flex-direction:column;gap:10px;font-variant-numeric:tabular-nums">
+        <div style="display:flex;justify-content:space-between"><span style="font-size:14px;color:var(--muted)">Simpanan pokok</span><span style="font-size:15px;font-weight:650">Rp 100.000</span></div>
+        <div style="display:flex;justify-content:space-between"><span style="font-size:14px;color:var(--muted)">Simpanan wajib</span><span style="font-size:15px;font-weight:650">Rp 350.000</span></div>
+        <div style="display:flex;justify-content:space-between"><span style="font-size:14px;color:var(--muted)">Simpanan sukarela</span><span style="font-size:15px;font-weight:650">Rp 150.000</span></div>
+      </div>
+    </section>
+    <section style="background:var(--surface);border:0.5px solid var(--border);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05);animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.09s both">
+      <span style="font-size:14px;color:var(--muted)">Sisa pinjaman</span>
+      <span style="font-size:31px;font-weight:650;letter-spacing:-0.8px;font-variant-numeric:tabular-nums;line-height:1">Rp 1.200.000</span>
+      <div style="height:8px;border-radius:999px;background:var(--bg);overflow:hidden"><div style="width:40%;height:100%;border-radius:999px;background:var(--accent);transform-origin:left;animation:growX 0.8s cubic-bezier(0.2,0.7,0.2,1) 0.25s both"></div></div>
+      <span style="font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums">Sudah diangsur Rp 800.000 dari Rp 2.000.000</span>
+    </section>
+    <section style="background:var(--surface);border:0.5px solid var(--border);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:10px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05);animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.15s both">
+      <span style="font-size:14px;color:var(--muted)">Cicilan berikutnya</span>
+      <span style="font-size:31px;font-weight:650;letter-spacing:-0.8px;font-variant-numeric:tabular-nums;line-height:1">Rp 200.000</span>
+      <div style="display:flex;gap:9px;align-items:center">
+        <svg viewBox="0 0 24 24" style="width:16px;height:16px;flex:none;fill:none;stroke:var(--muted);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round"><rect x="3.5" y="5" width="17" height="15" rx="3.5"></rect><path d="M8 3.5v3M16 3.5v3M3.5 10.5h17"></path></svg>
+        <span style="font-size:14.5px;font-weight:600">Jatuh tempo 5 Juli 2026</span>
+      </div>
+      <span style="font-size:13px;color:var(--muted)">Dibayar di kantor koperasi.</span>
+    </section>
+  </sc-if>
+</main>
+</sc-if>
+
+<sc-if value="{{sArus}}" hint-placeholder-val="{{false}}">
+<main data-screen-label="Arus Dana" style="min-height:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:14px;padding:0 20px 130px;animation:fadein 0.28s ease">
+  <header style="position:sticky;top:0;z-index:30;margin:0 -20px;padding:66px 20px 12px;display:flex;flex-direction:column;gap:3px;background:color-mix(in srgb, var(--bg) 82%, transparent);backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6)">
+    <h1 style="margin:0;font-size:25px;font-weight:750;letter-spacing:-0.5px">Arus Dana</h1>
+    <p style="margin:0;font-size:13px;color:var(--muted)">Ke mana uang koperasi pergi, Juni 2026</p>
+  </header>
+  <sc-if value="{{kGagal}}" hint-placeholder-val="{{false}}">
+    <div role="status" style="display:flex;gap:9px;align-items:flex-start;background:var(--kuning-tint);color:var(--kuning-tint-ink);border-radius:14px;padding:12px 14px">
+      <svg viewBox="0 0 24 24" style="width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M12 3.5L2.5 20.5h19L12 3.5z"></path><path d="M12 10v4.5"></path><path d="M12 17.6v0.01"></path></svg>
+      <span style="font-size:13px;line-height:1.5">Menampilkan hasil pemeriksaan tersimpan. Pemeriksaan langsung sedang tidak tersedia.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{kMuat}}" hint-placeholder-val="{{false}}">
+    <div style="display:flex;flex-direction:column;gap:14px" aria-label="Memuat">
+      <div style="height:230px;border-radius:22px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:110px;border-radius:22px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:230px;border-radius:22px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{kKosong}}" hint-placeholder-val="{{false}}">
+    <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:26px;padding:36px 26px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05)">
+      <svg viewBox="0 0 24 24" style="width:48px;height:48px;fill:none;stroke:var(--muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><path d="M7 17V7"></path><path d="M4 10l3-3 3 3"></path><path d="M17 7v10"></path><path d="M14 14l3 3 3-3"></path></svg>
+      <span style="font-size:16.5px;font-weight:600;line-height:1.5">Belum ada data arus dana untuk periode ini.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{kIsi}}" hint-placeholder-val="{{false}}">
+    <section style="background:var(--surface);border:0.5px solid var(--border);border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05);animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.03s both">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <span style="font-size:15px;font-weight:650">Kas koperasi</span>
+          <span style="font-size:12.5px;color:var(--muted)">Uang tunai yang dipegang, tiga bulan terakhir</span>
+        </div>
+        <button onClick="{{bukaTemuanKas}}" style-active="transform:scale(0.95)" style="display:flex;align-items:center;gap:6px;padding:7px 11px;border-radius:999px;background:var(--kuning-tint);color:var(--kuning-tint-ink);font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums;transition:transform 0.15s ease;flex:none">
+          <svg viewBox="0 0 24 24" style="width:12px;height:12px;flex:none;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"><path d="M12 3.5L2.5 20.5h19L12 3.5z"></path><path d="M12 10.5v4"></path></svg>
+          Turun 37%
+        </button>
+      </div>
+      <div style="display:flex;align-items:flex-end;gap:16px;height:150px;padding:0 4px">
+        <sc-for list="{{kasBars}}" as="k" hint-placeholder-count="3">
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:7px;height:100%">
+            <span style="font-size:13px;font-weight:650;font-variant-numeric:tabular-nums;text-align:center;color:{{k.valColor}}">{{k.val}}</span>
+            <div style="height:{{k.h}};border-radius:10px 10px 4px 4px;background:{{k.bg}};transform-origin:bottom;animation:growY 0.7s cubic-bezier(0.2,0.7,0.2,1) {{k.delay}} both"></div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;gap:16px;padding:0 4px">
+        <sc-for list="{{kasBars}}" as="k" hint-placeholder-count="3">
+          <span style="flex:1;text-align:center;font-size:12.5px;color:var(--muted)">{{k.label}}</span>
+        </sc-for>
+      </div>
+      <p style="margin:0;font-size:13px;line-height:1.5;color:var(--muted);border-top:0.5px solid var(--border);padding-top:12px">Kas turun Rp 21.500.000 sejak April. Pengawas menandai penurunan ini sebagai temuan.</p>
+    </section>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.09s both">
+      <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 6px 18px rgba(0,0,0,0.05)">
+        <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)">
+          <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:none;stroke:var(--hijau);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M12 19V5"></path><path d="M6 11l6-6 6 6"></path></svg>
+          Uang masuk
+        </span>
+        <span style="font-size:19px;font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-0.4px">{{arusMasukTxt}}</span>
+      </div>
+      <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 6px 18px rgba(0,0,0,0.05)">
+        <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)">
+          <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:none;stroke:var(--merah);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M12 5v14"></path><path d="M6 13l6 6 6-6"></path></svg>
+          Uang keluar
+        </span>
+        <span style="font-size:19px;font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-0.4px">{{arusKeluarTxt}}</span>
+      </div>
+    </div>
+    <p style="margin:0;font-size:13.5px;line-height:1.5;color:var(--muted);animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.12s both">Kas koperasi berkurang Rp 11.000.000 pada bulan Juni.</p>
+
+    <section style="background:var(--surface);border:0.5px solid var(--border);border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:14px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05);animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.15s both">
+      <span style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;color:var(--muted)">UANG MASUK</span>
+      <sc-for list="{{masukBars}}" as="m" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;justify-content:space-between;gap:10px">
+            <span style="font-size:13.5px">{{m.label}}</span>
+            <span style="font-size:13.5px;font-weight:650;font-variant-numeric:tabular-nums">{{m.amt}}</span>
+          </div>
+          <div style="height:9px;border-radius:999px;background:var(--bg);overflow:hidden"><div style="width:{{m.w}};height:100%;border-radius:999px;background:var(--accent);transform-origin:left;animation:growX 0.8s cubic-bezier(0.2,0.7,0.2,1) {{m.delay}} both"></div></div>
+        </div>
+      </sc-for>
+    </section>
+    <section style="background:var(--surface);border:0.5px solid var(--border);border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:14px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05);animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.2s both">
+      <span style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;color:var(--muted)">UANG KELUAR</span>
+      <sc-for list="{{keluarBars}}" as="k" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;justify-content:space-between;gap:10px">
+            <span style="font-size:13.5px">{{k.label}}</span>
+            <span style="font-size:13.5px;font-weight:650;font-variant-numeric:tabular-nums">{{k.amt}}</span>
+          </div>
+          <div style="height:9px;border-radius:999px;background:var(--bg);overflow:hidden"><div style="width:{{k.w}};height:100%;border-radius:999px;background:var(--muted);transform-origin:left;animation:growX 0.8s cubic-bezier(0.2,0.7,0.2,1) {{k.delay}} both"></div></div>
+        </div>
+      </sc-for>
+    </section>
+    <sc-if value="{{showSorotan}}" hint-placeholder-val="{{false}}">
+      <section style="display:flex;flex-direction:column;gap:10px;animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.25s both">
+        <span style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;color:var(--muted)">SEDANG DIPERIKSA PENGAWAS</span>
+        <sc-for list="{{sorotan}}" as="s" hint-placeholder-count="3">
+          <button onClick="{{s.onOpen}}" style-active="transform:scale(0.98)" style="display:flex;gap:11px;align-items:center;background:var(--kuning-tint);color:var(--kuning-tint-ink);border-radius:16px;padding:14px 15px;min-height:52px;transition:transform 0.15s ease">
+            <svg viewBox="0 0 24 24" style="width:17px;height:17px;flex:none;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round"><path d="M12 3.5L2.5 20.5h19L12 3.5z"></path><path d="M12 10v4.5"></path><path d="M12 17.6v0.01"></path></svg>
+            <span style="flex:1;display:flex;flex-direction:column;gap:2px;text-align:left">
+              <span style="font-size:14px;font-weight:650;font-variant-numeric:tabular-nums">{{s.label}}</span>
+              <span style="font-size:12.5px;opacity:0.85">{{s.sub}}</span>
+            </span>
+            <svg viewBox="0 0 24 24" style="width:14px;height:14px;flex:none;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M9.5 5l7 7-7 7"></path></svg>
+          </button>
+        </sc-for>
+      </section>
+    </sc-if>
+  </sc-if>
+</main>
+</sc-if>
+
+<sc-if value="{{sSuara}}" hint-placeholder-val="{{false}}">
+<main data-screen-label="Suara Anda" style="min-height:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:14px;padding:0 20px 130px;animation:fadein 0.28s ease">
+  <header style="position:sticky;top:0;z-index:30;margin:0 -20px;padding:66px 20px 12px;display:flex;flex-direction:column;gap:3px;background:color-mix(in srgb, var(--bg) 82%, transparent);backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6)">
+    <h1 style="margin:0;font-size:25px;font-weight:750;letter-spacing:-0.5px">Suara Anda</h1>
+    <p style="margin:0;font-size:13px;color:var(--muted)">Pertanyaan anggota dan keputusan bersama</p>
+  </header>
+  <sc-if value="{{kGagal}}" hint-placeholder-val="{{false}}">
+    <div role="status" style="display:flex;gap:9px;align-items:flex-start;background:var(--kuning-tint);color:var(--kuning-tint-ink);border-radius:14px;padding:12px 14px">
+      <svg viewBox="0 0 24 24" style="width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M12 3.5L2.5 20.5h19L12 3.5z"></path><path d="M12 10v4.5"></path><path d="M12 17.6v0.01"></path></svg>
+      <span style="font-size:13px;line-height:1.5">Menampilkan data tersimpan. Pembaruan sedang tidak tersedia.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{kMuat}}" hint-placeholder-val="{{false}}">
+    <div style="display:flex;flex-direction:column;gap:14px" aria-label="Memuat">
+      <div style="height:130px;border-radius:22px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:130px;border-radius:22px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:260px;border-radius:22px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{kKosong}}" hint-placeholder-val="{{false}}">
+    <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:26px;padding:36px 26px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05)">
+      <svg viewBox="0 0 24 24" style="width:48px;height:48px;fill:none;stroke:var(--muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><path d="M20 5.5H4v11h4v4l4-4h8v-11z"></path></svg>
+      <span style="font-size:16.5px;font-weight:600;line-height:1.5">Belum ada pertanyaan atau keputusan yang dibuka.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{kIsi}}" hint-placeholder-val="{{false}}">
+    <section style="display:flex;flex-direction:column;gap:10px;animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.03s both">
+      <span style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;color:var(--muted)">PERTANYAAN UNTUK RAPAT ANGGOTA TAHUNAN</span>
+      <sc-if value="{{adaPertanyaan}}" hint-placeholder-val="{{true}}">
+        <sc-for list="{{suaraQs}}" as="q" hint-placeholder-count="3">
+          <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:20px;padding:17px;display:flex;flex-direction:column;gap:9px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 6px 18px rgba(0,0,0,0.05);animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) {{q.delay}} both">
+            <span style="font-size:15.5px;font-weight:650;line-height:1.4;font-variant-numeric:tabular-nums">{{q.line}}</span>
+            <span style="font-size:13.5px;color:var(--muted);line-height:1.5">{{q.judul}}</span>
+            <sc-if value="{{q.you}}" hint-placeholder-val="{{false}}">
+              <span style="align-self:flex-start;display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:var(--hijau-tint);color:var(--hijau-tint-ink)">
+                <svg viewBox="0 0 24 24" style="width:12px;height:12px;flex:none;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"><path d="M5 13l5 5L20 7"></path></svg>
+                <span style="font-size:11.5px;font-weight:700">Termasuk pertanyaan Anda</span>
+              </span>
+            </sc-if>
+            <button onClick="{{q.onOpen}}" style="min-height:44px;display:flex;align-items:center;gap:5px;font-size:14px;font-weight:650;color:var(--accent)">Lihat temuan
+              <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round"><path d="M9.5 5l7 7-7 7"></path></svg>
+            </button>
+          </div>
+        </sc-for>
+      </sc-if>
+      <sc-if value="{{tanpaPertanyaan}}" hint-placeholder-val="{{false}}">
+        <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:20px;padding:24px;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 6px 18px rgba(0,0,0,0.05)">
+          <span style="font-size:14px;color:var(--muted);line-height:1.5">Belum ada pertanyaan yang dikumpulkan untuk rapat berikutnya.</span>
+        </div>
+      </sc-if>
+    </section>
+    <section style="display:flex;flex-direction:column;gap:10px;animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.14s both">
+      <span style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;color:var(--muted)">KEPUTUSAN KOPERASI</span>
+      <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:13px;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 8px 24px rgba(0,0,0,0.05)">
+        <span style="align-self:flex-start;display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;border:1px solid var(--border)">
+          <span style="width:7px;height:7px;border-radius:50%;background:var(--hijau);flex:none"></span>
+          <span style="font-size:11.5px;font-weight:700;color:var(--muted)">TERBUKA</span>
+        </span>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <h3 style="margin:0;font-size:17px;font-weight:650;line-height:1.35">Pembelian freezer untuk gerai sembako</h3>
+          <span style="font-size:23px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-0.4px">Rp 8.500.000</span>
+        </div>
+        <p style="margin:0;font-size:14px;line-height:1.55;color:var(--muted)">Usulan pengurus untuk unit usaha sembako. Suara Anda ikut menentukan keputusan bersama.</p>
+        <sc-if value="{{belumVote}}" hint-placeholder-val="{{true}}">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <button onClick="{{voteSetuju}}" style-active="transform:scale(0.97)" style="height:52px;border-radius:999px;background:var(--accent);color:var(--accent-on);font-size:15.5px;font-weight:650;display:flex;align-items:center;justify-content:center;transition:transform 0.15s ease">Setuju</button>
+            <button onClick="{{voteTidak}}" style-active="transform:scale(0.97)" style="height:52px;border-radius:999px;border:1px solid var(--border);color:var(--ink);font-size:15.5px;font-weight:650;display:flex;align-items:center;justify-content:center;transition:transform 0.15s ease">Tidak Setuju</button>
+          </div>
+          <span style="font-size:12.5px;color:var(--muted)">Hasil sementara terlihat setelah Anda memilih.</span>
+        </sc-if>
+        <sc-if value="{{sudahVote}}" hint-placeholder-val="{{false}}">
+          <div style="display:flex;flex-direction:column;gap:14px;animation:fadein 0.25s ease">
+            <span style="font-size:15px;font-weight:650;font-variant-numeric:tabular-nums">{{vTotalLine}}</span>
+            <div role="img" aria-label="{{vAria}}" style="display:grid;grid-template-columns:repeat(10,1fr);gap:8px">
+              <sc-for list="{{voteDots}}" as="d" hint-placeholder-count="30">
+                <span style="aspect-ratio:1;border-radius:50%;background:{{d.bg}};border:{{d.border}};box-sizing:border-box"></span>
+              </sc-for>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;font-variant-numeric:tabular-nums">
+              <span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)"><span style="width:9px;height:9px;border-radius:50%;background:var(--accent);flex:none"></span>{{vSetujuLabel}}</span>
+              <span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)"><span style="width:9px;height:9px;border-radius:50%;background:var(--muted);flex:none"></span>{{vTidakLabel}}</span>
+              <span style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)"><span style="width:9px;height:9px;border-radius:50%;border:1.5px solid var(--border);box-sizing:border-box;flex:none"></span>{{vBelumLabel}}</span>
+            </div>
+            <div style="display:flex;gap:9px;align-items:flex-start;background:var(--bg);border-radius:14px;padding:12px 13px">
+              <svg viewBox="0 0 24 24" style="width:15px;height:15px;flex:none;margin-top:1px;fill:none;stroke:var(--muted);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round"><rect x="5" y="10.5" width="14" height="9.5" rx="2.5"></rect><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"></path></svg>
+              <span style="font-size:13px;line-height:1.5;color:var(--muted)">{{vLockText}} Pilihan tersimpan dan tidak dapat diubah.</span>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </section>
+  </sc-if>
+</main>
+</sc-if>
+
+<sc-if value="{{sProfil}}" hint-placeholder-val="{{false}}">
+<main data-screen-label="Profil" style="min-height:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:14px;padding:0 20px 60px;animation:fadein 0.28s ease">
+  <header style="position:sticky;top:0;z-index:30;margin:0 -20px;padding:64px 20px 12px;display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb, var(--bg) 82%, transparent);backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6)">
+    <button onClick="{{goBeranda}}" style="min-height:44px;display:flex;align-items:center;gap:7px;font-size:15px;font-weight:600;color:var(--accent)">
+      <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M14.5 5l-7 7 7 7"></path></svg>
+      Beranda
+    </button>
+    <h1 style="margin:0;font-size:25px;font-weight:750;letter-spacing:-0.5px">Profil</h1>
+  </header>
+
+  <div style="background:var(--accent);color:var(--accent-on);border-radius:26px;padding:24px 22px;display:flex;flex-direction:column;gap:18px;box-shadow:0 2px 4px rgba(0,0,0,0.06),0 16px 40px rgba(0,0,0,0.14);animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.03s both">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:11.5px;font-weight:600;letter-spacing:0.6px;opacity:0.85">KOPERASI DESA MERAH PUTIH SUKAMAJU</span>
+      <span style="width:12px;height:12px;background:var(--accent-on);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);opacity:0.9"></span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <span style="font-size:24px;font-weight:750;letter-spacing:-0.3px">Sari Rahayu</span>
+      <span style="font-size:14px;opacity:0.85">Anggota</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end">
+      <div style="display:flex;flex-direction:column;gap:3px">
+        <span style="font-size:11px;letter-spacing:0.6px;opacity:0.8">NO. ANGGOTA</span>
+        <span style="font-size:20px;font-weight:700;font-variant-numeric:tabular-nums">KDS-0007</span>
+        <span style="font-size:12.5px;opacity:0.85">Bergabung 12 Maret 2025</span>
+      </div>
+      <div style="width:58px;height:58px;background:var(--accent-on);border-radius:12px;display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px;box-sizing:border-box">
+        <span style="background:var(--accent);border-radius:2px"></span>
+        <span style="background:var(--accent);border-radius:2px;opacity:0.55"></span>
+        <span style="background:var(--accent);border-radius:2px;opacity:0.55"></span>
+        <span style="background:var(--accent);border-radius:2px"></span>
+      </div>
+    </div>
+  </div>
+
+  <section style="display:flex;flex-direction:column;gap:8px;animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.09s both">
+    <span style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;color:var(--muted);padding-left:16px">DATA DIRI</span>
+    <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:22px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 6px 18px rgba(0,0,0,0.05)">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:52px;padding:6px 16px">
+        <span style="font-size:15px">Nama</span><span style="font-size:15px;color:var(--muted);text-align:right">Sari Rahayu</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:52px;padding:6px 16px;border-top:0.5px solid var(--border)">
+        <span style="font-size:15px">NIK</span><span style="font-size:15px;color:var(--muted);font-variant-numeric:tabular-nums;text-align:right">3208 &#8226;&#8226;&#8226;&#8226; &#8226;&#8226;&#8226;&#8226; 0042</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:52px;padding:6px 16px;border-top:0.5px solid var(--border)">
+        <span style="font-size:15px;flex:none">Alamat</span><span style="font-size:14px;color:var(--muted);text-align:right;line-height:1.4">Dusun Krajan RT 04, Sukamaju</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:8px;animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.14s both">
+    <span style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;color:var(--muted);padding-left:16px">TAMPILAN</span>
+    <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:22px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 6px 18px rgba(0,0,0,0.05)">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:56px;padding:8px 16px">
+        <span style="font-size:15px">Tema</span>
+        <div role="group" aria-label="Pilih tema" style="display:flex;background:var(--bg);border-radius:12px;padding:3px;gap:2px">
+          <button onClick="{{temaSistem}}" aria-pressed="{{pSistem}}" style="min-height:38px;padding:0 13px;border-radius:10px;font-size:13px;font-weight:600;background:{{bgSistem}};color:{{cSistem}};box-shadow:{{shSistem}}">Sistem</button>
+          <button onClick="{{temaTerang}}" aria-pressed="{{pTerang}}" style="min-height:38px;padding:0 13px;border-radius:10px;font-size:13px;font-weight:600;background:{{bgTerang}};color:{{cTerang}};box-shadow:{{shTerang}}">Terang</button>
+          <button onClick="{{temaGelap}}" aria-pressed="{{pGelap}}" style="min-height:38px;padding:0 13px;border-radius:10px;font-size:13px;font-weight:600;background:{{bgGelap}};color:{{cGelap}};box-shadow:{{shGelap}}">Gelap</button>
+        </div>
+      </div>
+    </div>
+    <span style="font-size:12px;color:var(--muted);padding-left:16px;line-height:1.5">Sistem mengikuti pengaturan gelap terang pada HP Anda.</span>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:8px;animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.19s both">
+    <span style="font-size:11.5px;font-weight:700;letter-spacing:0.8px;color:var(--muted);padding-left:16px">LAINNYA</span>
+    <div style="background:var(--surface);border:0.5px solid var(--border);border-radius:22px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,0.04),0 6px 18px rgba(0,0,0,0.05)">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:56px;padding:8px 16px">
+        <span style="display:flex;flex-direction:column;gap:1px">
+          <span style="font-size:15px">Kabar pemeriksaan bulanan</span>
+          <span style="font-size:12.5px;color:var(--muted)">Pemberitahuan saat hasil baru terbit</span>
+        </span>
+        <button onClick="{{toggleNotif}}" role="switch" aria-checked="{{notifOn}}" aria-label="Kabar pemeriksaan bulanan" style="width:51px;height:31px;border-radius:999px;background:{{notifBg}};position:relative;transition:background 0.2s ease;flex:none">
+          <span style="position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#ffffff;box-shadow:0 1px 3px rgba(0,0,0,0.25);transition:transform 0.2s ease;transform:{{notifKnob}}"></span>
+        </button>
+      </div>
+      <button onClick="{{noop}}" style-active="background:var(--bg)" style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:52px;padding:6px 16px;border-top:0.5px solid var(--border);width:100%;box-sizing:border-box">
+        <span style="font-size:15px">Hubungi Pengawas</span>
+        <svg viewBox="0 0 24 24" style="width:14px;height:14px;flex:none;fill:none;stroke:var(--muted);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round"><path d="M9.5 5l7 7-7 7"></path></svg>
+      </button>
+    </div>
+  </section>
+
+  <section style="animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1) 0.24s both">
+    <button onClick="{{keluar}}" style-active="transform:scale(0.98)" style="width:100%;box-sizing:border-box;min-height:52px;background:var(--surface);border:0.5px solid var(--border);border-radius:22px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:15px;font-weight:650;color:var(--merah);box-shadow:0 1px 2px rgba(0,0,0,0.04),0 6px 18px rgba(0,0,0,0.05);transition:transform 0.15s ease">
+      <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round"><path d="M9.5 4.5H5v15h4.5"></path><path d="M14.5 8l4 4-4 4"></path><path d="M18.5 12H9.5"></path></svg>
+      Keluar
+    </button>
+  </section>
+  <span style="text-align:center;font-size:12px;color:var(--muted)">Pramana purwarupa, v1.0</span>
+</main>
+</sc-if>
+
+</div>
+
+<sc-if value="{{showTabs}}" hint-placeholder-val="{{false}}">
+<nav aria-label="Navigasi utama" style="position:absolute;bottom:0;left:0;right:0;z-index:40;background:color-mix(in srgb, var(--surface) 80%, transparent);backdrop-filter:blur(20px) saturate(1.7);-webkit-backdrop-filter:blur(20px) saturate(1.7);border-top:0.5px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);padding:8px 6px 26px;box-sizing:border-box">
+  <button onClick="{{goBeranda}}" aria-current="{{tabB}}" style-active="transform:scale(0.94)" style="min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var({{tabBc}});transition:transform 0.15s ease">
+    <svg viewBox="0 0 24 24" style="width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:{{tabBw}};stroke-linecap:round;stroke-linejoin:round"><path d="M4 10.5L12 4l8 6.5"></path><path d="M5.5 9.5V20h13V9.5"></path></svg>
+    <span style="font-size:11px;font-weight:650">Beranda</span>
+  </button>
+  <button onClick="{{goUang}}" aria-current="{{tabU}}" style-active="transform:scale(0.94)" style="min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var({{tabUc}});transition:transform 0.15s ease">
+    <svg viewBox="0 0 24 24" style="width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:{{tabUw}};stroke-linecap:round;stroke-linejoin:round"><rect x="3" y="6" width="18" height="13.5" rx="3.5"></rect><path d="M3 10.5h18"></path><path d="M15.5 15.5h2.5"></path></svg>
+    <span style="font-size:11px;font-weight:650">Uang Anda</span>
+  </button>
+  <button onClick="{{goArus}}" aria-current="{{tabA}}" style-active="transform:scale(0.94)" style="min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var({{tabAc}});transition:transform 0.15s ease">
+    <svg viewBox="0 0 24 24" style="width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:{{tabAw}};stroke-linecap:round;stroke-linejoin:round"><path d="M7 18V6"></path><path d="M3.8 9.2L7 6l3.2 3.2"></path><path d="M17 6v12"></path><path d="M13.8 14.8L17 18l3.2-3.2"></path></svg>
+    <span style="font-size:11px;font-weight:650">Arus Dana</span>
+  </button>
+  <button onClick="{{goSuara}}" aria-current="{{tabS}}" style-active="transform:scale(0.94)" style="min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var({{tabSc}});transition:transform 0.15s ease">
+    <svg viewBox="0 0 24 24" style="width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:{{tabSw}};stroke-linecap:round;stroke-linejoin:round"><path d="M20 5.5H4v11h4v4l4-4h8v-11z"></path></svg>
+    <span style="font-size:11px;font-weight:650">Suara Anda</span>
+  </button>
+</nav>
+</sc-if>
+
+</div>
+</x-import>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: {&quot;width&quot;: 900, &quot;height&quot;: 920},
+  &quot;tema&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;sistem&quot;, &quot;terang&quot;, &quot;gelap&quot;], &quot;default&quot;: &quot;sistem&quot;, &quot;tsType&quot;: &quot;\&quot;sistem\&quot; | \&quot;terang\&quot; | \&quot;gelap\&quot;&quot;, &quot;section&quot;: &quot;Tampilan&quot;},
+  &quot;verdict&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;merah&quot;, &quot;kuning&quot;, &quot;hijau&quot;], &quot;default&quot;: &quot;merah&quot;, &quot;tsType&quot;: &quot;\&quot;merah\&quot; | \&quot;kuning\&quot; | \&quot;hijau\&quot;&quot;, &quot;section&quot;: &quot;Skenario&quot;},
+  &quot;kondisi&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;normal&quot;, &quot;memuat&quot;, &quot;kosong&quot;, &quot;gagal&quot;], &quot;default&quot;: &quot;normal&quot;, &quot;tsType&quot;: &quot;\&quot;normal\&quot; | \&quot;memuat\&quot; | \&quot;kosong\&quot; | \&quot;gagal\&quot;&quot;, &quot;section&quot;: &quot;Skenario&quot;},
+  &quot;mulaiDari&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;login&quot;, &quot;daftar&quot;, &quot;beranda&quot;], &quot;default&quot;: &quot;login&quot;, &quot;tsType&quot;: &quot;\&quot;login\&quot; | \&quot;daftar\&quot; | \&quot;beranda\&quot;&quot;, &quot;section&quot;: &quot;Skenario&quot;}
+}">
+class Component extends DCLogic {
+  state = {
+    screen: null, email: "", pass: "", loginErr: false, busyL: false,
+    nama: "", nik: "", alamat: "", dEmail: "", dPass: "", nikErr: false, busyD: false, dOk: false,
+    open: {}, added: {}, voted: null, notifOn: true,
+    temaO: null, verdictO: null, kondisiO: null,
+    sc: 1, shot: false, sysDark: false,
+    agRun: false, agStep: 4, agCounts: [312, 18, 6, 4],
+    nums: {}
+  };
+
+  AGENTS = [
+    { nama: "Pemeriksa Transaksi", target: 312, unit: "transaksi diperiksa", time: "07.02" },
+    { nama: "Pemeriksa Konflik Kepentingan", target: 18, unit: "vendor dicocokkan", time: "07.03" },
+    { nama: "Pemeriksa Kesehatan Keuangan", target: 6, unit: "rasio keuangan dihitung", time: "07.04" },
+    { nama: "Pemeriksa Kepatuhan", target: 4, unit: "aturan koperasi diperiksa", time: "07.05" }
+  ];
+
+  FIND = [
+    { id: "an1", sev: "merah", agent: "Pemeriksa Konflik Kepentingan",
+      judul: "Pembelian Rp 15.000.000 ke toko yang beralamat sama dengan rumah bendahara",
+      penjelasan: "Pada 14 Juni 2026 koperasi membeli barang senilai Rp 15.000.000 dari Toko Berkah. Alamat toko ini sama dengan alamat rumah bendahara koperasi.",
+      kenapa: "Uang koperasi adalah uang bersama seluruh anggota. Saat pembelian besar mengalir ke pihak yang dekat dengan pengurus, anggota berhak memastikan harganya wajar dan barangnya benar diterima.",
+      bukti: ["Pembelian Rp 15.000.000 ke Toko Berkah, 14 Juni 2026", "Alamat vendor sama dengan alamat bendahara, Jl. Melati No. 12"],
+      tanya: "Bisakah pengurus menjelaskan alasan memilih Toko Berkah untuk pembelian Rp 15.000.000 dan bagaimana harganya dibandingkan penjual lain?" },
+    { id: "an4", sev: "kuning", agent: "Pemeriksa Kesehatan Keuangan",
+      judul: "Kas koperasi menurun 37 persen dalam tiga bulan",
+      penjelasan: "Uang kas koperasi turun dari Rp 58.000.000 pada April menjadi Rp 36.500.000 pada Juni. Seperti rumah tangga, koperasi perlu pegangan uang tunai yang cukup.",
+      kenapa: "Jika kas terus menurun, koperasi bisa kesulitan melayani penarikan simpanan anggota. Penurunan yang cepat perlu dijelaskan penyebabnya, bukan didiamkan.",
+      bukti: ["Saldo kas April Rp 58.000.000, Juni Rp 36.500.000"],
+      tanya: "Apa penyebab kas koperasi menurun sejak April dan bagaimana rencana memulihkannya?" },
+    { id: "an2", sev: "kuning", agent: "Pemeriksa Transaksi",
+      judul: "Lima pinjaman disetujui pada hari yang sama",
+      penjelasan: "Pada 20 Juni 2026 ada lima pinjaman disetujui sekaligus dengan total Rp 30.000.000. Biasanya koperasi menyetujui satu sampai dua pinjaman per minggu.",
+      kenapa: "Persetujuan yang menumpuk dalam satu hari bisa berarti antrean biasa, bisa juga berarti pemeriksaan yang terburu buru. Anggota berhak tahu prosesnya tetap teliti.",
+      bukti: ["Lima pencairan pinjaman pada 20 Juni 2026, total Rp 30.000.000", "Kebiasaan sebelumnya satu sampai dua persetujuan per minggu"],
+      tanya: "Apa alasan lima pinjaman disetujui bersamaan pada 20 Juni dan bagaimana pemeriksaannya dilakukan?",
+      tanggapan: "Kelima pinjaman merupakan program musim tanam yang disetujui rapat pengurus 18 Juni, dokumen tersedia di kantor koperasi." },
+    { id: "an3", sev: "kuning", agent: "Pemeriksa Transaksi",
+      judul: "Satu pembelian besar dipecah menjadi tiga pembelian kecil",
+      penjelasan: "Dalam lima hari ada tiga pembelian ke CV Sumber Rejeki, masing masing Rp 4.900.000, sedikit di bawah batas Rp 5.000.000 yang memerlukan persetujuan tambahan.",
+      kenapa: "Memecah satu pembelian besar menjadi beberapa pembelian kecil dapat membuat pembelian lolos tanpa pemeriksaan yang seharusnya. Ini pola yang wajar untuk ditanyakan.",
+      bukti: ["Tiga pembelian Rp 4.900.000 ke CV Sumber Rejeki, 9 sampai 13 Juni 2026"],
+      tanya: "Mengapa pembelian ke CV Sumber Rejeki dipecah menjadi tiga kali dalam lima hari?" },
+    { id: "an5", sev: "kuning", agent: "Pemeriksa Kepatuhan",
+      judul: "Pinjaman melebihi batas dengan dokumen belum lengkap",
+      penjelasan: "Ada pinjaman Rp 12.000.000, di atas batas Rp 10.000.000 per anggota, dan dokumen persyaratannya tercatat belum lengkap.",
+      kenapa: "Batas pinjaman dibuat untuk menjaga uang bersama. Melewatinya boleh saja dalam keadaan tertentu, tetapi harus dengan alasan dan dokumen yang jelas.",
+      bukti: ["Pinjaman Rp 12.000.000, batas per anggota Rp 10.000.000", "Dokumen persyaratan tercatat belum lengkap"],
+      tanya: "Atas dasar apa pinjaman Rp 12.000.000 disetujui melebihi batas dan kapan dokumennya akan dilengkapi?" },
+    { id: "an6", sev: "info", agent: "Pemeriksa Kepatuhan",
+      judul: "Rapat Anggota Tahunan 2026 belum dijadwalkan",
+      penjelasan: "Sampai akhir Juni 2026 koperasi belum melaksanakan Rapat Anggota Tahunan untuk tahun buku 2025.",
+      kenapa: "Rapat tahunan adalah tempat anggota mendengar laporan dan mengambil keputusan bersama. Tanpa rapat, anggota tidak punya ruang resmi untuk bertanya.",
+      bukti: ["Belum ada jadwal Rapat Anggota Tahunan untuk tahun buku 2025"],
+      tanya: "Kapan Rapat Anggota Tahunan akan dilaksanakan?" }
+  ];
+
+  reduced() {
+    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  componentDidMount() {
+    this._mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+    if (this._mq) {
+      this.setState({ sysDark: this._mq.matches });
+      this._mqFn = (e) => this.setState({ sysDark: e.matches });
+      this._mq.addEventListener("change", this._mqFn);
+    }
+    this._rsFn = () => this.fit();
+    window.addEventListener("resize", this._rsFn);
+    this.fit();
+    window.pramanaApp = {
+      go: (s) => this.setScreen(s),
+      set: (p) => this.setState(p),
+      scroll: (y) => { if (this._scr) this._scr.scrollTop = y; },
+      run: () => this.runAgents()
+    };
+  }
+
+  componentWillUnmount() {
+    if (this._mq && this._mqFn) this._mq.removeEventListener("change", this._mqFn);
+    window.removeEventListener("resize", this._rsFn);
+    this.clearAgents();
+    if (this._numRafs) Object.values(this._numRafs).forEach(r => cancelAnimationFrame(r));
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.mulaiDari !== this.props.mulaiDari) this.setState({ screen: null });
+  }
+
+  fit() {
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const shot = this.state.shot;
+    const sc = shot ? vh / 874 : Math.min(1, (vh - 44) / 874, (vw - 32) / 402);
+    this.setState({ sc: Math.max(0.3, sc) });
+  }
+
+  setScreen(s) {
+    this.setState({ screen: s });
+    if (this._scr) this._scr.scrollTop = 0;
+    this.kick(s);
+  }
+
+  animNum(key, target, dur) {
+    if (this.reduced()) { this.setState(st => ({ nums: { ...st.nums, [key]: target } })); return; }
+    if (!this._numRafs) this._numRafs = {};
+    if (this._numRafs[key]) cancelAnimationFrame(this._numRafs[key]);
+    const t0 = performance.now();
+    const step = (t) => {
+      const p = Math.min(1, (t - t0) / dur);
+      const e = 1 - Math.pow(1 - p, 3);
+      this.setState(st => ({ nums: { ...st.nums, [key]: Math.round(target * e) } }));
+      if (p < 1) this._numRafs[key] = requestAnimationFrame(step);
+    };
+    this._numRafs[key] = requestAnimationFrame(step);
+  }
+
+  kick(screen) {
+    if (screen === "uang") this.animNum("simp", 600000, 900);
+    if (screen === "arus") { this.animNum("masuk", 57200000, 900); this.animNum("keluar", 68200000, 900); }
+  }
+
+  clearAgents() {
+    if (this._agT) this._agT.forEach(t => clearTimeout(t));
+    this._agT = [];
+    if (this._agRafs) this._agRafs.forEach(r => cancelAnimationFrame(r));
+    this._agRafs = [];
+  }
+
+  runAgents() {
+    this.clearAgents();
+    if (this.reduced()) {
+      this.setState({ agRun: false, agStep: 4, agCounts: this.AGENTS.map(a => a.target) });
+      return;
+    }
+    this.setState({ agRun: true, agStep: 0, agCounts: [0, 0, 0, 0] });
+    const per = 1150;
+    this.AGENTS.forEach((a, i) => {
+      this._agT.push(setTimeout(() => {
+        const t0 = performance.now();
+        const stepFn = (t) => {
+          const p = Math.min(1, (t - t0) / 850);
+          const e = 1 - Math.pow(1 - p, 3);
+          this.setState(st => {
+            const c = st.agCounts.slice();
+            c[i] = Math.round(a.target * e);
+            return { agCounts: c };
+          });
+          if (p < 1) { const r = requestAnimationFrame(stepFn); this._agRafs.push(r); }
+        };
+        const r0 = requestAnimationFrame(stepFn);
+        this._agRafs.push(r0);
+      }, i * per));
+      this._agT.push(setTimeout(() => {
+        this.setState({ agStep: i + 1, agRun: i < 3 });
+      }, i * per + per - 100));
+    });
+  }
+
+  fmtRp(v) { return "Rp " + v.toLocaleString("id-ID"); }
+
+  chipFor(sev) {
+    if (sev === "merah") return { tint: "--merah-tint", tintInk: "--merah-tint-ink", chip: "Perlu Dijelaskan" };
+    if (sev === "kuning") return { tint: "--kuning-tint", tintInk: "--kuning-tint-ink", chip: "Perlu Perhatian" };
+    return { tint: "--border", tintInk: "--muted", chip: "Catatan" };
+  }
+
+  renderVals() {
+    const p = this.props, st = this.state;
+    const temaSel = st.temaO ?? p.tema ?? "sistem";
+    const isDark = temaSel === "gelap" || (temaSel === "sistem" && st.sysDark);
+    const temaAttr = isDark ? "gelap" : "terang";
+    const verdict = st.verdictO ?? p.verdict ?? "merah";
+    const kondisi = st.kondisiO ?? p.kondisi ?? "normal";
+    const screen = st.screen ?? (p.mulaiDari ?? "login");
+
+    const kMuat = kondisi === "memuat";
+    const kKosong = kondisi === "kosong";
+    const kGagal = kondisi === "gagal";
+    const kIsi = !kMuat && !kKosong;
+
+    const V = {
+      merah: { tok: "--merah", on: "--merah-on", cta: "--merah", label: "Perlu Dijelaskan",
+        ringkasan: "Kas koperasi menurun dan ada satu pembelian besar yang perlu dijelaskan pengurus." },
+      kuning: { tok: "--kuning", on: "--kuning-on", cta: "--ink", label: "Perlu Perhatian",
+        ringkasan: "Ada beberapa hal yang sebaiknya Anda tanyakan kepada pengurus bulan ini." },
+      hijau: { tok: "--hijau", on: "--hijau-on", cta: "--hijau", label: "Sehat",
+        ringkasan: "Tidak ada hal yang perlu dikhawatirkan pada pemeriksaan bulan ini." }
+    }[verdict];
+
+    const raw = verdict === "hijau" ? [] : verdict === "kuning" ? this.FIND.filter(f => f.id !== "an1") : this.FIND;
+    const n = raw.filter(f => f.sev !== "info").length;
+
+    const findings = raw.map((f, i) => {
+      const c = this.chipFor(f.sev);
+      const open = !!st.open[f.id];
+      const added = !!st.added[f.id];
+      return {
+        id: f.id, agent: f.agent, judul: f.judul, penjelasan: f.penjelasan, kenapa: f.kenapa,
+        tanya: f.tanya, tint: c.tint, tintInk: c.tintInk, chip: c.chip,
+        isMerah: f.sev === "merah", isKuning: f.sev === "kuning", isInfo: f.sev === "info",
+        open, chevRot: open ? "rotate(180deg)" : "rotate(0deg)", added, notAdded: !added,
+        bukti: f.bukti.map(t => ({ t })),
+        hasTanggapan: !!f.tanggapan, tanggapan: f.tanggapan || "",
+        delay: (0.03 + i * 0.05).toFixed(2) + "s",
+        onToggle: () => this.setState(s => ({ open: { ...s.open, [f.id]: !s.open[f.id] } })),
+        onAdd: () => this.setState(s => ({ added: { ...s.added, [f.id]: true } }))
+      };
+    });
+
+    const agentFinds = {};
+    raw.forEach(f => { agentFinds[f.agent] = (agentFinds[f.agent] || 0) + 1; });
+    const agRows = this.AGENTS.map((a, i) => {
+      const done = i < st.agStep;
+      const active = st.agRun && i === st.agStep;
+      const count = st.agCounts[i];
+      const nf = agentFinds[a.nama] || 0;
+      return {
+        nama: a.nama, time: a.time,
+        isDone: done, isActive: active, isPending: !done && !active,
+        nameColor: (!done && !active) ? "var(--muted)" : "var(--ink)",
+        metric: (done || active) ? (count.toLocaleString("id-ID") + " " + a.unit) : "Menunggu giliran",
+        showChip: done && nf > 0, chip: nf + " temuan",
+        showTime: done && nf === 0,
+        onChip: () => { this.setScreen("temuan"); }
+      };
+    });
+    const agHeadStatus = st.agRun ? "Memeriksa..." : "Selesai 07.05";
+
+    const baseQ = [
+      { id: "an1", base: 12, judul: "Pembelian Rp 15.000.000 ke Toko Berkah" },
+      { id: "an4", base: 7, judul: "Penurunan kas koperasi sejak April" },
+      { id: "an2", base: 5, judul: "Lima pinjaman disetujui dalam sehari" }
+    ].filter(q => raw.some(f => f.id === q.id));
+    const suaraQs = baseQ.map(q => {
+      const you = !!st.added[q.id];
+      const count = q.base + (you ? 1 : 0);
+      return {
+        line: count + " anggota menanyakan hal yang sama",
+        judul: q.judul, you, count,
+        onOpen: () => { this.setState(s => ({ open: { ...s.open, [q.id]: true } })); this.setScreen("temuan"); }
+      };
+    }).sort((a, b) => b.count - a.count).map((q, i) => ({ ...q, delay: (0.05 + i * 0.04).toFixed(2) + "s" }));
+    const totalAnggotaTanya = suaraQs.reduce((s, q) => s + q.count, 0);
+    const agendaLine = suaraQs.length > 0
+      ? "Belum dijadwalkan pengurus. " + suaraQs.length + " pertanyaan dari " + totalAnggotaTanya + " anggota siap dibawa."
+      : "Belum dijadwalkan pengurus. Belum ada pertanyaan terkumpul.";
+
+    const masuk = [
+      { label: "Penjualan gerai", v: 43600000 }, { label: "Angsuran pinjaman", v: 7800000 },
+      { label: "Setoran simpanan", v: 4500000 }, { label: "Lainnya", v: 1300000 }
+    ];
+    const keluar = [
+      { label: "Pembelian stok", v: 32700000 }, { label: "Pencairan pinjaman", v: 30000000 },
+      { label: "Gaji dan honor", v: 4000000 }, { label: "Operasional", v: 1500000 }
+    ];
+    const bars = (arr, d0) => {
+      const max = Math.max(...arr.map(x => x.v));
+      return arr.map((x, i) => ({
+        label: x.label, amt: this.fmtRp(x.v),
+        w: Math.max(3, Math.round(x.v / max * 100)) + "%",
+        delay: (d0 + i * 0.07).toFixed(2) + "s"
+      }));
+    };
+
+    const kasData = [
+      { label: "April", v: 58.0 }, { label: "Mei", v: 47.2 }, { label: "Juni", v: 36.5 }
+    ];
+    const kasBars = kasData.map((k, i) => ({
+      label: k.label,
+      val: k.v.toFixed(1).replace(".", ",") + " jt",
+      h: Math.round(k.v / 58 * 100) + "%",
+      bg: i === 2 ? "var(--kuning)" : "color-mix(in srgb, var(--muted) 26%, transparent)",
+      valColor: i === 2 ? "var(--ink)" : "var(--muted)",
+      delay: (0.15 + i * 0.1).toFixed(2) + "s"
+    }));
+
+    const sorotanAll = [
+      { id: "an1", label: "Rp 15.000.000 ke Toko Berkah", sub: "Pembelian 14 Juni, terkait satu temuan" },
+      { id: "an2", label: "Rp 30.000.000 pencairan lima pinjaman", sub: "20 Juni, terkait satu temuan" },
+      { id: "an3", label: "Rp 14.700.000 ke CV Sumber Rejeki", sub: "Tiga pembelian beruntun, terkait satu temuan" }
+    ].filter(x => raw.some(f => f.id === x.id));
+    const sorotan = sorotanAll.map(x => ({
+      label: x.label, sub: x.sub,
+      onOpen: () => { this.setState(s => ({ open: { ...s.open, [x.id]: true } })); this.setScreen("temuan"); }
+    }));
+
+    const voted = st.voted;
+    const sCount = 9 + (voted === "setuju" ? 1 : 0);
+    const tCount = 3 + (voted === "tidak" ? 1 : 0);
+    const totVote = sCount + tCount;
+    const voteDots = [];
+    for (let i = 0; i < 30; i++) {
+      if (i < sCount) voteDots.push({ bg: "var(--accent)", border: "none" });
+      else if (i < sCount + tCount) voteDots.push({ bg: "var(--muted)", border: "none" });
+      else voteDots.push({ bg: "transparent", border: "1.5px solid var(--border)" });
+    }
+
+    const aktivitas = [
+      { tgl: "30 Jun", label: "Setoran simpanan anggota", amt: "Rp 4.500.000", flag: false },
+      { tgl: "20 Jun", label: "Lima pinjaman dicairkan", amt: "Rp 30.000.000", flag: verdict !== "hijau" },
+      { tgl: "14 Jun", label: "Pembelian stok gerai", amt: "Rp 15.000.000", flag: verdict === "merah" }
+    ];
+
+    const now = new Date();
+    const tanggalHariIni = now.toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+    const h = now.getHours();
+    const waktu = h < 11 ? "pagi" : h < 15 ? "siang" : h < 19 ? "sore" : "malam";
+
+    const inApp = ["beranda", "temuan", "uang", "arus", "suara"].includes(screen);
+    const tB = screen === "beranda" || screen === "temuan";
+    const tabTok = (a) => a ? "--accent" : "--muted";
+    const tabW = (a) => a ? "2.1" : "1.7";
+
+    const nums = st.nums;
+    const segBg = (on) => on ? "var(--surface)" : "transparent";
+    const segC = (on) => on ? "var(--ink)" : "var(--muted)";
+    const segSh = (on) => on ? "0 1px 3px rgba(0,0,0,0.12)" : "none";
+
+    return {
+      temaAttr, isDark,
+      sc: st.sc,
+      scW: Math.round(402 * st.sc) + "px",
+      scH: Math.round(874 * st.sc) + "px",
+      deskBg: st.shot ? "transparent" : (isDark ? "oklch(0.165 0.012 275)" : "oklch(0.925 0.008 75)"),
+      deskDisplay: "flex",
+      deskAlign: st.shot ? "flex-start" : "center",
+      deskJustify: st.shot ? "flex-start" : "center",
+      deskPad: st.shot ? "0" : "22px",
+      scrRef: (el) => { this._scr = el; },
+
+      sLogin: screen === "login", sDaftar: screen === "daftar", sBeranda: screen === "beranda",
+      sTemuan: screen === "temuan", sUang: screen === "uang", sArus: screen === "arus",
+      sSuara: screen === "suara", sProfil: screen === "profil",
+      showTabs: inApp,
+      tabB: tB ? "page" : "false", tabU: screen === "uang" ? "page" : "false",
+      tabA: screen === "arus" ? "page" : "false", tabS: screen === "suara" ? "page" : "false",
+      tabBc: tabTok(tB), tabUc: tabTok(screen === "uang"), tabAc: tabTok(screen === "arus"), tabSc: tabTok(screen === "suara"),
+      tabBw: tabW(tB), tabUw: tabW(screen === "uang"), tabAw: tabW(screen === "arus"), tabSw: tabW(screen === "suara"),
+
+      email: st.email, pass: st.pass, loginErr: st.loginErr,
+      btnMasuk: st.busyL ? "Memeriksa..." : "Masuk",
+      onEmail: (e) => this.setState({ email: e.target.value }),
+      onPass: (e) => this.setState({ pass: e.target.value }),
+      onLogin: () => {
+        if (this.state.busyL) return;
+        this.setState({ busyL: true });
+        setTimeout(() => {
+          const s = this.state;
+          const ok = (s.email.trim() === "juri.anggota@pramana.id" && s.pass === "PramanaJuri2026") ||
+                     (s.email.trim() === "sari@pramana.id" && s.pass === "SariSukamaju1");
+          if (ok) {
+            this.setState({ busyL: false, loginErr: false });
+            this.setScreen("beranda");
+            setTimeout(() => this.runAgents(), 500);
+          } else {
+            this.setState({ busyL: false, loginErr: true });
+          }
+        }, 550);
+      },
+      fillJuri: () => this.setState({ email: "juri.anggota@pramana.id", pass: "PramanaJuri2026", loginErr: false }),
+      goDaftar: () => this.setScreen("daftar"),
+      goLogin: () => this.setScreen("login"),
+
+      dFormShown: !st.dOk, dOk: st.dOk, nikErr: st.nikErr,
+      nama: st.nama, nik: st.nik, alamat: st.alamat, dEmail: st.dEmail, dPass: st.dPass,
+      btnDaftar: st.busyD ? "Memeriksa..." : "Daftar dan verifikasi",
+      kartuNama: st.nama.trim() || "Anggota Baru",
+      onNama: (e) => this.setState({ nama: e.target.value }),
+      onNik: (e) => this.setState({ nik: e.target.value.replace(/[^0-9]/g, "") }),
+      onAlamat: (e) => this.setState({ alamat: e.target.value }),
+      onDEmail: (e) => this.setState({ dEmail: e.target.value }),
+      onDPass: (e) => this.setState({ dPass: e.target.value }),
+      onDaftar: () => {
+        if (this.state.busyD) return;
+        if (!/^[0-9]{16}$/.test(this.state.nik)) { this.setState({ nikErr: true }); return; }
+        this.setState({ busyD: true, nikErr: false });
+        setTimeout(() => this.setState({ busyD: false, dOk: true }), 700);
+      },
+      masukDariKartu: () => { this.setScreen("beranda"); setTimeout(() => this.runAgents(), 500); },
+
+      goBeranda: () => this.setScreen("beranda"),
+      goTemuan: () => this.setScreen("temuan"),
+      goUang: () => this.setScreen("uang"),
+      goArus: () => this.setScreen("arus"),
+      goSuara: () => this.setScreen("suara"),
+      goProfil: () => this.setScreen("profil"),
+      keluar: () => { this.setState({ email: "", pass: "", loginErr: false }); this.setScreen("login"); },
+      noop: () => {},
+
+      kMuat, kKosong, kGagal, kIsi,
+      vTok: V.tok, vOn: V.on, vCta: V.cta, vLabel: V.label, vRingkasan: V.ringkasan,
+      isMerah: verdict === "merah", isKuning: verdict === "kuning", isHijau: verdict === "hijau",
+      notifText: "Pengawas menemukan " + n + " hal yang sebaiknya Anda tanyakan kepada pengurus bulan ini.",
+      showNotif: n > 0,
+      tanggalHariIni, sapaan: "Selamat " + waktu + ", Bu Sari",
+
+      agRows, agHeadStatus,
+      runAgents: () => this.runAgents(),
+      agendaLine, aktivitas,
+
+      temuanSub: "Pemeriksaan Juni 2026, " + raw.length + " temuan",
+      temuanKosong: !kMuat && (kKosong || raw.length === 0),
+      temuanIsi: kIsi && raw.length > 0,
+      findings,
+
+      uangSimpTxt: this.fmtRp(nums.simp ?? 600000),
+      arusMasukTxt: this.fmtRp(nums.masuk ?? 57200000),
+      arusKeluarTxt: this.fmtRp(nums.keluar ?? 68200000),
+
+      kasBars,
+      bukaTemuanKas: () => { this.setState(s => ({ open: { ...s.open, an4: true } })); this.setScreen("temuan"); },
+      masukBars: bars(masuk, 0.2), keluarBars: bars(keluar, 0.25),
+      sorotan, showSorotan: sorotan.length > 0,
+
+      suaraQs, adaPertanyaan: suaraQs.length > 0, tanpaPertanyaan: suaraQs.length === 0,
+      belumVote: !voted, sudahVote: !!voted,
+      voteSetuju: () => this.setState({ voted: "setuju" }),
+      voteTidak: () => this.setState({ voted: "tidak" }),
+      voteDots,
+      vTotalLine: totVote + " dari 30 anggota sudah memilih",
+      vAria: sCount + " suara setuju, " + tCount + " suara tidak setuju, " + (30 - totVote) + " belum memilih",
+      vSetujuLabel: sCount + " Setuju", vTidakLabel: tCount + " Tidak Setuju", vBelumLabel: (30 - totVote) + " belum memilih",
+      vLockText: voted === "setuju" ? "Pilihan Anda: Setuju." : "Pilihan Anda: Tidak Setuju.",
+
+      pSistem: temaSel === "sistem", pTerang: temaSel === "terang", pGelap: temaSel === "gelap",
+      bgSistem: segBg(temaSel === "sistem"), cSistem: segC(temaSel === "sistem"), shSistem: segSh(temaSel === "sistem"),
+      bgTerang: segBg(temaSel === "terang"), cTerang: segC(temaSel === "terang"), shTerang: segSh(temaSel === "terang"),
+      bgGelap: segBg(temaSel === "gelap"), cGelap: segC(temaSel === "gelap"), shGelap: segSh(temaSel === "gelap"),
+      temaSistem: () => this.setState({ temaO: "sistem" }),
+      temaTerang: () => this.setState({ temaO: "terang" }),
+      temaGelap: () => this.setState({ temaO: "gelap" }),
+
+      notifOn: st.notifOn,
+      notifBg: st.notifOn ? "var(--accent)" : "var(--border)",
+      notifKnob: st.notifOn ? "translateX(20px)" : "translateX(0)",
+      toggleNotif: () => this.setState(s => ({ notifOn: !s.notifOn }))
+    };
+  }
+}
+</script>
+</body>
+</html>

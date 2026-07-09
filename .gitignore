@@ -1,0 +1,39 @@
+# Secrets — never committed (AC-REP-03, R2)
+.env
+.env.*
+!.env.example
+secrets/
+
+# Control plane not for the public repo (R2)
+.claude/
+
+# Operator-internal docs (not product artifacts)
+prompt-orchestrator-pramana-ai.md
+env-prep-pramana-ai.md
+
+# Design bundle archives (unzipped copies live in design-handoff/, committed)
+*.zip
+
+# Dependencies & build output
+node_modules/
+.next/
+out/
+.vercel/
+*.tsbuildinfo
+
+# Local databases
+dev.db
+dev.db-journal
+*.sqlite
+*.sqlite-journal
+
+# Test & evidence build junk
+test-results/
+playwright-report/
+blob-report/
+coverage/
+.crown/worktrees/
+.crown/compact/
+
+# OS noise
+.DS_Store

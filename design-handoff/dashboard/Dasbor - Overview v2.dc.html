@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="./pramana-tokens.css" rel="stylesheet">
+<style>
+body{margin:0;background:oklch(0.93 0.009 84);font-family:'Public Sans',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:oklch(0.46 0.075 205)}a:hover{color:oklch(0.41 0.075 205)}
+button{font:inherit;border:0;background:none;padding:0;margin:0;cursor:pointer;color:inherit;text-align:left}
+input{font:inherit;border:0;background:none;outline:none;color:inherit}
+input::placeholder{color:var(--muted-foreground);opacity:1}
+button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+@keyframes prm-pulse{0%,100%{opacity:.45}50%{opacity:1}}
+@keyframes prm-spin{to{transform:rotate(360deg)}}
+@keyframes prm-enter{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes prm-pagein{from{opacity:0}to{opacity:1}}
+@keyframes prm-draw{to{stroke-dashoffset:0}}
+@keyframes prm-rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes prm-pop{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes prm-flash{0%{box-shadow:0 0 0 0 oklch(0.45 0.13 30 / 0.5)}70%{box-shadow:0 0 0 14px oklch(0.45 0.13 30 / 0)}100%{box-shadow:0 0 0 0 oklch(0.45 0.13 30 / 0)}}
+@keyframes prm-denyut{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes prm-slidein{from{transform:translateX(60px);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes prm-zoomin{from{opacity:0;transform:scale(0.96) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}}
+</style>
+</helmet>
+
+<div class="{{ temaKelas }}" data-screen-label="Overview Nasional v2" style="min-height:100vh;background:var(--background);color:var(--foreground);opacity:{{ pageOp }};transform:{{ pageTf }};transition:opacity .3s var(--ease-mewah), transform .3s var(--ease-mewah)">
+
+<sc-if value="{{ toastTampil }}" hint-placeholder-val="{{ false }}">
+  <div role="status" style="position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:120;display:flex;align-items:center;gap:10px;padding:13px 22px;border-radius:999px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised-lg);animation:prm-pop .5s var(--ease-mewah) both">
+    <div aria-hidden="true" style="width:10px;height:10px;border-radius:50%;background:var(--verdict-hijau);flex:none"></div>
+    <span style="font:600 12.5px/1.4 'Public Sans',sans-serif">{{ toastTeks }}</span>
+  </div>
+</sc-if>
+
+<sc-if value="{{ rowTipTampil }}" hint-placeholder-val="{{ false }}">
+  <div aria-hidden="true" style="position:fixed;left:{{ rowTipX }}px;top:{{ rowTipY }}px;z-index:110;pointer-events:none;width:250px;padding:14px 16px;border-radius:16px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised-lg)">
+    <div style="font:700 12.5px/1.35 'Public Sans',sans-serif">{{ rowTipNama }}</div>
+    <div style="font:500 11px/1.4 'Public Sans',sans-serif;color:var(--muted-foreground);margin-top:3px">{{ rowTipProv }} · {{ rowTipTemuan }} temuan periode ini</div>
+    <div style="display:flex;align-items:center;gap:6px;margin-top:10px">
+      <span style="font:700 9px/1 'Archivo',sans-serif;letter-spacing:.1em;color:var(--muted-foreground)">JAN-JUN</span>
+      <sc-for list="{{ rowTipTrail }}" as="d" hint-placeholder-count="6">
+        <span style="width:9px;height:9px;background:{{ d.vc }};clip-path:{{ d.clip }};border-radius:{{ d.br }};display:inline-block"></span>
+      </sc-for>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ bukaSetelan }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:90;background:var(--scrim);animation:prm-pagein .3s ease both" onClick="{{ tutupSetelan }}"></div>
+  <div role="dialog" aria-modal="true" aria-label="Pengaturan" style="position:fixed;top:0;right:0;bottom:0;width:400px;z-index:100;background:var(--background);box-shadow:var(--shadow-raised-lg);padding:30px 30px 30px;overflow-y:auto;animation:prm-slidein .45s var(--ease-mewah) both">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div style="font:800 17px/1 'Archivo',sans-serif">Pengaturan</div>
+      <div style="flex:1"></div>
+      <button type="button" onClick="{{ tutupSetelan }}" aria-label="Tutup pengaturan" style="width:36px;height:36px;border-radius:50%;background:var(--well);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well);display:flex;align-items:center;justify-content:center;font:700 13px/1 'Public Sans',sans-serif;color:var(--muted-foreground)">X</button>
+    </div>
+
+    <div style="font:700 10px/1 'Archivo',sans-serif;letter-spacing:.13em;color:var(--muted-foreground);margin:26px 0 12px">TEMA DEFAULT</div>
+    <div role="group" aria-label="Tema default" style="display:flex;gap:4px;padding:5px;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well)">
+      <sc-for list="{{ pilihanTema }}" as="p" hint-placeholder-count="3">
+        <button type="button" onClick="{{ p.klik }}" aria-pressed="{{ p.aktif }}" style="flex:1;padding:9px 0;border-radius:999px;text-align:center;font:700 11.5px/1 'Public Sans',sans-serif;background:{{ p.bg }};box-shadow:{{ p.sh }};border-top:1px solid {{ p.tepi }};color:{{ p.c }}">{{ p.label }}</button>
+      </sc-for>
+    </div>
+
+    <div style="font:700 10px/1 'Archivo',sans-serif;letter-spacing:.13em;color:var(--muted-foreground);margin:26px 0 12px">PERIODE DEFAULT</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px">
+      <sc-for list="{{ pilihanPeriodeDef }}" as="p" hint-placeholder-count="6">
+        <button type="button" onClick="{{ p.klik }}" aria-pressed="{{ p.aktif }}" style="padding:9px 14px;border-radius:999px;font:700 11.5px/1 'Public Sans',sans-serif;background:{{ p.bg }};box-shadow:{{ p.sh }};border-top:1px solid {{ p.tepi }};color:{{ p.c }}">{{ p.label }}</button>
+      </sc-for>
+    </div>
+
+    <div style="font:700 10px/1 'Archivo',sans-serif;letter-spacing:.13em;color:var(--muted-foreground);margin:26px 0 12px">PREFERENSI NOTIFIKASI</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <button type="button" onClick="{{ togelNotifMerah }}" style="display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:16px;background:var(--well);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well)">
+        <span style="flex:1;font:600 12.5px/1.4 'Public Sans',sans-serif">Koperasi merah baru</span>
+        <span aria-hidden="true" style="width:40px;height:22px;border-radius:999px;background:{{ nMerahBg }};box-shadow:var(--shadow-pressed-sm);position:relative;transition:background .3s var(--ease-mewah)"><span style="position:absolute;top:3px;left:{{ nMerahX }};width:16px;height:16px;border-radius:50%;background:var(--surface);box-shadow:var(--shadow-raised-sm);transition:left .3s var(--ease-mewah)"></span></span>
+        <span style="font:700 10.5px/1 'Public Sans',sans-serif;color:var(--muted-foreground);width:30px;text-align:right">{{ nMerahLabel }}</span>
+      </button>
+      <button type="button" onClick="{{ togelNotifSelesai }}" style="display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:16px;background:var(--well);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well)">
+        <span style="flex:1;font:600 12.5px/1.4 'Public Sans',sans-serif">Pemeriksaan selesai</span>
+        <span aria-hidden="true" style="width:40px;height:22px;border-radius:999px;background:{{ nSelesaiBg }};box-shadow:var(--shadow-pressed-sm);position:relative;transition:background .3s var(--ease-mewah)"><span style="position:absolute;top:3px;left:{{ nSelesaiX }};width:16px;height:16px;border-radius:50%;background:var(--surface);box-shadow:var(--shadow-raised-sm);transition:left .3s var(--ease-mewah)"></span></span>
+        <span style="font:700 10.5px/1 'Public Sans',sans-serif;color:var(--muted-foreground);width:30px;text-align:right">{{ nSelesaiLabel }}</span>
+      </button>
+    </div>
+
+    <div style="font:700 10px/1 'Archivo',sans-serif;letter-spacing:.13em;color:var(--muted-foreground);margin:26px 0 12px">AKUN</div>
+    <div style="padding:16px 18px;border-radius:16px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised-sm)">
+      <div style="font:700 13px/1.3 'Public Sans',sans-serif">Analis Kemenkop</div>
+      <div style="font:500 11.5px/1.6 'Public Sans',sans-serif;color:var(--muted-foreground);margin-top:4px">juri.pemerintah@pramana.id<br>Kementerian Koperasi RI</div>
+      <sc-if value="{{ bukaSandi }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+          <input type="password" placeholder="Kata sandi baru" aria-label="Kata sandi baru" style="width:100%;box-sizing:border-box;padding:12px 16px;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed);border-bottom:1px solid var(--edge-bottom-well);font:500 12.5px/1 'Public Sans',sans-serif;color:var(--foreground)">
+          <button type="button" onClick="{{ simpanSandi }}" style="padding:12px 18px;border-radius:999px;background:var(--primary);color:var(--primary-foreground);font:700 12px/1 'Public Sans',sans-serif;box-shadow:var(--shadow-raised-sm);text-align:center">Simpan Kata Sandi</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ tutupSandi }}" hint-placeholder-val="{{ true }}">
+        <button type="button" onClick="{{ bukaFormSandi }}" style="margin-top:14px;padding:11px 18px;border-radius:999px;background:var(--control-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised-sm);font:700 11.5px/1 'Public Sans',sans-serif">Ganti Kata Sandi</button>
+      </sc-if>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ bukaKeluar }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:90;background:var(--scrim);animation:prm-pagein .3s ease both" onClick="{{ batalKeluar }}"></div>
+  <div role="dialog" aria-modal="true" aria-label="Konfirmasi keluar" style="position:fixed;left:50%;top:42%;transform:translate(-50%,-50%);z-index:100;width:380px;padding:30px 32px;border-radius:24px;background:var(--background);box-shadow:var(--shadow-raised-lg);animation:prm-zoomin .4s var(--ease-mewah) both">
+    <div style="font:800 17px/1.3 'Archivo',sans-serif">Keluar dari dasbor?</div>
+    <div style="font:500 12.5px/1.6 'Public Sans',sans-serif;color:var(--muted-foreground);margin-top:8px">Sesi Anda akan diakhiri dan Anda kembali ke halaman masuk.</div>
+    <div style="display:flex;gap:12px;margin-top:22px">
+      <button type="button" onClick="{{ batalKeluar }}" style="flex:1;padding:13px 0;border-radius:999px;background:var(--control-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised-sm);font:700 12.5px/1 'Public Sans',sans-serif;text-align:center">Batal</button>
+      <button type="button" onClick="{{ konfirmasiKeluar }}" style="flex:1;padding:13px 0;border-radius:999px;background:var(--verdict-merah);color:var(--verdict-on);font:700 12.5px/1 'Public Sans',sans-serif;box-shadow:var(--shadow-raised-sm);text-align:center">Keluar</button>
+    </div>
+  </div>
+</sc-if>
+
+<div style="max-width:1440px;min-width:1240px;margin:0 auto;padding:26px 48px 60px;animation:prm-pagein .5s ease both">
+
+  <header style="display:flex;align-items:center;gap:14px;position:relative;z-index:70">
+    <div style="display:flex;align-items:center;gap:16px">
+      <div aria-hidden="true" style="width:42px;height:42px;border-radius:50%;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised-sm);display:flex;align-items:center;justify-content:center;flex:none">
+        <div style="width:16px;height:16px;border-radius:50%;background:var(--well);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well)"></div>
+      </div>
+      <div>
+        <div style="font:800 19px/1 'Archivo',sans-serif;letter-spacing:-0.01em">Pramana</div>
+        <div style="font:600 9.5px/1 'Public Sans',sans-serif;letter-spacing:.15em;color:var(--muted-foreground);margin-top:5px">DASBOR PENGAWASAN KEMENKOP</div>
+      </div>
+    </div>
+    <div style="flex:1"></div>
+
+    <div style="position:relative">
+      <button type="button" onClick="{{ togelDropPeriode }}" aria-expanded="{{ bukaPeriode }}" aria-label="Ganti periode" style="display:flex;align-items:center;gap:9px;padding:11px 18px;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well);font:600 12px/1 'Public Sans',sans-serif;color:var(--foreground)">
+        <span style="color:var(--muted-foreground)">Periode</span> {{ periodeLabel }}
+        <span aria-hidden="true" style="width:7px;height:7px;background:currentColor;clip-path:polygon(50% 100%, 0% 0%, 100% 0%);opacity:.6"></span>
+      </button>
+      <sc-if value="{{ bukaPeriode }}" hint-placeholder-val="{{ false }}">
+        <div role="menu" style="position:absolute;top:calc(100% + 10px);right:0;width:200px;padding:8px;border-radius:18px;background:var(--background);box-shadow:var(--shadow-raised-lg);border-top:1px solid var(--edge-top);animation:prm-pop .35s var(--ease-mewah) both;z-index:80">
+          <sc-for list="{{ daftarPeriode }}" as="p" hint-placeholder-count="6">
+            <button type="button" role="menuitem" onClick="{{ p.klik }}" style-hover="background:var(--row-hover)" style="display:flex;align-items:center;gap:10px;width:100%;box-sizing:border-box;padding:10px 14px;border-radius:12px;font:600 12.5px/1 'Public Sans',sans-serif;background:{{ p.bg }};box-shadow:{{ p.sh }};color:{{ p.c }}">
+              {{ p.label }}
+              <span style="flex:1"></span>
+              <span style="width:9px;height:9px;background:{{ p.vc }};clip-path:{{ p.clip }};border-radius:{{ p.br }};display:inline-block"></span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+
+    <div role="group" aria-label="Pilihan tema" style="display:flex;gap:4px;padding:5px;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well)">
+      <button type="button" onClick="{{ setTerang }}" aria-pressed="{{ terangAktif }}" style="padding:8px 16px;border-radius:999px;font:700 11.5px/1 'Public Sans',sans-serif;background:{{ tTerangBg }};box-shadow:{{ tTerangSh }};border-top:1px solid {{ tTerangTepi }};color:{{ tTerangC }}">Terang</button>
+      <button type="button" onClick="{{ setGelap }}" aria-pressed="{{ gelapAktif }}" style="padding:8px 16px;border-radius:999px;font:700 11.5px/1 'Public Sans',sans-serif;background:{{ tGelapBg }};box-shadow:{{ tGelapSh }};border-top:1px solid {{ tGelapTepi }};color:{{ tGelapC }}">Gelap</button>
+    </div>
+
+    <div style="position:relative">
+      <button type="button" onClick="{{ togelDropProfil }}" aria-expanded="{{ bukaProfil }}" aria-label="Menu akun" style-hover="transform:translateY(-1px)" style="display:flex;align-items:center;gap:10px;padding:6px 16px 6px 6px;border-radius:999px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised-sm);transition:transform .35s var(--ease-mewah)">
+        <span style="width:32px;height:32px;border-radius:50%;background:var(--well);box-shadow:var(--shadow-pressed-sm);display:flex;align-items:center;justify-content:center;font:700 11px/1 'Archivo',sans-serif;color:var(--muted-foreground)">AK</span>
+        <span>
+          <span style="display:block;font:700 12px/1.1 'Public Sans',sans-serif">Analis Kemenkop</span>
+          <span style="display:block;font:500 10px/1.1 'Public Sans',sans-serif;color:var(--muted-foreground);margin-top:3px">Kementerian Koperasi RI</span>
+        </span>
+        <span aria-hidden="true" style="width:7px;height:7px;background:var(--muted-foreground);clip-path:polygon(50% 100%, 0% 0%, 100% 0%);margin-left:4px"></span>
+      </button>
+      <sc-if value="{{ bukaProfil }}" hint-placeholder-val="{{ false }}">
+        <div role="menu" style="position:absolute;top:calc(100% + 10px);right:0;width:250px;padding:8px;border-radius:18px;background:var(--background);box-shadow:var(--shadow-raised-lg);border-top:1px solid var(--edge-top);animation:prm-pop .35s var(--ease-mewah) both;z-index:80">
+          <div style="padding:12px 14px 10px">
+            <div style="font:700 13px/1.2 'Public Sans',sans-serif">Analis Kemenkop</div>
+            <div style="font:500 11px/1.5 'Public Sans',sans-serif;color:var(--muted-foreground);margin-top:3px">juri.pemerintah@pramana.id</div>
+          </div>
+          <div style="height:1px;background:var(--border-hairline);margin:4px 8px"></div>
+          <button type="button" role="menuitem" onClick="{{ bukaSetelanKlik }}" style-hover="background:var(--row-hover)" style="display:block;width:100%;box-sizing:border-box;padding:11px 14px;border-radius:12px;font:600 12.5px/1 'Public Sans',sans-serif">Pengaturan</button>
+          <button type="button" role="menuitem" onClick="{{ bukaKeluarKlik }}" style-hover="background:var(--row-hover)" style="display:block;width:100%;box-sizing:border-box;padding:11px 14px;border-radius:12px;font:600 12.5px/1 'Public Sans',sans-serif;color:var(--verdict-merah)">Keluar</button>
+        </div>
+      </sc-if>
+    </div>
+  </header>
+
+  <sc-if value="{{ adaDropTerbuka }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;inset:0;z-index:60" onClick="{{ tutupSemuaDrop }}"></div>
+  </sc-if>
+
+  <div style="display:flex;align-items:flex-end;gap:16px;margin:32px 0 22px;animation:prm-enter .7s var(--ease-mewah) both">
+    <div>
+      <h1 style="font:800 27px/1.15 'Archivo',sans-serif;letter-spacing:-0.01em;margin:0">Peta Kesehatan Koperasi Desa</h1>
+      <div style="font:500 12.5px/1.5 'Public Sans',sans-serif;color:var(--muted-foreground);margin-top:8px">Pemantauan berkelanjutan oleh 4 AI Agent pemeriksa · Diperbarui {{ tickerGlobal }}</div>
+    </div>
+  </div>
+
+  <sc-if value="{{ gagalFlag }}" hint-placeholder-val="{{ false }}">
+    <div role="alert" style="display:flex;align-items:center;gap:12px;margin:0 0 20px;padding:14px 20px;border-radius:16px;background:var(--verdict-merah-surface);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well)">
+      <div aria-hidden="true" style="width:12px;height:12px;background:var(--verdict-merah);clip-path:polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);flex:none"></div>
+      <div style="font:600 13px/1.5 'Public Sans',sans-serif;color:var(--verdict-merah)">Gagal memuat data pengawasan. Periksa koneksi Anda lalu coba lagi.</div>
+      <div style="flex:1"></div>
+      <button type="button" onClick="{{ cobaLagi }}" style="padding:11px 22px;border-radius:999px;background:var(--primary);color:var(--primary-foreground);font:700 12.5px/1 'Public Sans',sans-serif;box-shadow:var(--shadow-raised-sm)">Coba Lagi</button>
+    </div>
+    <div style="padding:44px 24px;border-radius:24px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised);text-align:center">
+      <div style="font:500 13px/1.5 'Public Sans',sans-serif;color:var(--muted-foreground)">Data tidak dapat dimuat.</div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ memuatFlag }}" hint-placeholder-val="{{ false }}">
+    <div aria-busy="true">
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px">
+        <div style="padding:24px;border-radius:24px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised)">
+          <div style="height:12px;width:40%;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed-sm);animation:prm-pulse 1.6s ease-in-out infinite"></div>
+          <div style="height:20px;width:70%;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed-sm);margin-top:16px;animation:prm-pulse 1.6s ease-in-out infinite"></div>
+          <div style="height:30px;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed);margin-top:20px;animation:prm-pulse 1.6s ease-in-out infinite"></div>
+        </div>
+        <div style="padding:24px;border-radius:24px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised)">
+          <div style="height:12px;width:60%;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed-sm);animation:prm-pulse 1.6s ease-in-out infinite"></div>
+          <div style="height:12px;width:80%;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed-sm);margin-top:14px;animation:prm-pulse 1.6s ease-in-out infinite"></div>
+          <div style="height:12px;width:70%;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed-sm);margin-top:14px;animation:prm-pulse 1.6s ease-in-out infinite"></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:20px;margin-top:20px">
+        <sc-for list="{{ skel5 }}" as="s" hint-placeholder-count="5">
+          <div style="padding:18px 20px;border-radius:20px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised)">
+            <div style="height:9px;width:62%;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed-sm);animation:prm-pulse 1.6s ease-in-out infinite"></div>
+            <div style="height:26px;width:38%;border-radius:12px;background:var(--well);box-shadow:var(--shadow-pressed-sm);margin-top:14px;animation:prm-pulse 1.6s ease-in-out infinite"></div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="margin-top:20px;padding:10px 0 14px;border-radius:24px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised)">
+        <sc-for list="{{ skel6 }}" as="s" hint-placeholder-count="6">
+          <div style="display:grid;grid-template-columns:2fr 1.1fr 0.9fr 0.6fr;gap:18px;align-items:center;padding:16px 24px;border-top:1px solid var(--border-hairline)">
+            <div style="height:11px;width:70%;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed-sm);animation:prm-pulse 1.6s ease-in-out infinite"></div>
+            <div style="height:11px;width:60%;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed-sm);animation:prm-pulse 1.6s ease-in-out infinite"></div>
+            <div style="height:11px;width:50%;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed-sm);animation:prm-pulse 1.6s ease-in-out infinite"></div>
+            <div style="height:11px;width:40%;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed-sm);animation:prm-pulse 1.6s ease-in-out infinite"></div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:18px;justify-content:center">
+        <div aria-hidden="true" style="width:16px;height:16px;border-radius:50%;border:2px solid var(--border-hairline);border-top-color:var(--primary);animation:prm-spin .9s linear infinite"></div>
+        <div style="font:600 12.5px/1 'Public Sans',sans-serif;color:var(--muted-foreground)">Memuat data pengawasan...</div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ kosongFlag }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:80px 24px;border-radius:24px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised);display:flex;flex-direction:column;align-items:center;text-align:center">
+      <div aria-hidden="true" style="width:64px;height:64px;border-radius:50%;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised-sm);display:flex;align-items:center;justify-content:center">
+        <div style="width:24px;height:24px;border-radius:50%;background:var(--well);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well)"></div>
+      </div>
+      <div style="font:700 16px/1.3 'Archivo',sans-serif;margin-top:20px">Belum ada koperasi dalam pengawasan.</div>
+      <div style="font:500 12.5px/1.6 'Public Sans',sans-serif;color:var(--muted-foreground);margin-top:8px;max-width:420px">Data akan tampil setelah sinkronisasi pertama dari sistem keanggotaan selesai dijalankan.</div>
+      <button type="button" onClick="{{ cobaLagi }}" style="margin-top:22px;padding:12px 24px;border-radius:999px;background:var(--control-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised-sm);font:700 12.5px/1 'Public Sans',sans-serif;color:var(--foreground)">Muat Ulang</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ defaultFlag }}" hint-placeholder-val="{{ true }}">
+
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;animation:prm-enter .7s var(--ease-mewah) .06s both">
+      <div style="display:flex;gap:26px;padding:24px 28px;border-radius:24px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised)">
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+          <div style="font:700 10px/1 'Archivo',sans-serif;letter-spacing:.13em;color:var(--muted-foreground)">KONDISI NASIONAL · {{ periodeLabelCaps }}</div>
+          <div style="font:800 21px/1.3 'Archivo',sans-serif;letter-spacing:-0.01em;margin-top:10px">{{ heroJudul }}</div>
+          <div style="flex:1"></div>
+          <div role="img" aria-label="{{ distAria }}" style="display:flex;height:30px;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed);border-bottom:1px solid var(--edge-bottom-well);margin-top:16px;padding:5px;gap:4px">
+            <sc-for list="{{ distSeg }}" as="s" hint-placeholder-count="3">
+              <button type="button" onClick="{{ s.klik }}" title="Saring tabel: {{ s.nama }}" style-hover="transform:translateY(-1px)" style="width:{{ s.w }};border-radius:999px;background:{{ s.bg }};display:flex;align-items:center;justify-content:center;gap:6px;border:0;cursor:pointer;outline-offset:3px;box-shadow:{{ s.ring }};transition:transform .3s var(--ease-mewah)">
+                <span style="font:700 11px/1 'Public Sans',sans-serif;color:var(--verdict-on)">{{ s.label }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <div style="font:500 11.5px/1.5 'Public Sans',sans-serif;color:var(--muted-foreground);margin-top:12px">{{ deltaRingkas }} · Klik segmen untuk menyaring tabel.</div>
+        </div>
+        <div style="width:200px;flex:none;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;text-align:right">
+          <div style="font:700 10px/1 'Archivo',sans-serif;letter-spacing:.13em;color:var(--muted-foreground)">TEMUAN TERBUKA</div>
+          <div style="font:800 58px/1 'Public Sans',sans-serif;font-variant-numeric:tabular-nums;margin-top:8px;border-radius:18px;padding:2px 10px;animation:{{ flashAnim }}">{{ dispT }}</div>
+          <div style="font:500 11.5px/1.5 'Public Sans',sans-serif;color:var(--muted-foreground);margin-top:6px">{{ temuanSub }}</div>
+        </div>
+      </div>
+
+      <div style="padding:20px 22px;border-radius:24px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised);display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;gap:9px">
+          <div style="font:700 10px/1 'Archivo',sans-serif;letter-spacing:.13em;color:var(--muted-foreground)">PERLU PERHATIAN</div>
+          <span style="font:700 10.5px/1 'Public Sans',sans-serif;color:var(--verdict-merah);padding:4px 9px;border-radius:999px;background:var(--verdict-merah-surface)">{{ perhatianJumlah }}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;margin-top:6px">
+          <sc-for list="{{ perhatian }}" as="p" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:11px;padding:11px 2px;border-top:1px solid var(--border-hairline)">
+              <span aria-hidden="true" style="width:10px;height:10px;background:{{ p.vc }};clip-path:{{ p.clip }};border-radius:{{ p.br }};flex:none"></span>
+              <span style="flex:1;min-width:0">
+                <span style="display:block;font:700 12px/1.3 'Public Sans',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.nama }}</span>
+                <span style="display:block;font:500 10.5px/1.4 'Public Sans',sans-serif;color:var(--muted-foreground);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.alasan }}</span>
+              </span>
+              <button type="button" onClick="{{ p.buka }}" style-hover="transform:translateY(-1px)" style="padding:8px 13px;border-radius:999px;background:var(--control-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised-sm);font:700 10.5px/1 'Public Sans',sans-serif;transition:transform .3s var(--ease-mewah)">Buka</button>
+              <button type="button" onClick="{{ p.periksa }}" aria-label="Jalankan pemeriksaan {{ p.nama }}" style-hover="transform:translateY(-1px)" style="width:76px;padding:8px 0;border-radius:999px;background:{{ p.pBg }};color:{{ p.pC }};box-shadow:var(--shadow-raised-sm);font:700 10.5px/1 'Public Sans',sans-serif;text-align:center;transition:transform .3s var(--ease-mewah);display:inline-flex;align-items:center;justify-content:center;gap:6px">
+                <sc-if value="{{ p.jalanFlag }}" hint-placeholder-val="{{ false }}">
+                  <span aria-hidden="true" style="width:10px;height:10px;border-radius:50%;border:2px solid currentColor;border-top-color:transparent;animation:prm-spin .9s linear infinite;display:inline-block"></span>
+                </sc-if>
+                {{ p.pLabel }}
+              </button>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:20px;margin-top:20px;animation:prm-enter .7s var(--ease-mewah) .14s both">
+      <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="5">
+        <div style-hover="transform:translateY(-4px);box-shadow:var(--shadow-raised-lg)" style="padding:16px 18px 14px;border-radius:20px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised);transition:transform .45s var(--ease-mewah), box-shadow .45s var(--ease-mewah)">
+          <div style="display:flex;align-items:center;gap:7px">
+            <sc-if value="{{ k.adaBentuk }}" hint-placeholder-val="{{ false }}">
+              <div aria-hidden="true" style="width:9px;height:9px;background:{{ k.vc }};clip-path:{{ k.clip }};border-radius:{{ k.br }};flex:none"></div>
+            </sc-if>
+            <div style="font:700 9.5px/1.2 'Archivo',sans-serif;letter-spacing:.12em;color:var(--muted-foreground)">{{ k.label }}</div>
+          </div>
+          <div style="display:flex;align-items:flex-end;gap:10px;margin-top:10px">
+            <div style="font:700 32px/1 'Public Sans',sans-serif;font-variant-numeric:tabular-nums">{{ k.nilai }}</div>
+            <sc-if value="{{ k.adaDelta }}" hint-placeholder-val="{{ false }}">
+              <div title="Dibanding bulan sebelumnya" style="display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed-sm);margin-bottom:3px">
+                <span aria-hidden="true" style="width:7px;height:6px;background:{{ k.deltaWarna }};clip-path:polygon(50% 0%, 100% 100%, 0% 100%);transform:rotate({{ k.deltaRot }});opacity:{{ k.deltaArahOp }}"></span>
+                <span style="font:700 10px/1 'Public Sans',sans-serif;color:{{ k.deltaWarna }};font-variant-numeric:tabular-nums">{{ k.deltaTeks }}</span>
+              </div>
+            </sc-if>
+          </div>
+          <svg aria-hidden="true" width="100%" height="26" viewBox="0 0 92 26" preserveAspectRatio="none" style="display:block;margin-top:10px">
+            <polyline points="{{ k.spark }}" fill="none" stroke="{{ k.sparkWarna }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1;animation:prm-draw 1.1s var(--ease-mewah) .3s forwards"></polyline>
+            <circle cx="{{ k.sparkCx }}" cy="{{ k.sparkCy }}" r="2.6" fill="{{ k.sparkWarna }}" style="opacity:0;animation:prm-pagein .4s ease 1.2s forwards"></circle>
+          </svg>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:20px;margin-top:20px;animation:prm-enter .7s var(--ease-mewah) .22s both">
+      <div style="padding:20px 24px 18px;border-radius:24px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised)">
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <div style="font:700 13.5px/1 'Archivo',sans-serif">Tren Nasional 6 Bulan</div>
+          <div style="font:500 11px/1 'Public Sans',sans-serif;color:var(--muted-foreground)">garis = verdict · balok = temuan</div>
+          <div style="flex:1"></div>
+          <span style="display:inline-flex;align-items:center;gap:6px"><span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;background:var(--verdict-hijau)"></span><span style="font:600 11px/1 'Public Sans',sans-serif;color:var(--muted-foreground)">Hijau</span></span>
+          <span style="display:inline-flex;align-items:center;gap:6px"><span aria-hidden="true" style="width:9px;height:9px;background:var(--verdict-kuning);clip-path:polygon(50% 8%, 96% 92%, 4% 92%)"></span><span style="font:600 11px/1 'Public Sans',sans-serif;color:var(--muted-foreground)">Kuning</span></span>
+          <span style="display:inline-flex;align-items:center;gap:6px"><span aria-hidden="true" style="width:9px;height:9px;background:var(--verdict-merah);clip-path:polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)"></span><span style="font:600 11px/1 'Public Sans',sans-serif;color:var(--muted-foreground)">Merah</span></span>
+        </div>
+        <div key="{{ chartKey }}" style="position:relative;margin-top:14px;border-radius:18px;background:{{ cArBg }};box-shadow:{{ cArSh }};border-bottom:1px solid {{ cArTepi }};padding:14px 10px 6px">
+          <svg width="100%" height="210" viewBox="0 0 600 210" preserveAspectRatio="none" style="display:block">
+            <line x1="16" y1="52" x2="584" y2="52" stroke="var(--border-hairline)" stroke-width="1" style="opacity:{{ cGrid }}"></line>
+            <line x1="16" y1="103" x2="584" y2="103" stroke="var(--border-hairline)" stroke-width="1" style="opacity:{{ cGrid }}"></line>
+            <line x1="16" y1="154" x2="584" y2="154" stroke="var(--border-hairline)" stroke-width="1" style="opacity:{{ cGrid }}"></line>
+            <rect x="{{ markerX }}" y="14" width="52" height="182" rx="10" fill="var(--muted-foreground)" opacity="0.09"></rect>
+            <sc-for list="{{ barTemuan }}" as="b" hint-placeholder-count="6">
+              <rect x="{{ b.x }}" y="{{ b.y }}" width="34" height="{{ b.h }}" rx="{{ barRad }}" fill="var(--muted-foreground)" opacity="0.22" style="transform-origin:center bottom;transform-box:fill-box;animation:prm-rise .9s var(--ease-mewah) {{ b.delay }} both"></rect>
+            </sc-for>
+            <polyline points="{{ garisHijau }}" fill="none" stroke="var(--verdict-hijau)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1;animation:prm-draw 1.3s var(--ease-mewah) .15s forwards"></polyline>
+            <polyline points="{{ garisKuning }}" fill="none" stroke="var(--verdict-kuning)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1;animation:prm-draw 1.3s var(--ease-mewah) .3s forwards"></polyline>
+            <polyline points="{{ garisMerah }}" fill="none" stroke="var(--verdict-merah)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1;animation:prm-draw 1.3s var(--ease-mewah) .45s forwards"></polyline>
+            <sc-for list="{{ titik }}" as="t" hint-placeholder-count="18">
+              <circle cx="{{ t.x }}" cy="{{ t.y }}" r="3.4" fill="{{ t.f }}" stroke="var(--surface)" stroke-width="1.5" style="opacity:0;animation:prm-pagein .4s ease {{ t.delay }} forwards"></circle>
+            </sc-for>
+          </svg>
+          <div style="position:absolute;inset:14px 10px 6px;display:flex">
+            <sc-for list="{{ kolomHover }}" as="c" hint-placeholder-count="6">
+              <div onMouseEnter="{{ c.masuk }}" onMouseLeave="{{ c.keluar }}" onClick="{{ c.klik }}" title="Lihat {{ c.nama }}" style="flex:1;cursor:pointer"></div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ trenTipTampil }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;top:10px;left:{{ trenTipX }}%;transform:translateX(-50%);pointer-events:none;padding:10px 14px;border-radius:14px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised-lg);white-space:nowrap;z-index:5">
+              <div style="font:700 11px/1 'Archivo',sans-serif">{{ trenTipBulan }}</div>
+              <div style="font:500 11px/1.6 'Public Sans',sans-serif;color:var(--muted-foreground);margin-top:5px;font-variant-numeric:tabular-nums">Hijau {{ trenTipH }} · Kuning {{ trenTipK }} · Merah {{ trenTipM }}<br>Temuan terbuka {{ trenTipT }}</div>
+            </div>
+          </sc-if>
+        </div>
+        <div style="display:flex;margin-top:8px;padding:0 10px">
+          <sc-for list="{{ labelBulan }}" as="b" hint-placeholder-count="6">
+            <div style="flex:1;text-align:center;font:600 10.5px/1 'Public Sans',sans-serif;color:{{ b.c }}">{{ b.label }}</div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="padding:20px 22px 18px;border-radius:24px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised);display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="font:700 13.5px/1 'Archivo',sans-serif">AI Agent Pemeriksa</div>
+          <div style="flex:1"></div>
+          <span aria-hidden="true" style="width:8px;height:8px;border-radius:50%;background:var(--verdict-hijau);animation:prm-denyut 2.4s ease-in-out infinite"></span>
+          <span style="font:600 10.5px/1 'Public Sans',sans-serif;color:var(--muted-foreground)">4 agen aktif</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;flex:1">
+          <sc-for list="{{ agen }}" as="a" hint-placeholder-count="4">
+            <div style-hover="transform:translateY(-3px);box-shadow:var(--shadow-raised)" style="padding:13px 15px;border-radius:16px;background:var(--well);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well);transition:transform .4s var(--ease-mewah), box-shadow .4s var(--ease-mewah)">
+              <div style="font:700 11.5px/1.3 'Public Sans',sans-serif">{{ a.nama }}</div>
+              <div style="display:flex;align-items:center;gap:6px;margin-top:4px">
+                <span style="font:600 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:var(--muted-foreground);padding:3px 7px;border-radius:999px;background:var(--surface);box-shadow:var(--shadow-raised-sm)">{{ a.model }}</span>
+                <span style="font:600 9.5px/1 'Public Sans',sans-serif;color:var(--verdict-hijau)">Aktif</span>
+              </div>
+              <div style="display:flex;align-items:flex-end;gap:8px;margin-top:11px">
+                <span style="font:700 24px/1 'Public Sans',sans-serif;font-variant-numeric:tabular-nums">{{ a.nilai }}</span>
+                <span style="font:500 10px/1.3 'Public Sans',sans-serif;color:var(--muted-foreground);margin-bottom:2px">temuan</span>
+                <span style="flex:1"></span>
+                <svg aria-hidden="true" width="52" height="20" viewBox="0 0 52 20" preserveAspectRatio="none" style="display:block">
+                  <polyline points="{{ a.spark }}" fill="none" stroke="var(--muted-foreground)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" pathLength="1" style="stroke-dasharray:1;stroke-dashoffset:1;animation:prm-draw 1s var(--ease-mewah) .5s forwards"></polyline>
+                </svg>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:12px;padding:12px 15px;border-radius:16px;background:var(--well);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well)">
+          <span aria-hidden="true" style="width:10px;height:10px;background:var(--primary);border-radius:2px;flex:none"></span>
+          <span style="font:700 11.5px/1.3 'Public Sans',sans-serif">Adjudikator</span>
+          <span style="font:600 9px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;color:var(--muted-foreground);padding:3px 7px;border-radius:999px;background:var(--surface);box-shadow:var(--shadow-raised-sm)">GLM-5.2</span>
+          <span style="flex:1;font:500 10.5px/1.4 'Public Sans',sans-serif;color:var(--muted-foreground)">menyatukan temuan menjadi verdict</span>
+          <span style="font:600 9.5px/1 'Public Sans',sans-serif;color:var(--verdict-hijau)">Aktif</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;padding:8px 0 6px;border-radius:24px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised);animation:prm-enter .7s var(--ease-mewah) .3s both">
+      <div style="display:flex;align-items:center;gap:14px;padding:14px 24px 12px;flex-wrap:wrap">
+        <div>
+          <div style="font:700 15px/1.2 'Archivo',sans-serif">Koperasi dalam Pengawasan</div>
+          <div style="font:500 11.5px/1.4 'Public Sans',sans-serif;color:var(--muted-foreground);margin-top:4px">{{ jumlahLabel }}</div>
+        </div>
+        <sc-for list="{{ filterChips }}" as="f" hint-placeholder-count="1">
+          <button type="button" onClick="{{ f.hapus }}" title="Hapus saringan" style="display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well);font:700 11px/1 'Public Sans',sans-serif;color:var(--foreground)">
+            {{ f.label }}
+            <span aria-hidden="true" style="font:700 10px/1 'Public Sans',sans-serif;color:var(--muted-foreground)">X</span>
+          </button>
+        </sc-for>
+        <div style="flex:1"></div>
+        <input value="{{ cari }}" onChange="{{ ubahCari }}" placeholder="Cari koperasi atau provinsi" aria-label="Cari koperasi atau provinsi" style="width:270px;padding:12px 20px;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed);border-bottom:1px solid var(--edge-bottom-well);font:500 12.5px/1 'Public Sans',sans-serif;color:var(--foreground)">
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1.1fr 0.9fr 0.6fr;gap:18px;align-items:center;padding:4px 24px 10px">
+        <sc-for list="{{ headers }}" as="h" hint-placeholder-count="4">
+          <button type="button" onClick="{{ h.klik }}" title="Urutkan" style="display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:999px;justify-self:{{ h.js }};background:{{ h.bg }};box-shadow:{{ h.sh }};border-bottom:1px solid {{ h.tepi }};color:{{ h.c }};font:700 10.5px/1 'Archivo',sans-serif;letter-spacing:.11em">
+            {{ h.label }}
+            <span aria-hidden="true" style="width:7px;height:7px;background:currentColor;clip-path:polygon(50% 100%, 0% 0%, 100% 0%);opacity:{{ h.caretOp }};transform:rotate({{ h.caretRot }});transition:transform .3s var(--ease-mewah)"></span>
+          </button>
+        </sc-for>
+      </div>
+      <sc-for list="{{ rows }}" as="r" hint-placeholder-count="12">
+        <div role="link" tabindex="0" onClick="{{ r.buka }}" onKeyDown="{{ r.tekan }}" onMouseEnter="{{ r.masuk }}" onMouseMove="{{ r.gerak }}" onMouseLeave="{{ r.pergi }}" aria-label="Buka detail {{ r.nama }}" style-hover="background:var(--row-hover)" style="display:grid;grid-template-columns:2fr 1.1fr 0.9fr 0.6fr;gap:18px;align-items:center;padding:13px 24px;border-top:1px solid var(--border-hairline);cursor:pointer;transition:background .25s ease">
+          <div style="font:600 13.5px/1.35 'Public Sans',sans-serif">{{ r.nama }}</div>
+          <div style="font:500 12.5px/1.3 'Public Sans',sans-serif;color:var(--muted-foreground)">{{ r.prov }}</div>
+          <div>
+            <span style="display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well)">
+              <span aria-hidden="true" style="width:10px;height:10px;background:{{ r.vc }};clip-path:{{ r.clip }};border-radius:{{ r.br }};flex:none;display:inline-block"></span>
+              <span style="font:700 11.5px/1 'Public Sans',sans-serif;color:{{ r.vc }}">{{ r.vLabel }}</span>
+            </span>
+          </div>
+          <div style="font:700 13.5px/1 'Public Sans',sans-serif;font-variant-numeric:tabular-nums;text-align:right;padding-right:14px">{{ r.temuan }}</div>
+        </div>
+      </sc-for>
+      <sc-if value="{{ kosongFilter }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:28px 24px;border-top:1px solid var(--border-hairline);font:500 13px/1.5 'Public Sans',sans-serif;color:var(--muted-foreground);text-align:center">Tidak ada koperasi yang cocok dengan saringan Anda.</div>
+      </sc-if>
+      <div style="display:flex;gap:14px;padding:14px 24px 12px;border-top:1px solid var(--border-hairline)">
+        <div style="font:500 11.5px/1 'Public Sans',sans-serif;color:var(--muted-foreground)">{{ ringkasBawah }}</div>
+        <div style="flex:1"></div>
+        <div style="font:500 11.5px/1 'Public Sans',sans-serif;color:var(--muted-foreground)">Klik baris untuk membuka detail · arahkan kursor untuk riwayat 6 bulan</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:20px;margin-top:20px;animation:prm-enter .7s var(--ease-mewah) .38s both">
+      <div style="padding:20px 24px 18px;border-radius:24px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised)">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="font:700 13.5px/1 'Archivo',sans-serif">Sebaran Provinsi</div>
+          <div style="font:500 11px/1 'Public Sans',sans-serif;color:var(--muted-foreground)">{{ kartogramSub }}</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(13,1fr);gap:6px;margin-top:16px">
+          <sc-for list="{{ tiles }}" as="p" hint-placeholder-count="34">
+            <button type="button" onClick="{{ p.klik }}" title="{{ p.judul }}" aria-label="{{ p.judul }}" style-hover="transform:{{ p.hoverTf }}" style="grid-column:{{ p.col }};grid-row:{{ p.row }};aspect-ratio:1;border-radius:10px;background:{{ p.bg }};box-shadow:{{ p.sh }};border-top:1px solid {{ p.tepi }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:{{ p.kursor }};transition:transform .35s var(--ease-mewah);padding:0">
+              <span style="font:700 7.5px/1 'Archivo',sans-serif;letter-spacing:.04em;color:{{ p.c }}">{{ p.abbrev }}</span>
+              <sc-if value="{{ p.adaData }}" hint-placeholder-val="{{ false }}">
+                <span style="display:inline-flex;align-items:center;gap:3px">
+                  <span aria-hidden="true" style="width:7px;height:7px;background:{{ p.vc }};clip-path:{{ p.clipB }};border-radius:{{ p.brB }};display:inline-block"></span>
+                  <span style="font:700 9px/1 'Public Sans',sans-serif;color:{{ p.c }};font-variant-numeric:tabular-nums">{{ p.jumlah }}</span>
+                </span>
+              </sc-if>
+            </button>
+          </sc-for>
+        </div>
+        <div style="font:500 10.5px/1.5 'Public Sans',sans-serif;color:var(--muted-foreground);margin-top:12px">Angka = temuan terbuka. Klik provinsi aktif untuk menyaring tabel. Provinsi redup belum masuk pemantauan.</div>
+      </div>
+
+      <div style="padding:20px 22px 16px;border-radius:24px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised);display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;gap:9px">
+          <div style="font:700 13.5px/1 'Archivo',sans-serif">Aktivitas AI Agent</div>
+          <div style="flex:1"></div>
+          <span aria-hidden="true" style="width:8px;height:8px;border-radius:50%;background:var(--primary);animation:prm-denyut 2.4s ease-in-out infinite"></span>
+          <span style="font:600 10.5px/1 'Public Sans',sans-serif;color:var(--muted-foreground)">Diperbarui {{ feedTicker }}</span>
+        </div>
+        <div style="display:flex;flex-direction:column;margin-top:6px;flex:1">
+          <sc-for list="{{ feed }}" as="f" hint-placeholder-count="6">
+            <div key="{{ f.key }}" style="display:flex;align-items:flex-start;gap:11px;padding:11px 2px;border-top:1px solid var(--border-hairline);animation:prm-pop .5s var(--ease-mewah) both">
+              <span style="width:22px;height:22px;border-radius:50%;background:var(--well);box-shadow:var(--shadow-pressed-sm);display:inline-flex;align-items:center;justify-content:center;flex:none;margin-top:1px">
+                <sc-if value="{{ f.spinnerFlag }}" hint-placeholder-val="{{ false }}">
+                  <span aria-hidden="true" style="width:10px;height:10px;border-radius:50%;border:2px solid var(--primary);border-top-color:transparent;animation:prm-spin .9s linear infinite;display:inline-block"></span>
+                </sc-if>
+                <sc-if value="{{ f.bentukFlag }}" hint-placeholder-val="{{ true }}">
+                  <span aria-hidden="true" style="width:9px;height:9px;background:{{ f.vc }};clip-path:{{ f.clip }};border-radius:{{ f.br }};display:inline-block"></span>
+                </sc-if>
+              </span>
+              <span style="flex:1;min-width:0">
+                <span style="display:block;font:600 12px/1.4 'Public Sans',sans-serif">{{ f.teks }}</span>
+                <span style="display:block;font:500 10.5px/1.4 'Public Sans',sans-serif;color:var(--muted-foreground);margin-top:2px">{{ f.sub }}</span>
+              </span>
+              <span style="font:500 10px/1 'Public Sans',sans-serif;color:var(--muted-foreground);white-space:nowrap;margin-top:3px;font-variant-numeric:tabular-nums">{{ f.waktu }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+  </sc-if>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1440, &quot;height&quot;: 900 },
+  &quot;tema&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;terang&quot;, &quot;gelap&quot;], &quot;default&quot;: &quot;terang&quot;, &quot;tsType&quot;: &quot;\&quot;terang\&quot; | \&quot;gelap\&quot;&quot;, &quot;section&quot;: &quot;Tampilan&quot; },
+  &quot;mode&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;default&quot;, &quot;memuat&quot;, &quot;kosong&quot;, &quot;gagal&quot;], &quot;default&quot;: &quot;default&quot;, &quot;tsType&quot;: &quot;\&quot;default\&quot; | \&quot;memuat\&quot; | \&quot;kosong\&quot; | \&quot;gagal\&quot;&quot;, &quot;section&quot;: &quot;State&quot; },
+  &quot;gayaChart&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;neumorfik&quot;, &quot;flat&quot;], &quot;default&quot;: &quot;neumorfik&quot;, &quot;tsType&quot;: &quot;\&quot;neumorfik\&quot; | \&quot;flat\&quot;&quot;, &quot;section&quot;: &quot;Tampilan&quot; }
+}">
+class Component extends DCLogic {
+  state = {
+    tOv: null, mOv: null, periode: 5, bukaPeriode: false, bukaProfil: false,
+    bukaSetelan: false, bukaKeluar: false, bukaSandi: false,
+    sortKey: 'verdict', sortDir: 'desc', cari: '',
+    filterVerdict: null, filterProv: null,
+    detik: 0, feed: [], drift: 0, flash: false,
+    disp: { t: 0 }, trenTip: null, rowTip: null,
+    periksaStatus: {}, toast: null, exit: false,
+    setelan: { temaDef: 'terang', periodeDef: 5, nMerah: true, nSelesai: false }
+  };
+
+  BENTUK = {
+    hijau: { label: 'Hijau', vc: 'var(--verdict-hijau)', clip: 'none', br: '50%' },
+    kuning: { label: 'Kuning', vc: 'var(--verdict-kuning)', clip: 'polygon(50% 8%, 96% 92%, 4% 92%)', br: '0' },
+    merah: { label: 'Merah', vc: 'var(--verdict-merah)', clip: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)', br: '0' },
+    info: { label: 'Info', vc: 'var(--verdict-info)', clip: 'none', br: '2px' }
+  };
+
+  BULAN = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni'];
+  BULAN3 = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'];
+  NASIONAL = [
+    { h: 9, k: 3, m: 0, t: 5 }, { h: 9, k: 3, m: 0, t: 6 }, { h: 8, k: 4, m: 0, t: 8 },
+    { h: 7, k: 4, m: 1, t: 11 }, { h: 7, k: 4, m: 1, t: 12 }, { h: 6, k: 4, m: 2, t: 17 }
+  ];
+  AGEN = [
+    { nama: 'Konflik Kepentingan', model: 'GLM-4.7', seri: [0, 0, 1, 1, 1, 3] },
+    { nama: 'Anomali Transaksi', model: 'GLM-4.7', seri: [2, 2, 3, 4, 4, 6] },
+    { nama: 'Kesehatan Finansial', model: 'GLM-4.7', seri: [2, 2, 2, 3, 3, 4] },
+    { nama: 'Kepatuhan Proses', model: 'GLM-4.7', seri: [1, 2, 2, 3, 4, 4] }
+  ];
+  DATA = [
+    { id: 'kop-sukamaju', nama: 'Koperasi Desa Merah Putih Sukamaju', prov: 'Jawa Barat', v: ['hijau','hijau','hijau','kuning','kuning','merah'], t: [0,1,1,2,3,6] },
+    { id: 'kop-lembahsari', nama: 'Koperasi Desa Merah Putih Lembah Sari', prov: 'Sumatera Barat', v: ['kuning','kuning','kuning','merah','merah','merah'], t: [2,2,2,3,3,4] },
+    { id: 'kop-cempakawangi', nama: 'Koperasi Desa Merah Putih Cempaka Wangi', prov: 'Lampung', v: ['kuning','kuning','kuning','kuning','kuning','kuning'], t: [1,1,2,2,2,2] },
+    { id: 'kop-wanasaba', nama: 'Koperasi Desa Merah Putih Wanasaba', prov: 'Nusa Tenggara Barat', v: ['hijau','hijau','kuning','kuning','kuning','kuning'], t: [0,0,1,2,2,2] },
+    { id: 'kop-batulicin', nama: 'Koperasi Desa Merah Putih Batulicin', prov: 'Kalimantan Selatan', v: ['hijau','hijau','hijau','hijau','kuning','kuning'], t: [0,0,0,0,1,1] },
+    { id: 'kop-airmolek', nama: 'Koperasi Desa Merah Putih Air Molek', prov: 'Riau', v: ['kuning','kuning','kuning','kuning','hijau','kuning'], t: [1,1,1,1,0,1] },
+    { id: 'kop-mekarsari', nama: 'Koperasi Desa Merah Putih Mekarsari', prov: 'Jawa Barat', v: ['hijau','hijau','hijau','hijau','hijau','hijau'], t: [0,0,0,0,0,0] },
+    { id: 'kop-tirtayasa', nama: 'Koperasi Desa Merah Putih Tirtayasa', prov: 'Banten', v: ['hijau','hijau','hijau','hijau','hijau','hijau'], t: [0,0,0,0,0,0] },
+    { id: 'kop-argomulyo', nama: 'Koperasi Desa Merah Putih Argomulyo', prov: 'Jawa Tengah', v: ['hijau','hijau','hijau','hijau','hijau','hijau'], t: [0,0,0,0,0,0] },
+    { id: 'kop-sidodadi', nama: 'Koperasi Desa Merah Putih Sidodadi', prov: 'Jawa Timur', v: ['hijau','hijau','hijau','hijau','hijau','hijau'], t: [1,1,1,1,1,1] },
+    { id: 'kop-karangasem', nama: 'Koperasi Desa Merah Putih Karangasem', prov: 'Bali', v: ['hijau','hijau','hijau','hijau','hijau','hijau'], t: [0,0,0,0,0,0] },
+    { id: 'kop-mattirowalie', nama: 'Koperasi Desa Merah Putih Mattiro Walie', prov: 'Sulawesi Selatan', v: ['hijau','hijau','hijau','hijau','hijau','hijau'], t: [0,0,0,0,0,0] }
+  ];
+  ALASAN_JUN = {
+    'kop-sukamaju': 'Pembelian besar ke vendor beralamat sama dengan pengurus',
+    'kop-lembahsari': 'Empat temuan terbuka, dua terkait pinjaman',
+    'kop-cempakawangi': 'Pola pembelian terpecah di bawah ambang persetujuan',
+    'kop-wanasaba': 'Dokumen pinjaman belum lengkap',
+    'kop-batulicin': 'Angsuran macet meningkat',
+    'kop-airmolek': 'Kembali kuning setelah sempat membaik'
+  };
+  PROV = [
+    { n: 'Aceh', a: 'ACEH', c: 1, r: 1 }, { n: 'Sumatera Utara', a: 'SUMUT', c: 1, r: 2 }, { n: 'Riau', a: 'RIAU', c: 2, r: 2 }, { n: 'Kepulauan Riau', a: 'KEPRI', c: 3, r: 2 },
+    { n: 'Sumatera Barat', a: 'SUMBAR', c: 1, r: 3 }, { n: 'Jambi', a: 'JAMBI', c: 2, r: 3 }, { n: 'Bangka Belitung', a: 'BABEL', c: 3, r: 3 },
+    { n: 'Bengkulu', a: 'BKL', c: 1, r: 4 }, { n: 'Sumatera Selatan', a: 'SUMSEL', c: 2, r: 4 }, { n: 'Lampung', a: 'LAMPG', c: 3, r: 4 },
+    { n: 'Kalimantan Utara', a: 'KLTARA', c: 6, r: 1 }, { n: 'Kalimantan Barat', a: 'KALBAR', c: 5, r: 2 }, { n: 'Kalimantan Timur', a: 'KALTIM', c: 6, r: 2 },
+    { n: 'Kalimantan Tengah', a: 'KALTNG', c: 5, r: 3 }, { n: 'Kalimantan Selatan', a: 'KALSEL', c: 6, r: 3 },
+    { n: 'Sulawesi Utara', a: 'SULUT', c: 10, r: 1 }, { n: 'Gorontalo', a: 'GORON', c: 10, r: 2 }, { n: 'Sulawesi Tengah', a: 'SULTNG', c: 9, r: 3 }, { n: 'Sulawesi Barat', a: 'SULBAR', c: 8, r: 3 },
+    { n: 'Sulawesi Selatan', a: 'SULSEL', c: 9, r: 4 }, { n: 'Sulawesi Tenggara', a: 'SULTRA', c: 10, r: 4 },
+    { n: 'Maluku Utara', a: 'MALUT', c: 11, r: 2 }, { n: 'Maluku', a: 'MALUKU', c: 11, r: 4 },
+    { n: 'Papua Barat', a: 'PAPBAR', c: 12, r: 3 }, { n: 'Papua', a: 'PAPUA', c: 13, r: 3 },
+    { n: 'Banten', a: 'BANTEN', c: 3, r: 5 }, { n: 'DKI Jakarta', a: 'JKT', c: 4, r: 5 }, { n: 'Jawa Barat', a: 'JABAR', c: 5, r: 5 }, { n: 'Jawa Tengah', a: 'JATENG', c: 6, r: 5 },
+    { n: 'DI Yogyakarta', a: 'DIY', c: 6, r: 6 }, { n: 'Jawa Timur', a: 'JATIM', c: 7, r: 5 },
+    { n: 'Bali', a: 'BALI', c: 8, r: 5 }, { n: 'Nusa Tenggara Barat', a: 'NTB', c: 9, r: 5 }, { n: 'Nusa Tenggara Timur', a: 'NTT', c: 10, r: 5 }
+  ];
+  POOL = [
+    { jenis: 'selesai', b: 'hijau', teks: 'Pemeriksaan selesai: Karangasem', sub: 'Verdict Hijau, tanpa temuan · Adjudikator GLM-5.2' },
+    { jenis: 'temuan', b: 'kuning', teks: 'Temuan baru: pembelian terpecah tiga kuitansi', sub: 'Cempaka Wangi · Agen Anomali Transaksi', drift: true },
+    { jenis: 'berjalan', b: null, teks: 'Pemeriksaan berjalan: Lembah Sari', sub: '4 agen GLM-4.7 memindai 62 transaksi' },
+    { jenis: 'tanggapan', b: 'info', teks: 'Tanggapan pengurus masuk: Sukamaju', sub: 'Atas temuan lima pinjaman dalam satu hari' },
+    { jenis: 'verdict', b: 'merah', teks: 'Verdict berubah: Air Molek naik ke Kuning', sub: 'Dipicu temuan pinjaman baru' },
+    { jenis: 'selesai', b: 'hijau', teks: 'Pemeriksaan selesai: Mattiro Walie', sub: 'Verdict Hijau, tanpa temuan · Adjudikator GLM-5.2' }
+  ];
+
+  tm() { return this.state.tOv ?? this.props.tema ?? 'terang'; }
+  md() { return this.state.mOv ?? this.props.mode ?? 'default'; }
+  gaya() { return this.props.gayaChart ?? 'neumorfik'; }
+  kurangiGerak() { return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+
+  sinkronTema() { document.documentElement.classList.toggle('dark', this.tm() === 'gelap'); }
+
+  componentDidMount() {
+    window.__pv = (p) => this.setState(p);
+    this.sinkronTema();
+    this.setState({
+      feed: [
+        Object.assign({}, this.POOL[3], { tick: -540 }),
+        Object.assign({}, this.POOL[0], { tick: -132 }),
+        Object.assign({}, this.POOL[4], { tick: -1560 }),
+        Object.assign({}, this.POOL[2], { tick: -12 })
+      ].map((f, i) => Object.assign(f, { key: 'seed' + i })).sort((a, b) => b.tick - a.tick),
+      lastFeedTick: 0
+    });
+    this.poolIdx = 5;
+    this.animKpi();
+    this.iv = setInterval(() => this.tick(), 1000);
+  }
+
+  componentDidUpdate(prev) {
+    if (prev.tema !== this.props.tema) this.setState({ tOv: null });
+    if (prev.mode !== this.props.mode) this.setState({ mOv: null });
+    this.sinkronTema();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.iv);
+    if (this.raf) cancelAnimationFrame(this.raf);
+    if (this.flashT) clearTimeout(this.flashT);
+    if (this.toastT) clearTimeout(this.toastT);
+    Object.values(this.periksaT || {}).forEach(clearTimeout);
+    if (this.exitT) clearTimeout(this.exitT);
+  }
+
+  tick() {
+    this.setState((s) => {
+      const detik = s.detik + 1;
+      let patch = { detik };
+      if (detik - (s.lastFeedTick || 0) >= 15 && s.feed.length) {
+        const item = Object.assign({}, this.POOL[this.poolIdx % this.POOL.length], { tick: detik, key: 'live' + detik });
+        this.poolIdx++;
+        patch.feed = [item].concat(s.feed).slice(0, 7);
+        patch.lastFeedTick = detik;
+        if (item.drift && s.periode === 5 && s.drift < 3) {
+          patch.drift = s.drift + 1;
+          patch.flash = true;
+          patch.disp = { t: this.NASIONAL[5].t + s.drift + 1 };
+          if (this.flashT) clearTimeout(this.flashT);
+          this.flashT = setTimeout(() => this.setState({ flash: false }), 2200);
+        }
+      }
+      return patch;
+    });
+  }
+
+  animKpi() {
+    if (this.raf) cancelAnimationFrame(this.raf);
+    const target = this.NASIONAL[this.state.periode].t + (this.state.periode === 5 ? this.state.drift : 0);
+    if (this.kurangiGerak()) { this.setState({ disp: { t: target } }); return; }
+    const dari = this.state.disp.t || 0;
+    const mulai = performance.now();
+    const dur = 900;
+    const langkah = (kini) => {
+      const p = Math.min(1, (kini - mulai) / dur);
+      const e = 1 - Math.pow(1 - p, 4);
+      this.setState({ disp: { t: Math.round(dari + (target - dari) * e) } });
+      if (p < 1) this.raf = requestAnimationFrame(langkah);
+    };
+    this.raf = requestAnimationFrame(langkah);
+  }
+
+  gantiPeriode(i) {
+    this.setState({ periode: i, bukaPeriode: false, drift: 0, flash: false, trenTip: null }, () => this.animKpi());
+  }
+
+  nav(href) {
+    if (this.kurangiGerak()) { window.location.href = href; return; }
+    this.setState({ exit: true });
+    this.exitT = setTimeout(() => { window.location.href = href; }, 300);
+  }
+
+  toastKan(teks) {
+    if (this.toastT) clearTimeout(this.toastT);
+    this.setState({ toast: teks });
+    this.toastT = setTimeout(() => this.setState({ toast: null }), 3400);
+  }
+
+  urut(key) {
+    this.setState((s) => {
+      if (s.sortKey === key) return { sortDir: s.sortDir === 'asc' ? 'desc' : 'asc' };
+      const def = { nama: 'asc', prov: 'asc', verdict: 'desc', temuan: 'desc' };
+      return { sortKey: key, sortDir: def[key] };
+    });
+  }
+
+  sparkPoints(seri, w, h, pad) {
+    const min = Math.min.apply(null, seri), max = Math.max.apply(null, seri);
+    const rentang = (max - min) || 1;
+    return seri.map((v, i) => {
+      const x = pad + i * ((w - pad * 2) / (seri.length - 1));
+      const y = (h - pad) - ((v - min) / rentang) * (h - pad * 2);
+      return x.toFixed(1) + ',' + y.toFixed(1);
+    });
+  }
+
+  waktuRelatif(dTick) {
+    if (dTick < 5) return 'baru saja';
+    if (dTick < 60) return dTick + ' dtk lalu';
+    const m = Math.floor(dTick / 60);
+    if (m < 60) return m + ' mnt lalu';
+    return Math.floor(m / 60) + ' jam lalu';
+  }
+
+  renderVals() {
+    const tema = this.tm();
+    const mode = this.md();
+    const mi = this.state.periode;
+    const N = this.NASIONAL[mi];
+    const prevN = mi > 0 ? this.NASIONAL[mi - 1] : null;
+    const rank = { merah: 3, kuning: 2, hijau: 1 };
+    const drift = mi === 5 ? this.state.drift : 0;
+
+    const aktifBtn = { bg: 'var(--surface-fill)', sh: 'var(--shadow-raised-sm)', tepi: 'var(--edge-top)', c: 'var(--foreground)' };
+    const pasifBtn = { bg: 'transparent', sh: 'none', tepi: 'transparent', c: 'var(--muted-foreground)' };
+    const bT = tema === 'terang' ? aktifBtn : pasifBtn;
+    const bG = tema === 'gelap' ? aktifBtn : pasifBtn;
+
+    const fmtDelta = (d) => d === 0 ? 'tetap' : (d > 0 ? '+' + d : String(d));
+    const warnaDelta = (d, burukNaik) => {
+      if (d === 0) return 'var(--muted-foreground)';
+      const buruk = burukNaik ? d > 0 : d < 0;
+      return buruk ? 'var(--verdict-merah)' : 'var(--verdict-hijau)';
+    };
+
+    const heroJudul = N.m > 0
+      ? N.m + ' koperasi merah menunggu tindak lanjut Anda.'
+      : (N.k > 0 ? 'Tidak ada koperasi merah. ' + N.k + ' koperasi kuning dalam pemantauan.' : 'Seluruh koperasi dalam kondisi baik.');
+    const deltaRingkas = prevN
+      ? 'Dibanding ' + this.BULAN[mi - 1] + ': merah ' + fmtDelta(N.m - prevN.m) + ', kuning ' + fmtDelta(N.k - prevN.k) + ', temuan ' + fmtDelta(N.t - prevN.t)
+      : 'Awal periode pemantauan';
+
+    const distTotal = 12;
+    const distSeg = [
+      { key: 'hijau', n: N.h }, { key: 'kuning', n: N.k }, { key: 'merah', n: N.m }
+    ].filter((s) => s.n > 0).map((s) => {
+      const b = this.BENTUK[s.key];
+      const dipilih = this.state.filterVerdict === s.key;
+      return {
+        nama: b.label, w: ((s.n / distTotal) * 100).toFixed(1) + '%',
+        bg: b.vc, label: (s.n / distTotal) < 0.2 ? String(s.n) : s.n + ' ' + s.key,
+        ring: dipilih ? '0 0 0 3px var(--ring)' : 'none',
+        klik: () => this.setState((st) => ({ filterVerdict: st.filterVerdict === s.key ? null : s.key }))
+      };
+    });
+
+    const seriKpi = {
+      kop: [12, 12, 12, 12, 12, 12],
+      h: this.NASIONAL.map((x) => x.h), k: this.NASIONAL.map((x) => x.k),
+      m: this.NASIONAL.map((x) => x.m), t: this.NASIONAL.map((x) => x.t)
+    };
+    const kpiDef = [
+      { label: 'KOPERASI TERPANTAU', seri: seriKpi.kop, warna: 'var(--muted-foreground)', burukNaik: null },
+      { label: 'HIJAU', seri: seriKpi.h, bentuk: 'hijau', warna: 'var(--verdict-hijau)', burukNaik: false },
+      { label: 'KUNING', seri: seriKpi.k, bentuk: 'kuning', warna: 'var(--verdict-kuning)', burukNaik: true },
+      { label: 'MERAH', seri: seriKpi.m, bentuk: 'merah', warna: 'var(--verdict-merah)', burukNaik: true },
+      { label: 'TEMUAN TERBUKA', seri: seriKpi.t, warna: 'var(--primary)', burukNaik: true }
+    ];
+    const kpis = kpiDef.map((d) => {
+      const v = d.bentuk ? this.BENTUK[d.bentuk] : null;
+      const potong = d.seri.slice(0, mi + 1);
+      const seriTampil = potong.length > 1 ? potong : [potong[0], potong[0]];
+      const pts = this.sparkPoints(seriTampil, 92, 26, 3);
+      const akhir = pts[pts.length - 1].split(',');
+      const nilaiKini = d.seri[mi] + (d.label === 'TEMUAN TERBUKA' ? drift : 0);
+      const dlt = prevN ? d.seri[mi] - d.seri[mi - 1] : 0;
+      return {
+        label: d.label,
+        nilai: d.label === 'TEMUAN TERBUKA' ? String(this.state.disp.t) : String(nilaiKini),
+        adaBentuk: !!v, vc: v ? v.vc : 'transparent', clip: v ? v.clip : 'none', br: v ? v.br : '0',
+        adaDelta: !!prevN && d.burukNaik !== null,
+        deltaTeks: fmtDelta(dlt),
+        deltaWarna: d.burukNaik === null ? 'var(--muted-foreground)' : warnaDelta(dlt, d.burukNaik),
+        deltaRot: dlt < 0 ? '180deg' : '0deg',
+        deltaArahOp: dlt === 0 ? '0' : '1',
+        spark: pts.join(' '), sparkWarna: d.warna,
+        sparkCx: akhir[0], sparkCy: akhir[1]
+      };
+    });
+
+    const perhatianData = this.DATA
+      .filter((r) => r.v[mi] !== 'hijau')
+      .sort((a, b) => rank[b.v[mi]] - rank[a.v[mi]] || b.t[mi] - a.t[mi])
+      .slice(0, 4);
+    const perhatian = perhatianData.map((r) => {
+      const b = this.BENTUK[r.v[mi]];
+      const st = this.state.periksaStatus[r.id] || 'diam';
+      return {
+        key: r.id, nama: r.nama.replace('Koperasi Desa Merah Putih ', ''),
+        alasan: mi === 5 ? (this.ALASAN_JUN[r.id] || 'Ada temuan yang perlu dijelaskan') : (r.v[mi] === 'merah' ? 'Temuan serius menunggu penjelasan pengurus' : 'Ada temuan yang perlu dijelaskan pengurus'),
+        vc: b.vc, clip: b.clip, br: b.br,
+        buka: () => this.nav('./Dasbor - Detail Koperasi v2.dc.html'),
+        jalanFlag: st === 'jalan',
+        pLabel: st === 'jalan' ? '' : (st === 'selesai' ? 'Selesai' : 'Periksa'),
+        pBg: st === 'selesai' ? 'var(--verdict-hijau-surface)' : 'var(--primary)',
+        pC: st === 'selesai' ? 'var(--verdict-hijau)' : 'var(--primary-foreground)',
+        periksa: () => {
+          if ((this.state.periksaStatus[r.id] || 'diam') !== 'diam') return;
+          this.setState((s) => ({ periksaStatus: Object.assign({}, s.periksaStatus, { [r.id]: 'jalan' }) }));
+          this.periksaT = this.periksaT || {};
+          this.periksaT[r.id] = setTimeout(() => {
+            this.setState((s) => ({
+              periksaStatus: Object.assign({}, s.periksaStatus, { [r.id]: 'selesai' }),
+              feed: [{ jenis: 'selesai', b: 'hijau', teks: 'Pemeriksaan selesai: ' + r.nama.replace('Koperasi Desa Merah Putih ', ''), sub: 'Verdict tetap ' + this.BENTUK[r.v[mi]].label + ' · Adjudikator GLM-5.2', tick: s.detik, key: 'periksa' + r.id + s.detik }].concat(s.feed).slice(0, 7)
+            }));
+            this.toastKan('Pemeriksaan selesai. Verdict ' + r.nama.replace('Koperasi Desa Merah Putih ', '') + ' tetap ' + this.BENTUK[r.v[mi]].label + '.');
+          }, 4200);
+        }
+      };
+    });
+
+    const W = 600, H = 210, padX = 44, atas = 18, bawah = 194;
+    const xBulan = (i) => padX + i * ((W - padX * 2) / 5);
+    const yVerdict = (v) => bawah - (v / 10) * (bawah - atas);
+    const garis = (kunci) => this.NASIONAL.map((x, i) => xBulan(i).toFixed(1) + ',' + yVerdict(x[kunci]).toFixed(1)).join(' ');
+    const titik = [];
+    ['h', 'k', 'm'].forEach((kunci, gi) => {
+      const warna = kunci === 'h' ? 'var(--verdict-hijau)' : (kunci === 'k' ? 'var(--verdict-kuning)' : 'var(--verdict-merah)');
+      this.NASIONAL.forEach((x, i) => {
+        titik.push({ x: xBulan(i).toFixed(1), y: yVerdict(x[kunci]).toFixed(1), f: warna, delay: (0.9 + gi * 0.15 + i * 0.05).toFixed(2) + 's', key: kunci + i });
+      });
+    });
+    const barTemuan = this.NASIONAL.map((x, i) => ({
+      key: 'b' + i,
+      x: (xBulan(i) - 17).toFixed(1),
+      y: (bawah - (x.t / 20) * (bawah - atas)).toFixed(1),
+      h: ((x.t / 20) * (bawah - atas)).toFixed(1),
+      delay: (0.1 + i * 0.07).toFixed(2) + 's'
+    }));
+    const kolomHover = this.NASIONAL.map((x, i) => ({
+      key: 'kh' + i, nama: this.BULAN[i],
+      masuk: () => this.setState({ trenTip: i }),
+      keluar: () => this.setState({ trenTip: null }),
+      klik: () => this.gantiPeriode(i)
+    }));
+    const ti = this.state.trenTip;
+
+    const agen = this.AGEN.map((a) => {
+      const potong = a.seri.slice(0, mi + 1);
+      const seriTampil = potong.length > 1 ? potong : [potong[0], potong[0]];
+      return {
+        key: a.nama, nama: a.nama, model: a.model,
+        nilai: String(a.seri[mi]),
+        spark: this.sparkPoints(seriTampil, 52, 20, 2.5).join(' ')
+      };
+    });
+
+    const q = this.state.cari.trim().toLowerCase();
+    let data = this.DATA.filter((r) =>
+      (!q || r.nama.toLowerCase().includes(q) || r.prov.toLowerCase().includes(q)) &&
+      (!this.state.filterVerdict || r.v[mi] === this.state.filterVerdict) &&
+      (!this.state.filterProv || r.prov === this.state.filterProv)
+    );
+    const dir = this.state.sortDir === 'asc' ? 1 : -1;
+    const key = this.state.sortKey;
+    data = data.slice().sort((a, b) => {
+      let d = 0;
+      if (key === 'verdict') d = rank[a.v[mi]] - rank[b.v[mi]];
+      else if (key === 'temuan') d = a.t[mi] - b.t[mi];
+      else d = a[key === 'nama' ? 'nama' : 'prov'].localeCompare(b[key === 'nama' ? 'nama' : 'prov'], 'id');
+      d = d * dir;
+      if (d === 0) d = (b.t[mi] - a.t[mi]) || a.nama.localeCompare(b.nama, 'id');
+      return d;
+    });
+    const rows = data.map((r) => {
+      const v = this.BENTUK[r.v[mi]];
+      const buka = () => this.nav('./Dasbor - Detail Koperasi v2.dc.html');
+      return {
+        key: r.id, nama: r.nama, prov: r.prov, temuan: String(r.t[mi]),
+        vLabel: v.label, vc: v.vc, clip: v.clip, br: v.br,
+        buka,
+        tekan: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); buka(); } },
+        masuk: (e) => this.setState({ rowTip: { id: r.id, x: e.clientX, y: e.clientY } }),
+        gerak: (e) => {
+          const rt = this.state.rowTip;
+          if (rt && Math.abs(rt.x - e.clientX) < 6 && Math.abs(rt.y - e.clientY) < 6) return;
+          this.setState({ rowTip: { id: r.id, x: e.clientX, y: e.clientY } });
+        },
+        pergi: () => this.setState({ rowTip: null })
+      };
+    });
+
+    const defs = [
+      { key: 'nama', label: 'KOPERASI', js: 'start' },
+      { key: 'prov', label: 'PROVINSI', js: 'start' },
+      { key: 'verdict', label: 'VERDICT', js: 'start' },
+      { key: 'temuan', label: 'TEMUAN', js: 'end' }
+    ];
+    const headers = defs.map((h) => {
+      const aktif = key === h.key;
+      return {
+        key: h.key, label: h.label, js: h.js, klik: () => this.urut(h.key),
+        bg: aktif ? 'var(--well)' : 'transparent',
+        sh: aktif ? 'var(--shadow-pressed-sm)' : 'none',
+        tepi: aktif ? 'var(--edge-bottom-well)' : 'transparent',
+        c: aktif ? 'var(--foreground)' : 'var(--muted-foreground)',
+        caretOp: aktif ? '1' : '0',
+        caretRot: aktif && this.state.sortDir === 'asc' ? '180deg' : '0deg'
+      };
+    });
+
+    const filterChips = [];
+    if (this.state.filterVerdict) filterChips.push({ key: 'fv', label: 'Verdict: ' + this.BENTUK[this.state.filterVerdict].label, hapus: () => this.setState({ filterVerdict: null }) });
+    if (this.state.filterProv) filterChips.push({ key: 'fp', label: 'Provinsi: ' + this.state.filterProv, hapus: () => this.setState({ filterProv: null }) });
+
+    const agregatProv = {};
+    this.DATA.forEach((r) => {
+      const cur = agregatProv[r.prov] || { worst: 0, temuan: 0, jml: 0 };
+      cur.worst = Math.max(cur.worst, rank[r.v[mi]]);
+      cur.temuan += r.t[mi];
+      cur.jml += 1;
+      agregatProv[r.prov] = cur;
+    });
+    const namaRank = { 3: 'merah', 2: 'kuning', 1: 'hijau' };
+    const tiles = this.PROV.map((p) => {
+      const d = agregatProv[p.n];
+      const dipilih = this.state.filterProv === p.n;
+      if (!d) {
+        return {
+          key: p.a, abbrev: p.a, col: String(p.c), row: String(p.r),
+          judul: p.n + ' · belum masuk pemantauan',
+          adaData: false, jumlah: '', vc: 'transparent', clipB: 'none', brB: '0',
+          bg: 'var(--well)', sh: 'none', tepi: 'transparent', c: 'var(--disabled-foreground)',
+          kursor: 'default', hoverTf: 'none', klik: () => {}
+        };
+      }
+      const b = this.BENTUK[namaRank[d.worst]];
+      return {
+        key: p.a, abbrev: p.a, col: String(p.c), row: String(p.r),
+        judul: p.n + ': ' + d.jml + ' koperasi, ' + d.temuan + ' temuan, terburuk ' + b.label,
+        adaData: true, jumlah: String(d.temuan), vc: b.vc, clipB: b.clip, brB: b.br,
+        bg: dipilih ? b.vc : 'var(--surface-fill)',
+        sh: dipilih ? 'var(--shadow-pressed-sm)' : 'var(--shadow-raised-sm)',
+        tepi: dipilih ? 'transparent' : 'var(--edge-top)',
+        c: dipilih ? 'var(--verdict-on)' : 'var(--foreground)',
+        kursor: 'pointer', hoverTf: 'translateY(-3px) scale(1.05)',
+        klik: () => this.setState((s) => ({ filterProv: s.filterProv === p.n ? null : p.n }))
+      };
+    });
+
+    const feed = this.state.feed.map((f) => {
+      const b = f.b ? this.BENTUK[f.b === 'info' ? 'info' : f.b] : null;
+      return {
+        key: f.key, teks: f.teks, sub: f.sub,
+        waktu: this.waktuRelatif(this.state.detik - f.tick),
+        spinnerFlag: f.jenis === 'berjalan',
+        bentukFlag: f.jenis !== 'berjalan',
+        vc: b ? b.vc : 'transparent', clip: b ? b.clip : 'none', br: b ? b.br : '0'
+      };
+    });
+    const sejakFeed = this.state.detik - (this.state.lastFeedTick || 0);
+
+    const neu = this.gaya() !== 'flat';
+    const setl = this.state.setelan;
+    const pilihanTema = [
+      { label: 'Terang', val: 'terang' }, { label: 'Gelap', val: 'gelap' }, { label: 'Sistem', val: 'sistem' }
+    ].map((p) => {
+      const aktif = setl.temaDef === p.val;
+      const st = aktif ? aktifBtn : pasifBtn;
+      return {
+        key: p.val, label: p.label, aktif,
+        bg: st.bg, sh: st.sh, tepi: st.tepi, c: st.c,
+        klik: () => {
+          const sistemGelap = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          this.setState((s) => ({ setelan: Object.assign({}, s.setelan, { temaDef: p.val }), tOv: p.val === 'sistem' ? (sistemGelap ? 'gelap' : 'terang') : p.val }));
+        }
+      };
+    });
+    const pilihanPeriodeDef = this.BULAN3.map((b, i) => {
+      const aktif = setl.periodeDef === i;
+      const st = aktif ? aktifBtn : pasifBtn;
+      return {
+        key: b, label: b, aktif, bg: st.bg, sh: st.sh, tepi: st.tepi, c: st.c,
+        klik: () => { this.setState((s) => ({ setelan: Object.assign({}, s.setelan, { periodeDef: i }) })); this.gantiPeriode(i); }
+      };
+    });
+
+    const daftarPeriode = this.BULAN.map((b, i) => {
+      const worst = this.NASIONAL[i].m > 0 ? 'merah' : (this.NASIONAL[i].k > 0 ? 'kuning' : 'hijau');
+      const bt = this.BENTUK[worst];
+      const aktif = mi === i;
+      return {
+        key: b, label: b + ' 2026',
+        bg: aktif ? 'var(--well)' : 'transparent',
+        sh: aktif ? 'var(--shadow-pressed-sm)' : 'none',
+        c: aktif ? 'var(--foreground)' : 'var(--muted-foreground)',
+        vc: bt.vc, clip: bt.clip, br: bt.br,
+        klik: () => this.gantiPeriode(i)
+      };
+    });
+
+    const rt = this.state.rowTip;
+    const rtData = rt ? this.DATA.find((r) => r.id === rt.id) : null;
+
+    return {
+      temaKelas: tema === 'gelap' ? 'dark' : '',
+      pageOp: this.state.exit ? '0' : '1',
+      pageTf: this.state.exit ? 'translateY(-12px)' : 'none',
+      terangAktif: tema === 'terang', gelapAktif: tema === 'gelap',
+      setTerang: () => this.setState({ tOv: 'terang' }),
+      setGelap: () => this.setState({ tOv: 'gelap' }),
+      tTerangBg: bT.bg, tTerangSh: bT.sh, tTerangTepi: bT.tepi, tTerangC: bT.c,
+      tGelapBg: bG.bg, tGelapSh: bG.sh, tGelapTepi: bG.tepi, tGelapC: bG.c,
+
+      defaultFlag: mode === 'default', memuatFlag: mode === 'memuat',
+      kosongFlag: mode === 'kosong', gagalFlag: mode === 'gagal',
+      cobaLagi: () => this.setState({ mOv: 'default' }),
+      skel5: [1, 2, 3, 4, 5], skel6: [1, 2, 3, 4, 5, 6],
+
+      bukaPeriode: this.state.bukaPeriode,
+      togelDropPeriode: () => this.setState((s) => ({ bukaPeriode: !s.bukaPeriode, bukaProfil: false })),
+      bukaProfil: this.state.bukaProfil,
+      togelDropProfil: () => this.setState((s) => ({ bukaProfil: !s.bukaProfil, bukaPeriode: false })),
+      adaDropTerbuka: this.state.bukaPeriode || this.state.bukaProfil,
+      tutupSemuaDrop: () => this.setState({ bukaPeriode: false, bukaProfil: false }),
+      daftarPeriode,
+      periodeLabel: this.BULAN[mi] + ' 2026',
+      periodeLabelCaps: this.BULAN[mi].toUpperCase() + ' 2026',
+
+      bukaSetelan: this.state.bukaSetelan,
+      bukaSetelanKlik: () => this.setState({ bukaSetelan: true, bukaProfil: false }),
+      tutupSetelan: () => this.setState({ bukaSetelan: false, bukaSandi: false }),
+      pilihanTema, pilihanPeriodeDef,
+      nMerahBg: setl.nMerah ? 'var(--primary)' : 'var(--well)',
+      nMerahX: setl.nMerah ? '21px' : '3px',
+      nMerahLabel: setl.nMerah ? 'Aktif' : 'Mati',
+      togelNotifMerah: () => this.setState((s) => ({ setelan: Object.assign({}, s.setelan, { nMerah: !s.setelan.nMerah }) })),
+      nSelesaiBg: setl.nSelesai ? 'var(--primary)' : 'var(--well)',
+      nSelesaiX: setl.nSelesai ? '21px' : '3px',
+      nSelesaiLabel: setl.nSelesai ? 'Aktif' : 'Mati',
+      togelNotifSelesai: () => this.setState((s) => ({ setelan: Object.assign({}, s.setelan, { nSelesai: !s.setelan.nSelesai }) })),
+      bukaSandi: this.state.bukaSandi, tutupSandi: !this.state.bukaSandi,
+      bukaFormSandi: () => this.setState({ bukaSandi: true }),
+      simpanSandi: () => { this.setState({ bukaSandi: false }); this.toastKan('Kata sandi diperbarui.'); },
+
+      bukaKeluar: this.state.bukaKeluar,
+      bukaKeluarKlik: () => this.setState({ bukaKeluar: true, bukaProfil: false }),
+      batalKeluar: () => this.setState({ bukaKeluar: false }),
+      konfirmasiKeluar: () => { this.setState({ bukaKeluar: false }); this.nav('./Dasbor - Login v2.dc.html'); },
+
+      toastTampil: !!this.state.toast, toastTeks: this.state.toast || '',
+      tickerGlobal: sejakFeed < 3 ? 'baru saja' : sejakFeed + ' detik lalu',
+
+      heroJudul, deltaRingkas,
+      distSeg, distAria: 'Distribusi verdict: ' + N.h + ' hijau, ' + N.k + ' kuning, ' + N.m + ' merah dari 12 koperasi',
+      dispT: String(this.state.disp.t),
+      temuanSub: 'tersebar di ' + this.DATA.filter((r) => r.t[mi] > 0).length + ' koperasi',
+      flashAnim: this.state.flash ? 'prm-flash 1.1s ease-out 2' : 'none',
+      perhatian, perhatianJumlah: String(this.DATA.filter((r) => r.v[mi] !== 'hijau').length),
+
+      kpis,
+      chartKey: mi + '-' + this.gaya(),
+      cArBg: neu ? 'var(--well)' : 'transparent',
+      cArSh: neu ? 'var(--shadow-pressed)' : 'none',
+      cArTepi: neu ? 'var(--edge-bottom-well)' : 'transparent',
+      cGrid: neu ? '0.4' : '1',
+      barRad: neu ? '8' : '3',
+      garisHijau: garis('h'), garisKuning: garis('k'), garisMerah: garis('m'),
+      titik, barTemuan, kolomHover,
+      markerX: (xBulan(mi) - 26).toFixed(1),
+      labelBulan: this.BULAN3.map((b, i) => ({ key: b, label: b, c: i === mi ? 'var(--foreground)' : 'var(--muted-foreground)' })),
+      trenTipTampil: ti !== null,
+      trenTipX: ti !== null ? ((padX + ti * ((W - padX * 2) / 5)) / W * 100).toFixed(1) : '0',
+      trenTipBulan: ti !== null ? this.BULAN[ti] + ' 2026' : '',
+      trenTipH: ti !== null ? String(this.NASIONAL[ti].h) : '',
+      trenTipK: ti !== null ? String(this.NASIONAL[ti].k) : '',
+      trenTipM: ti !== null ? String(this.NASIONAL[ti].m) : '',
+      trenTipT: ti !== null ? String(this.NASIONAL[ti].t) : '',
+
+      agen,
+
+      rows, headers, filterChips,
+      cari: this.state.cari,
+      ubahCari: (e) => this.setState({ cari: e.target.value }),
+      kosongFilter: mode === 'default' && rows.length === 0,
+      jumlahLabel: (q || filterChips.length) ? 'Menampilkan ' + rows.length + ' dari 12 koperasi' : '12 koperasi, periode ' + this.BULAN[mi] + ' 2026',
+      ringkasBawah: N.m + ' merah · ' + N.k + ' kuning · ' + N.h + ' hijau',
+
+      tiles, kartogramSub: '11 provinsi aktif dari 34',
+
+      feed,
+      feedTicker: sejakFeed < 3 ? 'baru saja' : sejakFeed + ' dtk lalu',
+
+      rowTipTampil: !!rtData,
+      rowTipX: rt ? Math.min(rt.x + 18, window.innerWidth - 280) : 0,
+      rowTipY: rt ? rt.y + 18 : 0,
+      rowTipNama: rtData ? rtData.nama : '',
+      rowTipProv: rtData ? rtData.prov : '',
+      rowTipTemuan: rtData ? String(rtData.t[mi]) : '',
+      rowTipTrail: rtData ? rtData.v.map((vv, i) => { const b = this.BENTUK[vv]; return { key: i, vc: b.vc, clip: b.clip, br: b.br }; }) : []
+    };
+  }
+}
+</script>
+</body>
+</html>

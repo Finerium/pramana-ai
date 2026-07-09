@@ -1,0 +1,153 @@
+/* ==========================================================================
+   Pramana AI — Konsol Simulasi Pembukuan (Subjek)
+   Design tokens. OKLCH custom properties + Tailwind v4 @theme inline mapping.
+
+   Surface identity: "Merah Putih" — a single confident red accent on clean
+   white/paper. This surface is the cooperative's own bookkeeping system (the
+   DATA SOURCE watched by Pramana), deliberately distinct from the three
+   Pramana product surfaces (member Nila, gov Porselen neumorfik, landing
+   Malam Jernih).
+
+   RULE: never hard-code a hex/rgb/oklch literal in components. Consume tokens
+   only (e.g. bg-surface, text-ink, border-border, bg-primary). The one place
+   raw color lives is this file.
+
+   Verdict colors (hijau/kuning/merah) are Pramana's language and DO NOT appear
+   on this surface. The only status color here is connection/sync state
+   (--color-sync / --color-pending) and form validation (--color-danger).
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* Base surfaces */
+  --color-bg:              oklch(0.985 0.002 60);
+  --color-surface:         oklch(1 0 0);
+  --color-surface-sunken:  oklch(0.976 0.003 65);
+  --color-surface-raised:  oklch(0.965 0.004 65);
+
+  /* Text */
+  --color-ink:             oklch(0.24 0.006 45);
+  --color-ink-strong:      oklch(0.16 0.006 45);
+  --color-muted:           oklch(0.45 0.008 50);
+  --color-faint:           oklch(0.62 0.008 50);
+
+  /* Lines */
+  --color-border:          oklch(0.9 0.004 60);
+  --color-border-strong:   oklch(0.82 0.006 55);
+
+  /* Brand — Merah Putih (red primary, white on red) */
+  --color-primary:         oklch(0.52 0.208 27);
+  --color-primary-hover:   oklch(0.46 0.2 27);
+  --color-on-primary:      oklch(0.99 0.008 40);
+  --color-primary-soft:    oklch(0.955 0.032 27);
+  --color-on-primary-soft: oklch(0.45 0.19 27);
+
+  /* Focus ring */
+  --color-ring:            oklch(0.55 0.2 27);
+
+  /* Sync / connection status (NOT a verdict) */
+  --color-sync:            oklch(0.58 0.13 158);
+  --color-sync-soft:       oklch(0.95 0.04 158);
+  --color-on-sync-soft:    oklch(0.4 0.1 160);
+  --color-pending:         oklch(0.72 0.12 78);
+  --color-pending-soft:    oklch(0.95 0.06 82);
+  --color-on-pending-soft: oklch(0.47 0.1 70);
+
+  /* Form validation */
+  --color-danger:          oklch(0.5 0.2 27);
+  --color-danger-soft:     oklch(0.965 0.025 27);
+  --color-on-danger-soft:  oklch(0.45 0.19 27);
+
+  /* Radii */
+  --radius-input: 10px;
+  --radius-card:  16px;
+  --radius-pill:  999px;
+
+  /* Type */
+  --font-sans: 'Spline Sans', system-ui, sans-serif;
+  --font-mono: 'Spline Sans Mono', ui-monospace, monospace;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --color-bg:              oklch(0.185 0.004 45);
+  --color-surface:         oklch(0.225 0.005 45);
+  --color-surface-sunken:  oklch(0.2 0.004 45);
+  --color-surface-raised:  oklch(0.265 0.006 45);
+
+  --color-ink:             oklch(0.96 0.003 60);
+  --color-ink-strong:      oklch(0.99 0.002 60);
+  --color-muted:           oklch(0.73 0.006 55);
+  --color-faint:           oklch(0.56 0.006 55);
+
+  --color-border:          oklch(0.32 0.006 45);
+  --color-border-strong:   oklch(0.42 0.008 45);
+
+  --color-primary:         oklch(0.57 0.205 27);
+  --color-primary-hover:   oklch(0.63 0.19 27);
+  --color-on-primary:      oklch(0.99 0.008 40);
+  --color-primary-soft:    oklch(0.32 0.08 27);
+  --color-on-primary-soft: oklch(0.85 0.14 27);
+
+  --color-ring:            oklch(0.65 0.19 27);
+
+  --color-sync:            oklch(0.68 0.13 158);
+  --color-sync-soft:       oklch(0.33 0.06 158);
+  --color-on-sync-soft:    oklch(0.83 0.12 158);
+  --color-pending:         oklch(0.78 0.12 78);
+  --color-pending-soft:    oklch(0.34 0.06 78);
+  --color-on-pending-soft: oklch(0.85 0.11 80);
+
+  --color-danger:          oklch(0.7 0.17 27);
+  --color-danger-soft:     oklch(0.32 0.08 27);
+  --color-on-danger-soft:  oklch(0.85 0.14 27);
+}
+
+/* --------------------------------------------------------------------------
+   Tailwind v4 mapping. `inline` so generated utilities reference the live
+   custom properties and respond to the .dark override at runtime.
+   Utilities produced: bg-*/text-*/border-* for every color, font-sans,
+   font-mono, rounded-input/card/pill.
+   -------------------------------------------------------------------------- */
+@theme inline {
+  --color-bg:              var(--color-bg);
+  --color-surface:         var(--color-surface);
+  --color-surface-sunken:  var(--color-surface-sunken);
+  --color-surface-raised:  var(--color-surface-raised);
+
+  --color-ink:             var(--color-ink);
+  --color-ink-strong:      var(--color-ink-strong);
+  --color-muted:           var(--color-muted);
+  --color-faint:           var(--color-faint);
+
+  --color-border:          var(--color-border);
+  --color-border-strong:   var(--color-border-strong);
+
+  --color-primary:         var(--color-primary);
+  --color-primary-hover:   var(--color-primary-hover);
+  --color-on-primary:      var(--color-on-primary);
+  --color-primary-soft:    var(--color-primary-soft);
+  --color-on-primary-soft: var(--color-on-primary-soft);
+
+  --color-ring:            var(--color-ring);
+
+  --color-sync:            var(--color-sync);
+  --color-sync-soft:       var(--color-sync-soft);
+  --color-on-sync-soft:    var(--color-on-sync-soft);
+  --color-pending:         var(--color-pending);
+  --color-pending-soft:    var(--color-pending-soft);
+  --color-on-pending-soft: var(--color-on-pending-soft);
+
+  --color-danger:          var(--color-danger);
+  --color-danger-soft:     var(--color-danger-soft);
+  --color-on-danger-soft:  var(--color-on-danger-soft);
+
+  --radius-input: var(--radius-input);
+  --radius-card:  var(--radius-card);
+  --radius-pill:  var(--radius-pill);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}

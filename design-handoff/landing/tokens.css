@@ -1,0 +1,133 @@
+/*
+  Pramana AI — Landing page design tokens (LOCKED)
+  Palet: "Malam Jernih" (porselen + tinta malam, aksen navy)
+  Tipografi: Plus Jakarta Sans (display + teks) · JetBrains Mono (caption/eyebrow)
+
+  ATURAN KERAS:
+  - Semua warna dalam OKLCH. DILARANG hard-code hex/rgb di komponen.
+  - Komponen hanya boleh memakai token semantik di bawah (via Tailwind atau var()).
+  - Verdict (hijau/kuning/merah) adalah token semantik, bukan warna dekoratif.
+  - Verdict selalu dirender ikon bentuk + label, tidak pernah warna saja:
+    hijau = lingkaran, kuning = segitiga, merah = belah ketupat (rotate 45deg).
+*/
+
+:root {
+  color-scheme: light;
+
+  --latar: oklch(0.975 0.004 250);
+  --permukaan: oklch(0.955 0.006 250);
+  --kartu: oklch(0.995 0.002 250);
+  --garis: oklch(0.905 0.008 252);
+  --garis-kuat: oklch(0.82 0.012 252);
+
+  --tinta: oklch(0.215 0.02 265);
+  --tinta-2: oklch(0.45 0.018 262);
+  --tinta-3: oklch(0.52 0.014 260);
+
+  --aksen: oklch(0.49 0.1 255);
+  --aksen-kuat: oklch(0.42 0.105 256);
+  --aksen-teks: oklch(0.985 0.003 250);
+
+  --hijau: oklch(0.55 0.1 158);
+  --kuning: oklch(0.62 0.12 85);
+  --merah: oklch(0.55 0.16 25);
+
+  --cincin: oklch(0.49 0.1 255);
+  --bayang-kartu: 0 24px 64px -28px oklch(0.215 0.02 265 / 0.3);
+
+  /* Turunan otomatis: ikut berubah antar tema karena memakai var() */
+  --aksen-lembut: color-mix(in oklch, var(--aksen) 9%, var(--latar));
+  --hijau-lembut: color-mix(in oklch, var(--hijau) 12%, var(--latar));
+  --kuning-lembut: color-mix(in oklch, var(--kuning) 14%, var(--latar));
+  --merah-lembut: color-mix(in oklch, var(--merah) 12%, var(--latar));
+
+  --font-teks: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  --radius-kartu: 18px;
+  --radius-pil: 999px;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --latar: oklch(0.185 0.016 262);
+  --permukaan: oklch(0.215 0.017 262);
+  --kartu: oklch(0.235 0.018 262);
+  --garis: oklch(0.31 0.018 262);
+  --garis-kuat: oklch(0.4 0.02 260);
+
+  --tinta: oklch(0.945 0.006 250);
+  --tinta-2: oklch(0.74 0.012 255);
+  --tinta-3: oklch(0.65 0.013 257);
+
+  --aksen: oklch(0.72 0.095 250);
+  --aksen-kuat: oklch(0.78 0.09 248);
+  --aksen-teks: oklch(0.17 0.016 262);
+
+  --hijau: oklch(0.7 0.11 158);
+  --kuning: oklch(0.75 0.12 88);
+  --merah: oklch(0.68 0.15 25);
+
+  --cincin: oklch(0.72 0.095 250);
+  --bayang-kartu: 0 24px 64px -28px oklch(0 0 0 / 0.55);
+}
+
+/*
+  Default "ikut sistem": tanpa kelas .light atau .dark pada <html>,
+  preferensi OS yang menang. Toggle menulis kelas eksplisit.
+*/
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+
+    --latar: oklch(0.185 0.016 262);
+    --permukaan: oklch(0.215 0.017 262);
+    --kartu: oklch(0.235 0.018 262);
+    --garis: oklch(0.31 0.018 262);
+    --garis-kuat: oklch(0.4 0.02 260);
+
+    --tinta: oklch(0.945 0.006 250);
+    --tinta-2: oklch(0.74 0.012 255);
+    --tinta-3: oklch(0.65 0.013 257);
+
+    --aksen: oklch(0.72 0.095 250);
+    --aksen-kuat: oklch(0.78 0.09 248);
+    --aksen-teks: oklch(0.17 0.016 262);
+
+    --hijau: oklch(0.7 0.11 158);
+    --kuning: oklch(0.75 0.12 88);
+    --merah: oklch(0.68 0.15 25);
+
+    --cincin: oklch(0.72 0.095 250);
+    --bayang-kartu: 0 24px 64px -28px oklch(0 0 0 / 0.55);
+  }
+}
+
+/* Tailwind v4 mapping. Pakai kelas: bg-latar, text-tinta, border-garis, bg-aksen, dst. */
+@theme inline {
+  --color-latar: var(--latar);
+  --color-permukaan: var(--permukaan);
+  --color-kartu: var(--kartu);
+  --color-garis: var(--garis);
+  --color-garis-kuat: var(--garis-kuat);
+  --color-tinta: var(--tinta);
+  --color-tinta-2: var(--tinta-2);
+  --color-tinta-3: var(--tinta-3);
+  --color-aksen: var(--aksen);
+  --color-aksen-kuat: var(--aksen-kuat);
+  --color-aksen-teks: var(--aksen-teks);
+  --color-aksen-lembut: var(--aksen-lembut);
+  --color-hijau: var(--hijau);
+  --color-kuning: var(--kuning);
+  --color-merah: var(--merah);
+  --color-hijau-lembut: var(--hijau-lembut);
+  --color-kuning-lembut: var(--kuning-lembut);
+  --color-merah-lembut: var(--merah-lembut);
+  --color-cincin: var(--cincin);
+  --font-sans: var(--font-teks);
+  --font-mono: var(--font-mono);
+  --radius-kartu: var(--radius-kartu);
+  --radius-pil: var(--radius-pil);
+  --shadow-kartu: var(--bayang-kartu);
+}

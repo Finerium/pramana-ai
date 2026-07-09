@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Libre+Franklin:wght@400;500;600;700&family=Red+Hat+Mono:wght@400;500;600;700&family=Spline+Sans:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { background: oklch(0.965 0.004 90); color: oklch(0.26 0.006 70); font-family: system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: oklch(0.5 0.108 248); text-decoration: none; }
+  a:hover { color: oklch(0.42 0.108 248); text-decoration: underline; }
+  * { box-sizing: border-box; }
+  button:focus-visible, a:focus-visible { outline: 2px solid oklch(0.55 0.14 250); outline-offset: 2px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .cmb-anim { transition: background .18s ease, color .18s ease, border-color .18s ease; }
+  }
+</style>
+</helmet>
+
+<div style="max-width: 1320px; margin: 0 auto; padding: 56px 40px 96px;">
+
+  <!-- MASTHEAD -->
+  <div style="font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: oklch(0.5 0.108 248); margin-bottom: 14px;">Papan keputusan visual &middot; Permukaan 4 dari 4</div>
+  <h1 style="font-size: 40px; line-height: 1.08; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 16px; color: oklch(0.22 0.006 70); max-width: 20ch;">Konsol Pembukuan: palet dan tipografi</h1>
+  <p style="font-size: 16px; line-height: 1.6; color: oklch(0.42 0.008 70); margin: 0 0 8px; max-width: 68ch;">Sebelum membangun konsol, saya usulkan tiga arah palet dan tiga pasangan huruf. Semua ditampilkan di tema terang dan gelap. Belum ada warna atau huruf yang saya putuskan sendiri. Silakan kunci pilihan Anda di chat, lalu saya lanjut membangun.</p>
+  <p style="font-size: 13px; line-height: 1.6; color: oklch(0.55 0.008 70); margin: 0; max-width: 68ch;">Konsol ini adalah <strong style="color: oklch(0.3 0.006 70); font-weight: 600;">sistem pembukuan koperasi</strong> yang diawasi Pramana, bukan produk Pramana untuk pengurus. Ia harus terasa seperti aktor yang berbeda dari tiga permukaan lain.</p>
+
+  <!-- CONTEXT RIBBON -->
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: oklch(0.88 0.008 85); border: 1px solid oklch(0.88 0.008 85); border-radius: 12px; overflow: hidden; margin: 40px 0 20px;">
+    <div style="background: oklch(0.995 0.002 90); padding: 16px 18px;">
+      <div style="font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(0.55 0.008 70); margin-bottom: 8px;">Anggota &middot; mobile</div>
+      <div style="font-size: 13px; font-weight: 600; color: oklch(0.3 0.006 70); margin-bottom: 3px;">Nila / Geist</div>
+      <div style="font-size: 12px; line-height: 1.45; color: oklch(0.52 0.008 70);">Hangat, minimal, akomodasi literasi rendah.</div>
+    </div>
+    <div style="background: oklch(0.995 0.002 90); padding: 16px 18px;">
+      <div style="font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(0.55 0.008 70); margin-bottom: 8px;">Pemerintah &middot; dasbor</div>
+      <div style="font-size: 13px; font-weight: 600; color: oklch(0.3 0.006 70); margin-bottom: 3px;">Porselen Hangat / Archivo</div>
+      <div style="font-size: 12px; line-height: 1.45; color: oklch(0.52 0.008 70);">Neumorfik, padat data, instrumen serius.</div>
+    </div>
+    <div style="background: oklch(0.995 0.002 90); padding: 16px 18px;">
+      <div style="font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(0.55 0.008 70); margin-bottom: 8px;">Landing &middot; publik</div>
+      <div style="font-size: 13px; font-weight: 600; color: oklch(0.3 0.006 70); margin-bottom: 3px;">Malam Jernih / Plus Jakarta</div>
+      <div style="font-size: 12px; line-height: 1.45; color: oklch(0.52 0.008 70);">Energi marketing, kesan pertama.</div>
+    </div>
+    <div style="background: oklch(0.28 0.01 70); padding: 16px 18px;">
+      <div style="font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(0.72 0.05 248); margin-bottom: 8px;">Konsol &middot; ini</div>
+      <div style="font-size: 13px; font-weight: 600; color: oklch(0.97 0.002 90); margin-bottom: 3px;">Buku kas digital</div>
+      <div style="font-size: 12px; line-height: 1.45; color: oklch(0.8 0.006 80);">Jujur, fungsional, presisi. Bukan salah satu di atas.</div>
+    </div>
+  </div>
+
+  <!-- REASONING -->
+  <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 32px; margin: 28px 0 8px; max-width: 1000px;">
+    <div style="display: flex; gap: 12px;"><div style="flex: none; width: 22px; height: 22px; border-radius: 6px; background: oklch(0.5 0.108 248); color: oklch(0.99 0.005 240); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: ui-monospace, monospace;">1</div><p style="margin: 0; font-size: 13.5px; line-height: 1.55; color: oklch(0.4 0.008 70);"><strong style="color: oklch(0.28 0.006 70); font-weight: 600;">Form adalah pahlawan.</strong> Label besar tak ambigu bergaya gov.uk, input lapang, umpan balik inline langsung.</p></div>
+    <div style="display: flex; gap: 12px;"><div style="flex: none; width: 22px; height: 22px; border-radius: 6px; background: oklch(0.5 0.108 248); color: oklch(0.99 0.005 240); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: ui-monospace, monospace;">2</div><p style="margin: 0; font-size: 13.5px; line-height: 1.55; color: oklch(0.4 0.008 70);"><strong style="color: oklch(0.28 0.006 70); font-weight: 600;">Angka uang tabular dan besar.</strong> Saldo kas selalu terlihat dan berubah setelah entri. Rupiah diformat Rp 15.000.000.</p></div>
+    <div style="display: flex; gap: 12px;"><div style="flex: none; width: 22px; height: 22px; border-radius: 6px; background: oklch(0.5 0.108 248); color: oklch(0.99 0.005 240); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: ui-monospace, monospace;">3</div><p style="margin: 0; font-size: 13.5px; line-height: 1.55; color: oklch(0.4 0.008 70);"><strong style="color: oklch(0.28 0.006 70); font-weight: 600;">Warna verdict adalah bahasa inti.</strong> Hijau, kuning, merah berdiri sebagai token semantik terpisah, sama di semua permukaan.</p></div>
+    <div style="display: flex; gap: 12px;"><div style="flex: none; width: 22px; height: 22px; border-radius: 6px; background: oklch(0.5 0.108 248); color: oklch(0.99 0.005 240); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; font-family: ui-monospace, monospace;">4</div><p style="margin: 0; font-size: 13.5px; line-height: 1.55; color: oklch(0.4 0.008 70);"><strong style="color: oklch(0.28 0.006 70); font-weight: 600;">Aksen sengaja bukan warna verdict.</strong> Agar makna lampu lalu lintas tetap murni, warna antarmuka memakai ruang lain (atau tidak sama sekali).</p></div>
+  </div>
+
+  <!-- COMBINER -->
+  <div style="margin: 52px 0 0; border-top: 1px solid oklch(0.88 0.008 85); padding-top: 32px;">
+    <div style="font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(0.55 0.008 70); margin-bottom: 6px;">Coba gabungkan</div>
+    <p style="font-size: 14px; color: oklch(0.45 0.008 70); margin: 0 0 24px; max-width: 60ch;">Pilih palet, huruf, dan tema untuk melihat cuplikan konsol yang sebenarnya. Ini alat bantu keputusan, bukan konsol final.</p>
+
+    <div style="display: grid; grid-template-columns: 380px 1fr; gap: 40px; align-items: start;">
+      <!-- controls -->
+      <div style="display: flex; flex-direction: column; gap: 22px;">
+        <div>
+          <div style="font-size: 12px; font-weight: 600; color: oklch(0.4 0.008 70); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em;">Palet</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <sc-for list="{{ paletteChips }}" as="chip" hint-placeholder-count="3">
+              <button type="button" class="cmb-anim" style="{{ chip.style }}" onClick="{{ chip.onClick }}">
+                <span style="font-size: 13px; font-weight: 600;">{{ chip.label }}</span>
+                <span style="font-size: 11.5px; opacity: 0.66;">{{ chip.sub }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+        <div>
+          <div style="font-size: 12px; font-weight: 600; color: oklch(0.4 0.008 70); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em;">Tipografi</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <sc-for list="{{ fontChips }}" as="chip" hint-placeholder-count="3">
+              <button type="button" class="cmb-anim" style="{{ chip.style }}" onClick="{{ chip.onClick }}">
+                <span style="font-size: 13px; font-weight: 600;">{{ chip.label }}</span>
+                <span style="font-size: 11.5px; opacity: 0.66;">{{ chip.sub }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+        <div>
+          <div style="font-size: 12px; font-weight: 600; color: oklch(0.4 0.008 70); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em;">Tema</div>
+          <div style="display: flex; gap: 8px;">
+            <sc-for list="{{ themeChips }}" as="chip" hint-placeholder-count="2">
+              <button type="button" class="cmb-anim" style="{{ chip.style }}" onClick="{{ chip.onClick }}">{{ chip.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="font-family: ui-monospace, monospace; font-size: 11px; color: oklch(0.55 0.008 70); border-top: 1px dashed oklch(0.85 0.008 85); padding-top: 14px;">Terpilih: {{ selLabel }}</div>
+      </div>
+
+      <!-- live preview -->
+      <div class="cmb-anim" style="{{ previewVars }}">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 22px;">
+          <div>
+            <div style="font-size: 18px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; font-family: var(--ui);">Simulasi Pembukuan Koperasi</div>
+            <div style="font-size: 13px; color: var(--muted); margin-top: 3px; font-family: var(--ui);">Sumber data yang diawasi Pramana</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11px; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 6px 11px; white-space: nowrap;">
+            <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--hijau-dot); display: inline-block;"></span>Tersinkron ke Pramana
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 18px 0; margin-bottom: 24px;">
+          <div>
+            <div style="font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.09em; font-family: var(--mono); margin-bottom: 6px;">Saldo kas koperasi</div>
+            <div style="font-family: var(--mono); font-weight: 600; font-size: 42px; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: -0.01em;">Rp 36.500.000</div>
+          </div>
+          <div style="display: flex; gap: 7px;">
+            <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--hijau-ink); background: var(--hijau-bg); border-radius: 999px; padding: 6px 11px; font-family: var(--ui);"><span style="width: 7px; height: 7px; border-radius: 50%; background: var(--hijau-dot);"></span>Hijau</span>
+            <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--kuning-ink); background: var(--kuning-bg); border-radius: 999px; padding: 6px 11px; font-family: var(--ui);"><span style="width: 7px; height: 7px; border-radius: 50%; background: var(--kuning-dot);"></span>Kuning</span>
+            <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--merah-ink); background: var(--merah-bg); border-radius: 999px; padding: 6px 11px; font-family: var(--ui);"><span style="width: 7px; height: 7px; border-radius: 50%; background: var(--merah-dot);"></span>Merah</span>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 22px;">
+          <div style="display: flex; flex-direction: column; gap: 7px;">
+            <label style="font-size: 13px; font-weight: 600; color: var(--ink); font-family: var(--ui);">Jumlah (Rp)</label>
+            <div style="display: flex; align-items: center; gap: 9px; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;">
+              <span style="font-family: var(--mono); color: var(--muted); font-size: 16px;">Rp</span>
+              <span style="font-family: var(--mono); color: var(--ink); font-size: 16px; font-variant-numeric: tabular-nums;">15.000.000</span>
+            </div>
+            <div style="font-size: 12px; color: var(--muted); font-family: var(--ui);">Masukkan angka tanpa titik. Contoh: 15000000</div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 7px;">
+            <label style="font-size: 13px; font-weight: 600; color: var(--ink); font-family: var(--ui);">Jenis transaksi</label>
+            <div style="display: flex; align-items: center; justify-content: space-between; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;">
+              <span style="font-family: var(--ui); color: var(--ink); font-size: 15px;">Pembelian</span>
+              <span style="color: var(--muted); font-size: 12px;">&#9662;</span>
+            </div>
+            <div style="font-size: 12px; color: var(--muted); font-family: var(--ui);">Unit usaha wajib untuk pembelian.</div>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <button type="button" style="font-family: var(--ui); font-size: 14px; font-weight: 600; color: var(--accent-ink); background: var(--accent); border: none; border-radius: 10px; padding: 13px 22px; cursor: pointer; min-height: 44px;">Catat Transaksi</button>
+          <button type="button" style="font-family: var(--ui); font-size: 14px; font-weight: 600; color: var(--ink); background: transparent; border: 1px solid var(--border); border-radius: 10px; padding: 13px 20px; cursor: pointer; min-height: 44px;">Batalkan</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PALETTE REFERENCE -->
+  <div style="margin: 64px 0 0; border-top: 1px solid oklch(0.88 0.008 85); padding-top: 32px;">
+    <div style="font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(0.55 0.008 70); margin-bottom: 6px;">Tiga arah palet</div>
+    <p style="font-size: 14px; color: oklch(0.45 0.008 70); margin: 0 0 28px; max-width: 62ch;">Setiap arah ditampilkan di tema terang dan gelap. Nilai warna dalam OKLCH, siap menjadi custom property di :root dan .dark.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+
+      <!-- PALETTE A -->
+      <div style="background: oklch(0.995 0.002 90); border: 1px solid oklch(0.88 0.008 85); border-radius: 16px; overflow: hidden;">
+        <div style="padding: 22px 22px 18px; border-bottom: 1px solid oklch(0.9 0.006 85);">
+          <div style="display: flex; align-items: baseline; gap: 9px; margin-bottom: 6px;"><span style="font-family: ui-monospace, monospace; font-size: 11px; font-weight: 600; color: oklch(0.99 0.005 240); background: oklch(0.5 0.108 248); border-radius: 5px; padding: 3px 8px;">Palet A</span><span style="font-size: 17px; font-weight: 700; color: oklch(0.24 0.006 70); letter-spacing: -0.01em;">Baja dan Kertas</span></div>
+          <div style="font-size: 13px; line-height: 1.5; color: oklch(0.48 0.008 70);">Netral sejuk, tinta gelap, satu aksen biru baja. Kejelasan kantor belakang yang tenang.</div>
+        </div>
+        <!-- light -->
+        <div style="padding: 18px 22px; background: oklch(0.984 0.003 240);">
+          <div style="font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(0.5 0.02 250); margin-bottom: 12px;">Terang</div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(0.998 0.0015 240); border: 1px solid oklch(0.9 0.007 245);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.3 0.02 250); margin-top: 6px;">Permukaan</div><div style="font-family: ui-monospace, monospace; font-size: 9px; color: oklch(0.55 0.02 250);">0.998 0.002 240</div></div>
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(0.27 0.021 250);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.3 0.02 250); margin-top: 6px;">Tinta</div><div style="font-family: ui-monospace, monospace; font-size: 9px; color: oklch(0.55 0.02 250);">0.27 0.021 250</div></div>
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(0.505 0.108 248);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.3 0.02 250); margin-top: 6px;">Aksen</div><div style="font-family: ui-monospace, monospace; font-size: 9px; color: oklch(0.55 0.02 250);">0.505 0.108 248</div></div>
+          </div>
+          <div style="display: flex; gap: 6px; margin-top: 14px;">
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.37 0.09 150); background: oklch(0.95 0.045 150); border-radius: 7px; padding: 6px;">Hijau</span>
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.46 0.1 78); background: oklch(0.945 0.08 90); border-radius: 7px; padding: 6px;">Kuning</span>
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.48 0.17 27); background: oklch(0.945 0.05 27); border-radius: 7px; padding: 6px;">Merah</span>
+          </div>
+        </div>
+        <!-- dark -->
+        <div style="padding: 18px 22px; background: oklch(0.215 0.016 250);">
+          <div style="font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(0.72 0.013 245); margin-bottom: 12px;">Gelap</div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(0.255 0.017 250); border: 1px solid oklch(0.345 0.017 250);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.9 0.008 245); margin-top: 6px;">Permukaan</div></div>
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(0.955 0.004 240);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.9 0.008 245); margin-top: 6px;">Tinta</div></div>
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(0.7 0.1 248);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.9 0.008 245); margin-top: 6px;">Aksen</div></div>
+          </div>
+          <div style="display: flex; gap: 6px; margin-top: 14px;">
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.85 0.11 150); background: oklch(0.33 0.055 150); border-radius: 7px; padding: 6px;">Hijau</span>
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.88 0.11 90); background: oklch(0.35 0.065 88); border-radius: 7px; padding: 6px;">Kuning</span>
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.85 0.13 27); background: oklch(0.34 0.085 27); border-radius: 7px; padding: 6px;">Merah</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PALETTE B -->
+      <div style="background: oklch(0.995 0.002 90); border: 1px solid oklch(0.88 0.008 85); border-radius: 16px; overflow: hidden;">
+        <div style="padding: 22px 22px 18px; border-bottom: 1px solid oklch(0.9 0.006 85);">
+          <div style="display: flex; align-items: baseline; gap: 9px; margin-bottom: 6px;"><span style="font-family: ui-monospace, monospace; font-size: 11px; font-weight: 600; color: oklch(0.99 0.004 85); background: oklch(0.48 0.083 210); border-radius: 5px; padding: 3px 8px;">Palet B</span><span style="font-size: 17px; font-weight: 700; color: oklch(0.24 0.006 70); letter-spacing: -0.01em;">Tinta dan Petrol</span></div>
+          <div style="font-size: 13px; line-height: 1.5; color: oklch(0.48 0.008 70);">Netral hangat seperti kertas, tinta pekat, aksen petrol yang presisi dan tenang.</div>
+        </div>
+        <!-- light -->
+        <div style="padding: 18px 22px; background: oklch(0.983 0.0045 85);">
+          <div style="font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(0.49 0.012 70); margin-bottom: 12px;">Terang</div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(0.998 0.002 85); border: 1px solid oklch(0.895 0.009 82);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.3 0.009 65); margin-top: 6px;">Permukaan</div><div style="font-family: ui-monospace, monospace; font-size: 9px; color: oklch(0.55 0.01 70);">0.998 0.002 85</div></div>
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(0.245 0.009 65);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.3 0.009 65); margin-top: 6px;">Tinta</div><div style="font-family: ui-monospace, monospace; font-size: 9px; color: oklch(0.55 0.01 70);">0.245 0.009 65</div></div>
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(0.48 0.083 210);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.3 0.009 65); margin-top: 6px;">Aksen</div><div style="font-family: ui-monospace, monospace; font-size: 9px; color: oklch(0.55 0.01 70);">0.48 0.083 210</div></div>
+          </div>
+          <div style="display: flex; gap: 6px; margin-top: 14px;">
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.37 0.09 150); background: oklch(0.95 0.045 150); border-radius: 7px; padding: 6px;">Hijau</span>
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.46 0.1 78); background: oklch(0.945 0.08 90); border-radius: 7px; padding: 6px;">Kuning</span>
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.48 0.17 27); background: oklch(0.945 0.05 27); border-radius: 7px; padding: 6px;">Merah</span>
+          </div>
+        </div>
+        <!-- dark -->
+        <div style="padding: 18px 22px; background: oklch(0.205 0.007 70);">
+          <div style="font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(0.7 0.011 80); margin-bottom: 12px;">Gelap</div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(0.245 0.008 70); border: 1px solid oklch(0.335 0.009 72);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.9 0.008 80); margin-top: 6px;">Permukaan</div></div>
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(0.95 0.006 85);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.9 0.008 80); margin-top: 6px;">Tinta</div></div>
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(0.7 0.088 205);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.9 0.008 80); margin-top: 6px;">Aksen</div></div>
+          </div>
+          <div style="display: flex; gap: 6px; margin-top: 14px;">
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.85 0.11 150); background: oklch(0.33 0.055 150); border-radius: 7px; padding: 6px;">Hijau</span>
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.88 0.11 90); background: oklch(0.35 0.065 88); border-radius: 7px; padding: 6px;">Kuning</span>
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.85 0.13 27); background: oklch(0.34 0.085 27); border-radius: 7px; padding: 6px;">Merah</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PALETTE C -->
+      <div style="background: oklch(0.995 0.002 90); border: 1px solid oklch(0.88 0.008 85); border-radius: 16px; overflow: hidden;">
+        <div style="padding: 22px 22px 18px; border-bottom: 1px solid oklch(0.9 0.006 85);">
+          <div style="display: flex; align-items: baseline; gap: 9px; margin-bottom: 6px;"><span style="font-family: ui-monospace, monospace; font-size: 11px; font-weight: 600; color: oklch(0.98 0 0); background: oklch(0.24 0 0); border-radius: 5px; padding: 3px 8px;">Palet C</span><span style="font-size: 17px; font-weight: 700; color: oklch(0.24 0.006 70); letter-spacing: -0.01em;">Grafit Murni</span></div>
+          <div style="font-size: 13px; line-height: 1.5; color: oklch(0.48 0.008 70);">Abu-abu murni tanpa warna. Satu-satunya warna adalah verdict yang diawasi Pramana.</div>
+        </div>
+        <!-- light -->
+        <div style="padding: 18px 22px; background: oklch(0.985 0 0);">
+          <div style="font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(0.47 0 0); margin-bottom: 12px;">Terang</div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(1 0 0); border: 1px solid oklch(0.9 0 0);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.3 0 0); margin-top: 6px;">Permukaan</div><div style="font-family: ui-monospace, monospace; font-size: 9px; color: oklch(0.55 0 0);">1 0 0</div></div>
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(0.2 0 0);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.3 0 0); margin-top: 6px;">Tinta</div><div style="font-family: ui-monospace, monospace; font-size: 9px; color: oklch(0.55 0 0);">0.2 0 0</div></div>
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(0.24 0 0);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.3 0 0); margin-top: 6px;">Aksen</div><div style="font-family: ui-monospace, monospace; font-size: 9px; color: oklch(0.55 0 0);">0.24 0 0</div></div>
+          </div>
+          <div style="display: flex; gap: 6px; margin-top: 14px;">
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.37 0.09 150); background: oklch(0.95 0.045 150); border-radius: 7px; padding: 6px;">Hijau</span>
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.46 0.1 78); background: oklch(0.945 0.08 90); border-radius: 7px; padding: 6px;">Kuning</span>
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.48 0.17 27); background: oklch(0.945 0.05 27); border-radius: 7px; padding: 6px;">Merah</span>
+          </div>
+        </div>
+        <!-- dark -->
+        <div style="padding: 18px 22px; background: oklch(0.18 0 0);">
+          <div style="font-family: ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: oklch(0.67 0 0); margin-bottom: 12px;">Gelap</div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(0.23 0 0); border: 1px solid oklch(0.32 0 0);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.9 0 0); margin-top: 6px;">Permukaan</div></div>
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(0.97 0 0);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.9 0 0); margin-top: 6px;">Tinta</div></div>
+            <div><div style="height: 40px; border-radius: 7px; background: oklch(0.92 0 0);"></div><div style="font-size: 11px; font-weight: 600; color: oklch(0.9 0 0); margin-top: 6px;">Aksen</div></div>
+          </div>
+          <div style="display: flex; gap: 6px; margin-top: 14px;">
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.85 0.11 150); background: oklch(0.33 0.055 150); border-radius: 7px; padding: 6px;">Hijau</span>
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.88 0.11 90); background: oklch(0.35 0.065 88); border-radius: 7px; padding: 6px;">Kuning</span>
+            <span style="flex: 1; text-align: center; font-size: 11px; font-weight: 600; color: oklch(0.85 0.13 27); background: oklch(0.34 0.085 27); border-radius: 7px; padding: 6px;">Merah</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TYPOGRAPHY REFERENCE -->
+  <div style="margin: 64px 0 0; border-top: 1px solid oklch(0.88 0.008 85); padding-top: 32px;">
+    <div style="font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(0.55 0.008 70); margin-bottom: 6px;">Tiga pasangan huruf</div>
+    <p style="font-size: 14px; color: oklch(0.45 0.008 70); margin: 0 0 28px; max-width: 62ch;">Setiap pasangan memakai satu huruf antarmuka dan satu huruf monospace untuk angka uang. Semua punya angka tabular yang rapi. Dihindari: Geist, Archivo, Public Sans, Plus Jakarta, JetBrains Mono, dan Inter.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+
+      <!-- FONT 1 -->
+      <div style="background: oklch(0.998 0.002 90); border: 1px solid oklch(0.88 0.008 85); border-radius: 16px; padding: 26px;">
+        <div style="display: flex; align-items: baseline; gap: 9px; margin-bottom: 4px;"><span style="font-family: ui-monospace, monospace; font-size: 11px; font-weight: 600; color: oklch(0.99 0.005 240); background: oklch(0.5 0.108 248); border-radius: 5px; padding: 3px 8px;">Font 1</span><span style="font-size: 15px; font-weight: 700; color: oklch(0.24 0.006 70); font-family: 'IBM Plex Sans', sans-serif;">IBM Plex</span></div>
+        <div style="font-size: 12.5px; color: oklch(0.5 0.008 70); margin-bottom: 20px;">IBM Plex Sans + IBM Plex Mono. Terukur dan teknikal, rasa instrumen kerja yang presisi.</div>
+        <div style="border-top: 1px solid oklch(0.9 0.006 85); padding-top: 18px;">
+          <div style="font-family: 'IBM Plex Sans', sans-serif; font-size: 20px; font-weight: 600; color: oklch(0.24 0.006 70); letter-spacing: -0.01em; margin-bottom: 4px;">Catat Transaksi</div>
+          <div style="font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; font-weight: 600; color: oklch(0.3 0.006 70); margin-bottom: 3px;">Jumlah (Rp)</div>
+          <div style="font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; color: oklch(0.52 0.008 70); margin-bottom: 16px;">Masukkan angka tanpa titik.</div>
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 36px; font-weight: 600; color: oklch(0.22 0.006 70); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; margin-bottom: 18px;">Rp 36.500.000</div>
+          <div style="display: flex; flex-direction: column; gap: 7px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-variant-numeric: tabular-nums; color: oklch(0.4 0.008 70);">
+            <div style="display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid oklch(0.92 0.006 85); padding-bottom: 6px;"><span>20 Jun 2026 &middot; Pencairan</span><span>Rp&nbsp;6.000.000</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid oklch(0.92 0.006 85); padding-bottom: 6px;"><span>14 Jun 2026 &middot; Pembelian</span><span>Rp&nbsp;15.000.000</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 12px;"><span>12 Jun 2026 &middot; Angsuran</span><span>Rp&nbsp;200.000</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FONT 2 -->
+      <div style="background: oklch(0.998 0.002 90); border: 1px solid oklch(0.88 0.008 85); border-radius: 16px; padding: 26px;">
+        <div style="display: flex; align-items: baseline; gap: 9px; margin-bottom: 4px;"><span style="font-family: ui-monospace, monospace; font-size: 11px; font-weight: 600; color: oklch(0.99 0.005 240); background: oklch(0.5 0.108 248); border-radius: 5px; padding: 3px 8px;">Font 2</span><span style="font-size: 15px; font-weight: 700; color: oklch(0.24 0.006 70); font-family: 'Spline Sans', sans-serif;">Spline Sans</span></div>
+        <div style="font-size: 12.5px; color: oklch(0.5 0.008 70); margin-bottom: 20px;">Spline Sans + Spline Sans Mono. Humanis dan membumi, hangat tipis tanpa kehilangan ketegasan.</div>
+        <div style="border-top: 1px solid oklch(0.9 0.006 85); padding-top: 18px;">
+          <div style="font-family: 'Spline Sans', sans-serif; font-size: 20px; font-weight: 600; color: oklch(0.24 0.006 70); letter-spacing: -0.01em; margin-bottom: 4px;">Catat Transaksi</div>
+          <div style="font-family: 'Spline Sans', sans-serif; font-size: 13px; font-weight: 600; color: oklch(0.3 0.006 70); margin-bottom: 3px;">Jumlah (Rp)</div>
+          <div style="font-family: 'Spline Sans', sans-serif; font-size: 12px; color: oklch(0.52 0.008 70); margin-bottom: 16px;">Masukkan angka tanpa titik.</div>
+          <div style="font-family: 'Spline Sans Mono', monospace; font-size: 36px; font-weight: 600; color: oklch(0.22 0.006 70); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; margin-bottom: 18px;">Rp 36.500.000</div>
+          <div style="display: flex; flex-direction: column; gap: 7px; font-family: 'Spline Sans Mono', monospace; font-size: 12px; font-variant-numeric: tabular-nums; color: oklch(0.4 0.008 70);">
+            <div style="display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid oklch(0.92 0.006 85); padding-bottom: 6px;"><span>20 Jun 2026 &middot; Pencairan</span><span>Rp&nbsp;6.000.000</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid oklch(0.92 0.006 85); padding-bottom: 6px;"><span>14 Jun 2026 &middot; Pembelian</span><span>Rp&nbsp;15.000.000</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 12px;"><span>12 Jun 2026 &middot; Angsuran</span><span>Rp&nbsp;200.000</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FONT 3 -->
+      <div style="background: oklch(0.998 0.002 90); border: 1px solid oklch(0.88 0.008 85); border-radius: 16px; padding: 26px;">
+        <div style="display: flex; align-items: baseline; gap: 9px; margin-bottom: 4px;"><span style="font-family: ui-monospace, monospace; font-size: 11px; font-weight: 600; color: oklch(0.99 0.005 240); background: oklch(0.5 0.108 248); border-radius: 5px; padding: 3px 8px;">Font 3</span><span style="font-size: 15px; font-weight: 700; color: oklch(0.24 0.006 70); font-family: 'Libre Franklin', sans-serif;">Libre Franklin</span></div>
+        <div style="font-size: 12.5px; color: oklch(0.5 0.008 70); margin-bottom: 20px;">Libre Franklin + Red Hat Mono. Grotesk administratif klasik, resmi, tenang, terpercaya.</div>
+        <div style="border-top: 1px solid oklch(0.9 0.006 85); padding-top: 18px;">
+          <div style="font-family: 'Libre Franklin', sans-serif; font-size: 20px; font-weight: 600; color: oklch(0.24 0.006 70); letter-spacing: -0.01em; margin-bottom: 4px;">Catat Transaksi</div>
+          <div style="font-family: 'Libre Franklin', sans-serif; font-size: 13px; font-weight: 600; color: oklch(0.3 0.006 70); margin-bottom: 3px;">Jumlah (Rp)</div>
+          <div style="font-family: 'Libre Franklin', sans-serif; font-size: 12px; color: oklch(0.52 0.008 70); margin-bottom: 16px;">Masukkan angka tanpa titik.</div>
+          <div style="font-family: 'Red Hat Mono', monospace; font-size: 36px; font-weight: 600; color: oklch(0.22 0.006 70); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; margin-bottom: 18px;">Rp 36.500.000</div>
+          <div style="display: flex; flex-direction: column; gap: 7px; font-family: 'Red Hat Mono', monospace; font-size: 12px; font-variant-numeric: tabular-nums; color: oklch(0.4 0.008 70);">
+            <div style="display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid oklch(0.92 0.006 85); padding-bottom: 6px;"><span>20 Jun 2026 &middot; Pencairan</span><span>Rp&nbsp;6.000.000</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 12px; border-bottom: 1px solid oklch(0.92 0.006 85); padding-bottom: 6px;"><span>14 Jun 2026 &middot; Pembelian</span><span>Rp&nbsp;15.000.000</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 12px;"><span>12 Jun 2026 &middot; Angsuran</span><span>Rp&nbsp;200.000</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HOW TO CHOOSE -->
+  <div style="margin: 56px 0 0; background: oklch(0.28 0.01 70); border-radius: 16px; padding: 32px 36px;">
+    <div style="font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: oklch(0.72 0.05 248); margin-bottom: 12px;">Cara memilih</div>
+    <p style="font-size: 16px; line-height: 1.6; color: oklch(0.95 0.006 90); margin: 0 0 10px; max-width: 74ch;">Balas di chat, misalnya <strong style="color: oklch(0.99 0.002 90); font-weight: 600;">Palet B, Font 1</strong>. Boleh dicampur, misalnya <strong style="color: oklch(0.99 0.002 90); font-weight: 600;">Palet C dengan Font 2</strong>. Jika ragu, sebut kata yang paling penting bagi Anda dan saya usulkan satu.</p>
+    <p style="font-size: 14px; line-height: 1.6; color: oklch(0.78 0.006 80); margin: 0; max-width: 74ch;">Setelah Anda kunci, saya bangun konsol penuh: semua state (default, memuat, sukses inline, gagal validasi, kosong), tema terang dan gelap, plus berkas token OKLCH (:root dan .dark) dengan pemetaan Tailwind v4 untuk bundel handoff Claude Code.</p>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { palette: 'A', font: '1', theme: 'light' };
+
+  palettes = {
+    A: {
+      light: { bg:'oklch(0.984 0.003 240)', surface:'oklch(0.998 0.0015 240)', ink:'oklch(0.27 0.021 250)', muted:'oklch(0.505 0.02 250)', border:'oklch(0.905 0.007 245)', accent:'oklch(0.505 0.108 248)', accentInk:'oklch(0.99 0.005 240)' },
+      dark:  { bg:'oklch(0.215 0.016 250)', surface:'oklch(0.255 0.017 250)', ink:'oklch(0.955 0.004 240)', muted:'oklch(0.72 0.013 245)', border:'oklch(0.345 0.017 250)', accent:'oklch(0.7 0.1 248)', accentInk:'oklch(0.18 0.02 250)' },
+    },
+    B: {
+      light: { bg:'oklch(0.983 0.0045 85)', surface:'oklch(0.998 0.002 85)', ink:'oklch(0.245 0.009 65)', muted:'oklch(0.49 0.012 70)', border:'oklch(0.895 0.009 82)', accent:'oklch(0.48 0.083 210)', accentInk:'oklch(0.99 0.004 85)' },
+      dark:  { bg:'oklch(0.205 0.007 70)', surface:'oklch(0.245 0.008 70)', ink:'oklch(0.95 0.006 85)', muted:'oklch(0.7 0.011 80)', border:'oklch(0.335 0.009 72)', accent:'oklch(0.7 0.088 205)', accentInk:'oklch(0.17 0.01 70)' },
+    },
+    C: {
+      light: { bg:'oklch(0.985 0 0)', surface:'oklch(1 0 0)', ink:'oklch(0.2 0 0)', muted:'oklch(0.47 0 0)', border:'oklch(0.9 0 0)', accent:'oklch(0.24 0 0)', accentInk:'oklch(0.98 0 0)' },
+      dark:  { bg:'oklch(0.18 0 0)', surface:'oklch(0.23 0 0)', ink:'oklch(0.97 0 0)', muted:'oklch(0.67 0 0)', border:'oklch(0.32 0 0)', accent:'oklch(0.92 0 0)', accentInk:'oklch(0.16 0 0)' },
+    },
+  };
+
+  verdict = {
+    light: { hijauBg:'oklch(0.95 0.045 150)', hijauInk:'oklch(0.37 0.09 150)', hijauDot:'oklch(0.55 0.12 150)', kuningBg:'oklch(0.945 0.08 90)', kuningInk:'oklch(0.46 0.1 78)', kuningDot:'oklch(0.8 0.14 88)', merahBg:'oklch(0.945 0.05 27)', merahInk:'oklch(0.48 0.17 27)', merahDot:'oklch(0.57 0.2 27)' },
+    dark:  { hijauBg:'oklch(0.33 0.055 150)', hijauInk:'oklch(0.85 0.11 150)', hijauDot:'oklch(0.62 0.11 150)', kuningBg:'oklch(0.35 0.065 88)', kuningInk:'oklch(0.88 0.11 90)', kuningDot:'oklch(0.8 0.13 88)', merahBg:'oklch(0.34 0.085 27)', merahInk:'oklch(0.85 0.13 27)', merahDot:'oklch(0.62 0.19 27)' },
+  };
+
+  fonts = {
+    '1': { ui:"'IBM Plex Sans', system-ui, sans-serif", mono:"'IBM Plex Mono', ui-monospace, monospace", sub:'IBM Plex Sans + Mono' },
+    '2': { ui:"'Spline Sans', system-ui, sans-serif", mono:"'Spline Sans Mono', ui-monospace, monospace", sub:'Spline Sans + Mono' },
+    '3': { ui:"'Libre Franklin', system-ui, sans-serif", mono:"'Red Hat Mono', ui-monospace, monospace", sub:'Libre Franklin + Red Hat Mono' },
+  };
+
+  paletteNames = { A: 'Baja dan Kertas', B: 'Tinta dan Petrol', C: 'Grafit Murni' };
+
+  set(key, val) { this.setState({ [key]: val }); }
+
+  chipStyle(active) {
+    return {
+      display: 'flex', flexDirection: 'column', gap: '2px', textAlign: 'left',
+      fontFamily: 'system-ui, sans-serif', cursor: 'pointer', borderRadius: '10px',
+      padding: '11px 15px', minHeight: '44px', lineHeight: '1.3',
+      border: active ? '1px solid oklch(0.28 0.01 70)' : '1px solid oklch(0.88 0.008 85)',
+      background: active ? 'oklch(0.28 0.01 70)' : 'oklch(0.998 0.002 90)',
+      color: active ? 'oklch(0.98 0.002 90)' : 'oklch(0.36 0.008 70)',
+    };
+  }
+
+  segStyle(active) {
+    return {
+      fontFamily: 'system-ui, sans-serif', cursor: 'pointer', borderRadius: '10px',
+      padding: '11px 20px', minHeight: '44px', fontSize: '13px', fontWeight: 600,
+      border: active ? '1px solid oklch(0.28 0.01 70)' : '1px solid oklch(0.88 0.008 85)',
+      background: active ? 'oklch(0.28 0.01 70)' : 'oklch(0.998 0.002 90)',
+      color: active ? 'oklch(0.98 0.002 90)' : 'oklch(0.36 0.008 70)',
+    };
+  }
+
+  renderVals() {
+    const { palette, font, theme } = this.state;
+    const P = this.palettes[palette][theme];
+    const V = this.verdict[theme];
+    const F = this.fonts[font];
+
+    const previewVars = {
+      '--bg': P.bg, '--surface': P.surface, '--ink': P.ink, '--muted': P.muted,
+      '--border': P.border, '--accent': P.accent, '--accent-ink': P.accentInk,
+      '--hijau-bg': V.hijauBg, '--hijau-ink': V.hijauInk, '--hijau-dot': V.hijauDot,
+      '--kuning-bg': V.kuningBg, '--kuning-ink': V.kuningInk, '--kuning-dot': V.kuningDot,
+      '--merah-bg': V.merahBg, '--merah-ink': V.merahInk, '--merah-dot': V.merahDot,
+      '--ui': F.ui, '--mono': F.mono,
+      background: P.surface,
+      borderRadius: '16px', padding: '30px', border: '1px solid var(--border)',
+      boxShadow: '0 1px 2px oklch(0.2 0.01 70 / 0.04), 0 12px 40px oklch(0.2 0.01 70 / 0.06)',
+    };
+
+    const paletteChips = ['A','B','C'].map(id => ({
+      label: 'Palet ' + id, sub: this.paletteNames[id],
+      style: this.chipStyle(palette === id), onClick: () => this.set('palette', id),
+    }));
+    const fontChips = ['1','2','3'].map(id => ({
+      label: 'Font ' + id, sub: this.fonts[id].sub,
+      style: this.chipStyle(font === id), onClick: () => this.set('font', id),
+    }));
+    const themeChips = [['light','Terang'],['dark','Gelap']].map(([id,label]) => ({
+      label, style: this.segStyle(theme === id), onClick: () => this.set('theme', id),
+    }));
+
+    const selLabel = 'Palet ' + palette + ' \u00b7 Font ' + font + ' \u00b7 ' + (theme === 'light' ? 'Terang' : 'Gelap');
+
+    return { previewVars, paletteChips, fontChips, themeChips, selLabel };
+  }
+}
+</script>
+</body>
+</html>

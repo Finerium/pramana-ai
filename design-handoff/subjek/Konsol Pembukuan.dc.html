@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans+Mono:wght@400;500;600;700&family=Spline+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; }
+  * { box-sizing: border-box; }
+  body { -webkit-font-smoothing: antialiased; }
+  a { color: var(--color-primary); text-decoration: none; }
+  a:hover { color: var(--color-primary-hover); text-decoration: underline; }
+  ::placeholder { color: var(--color-faint); opacity: 1; }
+  input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+    outline: 2px solid var(--color-ring); outline-offset: 2px;
+  }
+  select option { color: #1a1a1a; }
+  @keyframes sp { to { transform: rotate(360deg); } }
+  .spin { animation: sp 0.7s linear infinite; }
+  @media (prefers-reduced-motion: reduce) { .spin { animation: none; } * { transition: none !important; } }
+</style>
+</helmet>
+
+<div style="{{ rootStyle }}">
+
+  <!-- ============ CONSOLE ============ -->
+  <sc-if value="{{ authed }}" hint-placeholder-val="{{ true }}">
+  <div>
+    <!-- HEADER -->
+    <header style="{{ S.header }}">
+      <div style="{{ S.redbar }}"></div>
+      <div style="{{ S.headerInner }}">
+        <div style="{{ S.brandRow }}">
+          <div style="{{ S.emblem }}"><div style="{{ S.emblemRed }}"></div><div style="{{ S.emblemWhite }}"></div></div>
+          <div style="min-width:0;">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <div style="{{ S.title }}">Simulasi Pembukuan Koperasi</div>
+              <span style="{{ S.simTag }}">Mode simulasi</span>
+            </div>
+            <div style="{{ S.sub }}">Sumber data yang diawasi Pramana</div>
+          </div>
+        </div>
+
+        <div style="{{ S.saldoWrap }}">
+          <div style="{{ S.saldoLabel }}">Saldo kas koperasi</div>
+          <div style="{{ S.saldoBox }}"><span style="{{ S.saldoVal }}">{{ saldoDisplay }}</span></div>
+          <div style="{{ S.koperasiName }}">Koperasi Desa Merah Putih Sukamaju</div>
+        </div>
+
+        <div style="{{ S.headerActions }}">
+          <span style="{{ S.syncChip }}"><span style="{{ S.syncDot }}"></span>Tersinkron ke Pramana</span>
+          <button type="button" style="{{ S.iconBtn }}" onClick="{{ h.toggleTheme }}" aria-label="Ganti tema">{{ themeIcon }}</button>
+          <button type="button" style="{{ S.ghostBtn }}" onClick="{{ h.logout }}">Keluar</button>
+        </div>
+      </div>
+    </header>
+
+    <div style="{{ S.container }}">
+      <div style="{{ S.grid }}">
+
+        <!-- LEFT: FORMS -->
+        <div style="{{ S.colLeft }}">
+
+          <!-- CATAT TRANSAKSI -->
+          <section style="{{ S.card }}">
+            <div style="{{ S.cardHead }}">
+              <div style="{{ S.cardTitle }}">Catat Transaksi</div>
+              <div style="{{ S.cardDesc }}">Setiap entri langsung menjadi sumber data yang diperiksa Pramana.</div>
+            </div>
+
+            <sc-if value="{{ trxNote }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ S.noteBox }}"><span style="{{ S.noteTag }}">Contoh</span><span>{{ trxNote }}</span></div>
+            </sc-if>
+
+            <div style="{{ S.formGrid }}">
+              <div style="{{ S.field }}">
+                <label style="{{ S.label }}">Jenis transaksi</label>
+                <div style="{{ S.selWrap }}">
+                  <select value="{{ trx.jenis }}" onChange="{{ h.trxJenis }}" style="{{ is.jenis }}">
+                    <sc-for list="{{ jenisOptions }}" as="o" hint-placeholder-count="8"><option value="{{ o.v }}">{{ o.l }}</option></sc-for>
+                  </select>
+                  <span style="{{ S.chev }}">&#9662;</span>
+                </div>
+              </div>
+
+              <div style="{{ S.field }}">
+                <label style="{{ S.label }}">Jumlah <span style="{{ S.reqMark }}">wajib</span></label>
+                <div style="{{ is.jumlahWrap }}">
+                  <span style="{{ S.rpPrefix }}">Rp</span>
+                  <input value="{{ trx.jumlah }}" onInput="{{ h.trxJumlah }}" inputmode="numeric" placeholder="0" style="{{ S.rpInput }}" aria-label="Jumlah rupiah">
+                </div>
+                <sc-if value="{{ trxEcho }}" hint-placeholder-val="{{ false }}"><div style="{{ S.echo }}">{{ trxEcho }}</div></sc-if>
+                <sc-if value="{{ te.jumlah }}" hint-placeholder-val="{{ false }}"><div style="{{ S.errText }}"><span style="{{ S.errIcon }}">!</span>{{ te.jumlah }}</div></sc-if>
+                <sc-if value="{{ trxJumlahHelp }}" hint-placeholder-val="{{ true }}"><div style="{{ S.helper }}">Masukkan angka tanpa titik. Contoh: 15000000</div></sc-if>
+              </div>
+
+              <div style="{{ S.field }}">
+                <label style="{{ S.label }}">Tanggal <span style="{{ S.reqMark }}">wajib</span></label>
+                <input type="date" value="{{ trx.tanggal }}" onChange="{{ h.trxTanggal }}" style="{{ is.tanggal }}" aria-label="Tanggal transaksi">
+                <sc-if value="{{ te.tanggal }}" hint-placeholder-val="{{ false }}"><div style="{{ S.errText }}"><span style="{{ S.errIcon }}">!</span>{{ te.tanggal }}</div></sc-if>
+              </div>
+
+              <div style="{{ S.field }}">
+                <label style="{{ S.label }}">Unit usaha</label>
+                <div style="{{ S.selWrap }}">
+                  <select value="{{ trx.unitUsaha }}" onChange="{{ h.trxUnit }}" style="{{ is.unitUsaha }}">
+                    <sc-for list="{{ unitOptions }}" as="o" hint-placeholder-count="5"><option value="{{ o.v }}">{{ o.l }}</option></sc-for>
+                  </select>
+                  <span style="{{ S.chev }}">&#9662;</span>
+                </div>
+                <sc-if value="{{ te.unitUsaha }}" hint-placeholder-val="{{ false }}"><div style="{{ S.errText }}"><span style="{{ S.errIcon }}">!</span>{{ te.unitUsaha }}</div></sc-if>
+              </div>
+
+              <sc-if value="{{ showVendor }}" hint-placeholder-val="{{ true }}">
+              <div style="{{ S.field }}">
+                <label style="{{ S.label }}">Nama vendor <span style="{{ S.reqMark }}">wajib</span></label>
+                <input value="{{ trx.vendorNama }}" onInput="{{ h.trxVendorNama }}" placeholder="Nama toko atau CV" style="{{ is.vendorNama }}">
+                <sc-if value="{{ te.vendorNama }}" hint-placeholder-val="{{ false }}"><div style="{{ S.errText }}"><span style="{{ S.errIcon }}">!</span>{{ te.vendorNama }}</div></sc-if>
+              </div>
+              </sc-if>
+
+              <sc-if value="{{ showVendor }}" hint-placeholder-val="{{ true }}">
+              <div style="{{ S.field }}">
+                <label style="{{ S.label }}">Alamat vendor <span style="{{ S.reqMark }}">wajib</span></label>
+                <input value="{{ trx.vendorAlamat }}" onInput="{{ h.trxVendorAlamat }}" placeholder="Alamat lengkap vendor" style="{{ is.vendorAlamat }}">
+                <sc-if value="{{ te.vendorAlamat }}" hint-placeholder-val="{{ false }}"><div style="{{ S.errText }}"><span style="{{ S.errIcon }}">!</span>{{ te.vendorAlamat }}</div></sc-if>
+              </div>
+              </sc-if>
+
+              <div style="{{ S.field }}">
+                <label style="{{ S.label }}">Anggota terkait <span style="{{ S.optMark }}">opsional</span></label>
+                <div style="{{ S.selWrap }}">
+                  <select value="{{ trx.anggota }}" onChange="{{ h.trxAnggota }}" style="{{ is.anggota }}">
+                    <sc-for list="{{ anggotaOptionsTrx }}" as="o" hint-placeholder-count="6"><option value="{{ o.v }}">{{ o.l }}</option></sc-for>
+                  </select>
+                  <span style="{{ S.chev }}">&#9662;</span>
+                </div>
+              </div>
+
+              <div style="{{ S.fieldFull }}">
+                <label style="{{ S.label }}">Deskripsi <span style="{{ S.reqMark }}">wajib</span></label>
+                <textarea value="{{ trx.deskripsi }}" onInput="{{ h.trxDeskripsi }}" placeholder="Jelaskan singkat transaksi ini" style="{{ is.deskripsi }}"></textarea>
+                <sc-if value="{{ te.deskripsi }}" hint-placeholder-val="{{ false }}"><div style="{{ S.errText }}"><span style="{{ S.errIcon }}">!</span>{{ te.deskripsi }}</div></sc-if>
+              </div>
+            </div>
+
+            <sc-if value="{{ trxSuccess }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ S.successBox }}"><span style="{{ S.okIcon }}">&#10003;</span><span>Transaksi tercatat. Saldo kas diperbarui dan entri dikirim ke Pramana.</span></div>
+            </sc-if>
+
+            <div style="{{ S.formActions }}">
+              <button type="button" style="{{ S.btnPrimary }}" onClick="{{ h.submitTrx }}" disabled="{{ trxLoading }}">
+                <sc-if value="{{ trxLoading }}" hint-placeholder-val="{{ false }}"><span class="spin" style="{{ S.spinner }}"></span></sc-if>
+                {{ trxBtnLabel }}
+              </button>
+              <button type="button" style="{{ S.btnGhost }}" onClick="{{ h.resetTrx }}">Bersihkan</button>
+            </div>
+          </section>
+
+          <!-- PERSETUJUAN PINJAMAN -->
+          <section style="{{ S.card }}">
+            <div style="{{ S.cardHead }}">
+              <div style="{{ S.cardTitle }}">Persetujuan Pinjaman</div>
+              <div style="{{ S.cardDesc }}">Plafon kebijakan koperasi Rp 10.000.000 per anggota.</div>
+            </div>
+
+            <sc-if value="{{ pinNote }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ S.noteBox }}"><span style="{{ S.noteTag }}">Contoh</span><span>{{ pinNote }}</span></div>
+            </sc-if>
+
+            <div style="{{ S.formGrid }}">
+              <div style="{{ S.field }}">
+                <label style="{{ S.label }}">Anggota <span style="{{ S.reqMark }}">wajib</span></label>
+                <div style="{{ S.selWrap }}">
+                  <select value="{{ pin.anggota }}" onChange="{{ h.pinAnggota }}" style="{{ ip.anggota }}">
+                    <sc-for list="{{ anggotaOptionsPin }}" as="o" hint-placeholder-count="6"><option value="{{ o.v }}">{{ o.l }}</option></sc-for>
+                  </select>
+                  <span style="{{ S.chev }}">&#9662;</span>
+                </div>
+                <sc-if value="{{ pe.anggota }}" hint-placeholder-val="{{ false }}"><div style="{{ S.errText }}"><span style="{{ S.errIcon }}">!</span>{{ pe.anggota }}</div></sc-if>
+              </div>
+
+              <div style="{{ S.field }}">
+                <label style="{{ S.label }}">Disetujui oleh <span style="{{ S.reqMark }}">wajib</span></label>
+                <div style="{{ S.selWrap }}">
+                  <select value="{{ pin.disetujuiOleh }}" onChange="{{ h.pinJabatan }}" style="{{ ip.disetujuiOleh }}">
+                    <sc-for list="{{ jabatanOptions }}" as="o" hint-placeholder-count="6"><option value="{{ o.v }}">{{ o.l }}</option></sc-for>
+                  </select>
+                  <span style="{{ S.chev }}">&#9662;</span>
+                </div>
+                <sc-if value="{{ pe.disetujuiOleh }}" hint-placeholder-val="{{ false }}"><div style="{{ S.errText }}"><span style="{{ S.errIcon }}">!</span>{{ pe.disetujuiOleh }}</div></sc-if>
+              </div>
+
+              <div style="{{ S.field }}">
+                <label style="{{ S.label }}">Pokok pinjaman <span style="{{ S.reqMark }}">wajib</span></label>
+                <div style="{{ ip.pokokWrap }}">
+                  <span style="{{ S.rpPrefix }}">Rp</span>
+                  <input value="{{ pin.pokok }}" onInput="{{ h.pinPokok }}" inputmode="numeric" placeholder="0" style="{{ S.rpInput }}" aria-label="Pokok pinjaman">
+                </div>
+                <sc-if value="{{ pinPokokEcho }}" hint-placeholder-val="{{ false }}"><div style="{{ S.echo }}">{{ pinPokokEcho }}</div></sc-if>
+                <sc-if value="{{ pe.pokok }}" hint-placeholder-val="{{ false }}"><div style="{{ S.errText }}"><span style="{{ S.errIcon }}">!</span>{{ pe.pokok }}</div></sc-if>
+              </div>
+
+              <div style="{{ S.field }}">
+                <label style="{{ S.label }}">Cicilan bulanan <span style="{{ S.reqMark }}">wajib</span></label>
+                <div style="{{ ip.cicilanWrap }}">
+                  <span style="{{ S.rpPrefix }}">Rp</span>
+                  <input value="{{ pin.cicilan }}" onInput="{{ h.pinCicilan }}" inputmode="numeric" placeholder="0" style="{{ S.rpInput }}" aria-label="Cicilan bulanan">
+                </div>
+                <sc-if value="{{ pinCicilanEcho }}" hint-placeholder-val="{{ false }}"><div style="{{ S.echo }}">{{ pinCicilanEcho }}</div></sc-if>
+                <sc-if value="{{ pe.cicilan }}" hint-placeholder-val="{{ false }}"><div style="{{ S.errText }}"><span style="{{ S.errIcon }}">!</span>{{ pe.cicilan }}</div></sc-if>
+              </div>
+
+              <div style="{{ S.field }}">
+                <label style="{{ S.label }}">Jatuh tempo berikut <span style="{{ S.reqMark }}">wajib</span></label>
+                <input type="date" value="{{ pin.jatuhTempo }}" onChange="{{ h.pinJatuhTempo }}" style="{{ ip.jatuhTempo }}" aria-label="Jatuh tempo berikut">
+                <sc-if value="{{ pe.jatuhTempo }}" hint-placeholder-val="{{ false }}"><div style="{{ S.errText }}"><span style="{{ S.errIcon }}">!</span>{{ pe.jatuhTempo }}</div></sc-if>
+              </div>
+
+              <div style="{{ S.field }}">
+                <label style="{{ S.label }}">Kelengkapan dokumen</label>
+                <div style="{{ S.switchCard }}">
+                  <div>
+                    <div style="{{ S.switchTitle }}">Dokumen lengkap</div>
+                    <div style="{{ S.switchSub }}">{{ dokStatusLabel }}</div>
+                  </div>
+                  <button type="button" role="switch" aria-checked="{{ pin.dokumenLengkap }}" onClick="{{ h.toggleDok }}" style="{{ dokTrack }}"><span style="{{ dokThumb }}"></span></button>
+                </div>
+              </div>
+            </div>
+
+            <sc-if value="{{ pinSuccess }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ S.successBox }}"><span style="{{ S.okIcon }}">&#10003;</span><span>Pinjaman tersimpan. Entri dikirim ke Pramana.</span></div>
+            </sc-if>
+
+            <div style="{{ S.formActions }}">
+              <button type="button" style="{{ S.btnPrimary }}" onClick="{{ h.submitPin }}" disabled="{{ pinLoading }}">
+                <sc-if value="{{ pinLoading }}" hint-placeholder-val="{{ false }}"><span class="spin" style="{{ S.spinner }}"></span></sc-if>
+                {{ pinBtnLabel }}
+              </button>
+              <button type="button" style="{{ S.btnGhost }}" onClick="{{ h.resetPin }}">Bersihkan</button>
+            </div>
+          </section>
+        </div>
+
+        <!-- RIGHT: RAIL -->
+        <div style="{{ S.colRight }}">
+
+          <!-- PRESET SKENARIO -->
+          <section style="{{ S.card }}">
+            <div style="{{ S.cardHead }}">
+              <div style="{{ S.cardTitle }}">Preset skenario</div>
+              <div style="{{ S.cardDesc }}">Mengisi form dengan contoh. Tidak langsung tersimpan, Anda tetap menekan tombol.</div>
+            </div>
+            <div style="{{ S.presetGrid }}">
+              <sc-for list="{{ presets }}" as="p" hint-placeholder-count="4">
+                <button type="button" style="{{ S.presetBtn }}" onClick="{{ p.onClick }}">
+                  <span style="{{ S.presetIdx }}">{{ p.idx }}</span>
+                  <span style="{{ S.presetLabel }}">{{ p.label }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </section>
+
+          <!-- STATUS RAT -->
+          <section style="{{ S.card }}">
+            <div style="{{ S.cardHead }}">
+              <div style="{{ S.cardTitle }}">Status RAT</div>
+              <div style="{{ S.cardDesc }}">Rapat Anggota Tahunan tahun berjalan.</div>
+            </div>
+            <div style="{{ S.ratYearRow }}">
+              <span style="{{ S.ratYearLabel }}">Tahun berjalan</span>
+              <span style="{{ S.ratYear }}">2026</span>
+            </div>
+            <div style="{{ S.switchCard }}">
+              <div>
+                <div style="{{ S.switchTitle }}">{{ ratStatusTitle }}</div>
+                <div style="{{ S.switchSub }}">{{ ratStatusSub }}</div>
+              </div>
+              <button type="button" role="switch" aria-checked="{{ ratTerlaksana }}" onClick="{{ h.toggleRat }}" style="{{ ratTrack }}"><span style="{{ ratThumb }}"></span></button>
+            </div>
+            <sc-if value="{{ ratTerlaksana }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ S.field }}" >
+                <label style="{{ S.label }}">Tanggal pelaksanaan</label>
+                <input type="date" value="{{ rat.tanggal }}" onChange="{{ h.ratTanggal }}" style="{{ S.inputBase }}" aria-label="Tanggal RAT">
+              </div>
+            </sc-if>
+            <sc-if value="{{ ratSuccess }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ S.successBox }}"><span style="{{ S.okIcon }}">&#10003;</span><span>Status RAT diperbarui.</span></div>
+            </sc-if>
+            <div style="{{ S.formActions }}">
+              <button type="button" style="{{ S.btnPrimarySm }}" onClick="{{ h.submitRat }}">Perbarui status RAT</button>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <!-- DAFTAR ENTRI TERAKHIR -->
+      <section style="{{ S.daftarCard }}">
+        <div style="{{ S.daftarHead }}">
+          <div>
+            <div style="{{ S.cardTitle }}">Daftar Entri Terakhir</div>
+            <div style="{{ S.cardDesc }}">Sepuluh transaksi dan lima pinjaman terbaru, dengan status sinkronisasi ke Pramana.</div>
+          </div>
+          <div style="{{ S.segWrap }}">
+            <button type="button" style="{{ seg.terisi }}" onClick="{{ h.viewTerisi }}">Terisi</button>
+            <button type="button" style="{{ seg.kosong }}" onClick="{{ h.viewKosong }}">Kosong</button>
+          </div>
+        </div>
+
+        <div style="{{ S.listGrid }}">
+          <!-- TRANSAKSI -->
+          <div>
+            <div style="{{ S.subTitle }}">Transaksi</div>
+            <sc-if value="{{ trxHasItems }}" hint-placeholder-val="{{ true }}">
+              <div>
+                <sc-for list="{{ trxRows }}" as="r" hint-placeholder-count="6">
+                  <div style="{{ r.rowStyle }}">
+                    <div style="{{ S.entryLeft }}">
+                      <div style="{{ S.entryTop }}"><span style="{{ S.entryJenis }}">{{ r.jenisLabel }}</span><span style="{{ S.entryDate }}">{{ r.tanggalDisp }}</span></div>
+                      <div style="{{ S.entryPihak }}">{{ r.pihak }}</div>
+                    </div>
+                    <div style="{{ S.entryRight }}">
+                      <span style="{{ r.amountStyle }}">{{ r.amountDisp }}</span>
+                      <span style="{{ r.chipStyle }}"><span style="{{ r.dotStyle }}"></span>{{ r.syncLabel }}</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ trxEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ S.emptyBox }}">
+                <div style="{{ S.emptyGlyph }}"><span style="{{ S.emptyGlyphLine }}"></span><span style="{{ S.emptyGlyphLine }}"></span><span style="{{ S.emptyGlyphLineShort }}"></span></div>
+                <div style="{{ S.emptyTitle }}">Belum ada transaksi</div>
+                <div style="{{ S.emptyDesc }}">Transaksi yang Anda catat akan muncul di sini dan langsung dikirim ke Pramana.</div>
+              </div>
+            </sc-if>
+          </div>
+
+          <!-- PINJAMAN -->
+          <div>
+            <div style="{{ S.subTitle }}">Pinjaman</div>
+            <sc-if value="{{ pinHasItems }}" hint-placeholder-val="{{ true }}">
+              <div>
+                <sc-for list="{{ pinRows }}" as="r" hint-placeholder-count="3">
+                  <div style="{{ r.rowStyle }}">
+                    <div style="{{ S.entryLeft }}">
+                      <div style="{{ S.entryTop }}"><span style="{{ S.entryJenis }}">{{ r.anggota }}</span><span style="{{ S.entryDate }}">Tempo {{ r.jatuhTempoDisp }}</span></div>
+                      <div style="{{ S.entryPihak }}">Pokok {{ r.pokokDisp }} &middot; cicilan {{ r.cicilanDisp }}</div>
+                    </div>
+                    <div style="{{ S.entryRight }}">
+                      <span style="{{ r.dokChipStyle }}">{{ r.dokLabel }}</span>
+                      <span style="{{ r.chipStyle }}"><span style="{{ r.dotStyle }}"></span>{{ r.syncLabel }}</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ pinEmpty }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ S.emptyBox }}">
+                <div style="{{ S.emptyGlyph }}"><span style="{{ S.emptyGlyphLine }}"></span><span style="{{ S.emptyGlyphLine }}"></span><span style="{{ S.emptyGlyphLineShort }}"></span></div>
+                <div style="{{ S.emptyTitle }}">Belum ada pinjaman</div>
+                <div style="{{ S.emptyDesc }}">Pinjaman yang Anda setujui akan muncul di sini beserta status dokumennya.</div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </section>
+
+      <div style="{{ S.footNote }}">Konsol ini mensimulasikan sistem pembukuan koperasi. Data yang Anda catat menjadi sumber yang diperiksa Pramana. Ini bukan bagian produk Pramana untuk pengurus.</div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ============ LOGIN ============ -->
+  <sc-if value="{{ notAuthed }}" hint-placeholder-val="{{ false }}">
+  <div style="{{ S.loginWrap }}">
+    <div style="{{ S.loginTopBar }}">
+      <div style="{{ S.emblem }}"><div style="{{ S.emblemRed }}"></div><div style="{{ S.emblemWhite }}"></div></div>
+      <button type="button" style="{{ S.iconBtn }}" onClick="{{ h.toggleTheme }}" aria-label="Ganti tema">{{ themeIcon }}</button>
+    </div>
+    <div style="{{ S.loginCard }}">
+      <div style="{{ S.loginTop }}"></div>
+      <div style="{{ S.loginBody }}">
+        <div style="{{ S.loginKicker }}">Simulasi Pembukuan Koperasi</div>
+        <div style="{{ S.loginTitle }}">Masuk sebagai bendahara</div>
+        <div style="{{ S.loginSub }}">Sumber data yang diawasi Pramana. Gunakan akun uji di bawah untuk mencoba.</div>
+
+        <sc-if value="{{ loginErr }}" hint-placeholder-val="{{ false }}">
+          <div style="{{ S.loginErrBox }}"><span style="{{ S.errIcon }}">!</span><span>{{ loginErr }}</span></div>
+        </sc-if>
+
+        <div style="{{ S.field }}">
+          <label style="{{ S.label }}">Email</label>
+          <input value="{{ login.email }}" onInput="{{ h.loginEmail }}" placeholder="nama@pramana.id" style="{{ ls.email }}" autocomplete="username">
+        </div>
+        <div style="{{ S.fieldMt }}">
+          <label style="{{ S.label }}">Kata sandi</label>
+          <input type="password" value="{{ login.password }}" onInput="{{ h.loginPass }}" placeholder="Kata sandi" style="{{ ls.pass }}" autocomplete="current-password">
+        </div>
+
+        <div style="{{ S.hintBox }}">
+          <div style="{{ S.hintLabel }}"><span style="{{ S.hintDot }}"></span>Akun uji bendahara</div>
+          <div style="{{ S.hintCred }}">bendahara@pramana.id<br>PramanaBendahara2026</div>
+          <button type="button" style="{{ S.hintBtn }}" onClick="{{ h.autofill }}">Isi otomatis</button>
+        </div>
+
+        <button type="button" style="{{ S.btnPrimaryBlock }}" onClick="{{ h.doLogin }}">Masuk</button>
+      </div>
+    </div>
+    <div style="{{ S.loginFoot }}">Purwarupa untuk penjurian. Seluruh data bersifat sintetis.</div>
+  </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  MONO = "'Spline Sans Mono', ui-monospace, monospace";
+
+  tokens = {
+    light: {
+      '--color-bg':'oklch(0.985 0.002 60)', '--color-surface':'oklch(1 0 0)', '--color-surface-sunken':'oklch(0.976 0.003 65)', '--color-surface-raised':'oklch(0.965 0.004 65)',
+      '--color-ink':'oklch(0.24 0.006 45)', '--color-ink-strong':'oklch(0.16 0.006 45)', '--color-muted':'oklch(0.45 0.008 50)', '--color-faint':'oklch(0.62 0.008 50)',
+      '--color-border':'oklch(0.9 0.004 60)', '--color-border-strong':'oklch(0.82 0.006 55)',
+      '--color-primary':'oklch(0.52 0.208 27)', '--color-primary-hover':'oklch(0.46 0.2 27)', '--color-on-primary':'oklch(0.99 0.008 40)', '--color-primary-soft':'oklch(0.955 0.032 27)', '--color-on-primary-soft':'oklch(0.45 0.19 27)',
+      '--color-ring':'oklch(0.55 0.2 27)',
+      '--color-sync':'oklch(0.58 0.13 158)', '--color-sync-soft':'oklch(0.95 0.04 158)', '--color-on-sync-soft':'oklch(0.4 0.1 160)',
+      '--color-pending':'oklch(0.72 0.12 78)', '--color-pending-soft':'oklch(0.95 0.06 82)', '--color-on-pending-soft':'oklch(0.47 0.1 70)',
+      '--color-danger':'oklch(0.5 0.2 27)', '--color-danger-soft':'oklch(0.965 0.025 27)', '--color-on-danger-soft':'oklch(0.45 0.19 27)',
+    },
+    dark: {
+      '--color-bg':'oklch(0.185 0.004 45)', '--color-surface':'oklch(0.225 0.005 45)', '--color-surface-sunken':'oklch(0.2 0.004 45)', '--color-surface-raised':'oklch(0.265 0.006 45)',
+      '--color-ink':'oklch(0.96 0.003 60)', '--color-ink-strong':'oklch(0.99 0.002 60)', '--color-muted':'oklch(0.73 0.006 55)', '--color-faint':'oklch(0.56 0.006 55)',
+      '--color-border':'oklch(0.32 0.006 45)', '--color-border-strong':'oklch(0.42 0.008 45)',
+      '--color-primary':'oklch(0.57 0.205 27)', '--color-primary-hover':'oklch(0.63 0.19 27)', '--color-on-primary':'oklch(0.99 0.008 40)', '--color-primary-soft':'oklch(0.32 0.08 27)', '--color-on-primary-soft':'oklch(0.85 0.14 27)',
+      '--color-ring':'oklch(0.65 0.19 27)',
+      '--color-sync':'oklch(0.68 0.13 158)', '--color-sync-soft':'oklch(0.33 0.06 158)', '--color-on-sync-soft':'oklch(0.83 0.12 158)',
+      '--color-pending':'oklch(0.78 0.12 78)', '--color-pending-soft':'oklch(0.34 0.06 78)', '--color-on-pending-soft':'oklch(0.85 0.11 80)',
+      '--color-danger':'oklch(0.7 0.17 27)', '--color-danger-soft':'oklch(0.32 0.08 27)', '--color-on-danger-soft':'oklch(0.85 0.14 27)',
+    },
+  };
+
+  jenisMeta = {
+    pembelian:{label:'Pembelian',arah:'keluar'}, penjualan:{label:'Penjualan',arah:'masuk'},
+    setoran_simpanan:{label:'Setoran simpanan',arah:'masuk'}, penarikan_simpanan:{label:'Penarikan simpanan',arah:'keluar'},
+    pencairan_pinjaman:{label:'Pencairan pinjaman',arah:'keluar'}, angsuran:{label:'Angsuran',arah:'masuk'},
+    gaji:{label:'Gaji',arah:'keluar'}, operasional:{label:'Operasional',arah:'keluar'},
+  };
+  jenisOptions = [
+    {v:'pembelian',l:'Pembelian'},{v:'penjualan',l:'Penjualan'},{v:'setoran_simpanan',l:'Setoran simpanan'},
+    {v:'penarikan_simpanan',l:'Penarikan simpanan'},{v:'pencairan_pinjaman',l:'Pencairan pinjaman'},
+    {v:'angsuran',l:'Angsuran'},{v:'gaji',l:'Gaji'},{v:'operasional',l:'Operasional'},
+  ];
+  unitOptions = [{v:'',l:'Pilih unit usaha'},{v:'sembako',l:'Gerai Sembako'},{v:'simpan_pinjam',l:'Unit Simpan Pinjam'},{v:'apotek',l:'Apotek Desa'},{v:'gudang',l:'Gudang'}];
+  anggotaOptionsTrx = [{v:'',l:'Tidak terkait anggota'},{v:'sari',l:'Sari Rahayu'},{v:'budi',l:'Budi Santoso'},{v:'andi',l:'Andi Pratama'},{v:'dewi',l:'Dewi Lestari'},{v:'rudi',l:'Rudi Hartono'}];
+  anggotaOptionsPin = [{v:'',l:'Pilih anggota'},{v:'sari',l:'Sari Rahayu'},{v:'budi',l:'Budi Santoso'},{v:'andi',l:'Andi Pratama'},{v:'dewi',l:'Dewi Lestari'},{v:'rudi',l:'Rudi Hartono'}];
+  jabatanOptions = [{v:'',l:'Pilih jabatan'},{v:'ketua',l:'Ketua'},{v:'wakil',l:'Wakil Ketua'},{v:'sekretaris',l:'Sekretaris'},{v:'bendahara',l:'Bendahara'},{v:'pengawas',l:'Pengawas'}];
+  anggotaMap = {sari:'Sari Rahayu',budi:'Budi Santoso',andi:'Andi Pratama',dewi:'Dewi Lestari',rudi:'Rudi Hartono'};
+  unitMap = {sembako:'Gerai Sembako',simpan_pinjam:'Unit Simpan Pinjam',apotek:'Apotek Desa',gudang:'Gudang'};
+
+  seedTrx = [
+    {id:'s1',tanggal:'2026-06-20',jenis:'pencairan_pinjaman',jumlah:6000000,pihak:'Rudi Hartono',sync:'tersinkron'},
+    {id:'s2',tanggal:'2026-06-18',jenis:'penjualan',jumlah:1250000,pihak:'Gerai Sembako',sync:'tersinkron'},
+    {id:'s3',tanggal:'2026-06-14',jenis:'pembelian',jumlah:15000000,pihak:'Toko Berkah',sync:'tersinkron'},
+    {id:'s4',tanggal:'2026-06-12',jenis:'angsuran',jumlah:200000,pihak:'Sari Rahayu',sync:'tersinkron'},
+    {id:'s5',tanggal:'2026-06-10',jenis:'gaji',jumlah:2500000,pihak:'Budi Santoso',sync:'tersinkron'},
+    {id:'s6',tanggal:'2026-06-08',jenis:'setoran_simpanan',jumlah:50000,pihak:'Dewi Lestari',sync:'tersinkron'},
+  ];
+  seedPin = [
+    {id:'p1',anggota:'Rudi Hartono',pokok:12000000,cicilan:1000000,jatuhTempo:'2026-07-20',dokumenLengkap:false,sync:'tersinkron'},
+    {id:'p2',anggota:'Sari Rahayu',pokok:2000000,cicilan:200000,jatuhTempo:'2026-07-05',dokumenLengkap:true,sync:'tersinkron'},
+    {id:'p3',anggota:'Andi Pratama',pokok:6000000,cicilan:500000,jatuhTempo:'2026-07-20',dokumenLengkap:true,sync:'tersinkron'},
+  ];
+
+  emptyTrx(){ return {jenis:'pembelian',jumlah:'',tanggal:'',unitUsaha:'',vendorNama:'',vendorAlamat:'',deskripsi:'',anggota:''}; }
+  emptyPin(){ return {anggota:'',pokok:'',cicilan:'',jatuhTempo:'',disetujuiOleh:'',dokumenLengkap:false}; }
+
+  state = {
+    authed:true, theme:'light',
+    login:{email:'',password:''}, loginErr:'',
+    trx:this.emptyTrx(), trxErr:{}, trxLoading:false, trxSuccess:false, trxNote:'',
+    pin:this.emptyPin(), pinErr:{}, pinLoading:false, pinSuccess:false, pinNote:'',
+    rat:{status:'belum',tanggal:''}, ratSuccess:false,
+    saldo:36500000, saldoPulse:false,
+    trxList:this.seedTrx.slice(), pinList:this.seedPin.slice(), listView:'terisi',
+  };
+
+  formatRp(n){ if(n===''||n===null||n===undefined||isNaN(Number(n))) return 'Rp 0'; return 'Rp ' + Number(n).toLocaleString('id-ID'); }
+  fmtDate(iso){ if(!iso) return ''; const p=iso.split('-'); if(p.length<3) return iso; const mo=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des']; return parseInt(p[2],10)+' '+mo[parseInt(p[1],10)-1]+' '+p[0]; }
+
+  validateTrx(t){
+    const e={};
+    if(!t.jumlah){ e.jumlah='Jumlah wajib diisi.'; } else if(!/^\d+$/.test(t.jumlah)||parseInt(t.jumlah,10)<=0){ e.jumlah='Jumlah harus berupa angka lebih dari nol. Masukkan tanpa titik.'; }
+    if(!t.tanggal) e.tanggal='Tanggal wajib diisi.';
+    if(!t.deskripsi||!t.deskripsi.trim()) e.deskripsi='Deskripsi wajib diisi agar entri mudah ditelusuri.';
+    if(t.jenis==='pembelian'){
+      if(!t.unitUsaha) e.unitUsaha='Unit usaha wajib dipilih untuk pembelian.';
+      if(!t.vendorNama||!t.vendorNama.trim()) e.vendorNama='Nama vendor wajib diisi untuk pembelian.';
+      if(!t.vendorAlamat||!t.vendorAlamat.trim()) e.vendorAlamat='Alamat vendor wajib diisi untuk pembelian.';
+    }
+    return e;
+  }
+  validatePin(p){
+    const e={};
+    if(!p.anggota) e.anggota='Anggota wajib dipilih.';
+    if(!p.disetujuiOleh) e.disetujuiOleh='Jabatan penyetuju wajib dipilih.';
+    if(!p.pokok){ e.pokok='Pokok pinjaman wajib diisi.'; } else if(!/^\d+$/.test(p.pokok)||parseInt(p.pokok,10)<=0){ e.pokok='Pokok harus berupa angka lebih dari nol.'; }
+    if(!p.cicilan){ e.cicilan='Cicilan bulanan wajib diisi.'; } else if(!/^\d+$/.test(p.cicilan)||parseInt(p.cicilan,10)<=0){ e.cicilan='Cicilan harus berupa angka lebih dari nol.'; }
+    if(!p.jatuhTempo) e.jatuhTempo='Tanggal jatuh tempo wajib diisi.';
+    return e;
+  }
+
+  // handlers
+  toggleTheme = () => this.setState(s=>({theme:s.theme==='light'?'dark':'light'}));
+  logout = () => this.setState({authed:false, login:{email:'',password:''}, loginErr:''});
+  loginEmail = (e)=>{ const v=e.target.value; this.setState(s=>({login:{...s.login,email:v},loginErr:''})); };
+  loginPass = (e)=>{ const v=e.target.value; this.setState(s=>({login:{...s.login,password:v},loginErr:''})); };
+  autofill = ()=> this.setState({login:{email:'bendahara@pramana.id',password:'PramanaBendahara2026'},loginErr:''});
+  doLogin = ()=>{ const {email,password}=this.state.login; if(email==='bendahara@pramana.id'&&password==='PramanaBendahara2026'){ this.setState({authed:true,loginErr:''}); } else { this.setState({loginErr:'Email atau kata sandi belum tepat. Silakan coba lagi.'}); } };
+
+  chgTrx = (k,num) => (e)=>{ let v=e.target.value; if(num) v=v.replace(/[^\d]/g,''); this.setState(s=>{ const err={...s.trxErr}; delete err[k]; return {trx:{...s.trx,[k]:v}, trxErr:err, trxSuccess:false}; }); };
+  chgPin = (k,num) => (e)=>{ let v=e.target.value; if(num) v=v.replace(/[^\d]/g,''); this.setState(s=>{ const err={...s.pinErr}; delete err[k]; return {pin:{...s.pin,[k]:v}, pinErr:err, pinSuccess:false}; }); };
+  toggleDok = ()=> this.setState(s=>({pin:{...s.pin,dokumenLengkap:!s.pin.dokumenLengkap}, pinSuccess:false}));
+  toggleRat = ()=> this.setState(s=>({rat:{...s.rat,status:s.rat.status==='terlaksana'?'belum':'terlaksana'}, ratSuccess:false}));
+  ratTanggal = (e)=>{ const v=e.target.value; this.setState(s=>({rat:{...s.rat,tanggal:v}, ratSuccess:false})); };
+  submitRat = ()=> this.setState({ratSuccess:true});
+  resetTrx = ()=> this.setState({trx:this.emptyTrx(), trxErr:{}, trxSuccess:false, trxNote:''});
+  resetPin = ()=> this.setState({pin:this.emptyPin(), pinErr:{}, pinSuccess:false, pinNote:''});
+  viewTerisi = ()=> this.setState({listView:'terisi'});
+  viewKosong = ()=> this.setState({listView:'kosong'});
+
+  submitTrx = ()=>{
+    const errs=this.validateTrx(this.state.trx);
+    if(Object.keys(errs).length){ this.setState({trxErr:errs, trxSuccess:false}); return; }
+    this.setState({trxLoading:true, trxErr:{}, trxSuccess:false});
+    setTimeout(()=>{
+      const t=this.state.trx; const meta=this.jenisMeta[t.jenis]; const amt=parseInt(t.jumlah,10);
+      const pihak = t.vendorNama || this.anggotaMap[t.anggota] || this.unitMap[t.unitUsaha] || 'Koperasi';
+      const id='n'+Date.now();
+      const entry={id,tanggal:t.tanggal,jenis:t.jenis,jumlah:amt,pihak,sync:'menunggu'};
+      const newSaldo=this.state.saldo + (meta.arah==='masuk'?amt:-amt);
+      this.setState(s=>({saldo:newSaldo, saldoPulse:true, trxList:[entry,...s.trxList].slice(0,10), trxLoading:false, trxSuccess:true, trx:this.emptyTrx(), trxNote:'', listView:'terisi'}));
+      setTimeout(()=> this.setState(s=>({trxList:s.trxList.map(x=>x.id===id?{...x,sync:'tersinkron'}:x)})), 1500);
+      setTimeout(()=> this.setState({saldoPulse:false}), 800);
+    }, 900);
+  };
+  submitPin = ()=>{
+    const errs=this.validatePin(this.state.pin);
+    if(Object.keys(errs).length){ this.setState({pinErr:errs, pinSuccess:false}); return; }
+    this.setState({pinLoading:true, pinErr:{}, pinSuccess:false});
+    setTimeout(()=>{
+      const p=this.state.pin; const id='np'+Date.now();
+      const entry={id,anggota:this.anggotaMap[p.anggota]||'Anggota',pokok:parseInt(p.pokok,10),cicilan:parseInt(p.cicilan,10),jatuhTempo:p.jatuhTempo,dokumenLengkap:p.dokumenLengkap,sync:'menunggu'};
+      this.setState(s=>({pinList:[entry,...s.pinList].slice(0,5), pinLoading:false, pinSuccess:true, pin:this.emptyPin(), pinNote:'', listView:'terisi'}));
+      setTimeout(()=> this.setState(s=>({pinList:s.pinList.map(x=>x.id===id?{...x,sync:'tersinkron'}:x)})), 1500);
+    }, 900);
+  };
+
+  presetKonflik = ()=> this.setState({trx:{jenis:'pembelian',jumlah:'15000000',tanggal:'2026-06-14',unitUsaha:'sembako',vendorNama:'Toko Berkah',vendorAlamat:'Jl. Melati No. 12, Sukamaju',deskripsi:'Pembelian perlengkapan gerai sembako',anggota:''}, trxErr:{}, trxSuccess:false, trxNote:'Alamat vendor sama dengan alamat pengurus. Setelah dicatat, Pramana dapat menandainya sebagai hal yang perlu dijelaskan pengurus.'});
+  presetPecah = ()=> this.setState({trx:{jenis:'pembelian',jumlah:'4900000',tanggal:'2026-06-22',unitUsaha:'sembako',vendorNama:'CV Sumber Rejeki',vendorAlamat:'Jl. Raya Sukamaju No. 8',deskripsi:'Pembelian stok tahap ketiga minggu ini',anggota:''}, trxErr:{}, trxSuccess:false, trxNote:'Pembelian dipecah menjadi beberapa nilai di bawah lima juta ke vendor yang sama dalam sepekan. Pola ini dapat ditanyakan Pramana.'});
+  presetKas = ()=> this.setState({trx:{jenis:'operasional',jumlah:'20000000',tanggal:'2026-06-25',unitUsaha:'',vendorNama:'',vendorAlamat:'',deskripsi:'Pengeluaran operasional besar akhir bulan',anggota:''}, trxErr:{}, trxSuccess:false, trxNote:'Pengeluaran besar yang menekan saldo kas. Tren kas yang menurun tajam dapat menjadi perhatian Pramana.'});
+  presetPlafon = ()=> this.setState({pin:{anggota:'rudi',pokok:'12000000',cicilan:'1000000',jatuhTempo:'2026-07-20',disetujuiOleh:'bendahara',dokumenLengkap:false}, pinErr:{}, pinSuccess:false, pinNote:'Pokok melebihi plafon sepuluh juta dan dokumen ditandai belum lengkap. Kombinasi ini dapat ditanyakan Pramana.'});
+
+  mkChip(kind){
+    const base={display:'inline-flex',alignItems:'center',gap:'6px',fontSize:'11px',fontWeight:600,borderRadius:'999px',padding:'4px 9px',whiteSpace:'nowrap'};
+    if(kind==='tersinkron') return {...base,color:'var(--color-on-sync-soft)',background:'var(--color-sync-soft)'};
+    return {...base,color:'var(--color-on-pending-soft)',background:'var(--color-pending-soft)'};
+  }
+  mkDot(kind){ return {width:'6px',height:'6px',borderRadius:'50%',background:kind==='tersinkron'?'var(--color-sync)':'var(--color-pending)'}; }
+
+  renderVals(){
+    const st=this.state; const T=this.tokens[st.theme]; const MONO=this.MONO;
+    const rootStyle={...T, background:'var(--color-bg)', color:'var(--color-ink)', fontFamily:"'Spline Sans', system-ui, sans-serif", minHeight:'100vh', width:'100%'};
+
+    const te=st.trxErr, pe=st.pinErr;
+    const inputBase={width:'100%',minHeight:'46px',boxSizing:'border-box',fontFamily:"'Spline Sans', system-ui, sans-serif",fontSize:'15px',color:'var(--color-ink-strong)',background:'var(--color-surface-sunken)',border:'1px solid var(--color-border-strong)',borderRadius:'10px',padding:'11px 14px',outline:'none'};
+    const mkInput=(err)=>({...inputBase, ...(err?{borderColor:'var(--color-danger)',background:'var(--color-danger-soft)'}:{})});
+    const selectBase={...inputBase, appearance:'none', WebkitAppearance:'none', MozAppearance:'none', paddingRight:'38px', cursor:'pointer'};
+    const mkSelect=(err)=>({...selectBase, ...(err?{borderColor:'var(--color-danger)',background:'var(--color-danger-soft)'}:{})});
+    const textareaBase={...inputBase, minHeight:'92px', resize:'vertical', lineHeight:1.5};
+    const mkTextarea=(err)=>({...textareaBase, ...(err?{borderColor:'var(--color-danger)',background:'var(--color-danger-soft)'}:{})});
+    const mkRpWrap=(err)=>({display:'flex',alignItems:'stretch',border:'1px solid '+(err?'var(--color-danger)':'var(--color-border-strong)'),borderRadius:'10px',overflow:'hidden',background:err?'var(--color-danger-soft)':'var(--color-surface-sunken)'});
+
+    const mkTrack=(on)=>({width:'48px',height:'28px',minWidth:'48px',borderRadius:'999px',background:on?'var(--color-primary)':'var(--color-border-strong)',position:'relative',cursor:'pointer',border:'none',padding:0,transition:'background .18s ease',flex:'none'});
+    const mkThumb=(on)=>({position:'absolute',top:'3px',left:on?'23px':'3px',width:'22px',height:'22px',borderRadius:'50%',background:'var(--color-on-primary)',transition:'left .18s ease',boxShadow:'0 1px 3px rgba(0,0,0,0.35)'});
+    const mkSeg=(active)=>({fontFamily:"'Spline Sans', system-ui, sans-serif",fontSize:'12px',fontWeight:600,padding:'6px 14px',borderRadius:'7px',border:'none',cursor:'pointer',minHeight:'34px',background:active?'var(--color-surface)':'transparent',color:active?'var(--color-ink-strong)':'var(--color-muted)',boxShadow:active?'0 1px 2px rgba(0,0,0,0.06)':'none'});
+
+    const S={
+      header:{position:'sticky',top:0,zIndex:20,background:'var(--color-surface)',borderBottom:'1px solid var(--color-border)'},
+      redbar:{height:'3px',background:'var(--color-primary)'},
+      headerInner:{maxWidth:'1320px',margin:'0 auto',padding:'15px 32px',display:'flex',alignItems:'center',gap:'24px',flexWrap:'wrap'},
+      brandRow:{display:'flex',alignItems:'center',gap:'13px',flex:'1 1 300px',minWidth:0},
+      emblem:{width:'30px',height:'30px',borderRadius:'8px',overflow:'hidden',border:'1px solid var(--color-border-strong)',flex:'none',display:'flex',flexDirection:'column'},
+      emblemRed:{height:'50%',background:'var(--color-primary)'}, emblemWhite:{height:'50%',background:'var(--color-surface)'},
+      title:{fontSize:'17px',fontWeight:600,color:'var(--color-ink-strong)',letterSpacing:'-0.01em',lineHeight:1.15},
+      simTag:{fontSize:'10.5px',fontWeight:600,color:'var(--color-on-primary-soft)',background:'var(--color-primary-soft)',borderRadius:'999px',padding:'2px 9px',letterSpacing:'0.02em'},
+      sub:{fontSize:'12.5px',color:'var(--color-muted)',marginTop:'2px'},
+      saldoWrap:{display:'flex',flexDirection:'column',alignItems:'flex-end',gap:'2px'},
+      saldoLabel:{fontFamily:MONO,fontSize:'10px',letterSpacing:'0.1em',textTransform:'uppercase',color:'var(--color-muted)'},
+      saldoBox:{borderRadius:'8px',padding:'2px 8px',transition:'background .6s ease',background:st.saldoPulse?'var(--color-primary-soft)':'transparent'},
+      saldoVal:{fontFamily:MONO,fontWeight:600,fontSize:'30px',color:'var(--color-ink-strong)',fontVariantNumeric:'tabular-nums',letterSpacing:'-0.01em',lineHeight:1.1},
+      koperasiName:{fontSize:'11.5px',color:'var(--color-faint)'},
+      headerActions:{display:'flex',alignItems:'center',gap:'10px',flexWrap:'wrap'},
+      syncChip:{display:'inline-flex',alignItems:'center',gap:'7px',fontSize:'12px',fontWeight:600,color:'var(--color-on-sync-soft)',background:'var(--color-sync-soft)',borderRadius:'999px',padding:'7px 13px'},
+      syncDot:{width:'7px',height:'7px',borderRadius:'50%',background:'var(--color-sync)'},
+      iconBtn:{width:'42px',height:'42px',minWidth:'42px',display:'inline-flex',alignItems:'center',justifyContent:'center',borderRadius:'10px',border:'1px solid var(--color-border-strong)',background:'var(--color-surface)',color:'var(--color-ink)',cursor:'pointer',fontSize:'16px'},
+      ghostBtn:{minHeight:'42px',padding:'0 16px',borderRadius:'10px',border:'1px solid var(--color-border-strong)',background:'var(--color-surface)',color:'var(--color-ink)',cursor:'pointer',fontSize:'13.5px',fontWeight:600,fontFamily:"'Spline Sans', system-ui, sans-serif"},
+      container:{maxWidth:'1320px',margin:'0 auto',padding:'28px 32px 56px'},
+      grid:{display:'grid',gridTemplateColumns:'minmax(0,1fr) 356px',gap:'24px',alignItems:'start'},
+      colLeft:{display:'flex',flexDirection:'column',gap:'24px',minWidth:0},
+      colRight:{display:'flex',flexDirection:'column',gap:'24px'},
+      card:{background:'var(--color-surface)',border:'1px solid var(--color-border)',borderRadius:'16px',padding:'26px',boxShadow:'0 1px 2px rgba(0,0,0,0.03)'},
+      cardHead:{marginBottom:'20px'},
+      cardTitle:{fontSize:'16px',fontWeight:600,color:'var(--color-ink-strong)',letterSpacing:'-0.01em'},
+      cardDesc:{fontSize:'13px',color:'var(--color-muted)',marginTop:'5px',lineHeight:1.5},
+      formGrid:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'18px'},
+      field:{display:'flex',flexDirection:'column',gap:'7px'},
+      fieldMt:{display:'flex',flexDirection:'column',gap:'7px',marginTop:'16px'},
+      fieldFull:{display:'flex',flexDirection:'column',gap:'7px',gridColumn:'1 / -1'},
+      label:{fontSize:'13px',fontWeight:600,color:'var(--color-ink)',display:'flex',gap:'6px',alignItems:'baseline'},
+      reqMark:{fontSize:'10px',fontWeight:600,color:'var(--color-on-primary-soft)',background:'var(--color-primary-soft)',borderRadius:'4px',padding:'1px 6px',textTransform:'uppercase',letterSpacing:'0.03em'},
+      optMark:{fontSize:'11px',fontWeight:400,color:'var(--color-faint)'},
+      helper:{fontSize:'12px',color:'var(--color-muted)',lineHeight:1.45},
+      echo:{fontFamily:MONO,fontSize:'12.5px',color:'var(--color-ink)',fontWeight:500,fontVariantNumeric:'tabular-nums'},
+      errText:{fontSize:'12px',color:'var(--color-danger)',fontWeight:500,display:'flex',gap:'7px',alignItems:'flex-start',lineHeight:1.4},
+      errIcon:{flex:'none',width:'15px',height:'15px',borderRadius:'50%',background:'var(--color-danger)',color:'var(--color-on-primary)',fontSize:'11px',fontWeight:700,display:'inline-flex',alignItems:'center',justifyContent:'center',lineHeight:1},
+      okIcon:{flex:'none',width:'16px',height:'16px',borderRadius:'50%',background:'var(--color-sync)',color:'var(--color-on-primary)',fontSize:'10px',fontWeight:700,display:'inline-flex',alignItems:'center',justifyContent:'center',marginTop:'1px'},
+      selWrap:{position:'relative'},
+      chev:{position:'absolute',right:'14px',top:'50%',transform:'translateY(-50%)',pointerEvents:'none',color:'var(--color-muted)',fontSize:'11px'},
+      rpPrefix:{display:'flex',alignItems:'center',padding:'0 13px',fontFamily:MONO,fontSize:'15px',color:'var(--color-muted)',background:'var(--color-surface-raised)',borderRight:'1px solid var(--color-border)'},
+      rpInput:{flex:1,minWidth:0,border:'none',background:'transparent',minHeight:'46px',fontFamily:MONO,fontSize:'16px',color:'var(--color-ink-strong)',fontVariantNumeric:'tabular-nums',padding:'11px 14px',outline:'none'},
+      inputBase:inputBase,
+      formActions:{display:'flex',alignItems:'center',gap:'12px',marginTop:'22px',flexWrap:'wrap'},
+      btnPrimary:{display:'inline-flex',alignItems:'center',justifyContent:'center',gap:'9px',minHeight:'46px',padding:'0 24px',fontFamily:"'Spline Sans', system-ui, sans-serif",fontSize:'15px',fontWeight:600,color:'var(--color-on-primary)',background:'var(--color-primary)',border:'none',borderRadius:'11px',cursor:st.trxLoading?'default':'pointer',opacity:st.trxLoading?0.85:1},
+      btnPrimarySm:{display:'inline-flex',alignItems:'center',justifyContent:'center',minHeight:'44px',padding:'0 20px',fontFamily:"'Spline Sans', system-ui, sans-serif",fontSize:'14px',fontWeight:600,color:'var(--color-on-primary)',background:'var(--color-primary)',border:'none',borderRadius:'10px',cursor:'pointer'},
+      btnGhost:{display:'inline-flex',alignItems:'center',justifyContent:'center',minHeight:'46px',padding:'0 20px',fontFamily:"'Spline Sans', system-ui, sans-serif",fontSize:'15px',fontWeight:600,color:'var(--color-ink)',background:'transparent',border:'1px solid var(--color-border-strong)',borderRadius:'11px',cursor:'pointer'},
+      spinner:{width:'15px',height:'15px',borderRadius:'50%',border:'2px solid rgba(255,255,255,0.4)',borderTopColor:'var(--color-on-primary)',display:'inline-block'},
+      successBox:{display:'flex',gap:'10px',alignItems:'flex-start',background:'var(--color-sync-soft)',border:'1px solid var(--color-sync)',borderRadius:'10px',padding:'12px 14px',fontSize:'13px',color:'var(--color-on-sync-soft)',lineHeight:1.45,marginTop:'18px'},
+      noteBox:{display:'flex',gap:'11px',alignItems:'flex-start',background:'var(--color-surface-sunken)',border:'1px dashed var(--color-border-strong)',borderRadius:'10px',padding:'12px 14px',fontSize:'12.5px',color:'var(--color-muted)',lineHeight:1.55,marginBottom:'20px'},
+      noteTag:{flex:'none',fontFamily:MONO,fontSize:'10px',fontWeight:600,color:'var(--color-on-primary-soft)',background:'var(--color-primary-soft)',borderRadius:'5px',padding:'2px 7px',textTransform:'uppercase',letterSpacing:'0.04em',marginTop:'1px'},
+      presetGrid:{display:'flex',flexDirection:'column',gap:'10px'},
+      presetBtn:{display:'flex',alignItems:'flex-start',gap:'11px',textAlign:'left',width:'100%',background:'var(--color-surface-sunken)',border:'1px solid var(--color-border)',borderRadius:'12px',padding:'13px 15px',cursor:'pointer',minHeight:'44px'},
+      presetIdx:{flex:'none',fontFamily:MONO,fontSize:'11px',fontWeight:700,color:'var(--color-on-primary-soft)',background:'var(--color-primary-soft)',borderRadius:'6px',padding:'2px 8px',marginTop:'1px'},
+      presetLabel:{fontSize:'13px',fontWeight:500,color:'var(--color-ink)',lineHeight:1.4},
+      switchCard:{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'14px',background:'var(--color-surface-sunken)',border:'1px solid var(--color-border)',borderRadius:'12px',padding:'13px 15px'},
+      switchTitle:{fontSize:'14px',fontWeight:600,color:'var(--color-ink-strong)'},
+      switchSub:{fontSize:'12px',color:'var(--color-muted)',marginTop:'2px'},
+      ratYearRow:{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 2px 16px'},
+      ratYearLabel:{fontSize:'13px',color:'var(--color-muted)'},
+      ratYear:{fontFamily:MONO,fontSize:'18px',fontWeight:600,color:'var(--color-ink-strong)',fontVariantNumeric:'tabular-nums'},
+      daftarCard:{background:'var(--color-surface)',border:'1px solid var(--color-border)',borderRadius:'16px',padding:'26px',boxShadow:'0 1px 2px rgba(0,0,0,0.03)',marginTop:'24px'},
+      daftarHead:{display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:'16px',flexWrap:'wrap',marginBottom:'22px'},
+      segWrap:{display:'inline-flex',gap:'4px',background:'var(--color-surface-sunken)',border:'1px solid var(--color-border)',borderRadius:'9px',padding:'3px'},
+      listGrid:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'32px'},
+      subTitle:{fontSize:'12px',fontWeight:600,color:'var(--color-muted)',textTransform:'uppercase',letterSpacing:'0.07em',marginBottom:'8px'},
+      entryLeft:{flex:1,minWidth:0},
+      entryTop:{display:'flex',alignItems:'baseline',gap:'9px'},
+      entryJenis:{fontSize:'14px',fontWeight:600,color:'var(--color-ink-strong)'},
+      entryDate:{fontFamily:MONO,fontSize:'11px',color:'var(--color-muted)',whiteSpace:'nowrap'},
+      entryPihak:{fontSize:'12.5px',color:'var(--color-muted)',marginTop:'3px',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'},
+      entryRight:{display:'flex',flexDirection:'column',alignItems:'flex-end',gap:'6px',flex:'none'},
+      emptyBox:{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',textAlign:'center',padding:'40px 20px',border:'1px dashed var(--color-border-strong)',borderRadius:'12px',gap:'8px'},
+      emptyGlyph:{width:'40px',height:'48px',border:'1.5px solid var(--color-border-strong)',borderRadius:'6px',background:'var(--color-surface-sunken)',display:'flex',flexDirection:'column',justifyContent:'center',gap:'5px',padding:'0 8px',opacity:0.7,marginBottom:'2px'},
+      emptyGlyphLine:{height:'3px',borderRadius:'2px',background:'var(--color-border-strong)',width:'100%'},
+      emptyGlyphLineShort:{height:'3px',borderRadius:'2px',background:'var(--color-border-strong)',width:'55%'},
+      emptyTitle:{fontSize:'14px',fontWeight:600,color:'var(--color-ink)'},
+      emptyDesc:{fontSize:'12.5px',color:'var(--color-muted)',maxWidth:'34ch',lineHeight:1.5},
+      footNote:{fontSize:'12px',color:'var(--color-faint)',lineHeight:1.55,marginTop:'22px',maxWidth:'82ch'},
+      loginWrap:{minHeight:'100vh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'40px 20px',position:'relative'},
+      loginTopBar:{position:'absolute',top:'24px',left:0,right:0,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 32px'},
+      loginCard:{width:'100%',maxWidth:'440px',background:'var(--color-surface)',border:'1px solid var(--color-border)',borderRadius:'18px',overflow:'hidden',boxShadow:'0 16px 48px rgba(0,0,0,0.1)'},
+      loginTop:{height:'4px',background:'var(--color-primary)'},
+      loginBody:{padding:'34px 34px 32px'},
+      loginKicker:{fontFamily:MONO,fontSize:'11px',letterSpacing:'0.1em',textTransform:'uppercase',color:'var(--color-on-primary-soft)',marginBottom:'10px'},
+      loginTitle:{fontSize:'24px',fontWeight:700,color:'var(--color-ink-strong)',letterSpacing:'-0.02em',marginBottom:'6px'},
+      loginSub:{fontSize:'13.5px',color:'var(--color-muted)',lineHeight:1.5,marginBottom:'22px'},
+      loginErrBox:{display:'flex',gap:'10px',alignItems:'flex-start',background:'var(--color-danger-soft)',border:'1px solid var(--color-danger)',borderRadius:'10px',padding:'12px 14px',fontSize:'13px',color:'var(--color-danger)',marginBottom:'18px',lineHeight:1.45},
+      hintBox:{background:'var(--color-surface-sunken)',border:'1px solid var(--color-border)',borderRadius:'12px',padding:'15px 16px',marginTop:'20px',marginBottom:'22px'},
+      hintLabel:{display:'flex',alignItems:'center',gap:'8px',fontSize:'12.5px',fontWeight:600,color:'var(--color-ink)'},
+      hintDot:{width:'7px',height:'7px',borderRadius:'50%',background:'var(--color-primary)'},
+      hintCred:{fontFamily:MONO,fontSize:'12.5px',color:'var(--color-muted)',marginTop:'9px',lineHeight:1.7},
+      hintBtn:{marginTop:'12px',minHeight:'38px',padding:'0 14px',borderRadius:'8px',border:'1px solid var(--color-border-strong)',background:'var(--color-surface)',color:'var(--color-ink)',cursor:'pointer',fontSize:'12.5px',fontWeight:600,fontFamily:"'Spline Sans', system-ui, sans-serif"},
+      btnPrimaryBlock:{width:'100%',display:'inline-flex',alignItems:'center',justifyContent:'center',minHeight:'48px',fontFamily:"'Spline Sans', system-ui, sans-serif",fontSize:'15px',fontWeight:600,color:'var(--color-on-primary)',background:'var(--color-primary)',border:'none',borderRadius:'11px',cursor:'pointer'},
+      loginFoot:{fontSize:'12px',color:'var(--color-faint)',marginTop:'22px'},
+    };
+
+    const is={ jenis:mkSelect(false), jumlahWrap:mkRpWrap(!!te.jumlah), tanggal:mkInput(!!te.tanggal), unitUsaha:mkSelect(!!te.unitUsaha), vendorNama:mkInput(!!te.vendorNama), vendorAlamat:mkInput(!!te.vendorAlamat), anggota:mkSelect(false), deskripsi:mkTextarea(!!te.deskripsi) };
+    const ip={ anggota:mkSelect(!!pe.anggota), disetujuiOleh:mkSelect(!!pe.disetujuiOleh), pokokWrap:mkRpWrap(!!pe.pokok), cicilanWrap:mkRpWrap(!!pe.cicilan), jatuhTempo:mkInput(!!pe.jatuhTempo) };
+    const ls={ email:mkInput(!!st.loginErr), pass:mkInput(!!st.loginErr) };
+
+    const dokOn=st.pin.dokumenLengkap;
+    const ratTerlaksana=st.rat.status==='terlaksana';
+
+    const trxRows=st.trxList.map(x=>{ const meta=this.jenisMeta[x.jenis]; const masuk=meta.arah==='masuk'; return {
+      id:x.id, jenisLabel:meta.label, tanggalDisp:this.fmtDate(x.tanggal), pihak:x.pihak,
+      amountDisp:(masuk?'+ ':'\u2212 ')+this.formatRp(x.jumlah),
+      amountStyle:{fontFamily:MONO,fontSize:'15px',fontWeight:600,color:'var(--color-ink-strong)',fontVariantNumeric:'tabular-nums',whiteSpace:'nowrap'},
+      syncLabel:x.sync==='tersinkron'?'Tersinkron':'Menunggu sinkron', chipStyle:this.mkChip(x.sync), dotStyle:this.mkDot(x.sync),
+      rowStyle:{display:'flex',alignItems:'center',gap:'14px',padding:'13px 0',borderBottom:'1px solid var(--color-border)'},
+    };});
+    const pinRows=st.pinList.map(x=>({
+      id:x.id, anggota:x.anggota, jatuhTempoDisp:this.fmtDate(x.jatuhTempo), pokokDisp:this.formatRp(x.pokok), cicilanDisp:this.formatRp(x.cicilan),
+      dokLabel:x.dokumenLengkap?'Dokumen lengkap':'Dokumen belum lengkap',
+      dokChipStyle:{fontSize:'11px',fontWeight:600,borderRadius:'999px',padding:'4px 9px',whiteSpace:'nowrap',color:x.dokumenLengkap?'var(--color-on-sync-soft)':'var(--color-on-pending-soft)',background:x.dokumenLengkap?'var(--color-sync-soft)':'var(--color-pending-soft)'},
+      syncLabel:x.sync==='tersinkron'?'Tersinkron':'Menunggu sinkron', chipStyle:this.mkChip(x.sync), dotStyle:this.mkDot(x.sync),
+      rowStyle:{display:'flex',alignItems:'center',gap:'14px',padding:'13px 0',borderBottom:'1px solid var(--color-border)'},
+    }));
+
+    const trxHasItems=st.listView==='terisi'&&st.trxList.length>0;
+    const pinHasItems=st.listView==='terisi'&&st.pinList.length>0;
+
+    const h={
+      toggleTheme:this.toggleTheme, logout:this.logout, autofill:this.autofill, doLogin:this.doLogin, loginEmail:this.loginEmail, loginPass:this.loginPass,
+      trxJenis:this.chgTrx('jenis',false), trxJumlah:this.chgTrx('jumlah',true), trxTanggal:this.chgTrx('tanggal',false), trxUnit:this.chgTrx('unitUsaha',false),
+      trxVendorNama:this.chgTrx('vendorNama',false), trxVendorAlamat:this.chgTrx('vendorAlamat',false), trxAnggota:this.chgTrx('anggota',false), trxDeskripsi:this.chgTrx('deskripsi',false),
+      submitTrx:this.submitTrx, resetTrx:this.resetTrx,
+      pinAnggota:this.chgPin('anggota',false), pinJabatan:this.chgPin('disetujuiOleh',false), pinPokok:this.chgPin('pokok',true), pinCicilan:this.chgPin('cicilan',true), pinJatuhTempo:this.chgPin('jatuhTempo',false),
+      toggleDok:this.toggleDok, submitPin:this.submitPin, resetPin:this.resetPin,
+      toggleRat:this.toggleRat, ratTanggal:this.ratTanggal, submitRat:this.submitRat,
+      viewTerisi:this.viewTerisi, viewKosong:this.viewKosong,
+    };
+
+    return {
+      rootStyle, authed:st.authed, notAuthed:!st.authed, theme:st.theme, themeIcon:st.theme==='light'?'\u25D1':'\u25D0',
+      S, is, ip, ls, h,
+      login:st.login, loginErr:st.loginErr,
+      trx:st.trx, te, showVendor:st.trx.jenis==='pembelian', trxLoading:st.trxLoading, trxSuccess:st.trxSuccess, trxNote:st.trxNote,
+      trxBtnLabel:st.trxLoading?'Menyimpan...':'Catat Transaksi', trxEcho:(st.trx.jumlah&&/^\d+$/.test(st.trx.jumlah))?('Terbaca: '+this.formatRp(st.trx.jumlah)):'', trxJumlahHelp:!(st.trx.jumlah&&/^\d+$/.test(st.trx.jumlah)),
+      pin:st.pin, pe, pinLoading:st.pinLoading, pinSuccess:st.pinSuccess, pinNote:st.pinNote, pinBtnLabel:st.pinLoading?'Menyimpan...':'Setujui Pinjaman',
+      pinPokokEcho:(st.pin.pokok&&/^\d+$/.test(st.pin.pokok))?('Terbaca: '+this.formatRp(st.pin.pokok)):'', pinCicilanEcho:(st.pin.cicilan&&/^\d+$/.test(st.pin.cicilan))?('Terbaca: '+this.formatRp(st.pin.cicilan)):'',
+      dokTrack:mkTrack(dokOn), dokThumb:mkThumb(dokOn), dokStatusLabel:dokOn?'Dokumen dinyatakan lengkap.':'Dokumen belum lengkap.',
+      rat:st.rat, ratTerlaksana, ratTrack:mkTrack(ratTerlaksana), ratThumb:mkThumb(ratTerlaksana), ratSuccess:st.ratSuccess,
+      ratStatusTitle:ratTerlaksana?'RAT sudah terlaksana':'RAT belum terlaksana', ratStatusSub:ratTerlaksana?'Isi tanggal pelaksanaan di bawah.':'Status ini menjadi salah satu yang diperiksa Pramana.',
+      saldoDisplay:this.formatRp(st.saldo),
+      jenisOptions:this.jenisOptions, unitOptions:this.unitOptions, anggotaOptionsTrx:this.anggotaOptionsTrx, anggotaOptionsPin:this.anggotaOptionsPin, jabatanOptions:this.jabatanOptions,
+      presets:[{idx:'1',label:'Isi contoh: pembelian ke alamat pengurus',onClick:this.presetKonflik},{idx:'2',label:'Isi contoh: pemecahan pembelian',onClick:this.presetPecah},{idx:'3',label:'Isi contoh: pinjaman lampaui plafon tanpa dokumen',onClick:this.presetPlafon},{idx:'4',label:'Isi contoh: pengeluaran menguras kas',onClick:this.presetKas}],
+      seg:{terisi:mkSeg(st.listView==='terisi'),kosong:mkSeg(st.listView==='kosong')},
+      trxRows, pinRows, trxHasItems, trxEmpty:!trxHasItems, pinHasItems, pinEmpty:!pinHasItems,
+    };
+  }
+}
+</script>
+</body>
+</html>

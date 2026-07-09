@@ -1,0 +1,5 @@
+{"at":"2026-07-09T09:58:13.247Z","tool":"Write","reason":"path contains protected segment 'design-handoff'","detail":"design-handoff/mobile/handoff/tokens.css"}
+{"at":"2026-07-09T09:58:13.320Z","tool":"Write","reason":"'tests' is verification-workflow property in phase 1-build","detail":"tests/foo.test.ts"}
+{"at":"2026-07-09T09:58:13.445Z","tool":"Edit","reason":"path contains protected segment 'design-handoff'","detail":"/tmp/wt/pramana/design-handoff/x.css"}
+{"at":"2026-07-09T09:58:13.506Z","tool":"Bash","reason":"rm -rf is denied","detail":"rm -rf node_modules"}
+{"at":"2026-07-09T09:58:13.566Z","tool":"Bash","reason":"reading .env via bash is denied (secrets)","detail":"cat .env"}

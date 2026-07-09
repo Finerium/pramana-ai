@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:oklch(0.968 0.006 75);--surface:oklch(0.995 0.002 75);--ink:oklch(0.255 0.02 275);--muted:oklch(0.50 0.022 270);--border:oklch(0.905 0.008 75);
+--accent:oklch(0.45 0.085 265);--accent-on:oklch(1 0 0);
+--hijau:oklch(0.53 0.115 152);--hijau-on:oklch(1 0 0);
+--kuning:oklch(0.79 0.135 82);--kuning-on:oklch(0.255 0.02 275);
+--merah:oklch(0.53 0.165 27);--merah-on:oklch(1 0 0);
+--hijau-tint:oklch(0.93 0.04 152);--hijau-tint-ink:oklch(0.38 0.10 152);
+--kuning-tint:oklch(0.94 0.05 90);--kuning-tint-ink:oklch(0.44 0.10 75);
+--merah-tint:oklch(0.93 0.035 25);--merah-tint-ink:oklch(0.42 0.13 27);
+}
+[data-tema="gelap"]{
+--bg:oklch(0.215 0.015 275);--surface:oklch(0.262 0.016 275);--ink:oklch(0.94 0.006 80);--muted:oklch(0.67 0.015 270);--border:oklch(0.335 0.015 272);
+--accent:oklch(0.73 0.085 265);--accent-on:oklch(0.215 0.015 275);
+--hijau:oklch(0.68 0.115 152);--hijau-on:oklch(0.215 0.015 275);
+--kuning:oklch(0.80 0.13 82);--kuning-on:oklch(0.215 0.015 275);
+--merah:oklch(0.64 0.15 30);--merah-on:oklch(0.215 0.015 275);
+--hijau-tint:oklch(0.31 0.045 152);--hijau-tint-ink:oklch(0.86 0.09 150);
+--kuning-tint:oklch(0.31 0.04 85);--kuning-tint-ink:oklch(0.88 0.10 90);
+--merah-tint:oklch(0.31 0.05 28);--merah-tint-ink:oklch(0.87 0.07 25);
+}
+html,body{margin:0;padding:0}
+button{font:inherit;color:inherit;background:none;border:none;padding:0;margin:0;text-align:inherit;cursor:pointer}
+input{font:inherit}
+::placeholder{color:var(--muted);opacity:0.75}
+a{color:var(--accent)}a:hover{opacity:0.85}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.45}}
+@keyframes rise{from{opacity:0;transform:translateY(20px) scale(0.97)}to{opacity:1;transform:none}}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important}}
+</style>
+</helmet>
+<div data-tema="{{tema}}" style="min-height:100dvh;background:var(--bg);display:flex;justify-content:center;font-family:Geist,ui-sans-serif,system-ui,sans-serif;color:var(--ink)">
+<div style="width:100%;max-width:430px;min-width:320px;min-height:100dvh;display:flex;flex-direction:column;position:relative">
+
+<sc-if value="{{sLogin}}" hint-placeholder-val="{{true}}">
+<main data-screen-label="Login" style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:28px;padding:40px 24px 48px;animation:fadein 0.24s ease">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+    <span style="width:34px;height:34px;background:var(--accent);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)"></span>
+    <span style="font-size:30px;font-weight:800;letter-spacing:-0.6px">Pramana</span>
+    <span style="font-size:14.5px;color:var(--muted);text-align:center">Pengawas yang bekerja untuk anggota koperasi</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:22px 20px">
+    <label style="display:flex;flex-direction:column;gap:7px">
+      <span style="font-size:13.5px;font-weight:600">Email</span>
+      <input type="email" value="{{email}}" onChange="{{onEmail}}" placeholder="nama@contoh.id" style="width:100%;box-sizing:border-box;height:50px;padding:0 14px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--ink);font-size:16px">
+    </label>
+    <label style="display:flex;flex-direction:column;gap:7px">
+      <span style="font-size:13.5px;font-weight:600">Kata sandi</span>
+      <input type="password" value="{{pass}}" onChange="{{onPass}}" placeholder="Kata sandi Anda" style="width:100%;box-sizing:border-box;height:50px;padding:0 14px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--ink);font-size:16px">
+    </label>
+    <sc-if value="{{loginErr}}" hint-placeholder-val="{{false}}">
+      <div role="alert" style="display:flex;gap:9px;align-items:flex-start;background:var(--merah-tint);color:var(--merah-tint-ink);border-radius:12px;padding:12px 14px">
+        <span style="display:flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:4px;background:var(--merah-tint-ink);color:var(--merah-tint);font-size:10px;font-weight:800;flex:none">&#10005;</span>
+        <span style="font-size:13.5px;line-height:1.5">Email atau kata sandi belum tepat. Silakan coba lagi.</span>
+      </div>
+    </sc-if>
+    <button onClick="{{onLogin}}" style="height:54px;border-radius:999px;background:var(--accent);color:var(--accent-on);font-size:17px;font-weight:600;text-align:center">{{btnMasuk}}</button>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px;border:1.5px dashed var(--border);border-radius:16px;padding:16px 18px">
+    <span style="font-size:12px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;color:var(--muted)">Akun uji juri</span>
+    <span style="font:13px ui-monospace,Menlo,monospace;color:var(--ink);line-height:1.6">juri.anggota@pramana.id<br>PramanaJuri2026</span>
+    <button onClick="{{fillJuri}}" style="min-height:44px;display:flex;align-items:center;font-size:14.5px;font-weight:600;color:var(--accent)">Isi otomatis</button>
+  </div>
+  <div style="display:flex;justify-content:center;gap:6px;font-size:15px">
+    <span style="color:var(--muted)">Belum menjadi anggota?</span>
+    <button onClick="{{goDaftar}}" style="min-height:44px;margin-top:-12px;display:inline-flex;align-items:center;font-weight:600;color:var(--accent)">Daftar</button>
+  </div>
+</main>
+</sc-if>
+
+<sc-if value="{{sDaftar}}" hint-placeholder-val="{{false}}">
+<main data-screen-label="Daftar" style="flex:1;display:flex;flex-direction:column;gap:20px;padding:28px 24px 48px;animation:fadein 0.24s ease">
+  <sc-if value="{{dFormShown}}" hint-placeholder-val="{{true}}">
+    <button onClick="{{goLogin}}" style="min-height:44px;display:flex;align-items:center;gap:6px;font-size:15px;font-weight:600;color:var(--accent)">&#8249; Masuk</button>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <h1 style="margin:0;font-size:26px;font-weight:750;letter-spacing:-0.4px">Menjadi anggota</h1>
+      <p style="margin:0;font-size:14.5px;line-height:1.5;color:var(--muted)">Koperasi Desa Merah Putih Sukamaju</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:22px 20px">
+      <label style="display:flex;flex-direction:column;gap:7px">
+        <span style="font-size:13.5px;font-weight:600">Nama lengkap</span>
+        <input value="{{nama}}" onChange="{{onNama}}" placeholder="Sesuai KTP" style="width:100%;box-sizing:border-box;height:50px;padding:0 14px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--ink);font-size:16px">
+      </label>
+      <label style="display:flex;flex-direction:column;gap:7px">
+        <span style="font-size:13.5px;font-weight:600">NIK, 16 angka</span>
+        <input inputMode="numeric" maxLength="16" value="{{nik}}" onChange="{{onNik}}" placeholder="Nomor pada KTP Anda" style="width:100%;box-sizing:border-box;height:50px;padding:0 14px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--ink);font-size:16px;font-variant-numeric:tabular-nums">
+      </label>
+      <sc-if value="{{nikErr}}" hint-placeholder-val="{{false}}">
+        <div role="alert" style="display:flex;gap:9px;align-items:flex-start;background:var(--merah-tint);color:var(--merah-tint-ink);border-radius:12px;padding:12px 14px">
+          <span style="display:flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:4px;background:var(--merah-tint-ink);color:var(--merah-tint);font-size:10px;font-weight:800;flex:none">&#10005;</span>
+          <span style="font-size:13.5px;line-height:1.5">Nomor NIK harus 16 angka. Silakan periksa kembali KTP Anda.</span>
+        </div>
+      </sc-if>
+      <label style="display:flex;flex-direction:column;gap:7px">
+        <span style="font-size:13.5px;font-weight:600">Alamat</span>
+        <input value="{{alamat}}" onChange="{{onAlamat}}" placeholder="Dusun, desa, kecamatan" style="width:100%;box-sizing:border-box;height:50px;padding:0 14px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--ink);font-size:16px">
+      </label>
+      <label style="display:flex;flex-direction:column;gap:7px">
+        <span style="font-size:13.5px;font-weight:600">Email</span>
+        <input type="email" value="{{dEmail}}" onChange="{{onDEmail}}" placeholder="nama@contoh.id" style="width:100%;box-sizing:border-box;height:50px;padding:0 14px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--ink);font-size:16px">
+      </label>
+      <label style="display:flex;flex-direction:column;gap:7px">
+        <span style="font-size:13.5px;font-weight:600">Kata sandi</span>
+        <input type="password" value="{{dPass}}" onChange="{{onDPass}}" placeholder="Minimal 8 karakter" style="width:100%;box-sizing:border-box;height:50px;padding:0 14px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--ink);font-size:16px">
+      </label>
+      <button onClick="{{onDaftar}}" style="height:54px;border-radius:999px;background:var(--accent);color:var(--accent-on);font-size:17px;font-weight:600;text-align:center">{{btnDaftar}}</button>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;justify-content:center">
+      <span style="width:9px;height:9px;background:var(--muted);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);flex:none"></span>
+      <span style="font-size:12.5px;color:var(--muted)">Verifikasi simulasi untuk purwarupa</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{dOk}}" hint-placeholder-val="{{false}}">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:24px">
+      <p style="margin:0;font-size:16.5px;line-height:1.5;text-align:center;font-weight:600">Selamat, Anda resmi menjadi anggota. Ini kartu anggota digital Anda.</p>
+      <div style="background:var(--accent);color:var(--accent-on);border-radius:22px;padding:24px 22px;display:flex;flex-direction:column;gap:20px;animation:rise 0.5s cubic-bezier(0.2,0.7,0.2,1)">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:12px;font-weight:600;letter-spacing:0.5px;opacity:0.85">KOPERASI DESA MERAH PUTIH SUKAMAJU</span>
+          <span style="width:12px;height:12px;background:var(--accent-on);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);opacity:0.9"></span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <span style="font-size:23px;font-weight:750;letter-spacing:-0.3px">{{kartuNama}}</span>
+          <span style="font-size:14px;opacity:0.85">Anggota</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end">
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <span style="font-size:11.5px;letter-spacing:0.5px;opacity:0.8">NO. ANGGOTA</span>
+            <span style="font-size:19px;font-weight:700;font-variant-numeric:tabular-nums">KDS-0031</span>
+            <span style="font-size:12.5px;opacity:0.85">Bergabung 8 Juli 2026</span>
+          </div>
+          <div style="width:58px;height:58px;background:var(--accent-on);border-radius:10px;display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px;box-sizing:border-box">
+            <span style="background:var(--accent);border-radius:2px"></span>
+            <span style="background:var(--accent);border-radius:2px;opacity:0.55"></span>
+            <span style="background:var(--accent);border-radius:2px;opacity:0.55"></span>
+            <span style="background:var(--accent);border-radius:2px"></span>
+          </div>
+        </div>
+      </div>
+      <button onClick="{{masukDariKartu}}" style="height:54px;border-radius:999px;background:var(--accent);color:var(--accent-on);font-size:17px;font-weight:600;text-align:center">Masuk ke Beranda</button>
+      <div style="display:flex;gap:8px;align-items:center;justify-content:center">
+        <span style="width:9px;height:9px;background:var(--muted);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);flex:none"></span>
+        <span style="font-size:12.5px;color:var(--muted)">Verifikasi simulasi untuk purwarupa</span>
+      </div>
+    </div>
+  </sc-if>
+</main>
+</sc-if>
+
+<sc-if value="{{sBeranda}}" hint-placeholder-val="{{false}}">
+<main data-screen-label="Beranda" style="flex:1;display:flex;flex-direction:column;gap:18px;padding:24px 22px 120px;animation:fadein 0.24s ease">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+    <div style="display:flex;flex-direction:column;gap:3px">
+      <span style="font-size:12.5px;color:var(--muted)">Koperasi Desa Merah Putih Sukamaju</span>
+      <span style="font-size:21px;font-weight:750;letter-spacing:-0.3px">Koperasi Anda Sehat?</span>
+    </div>
+    <button onClick="{{keluar}}" style="min-height:44px;display:flex;align-items:center;font-size:13.5px;font-weight:600;color:var(--muted)">Keluar</button>
+  </div>
+  <sc-if value="{{kGagal}}" hint-placeholder-val="{{false}}">
+    <div role="status" style="display:flex;gap:9px;align-items:flex-start;background:var(--kuning-tint);color:var(--kuning-tint-ink);border-radius:12px;padding:12px 14px">
+      <span style="display:flex;align-items:flex-end;justify-content:center;width:18px;height:18px;clip-path:polygon(50% 4%,100% 96%,0 96%);background:var(--kuning-tint-ink);color:var(--kuning-tint);font-size:9px;font-weight:800;padding-bottom:2px;box-sizing:border-box;flex:none">!</span>
+      <span style="font-size:13px;line-height:1.5">Menampilkan hasil pemeriksaan tersimpan. Pemeriksaan langsung sedang tidak tersedia.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{kMuat}}" hint-placeholder-val="{{false}}">
+    <div style="display:flex;flex-direction:column;gap:14px" aria-label="Memuat">
+      <div style="height:340px;border-radius:24px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:64px;border-radius:16px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{kKosong}}" hint-placeholder-val="{{false}}">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:36px 26px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+      <span style="width:52px;height:52px;border:3px solid var(--muted);border-radius:50%;box-sizing:border-box"></span>
+      <span style="font-size:17px;font-weight:650;line-height:1.4">Pengawas belum menyelesaikan pemeriksaan pertama untuk koperasi Anda.</span>
+      <span style="font-size:14px;color:var(--muted);line-height:1.5">Hasil pemeriksaan akan muncul di sini.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{kIsi}}" hint-placeholder-val="{{false}}">
+    <section style="background:var({{vTok}});color:var({{vOn}});border-radius:24px;padding:26px 24px 24px;display:flex;flex-direction:column;gap:16px">
+      <span style="font-size:12.5px;font-weight:600;letter-spacing:0.4px;opacity:0.85">PEMERIKSAAN JUNI 2026</span>
+      <div style="display:flex;flex-direction:column;gap:14px;padding:10px 0 4px">
+        <sc-if value="{{isMerah}}" hint-placeholder-val="{{false}}">
+          <span style="display:flex;align-items:center;justify-content:center;width:62px;height:62px;border-radius:14px;background:var({{vOn}});color:var({{vTok}});font-size:30px;font-weight:800">&#10005;</span>
+        </sc-if>
+        <sc-if value="{{isKuning}}" hint-placeholder-val="{{false}}">
+          <span style="display:flex;align-items:flex-end;justify-content:center;width:66px;height:60px;clip-path:polygon(50% 3%,100% 97%,0 97%);background:var({{vOn}});color:var({{vTok}});font-size:26px;font-weight:800;padding-bottom:6px;box-sizing:border-box">!</span>
+        </sc-if>
+        <sc-if value="{{isHijau}}" hint-placeholder-val="{{false}}">
+          <span style="display:flex;align-items:center;justify-content:center;width:62px;height:62px;border-radius:50%;background:var({{vOn}});color:var({{vTok}});font-size:30px;font-weight:800">&#10003;</span>
+        </sc-if>
+        <h2 style="margin:0;font-size:36px;line-height:1.08;font-weight:800;letter-spacing:-0.8px">{{vLabel}}</h2>
+        <p style="margin:0;font-size:16.5px;line-height:1.5;opacity:0.94">{{vRingkasan}}</p>
+      </div>
+      <button onClick="{{goTemuan}}" style="height:56px;border-radius:999px;background:var(--surface);color:var({{vCta}});font-size:16.5px;font-weight:650;text-align:center">Lihat yang perlu Anda tahu</button>
+    </section>
+    <sc-if value="{{showNotif}}" hint-placeholder-val="{{false}}">
+      <button onClick="{{goTemuan}}" style="display:flex;gap:11px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:15px 16px;min-height:44px">
+        <span style="width:9px;height:9px;border-radius:50%;background:var(--accent);flex:none;margin-top:5px"></span>
+        <span style="flex:1;font-size:14px;line-height:1.5">{{notifText}}</span>
+        <span style="color:var(--muted);font-size:16px;font-weight:600">&#8250;</span>
+      </button>
+    </sc-if>
+  </sc-if>
+</main>
+</sc-if>
+
+<sc-if value="{{sTemuan}}" hint-placeholder-val="{{false}}">
+<main data-screen-label="Temuan" style="flex:1;display:flex;flex-direction:column;gap:16px;padding:24px 22px 120px;animation:fadein 0.24s ease">
+  <button onClick="{{goBeranda}}" style="min-height:44px;display:flex;align-items:center;gap:6px;font-size:15px;font-weight:600;color:var(--accent)">&#8249; Beranda</button>
+  <div style="display:flex;flex-direction:column;gap:5px">
+    <h1 style="margin:0;font-size:25px;font-weight:750;letter-spacing:-0.4px">Yang Perlu Anda Tahu</h1>
+    <p style="margin:0;font-size:13.5px;color:var(--muted)">{{temuanSub}}</p>
+  </div>
+  <sc-if value="{{kGagal}}" hint-placeholder-val="{{false}}">
+    <div role="status" style="display:flex;gap:9px;align-items:flex-start;background:var(--kuning-tint);color:var(--kuning-tint-ink);border-radius:12px;padding:12px 14px">
+      <span style="display:flex;align-items:flex-end;justify-content:center;width:18px;height:18px;clip-path:polygon(50% 4%,100% 96%,0 96%);background:var(--kuning-tint-ink);color:var(--kuning-tint);font-size:9px;font-weight:800;padding-bottom:2px;box-sizing:border-box;flex:none">!</span>
+      <span style="font-size:13px;line-height:1.5">Menampilkan hasil pemeriksaan tersimpan. Pemeriksaan langsung sedang tidak tersedia.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{kMuat}}" hint-placeholder-val="{{false}}">
+    <div style="display:flex;flex-direction:column;gap:14px" aria-label="Memuat">
+      <div style="height:180px;border-radius:18px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:180px;border-radius:18px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:180px;border-radius:18px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{temuanKosong}}" hint-placeholder-val="{{false}}">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:40px 26px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center">
+      <span style="display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;background:var(--hijau);color:var(--hijau-on);font-size:26px;font-weight:800">&#10003;</span>
+      <span style="font-size:16.5px;font-weight:600;line-height:1.5">Tidak ada hal yang perlu ditanyakan bulan ini. Koperasi Anda dalam keadaan baik.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{temuanIsi}}" hint-placeholder-val="{{false}}">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <sc-for list="{{findings}}" as="f" hint-placeholder-count="3">
+        <article id="{{f.id}}" style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:13px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+            <span style="display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;background:var({{f.tint}});color:var({{f.tintInk}})">
+              <span style="width:10px;height:10px;background:currentColor;clip-path:{{f.clip}};border-radius:{{f.rad}};flex:none"></span>
+              <span style="font-size:12px;font-weight:700">{{f.chip}}</span>
+            </span>
+            <span style="font-size:11.5px;color:var(--muted);text-align:right">{{f.agent}}</span>
+          </div>
+          <h3 style="margin:0;font-size:16.5px;font-weight:650;line-height:1.35">{{f.judul}}</h3>
+          <p style="margin:0;font-size:14.5px;line-height:1.55">{{f.penjelasan}}</p>
+          <div style="display:flex;flex-direction:column;gap:7px;background:var(--bg);border-radius:12px;padding:12px 13px">
+            <span style="font-size:11.5px;font-weight:700;letter-spacing:0.5px;color:var(--muted)">BUKTI</span>
+            <sc-for list="{{f.bukti}}" as="b" hint-placeholder-count="2">
+              <div style="display:flex;gap:8px;align-items:flex-start">
+                <span style="width:8px;height:10px;border:1.5px solid var(--muted);border-radius:2px;flex:none;margin-top:3px"></span>
+                <span style="font-size:13px;line-height:1.5;color:var(--ink);font-variant-numeric:tabular-nums">{{b.t}}</span>
+              </div>
+            </sc-for>
+          </div>
+          <button onClick="{{f.onToggle}}" aria-expanded="{{f.open}}" style="min-height:46px;display:flex;align-items:center;justify-content:space-between;font-size:15px;font-weight:650;color:var(--accent)">
+            <span>Kenapa ini penting?</span><span aria-hidden="true">{{f.chev}}</span>
+          </button>
+          <sc-if value="{{f.open}}" hint-placeholder-val="{{false}}">
+            <p style="margin:0;font-size:14.5px;line-height:1.6;background:var(--bg);border-radius:12px;padding:13px 14px;animation:fadein 0.2s ease">{{f.kenapa}}</p>
+          </sc-if>
+          <div style="border:1.5px solid var(--border);border-radius:12px;padding:12px 13px;display:flex;flex-direction:column;gap:6px">
+            <span style="font-size:11.5px;font-weight:700;letter-spacing:0.5px;color:var(--muted)">PERTANYAAN UNTUK RAPAT</span>
+            <span style="font-size:14.5px;font-weight:600;line-height:1.5">{{f.tanya}}</span>
+          </div>
+          <sc-if value="{{f.notAdded}}" hint-placeholder-val="{{true}}">
+            <button onClick="{{f.onAdd}}" style="height:52px;border-radius:999px;background:var(--accent);color:var(--accent-on);font-size:15.5px;font-weight:650;text-align:center">Tambahkan ke pertanyaan rapat</button>
+          </sc-if>
+          <sc-if value="{{f.added}}" hint-placeholder-val="{{false}}">
+            <div role="status" style="display:flex;gap:9px;align-items:flex-start;background:var(--hijau-tint);color:var(--hijau-tint-ink);border-radius:12px;padding:13px 14px;animation:fadein 0.2s ease">
+              <span style="display:flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--hijau-tint-ink);color:var(--hijau-tint);font-size:10px;font-weight:800;flex:none">&#10003;</span>
+              <span style="font-size:13.5px;line-height:1.5;font-weight:600">Tersimpan. Pertanyaan ini akan dibawa ke Rapat Anggota Tahunan.</span>
+            </div>
+          </sc-if>
+          <sc-if value="{{f.hasTanggapan}}" hint-placeholder-val="{{false}}">
+            <div style="background:var(--bg);border-radius:12px;padding:13px 14px;display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:11.5px;font-weight:700;letter-spacing:0.5px;color:var(--muted)">TANGGAPAN PENGURUS, 24 JUNI 2026</span>
+              <span style="font-size:13.5px;line-height:1.55">{{f.tanggapan}}</span>
+            </div>
+          </sc-if>
+        </article>
+      </sc-for>
+    </div>
+  </sc-if>
+</main>
+</sc-if>
+
+<sc-if value="{{sUang}}" hint-placeholder-val="{{false}}">
+<main data-screen-label="Uang Anda" style="flex:1;display:flex;flex-direction:column;gap:16px;padding:24px 22px 120px;animation:fadein 0.24s ease">
+  <div style="display:flex;flex-direction:column;gap:5px">
+    <h1 style="margin:0;font-size:25px;font-weight:750;letter-spacing:-0.4px">Uang Anda</h1>
+    <p style="margin:0;font-size:13.5px;color:var(--muted)">Sari Rahayu, No. Anggota KDS-0007</p>
+  </div>
+  <sc-if value="{{kGagal}}" hint-placeholder-val="{{false}}">
+    <div role="status" style="display:flex;gap:9px;align-items:flex-start;background:var(--kuning-tint);color:var(--kuning-tint-ink);border-radius:12px;padding:12px 14px">
+      <span style="display:flex;align-items:flex-end;justify-content:center;width:18px;height:18px;clip-path:polygon(50% 4%,100% 96%,0 96%);background:var(--kuning-tint-ink);color:var(--kuning-tint);font-size:9px;font-weight:800;padding-bottom:2px;box-sizing:border-box;flex:none">!</span>
+      <span style="font-size:13px;line-height:1.5">Menampilkan catatan tersimpan. Pembaruan sedang tidak tersedia.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{kMuat}}" hint-placeholder-val="{{false}}">
+    <div style="display:flex;flex-direction:column;gap:14px" aria-label="Memuat">
+      <div style="height:210px;border-radius:20px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:130px;border-radius:20px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:130px;border-radius:20px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{kKosong}}" hint-placeholder-val="{{false}}">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:36px 26px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+      <span style="width:52px;height:52px;border:3px solid var(--muted);border-radius:50%;box-sizing:border-box"></span>
+      <span style="font-size:16.5px;font-weight:600;line-height:1.5">Belum ada catatan simpanan untuk akun Anda.</span>
+      <span style="font-size:14px;color:var(--muted);line-height:1.5">Setoran pertama Anda akan tercatat di sini.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{kIsi}}" hint-placeholder-val="{{false}}">
+    <section style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:14px">
+      <span style="font-size:14px;color:var(--muted)">Total simpanan Anda</span>
+      <span style="font-size:46px;font-weight:800;letter-spacing:-1.2px;font-variant-numeric:tabular-nums;line-height:1">Rp 600.000</span>
+      <div style="height:1px;background:var(--border)"></div>
+      <div style="display:flex;flex-direction:column;gap:10px;font-variant-numeric:tabular-nums">
+        <div style="display:flex;justify-content:space-between"><span style="font-size:14px;color:var(--muted)">Simpanan pokok</span><span style="font-size:15px;font-weight:650">Rp 100.000</span></div>
+        <div style="display:flex;justify-content:space-between"><span style="font-size:14px;color:var(--muted)">Simpanan wajib</span><span style="font-size:15px;font-weight:650">Rp 350.000</span></div>
+        <div style="display:flex;justify-content:space-between"><span style="font-size:14px;color:var(--muted)">Simpanan sukarela</span><span style="font-size:15px;font-weight:650">Rp 150.000</span></div>
+      </div>
+    </section>
+    <section style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:12px">
+      <span style="font-size:14px;color:var(--muted)">Sisa pinjaman</span>
+      <span style="font-size:30px;font-weight:750;letter-spacing:-0.6px;font-variant-numeric:tabular-nums;line-height:1">Rp 1.200.000</span>
+      <div style="height:8px;border-radius:999px;background:var(--border);overflow:hidden"><div style="width:40%;height:100%;border-radius:999px;background:var(--accent)"></div></div>
+      <span style="font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums">Sudah diangsur Rp 800.000 dari Rp 2.000.000</span>
+    </section>
+    <section style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:10px">
+      <span style="font-size:14px;color:var(--muted)">Cicilan berikutnya</span>
+      <span style="font-size:30px;font-weight:750;letter-spacing:-0.6px;font-variant-numeric:tabular-nums;line-height:1">Rp 200.000</span>
+      <div style="display:flex;gap:9px;align-items:center">
+        <span style="width:14px;height:14px;border:2px solid var(--muted);border-radius:4px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;flex:none"><span style="width:4px;height:4px;background:var(--muted);border-radius:1px"></span></span>
+        <span style="font-size:14.5px;font-weight:600">Jatuh tempo 5 Juli 2026</span>
+      </div>
+      <span style="font-size:13px;color:var(--muted)">Dibayar di kantor koperasi.</span>
+    </section>
+  </sc-if>
+</main>
+</sc-if>
+
+<sc-if value="{{sArus}}" hint-placeholder-val="{{false}}">
+<main data-screen-label="Arus Dana" style="flex:1;display:flex;flex-direction:column;gap:16px;padding:24px 22px 120px;animation:fadein 0.24s ease">
+  <div style="display:flex;flex-direction:column;gap:5px">
+    <h1 style="margin:0;font-size:25px;font-weight:750;letter-spacing:-0.4px">Arus Dana</h1>
+    <p style="margin:0;font-size:13.5px;color:var(--muted)">Ke mana uang koperasi pergi, Juni 2026</p>
+  </div>
+  <sc-if value="{{kGagal}}" hint-placeholder-val="{{false}}">
+    <div role="status" style="display:flex;gap:9px;align-items:flex-start;background:var(--kuning-tint);color:var(--kuning-tint-ink);border-radius:12px;padding:12px 14px">
+      <span style="display:flex;align-items:flex-end;justify-content:center;width:18px;height:18px;clip-path:polygon(50% 4%,100% 96%,0 96%);background:var(--kuning-tint-ink);color:var(--kuning-tint);font-size:9px;font-weight:800;padding-bottom:2px;box-sizing:border-box;flex:none">!</span>
+      <span style="font-size:13px;line-height:1.5">Menampilkan hasil pemeriksaan tersimpan. Pemeriksaan langsung sedang tidak tersedia.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{kMuat}}" hint-placeholder-val="{{false}}">
+    <div style="display:flex;flex-direction:column;gap:14px" aria-label="Memuat">
+      <div style="height:110px;border-radius:20px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:230px;border-radius:20px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:230px;border-radius:20px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{kKosong}}" hint-placeholder-val="{{false}}">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:36px 26px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+      <span style="width:52px;height:52px;border:3px solid var(--muted);border-radius:50%;box-sizing:border-box"></span>
+      <span style="font-size:16.5px;font-weight:600;line-height:1.5">Belum ada data arus dana untuk periode ini.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{kIsi}}" hint-placeholder-val="{{false}}">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px">
+        <span style="font-size:13px;color:var(--muted)"><span style="font-weight:700">&#8593;</span> Uang masuk</span>
+        <span style="font-size:19px;font-weight:750;font-variant-numeric:tabular-nums;letter-spacing:-0.3px">Rp 57.200.000</span>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px">
+        <span style="font-size:13px;color:var(--muted)"><span style="font-weight:700">&#8595;</span> Uang keluar</span>
+        <span style="font-size:19px;font-weight:750;font-variant-numeric:tabular-nums;letter-spacing:-0.3px">Rp 68.200.000</span>
+      </div>
+    </div>
+    <p style="margin:0;font-size:13.5px;line-height:1.5;color:var(--muted)">Kas koperasi berkurang Rp 11.000.000 pada bulan Juni.</p>
+    <section style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:14px">
+      <span style="font-size:12px;font-weight:700;letter-spacing:0.6px;color:var(--muted)">UANG MASUK</span>
+      <sc-for list="{{masukBars}}" as="m" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;justify-content:space-between;gap:10px">
+            <span style="font-size:13.5px">{{m.label}}</span>
+            <span style="font-size:13.5px;font-weight:650;font-variant-numeric:tabular-nums">{{m.amt}}</span>
+          </div>
+          <div style="height:9px;border-radius:999px;background:var(--bg);overflow:hidden"><div style="width:{{m.w}};height:100%;border-radius:999px;background:var(--accent)"></div></div>
+        </div>
+      </sc-for>
+    </section>
+    <section style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:14px">
+      <span style="font-size:12px;font-weight:700;letter-spacing:0.6px;color:var(--muted)">UANG KELUAR</span>
+      <sc-for list="{{keluarBars}}" as="k" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;justify-content:space-between;gap:10px">
+            <span style="font-size:13.5px">{{k.label}}</span>
+            <span style="font-size:13.5px;font-weight:650;font-variant-numeric:tabular-nums">{{k.amt}}</span>
+          </div>
+          <div style="height:9px;border-radius:999px;background:var(--bg);overflow:hidden"><div style="width:{{k.w}};height:100%;border-radius:999px;background:var(--muted)"></div></div>
+        </div>
+      </sc-for>
+    </section>
+    <sc-if value="{{showSorotan}}" hint-placeholder-val="{{false}}">
+      <section style="display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:12px;font-weight:700;letter-spacing:0.6px;color:var(--muted)">SEDANG DIPERIKSA PENGAWAS</span>
+        <sc-for list="{{sorotan}}" as="s" hint-placeholder-count="3">
+          <button onClick="{{s.onOpen}}" style="display:flex;gap:11px;align-items:center;background:var(--kuning-tint);color:var(--kuning-tint-ink);border-radius:16px;padding:14px 15px;min-height:52px">
+            <span style="display:flex;align-items:flex-end;justify-content:center;width:18px;height:18px;clip-path:polygon(50% 4%,100% 96%,0 96%);background:var(--kuning-tint-ink);color:var(--kuning-tint);font-size:9px;font-weight:800;padding-bottom:2px;box-sizing:border-box;flex:none">!</span>
+            <span style="flex:1;display:flex;flex-direction:column;gap:2px;text-align:left">
+              <span style="font-size:14px;font-weight:650;font-variant-numeric:tabular-nums">{{s.label}}</span>
+              <span style="font-size:12.5px;opacity:0.85">{{s.sub}}</span>
+            </span>
+            <span style="font-size:16px;font-weight:600">&#8250;</span>
+          </button>
+        </sc-for>
+      </section>
+    </sc-if>
+  </sc-if>
+</main>
+</sc-if>
+
+<sc-if value="{{sSuara}}" hint-placeholder-val="{{false}}">
+<main data-screen-label="Suara Anda" style="flex:1;display:flex;flex-direction:column;gap:16px;padding:24px 22px 120px;animation:fadein 0.24s ease">
+  <div style="display:flex;flex-direction:column;gap:5px">
+    <h1 style="margin:0;font-size:25px;font-weight:750;letter-spacing:-0.4px">Suara Anda</h1>
+    <p style="margin:0;font-size:13.5px;color:var(--muted)">Pertanyaan anggota dan keputusan bersama</p>
+  </div>
+  <sc-if value="{{kGagal}}" hint-placeholder-val="{{false}}">
+    <div role="status" style="display:flex;gap:9px;align-items:flex-start;background:var(--kuning-tint);color:var(--kuning-tint-ink);border-radius:12px;padding:12px 14px">
+      <span style="display:flex;align-items:flex-end;justify-content:center;width:18px;height:18px;clip-path:polygon(50% 4%,100% 96%,0 96%);background:var(--kuning-tint-ink);color:var(--kuning-tint);font-size:9px;font-weight:800;padding-bottom:2px;box-sizing:border-box;flex:none">!</span>
+      <span style="font-size:13px;line-height:1.5">Menampilkan data tersimpan. Pembaruan sedang tidak tersedia.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{kMuat}}" hint-placeholder-val="{{false}}">
+    <div style="display:flex;flex-direction:column;gap:14px" aria-label="Memuat">
+      <div style="height:120px;border-radius:18px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:120px;border-radius:18px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+      <div style="height:240px;border-radius:18px;background:var(--border);animation:pulse 1.5s ease-in-out infinite"></div>
+    </div>
+  </sc-if>
+  <sc-if value="{{kKosong}}" hint-placeholder-val="{{false}}">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:36px 26px;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center">
+      <span style="width:52px;height:52px;border:3px solid var(--muted);border-radius:50%;box-sizing:border-box"></span>
+      <span style="font-size:16.5px;font-weight:600;line-height:1.5">Belum ada pertanyaan atau keputusan yang dibuka.</span>
+    </div>
+  </sc-if>
+  <sc-if value="{{kIsi}}" hint-placeholder-val="{{false}}">
+    <section style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-size:12px;font-weight:700;letter-spacing:0.6px;color:var(--muted)">PERTANYAAN UNTUK RAPAT ANGGOTA TAHUNAN</span>
+      <sc-if value="{{adaPertanyaan}}" hint-placeholder-val="{{true}}">
+        <sc-for list="{{suaraQs}}" as="q" hint-placeholder-count="3">
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:17px;display:flex;flex-direction:column;gap:9px">
+            <span style="font-size:15.5px;font-weight:650;line-height:1.4">{{q.line}}</span>
+            <span style="font-size:13.5px;color:var(--muted);line-height:1.5">{{q.judul}}</span>
+            <sc-if value="{{q.you}}" hint-placeholder-val="{{false}}">
+              <span style="align-self:flex-start;display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:var(--hijau-tint);color:var(--hijau-tint-ink)">
+                <span style="display:flex;align-items:center;justify-content:center;width:13px;height:13px;border-radius:50%;background:currentColor;flex:none"></span>
+                <span style="font-size:11.5px;font-weight:700">Termasuk pertanyaan Anda</span>
+              </span>
+            </sc-if>
+            <button onClick="{{q.onOpen}}" style="min-height:44px;display:flex;align-items:center;gap:4px;font-size:14px;font-weight:650;color:var(--accent)">Lihat temuan <span>&#8250;</span></button>
+          </div>
+        </sc-for>
+      </sc-if>
+      <sc-if value="{{tanpaPertanyaan}}" hint-placeholder-val="{{false}}">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:24px;text-align:center">
+          <span style="font-size:14px;color:var(--muted);line-height:1.5">Belum ada pertanyaan yang dikumpulkan untuk rapat berikutnya.</span>
+        </div>
+      </sc-if>
+    </section>
+    <section style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-size:12px;font-weight:700;letter-spacing:0.6px;color:var(--muted)">KEPUTUSAN KOPERASI</span>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:13px">
+        <span style="align-self:flex-start;display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;border:1.5px solid var(--border)">
+          <span style="width:7px;height:7px;border-radius:50%;background:var(--hijau);flex:none"></span>
+          <span style="font-size:11.5px;font-weight:700;color:var(--muted)">TERBUKA</span>
+        </span>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <h3 style="margin:0;font-size:17px;font-weight:650;line-height:1.35">Pembelian freezer untuk gerai sembako</h3>
+          <span style="font-size:22px;font-weight:750;font-variant-numeric:tabular-nums;letter-spacing:-0.3px">Rp 8.500.000</span>
+        </div>
+        <p style="margin:0;font-size:14px;line-height:1.55;color:var(--muted)">Usulan pengurus untuk unit usaha sembako. Suara Anda ikut menentukan keputusan bersama.</p>
+        <sc-if value="{{belumVote}}" hint-placeholder-val="{{true}}">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <button onClick="{{voteSetuju}}" style="height:52px;border-radius:999px;border:1.5px solid var(--accent);color:var(--accent);font-size:15.5px;font-weight:650;text-align:center;display:flex;align-items:center;justify-content:center">Setuju</button>
+            <button onClick="{{voteTidak}}" style="height:52px;border-radius:999px;border:1.5px solid var(--border);color:var(--ink);font-size:15.5px;font-weight:650;text-align:center;display:flex;align-items:center;justify-content:center">Tidak Setuju</button>
+          </div>
+          <span style="font-size:12.5px;color:var(--muted)">Hasil sementara terlihat setelah Anda memilih.</span>
+        </sc-if>
+        <sc-if value="{{sudahVote}}" hint-placeholder-val="{{false}}">
+          <div style="display:flex;flex-direction:column;gap:12px;animation:fadein 0.2s ease">
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;justify-content:space-between"><span style="font-size:13.5px;font-weight:650">Setuju</span><span style="font-size:13.5px;font-variant-numeric:tabular-nums;color:var(--muted)">{{vSetujuLabel}}</span></div>
+              <div style="height:9px;border-radius:999px;background:var(--bg);overflow:hidden"><div style="width:{{vSetujuW}};height:100%;border-radius:999px;background:var(--accent)"></div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="display:flex;justify-content:space-between"><span style="font-size:13.5px;font-weight:650">Tidak Setuju</span><span style="font-size:13.5px;font-variant-numeric:tabular-nums;color:var(--muted)">{{vTidakLabel}}</span></div>
+              <div style="height:9px;border-radius:999px;background:var(--bg);overflow:hidden"><div style="width:{{vTidakW}};height:100%;border-radius:999px;background:var(--muted)"></div></div>
+            </div>
+            <div style="display:flex;gap:9px;align-items:flex-start;background:var(--bg);border-radius:12px;padding:12px 13px">
+              <span style="width:12px;height:12px;border:2px solid var(--muted);border-radius:3px;box-sizing:border-box;flex:none;margin-top:2px"></span>
+              <span style="font-size:13px;line-height:1.5;color:var(--muted)">{{vLockText}} Pilihan tersimpan dan tidak dapat diubah. 13 dari 30 anggota sudah memilih.</span>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </section>
+  </sc-if>
+</main>
+</sc-if>
+
+<sc-if value="{{showTabs}}" hint-placeholder-val="{{false}}">
+<nav aria-label="Navigasi utama" style="position:fixed;bottom:0;left:0;right:0;margin:0 auto;width:100%;max-width:430px;background:var(--surface);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(4,1fr);padding:8px 6px 14px;z-index:40;box-sizing:border-box">
+  <button onClick="{{goBeranda}}" aria-current="{{tabB}}" style="min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:var({{tabBc}})">
+    <span style="height:20px;display:flex;align-items:center"><span style="width:19px;height:18px;background:currentColor;clip-path:polygon(50% 0,100% 42%,100% 100%,0 100%,0 42%)"></span></span>
+    <span style="font-size:11px;font-weight:650">Beranda</span>
+  </button>
+  <button onClick="{{goUang}}" aria-current="{{tabU}}" style="min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:var({{tabUc}})">
+    <span style="height:20px;display:flex;align-items:center"><span style="width:18px;height:18px;border:2.5px solid currentColor;border-radius:50%;box-sizing:border-box;display:flex;align-items:center;justify-content:center"><span style="width:5px;height:5px;background:currentColor;border-radius:1.5px"></span></span></span>
+    <span style="font-size:11px;font-weight:650">Uang Anda</span>
+  </button>
+  <button onClick="{{goArus}}" aria-current="{{tabA}}" style="min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:var({{tabAc}})">
+    <span style="height:20px;display:flex;align-items:center;font-size:15px;font-weight:800;letter-spacing:-2px">&#8593;&#8595;</span>
+    <span style="font-size:11px;font-weight:650">Arus Dana</span>
+  </button>
+  <button onClick="{{goSuara}}" aria-current="{{tabS}}" style="min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:var({{tabSc}})">
+    <span style="height:20px;display:flex;align-items:center"><span style="display:flex;flex-direction:column;align-items:flex-start"><span style="width:18px;height:13px;background:currentColor;border-radius:5px"></span><span style="width:7px;height:5px;background:currentColor;clip-path:polygon(0 0,100% 0,0 100%);margin-left:4px;margin-top:-1px"></span></span></span>
+    <span style="font-size:11px;font-weight:650">Suara Anda</span>
+  </button>
+</nav>
+</sc-if>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: {&quot;width&quot;: 390, &quot;height&quot;: 844},
+  &quot;tema&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;terang&quot;, &quot;gelap&quot;], &quot;default&quot;: &quot;terang&quot;, &quot;tsType&quot;: &quot;\&quot;terang\&quot; | \&quot;gelap\&quot;&quot;, &quot;section&quot;: &quot;Tampilan&quot;},
+  &quot;verdict&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;merah&quot;, &quot;kuning&quot;, &quot;hijau&quot;], &quot;default&quot;: &quot;merah&quot;, &quot;tsType&quot;: &quot;\&quot;merah\&quot; | \&quot;kuning\&quot; | \&quot;hijau\&quot;&quot;, &quot;section&quot;: &quot;Skenario&quot;},
+  &quot;kondisi&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;normal&quot;, &quot;memuat&quot;, &quot;kosong&quot;, &quot;gagal&quot;], &quot;default&quot;: &quot;normal&quot;, &quot;tsType&quot;: &quot;\&quot;normal\&quot; | \&quot;memuat\&quot; | \&quot;kosong\&quot; | \&quot;gagal\&quot;&quot;, &quot;section&quot;: &quot;Skenario&quot;},
+  &quot;mulaiDari&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;login&quot;, &quot;daftar&quot;, &quot;beranda&quot;], &quot;default&quot;: &quot;login&quot;, &quot;tsType&quot;: &quot;\&quot;login\&quot; | \&quot;daftar\&quot; | \&quot;beranda\&quot;&quot;, &quot;section&quot;: &quot;Skenario&quot;}
+}">
+class Component extends DCLogic {
+  state = {
+    screen: null, email: "", pass: "", loginErr: false, busyL: false,
+    nama: "", nik: "", alamat: "", dEmail: "", dPass: "", nikErr: false, busyD: false, dOk: false,
+    open: {}, added: {}, voted: null,
+    temaO: null, verdictO: null, kondisiO: null
+  };
+
+  FIND = [
+    { id: "an1", sev: "merah", agent: "Pemeriksa Konflik Kepentingan",
+      judul: "Pembelian Rp 15.000.000 ke toko yang beralamat sama dengan rumah bendahara",
+      penjelasan: "Pada 14 Juni 2026 koperasi membeli barang senilai Rp 15.000.000 dari Toko Berkah. Alamat toko ini sama dengan alamat rumah bendahara koperasi.",
+      kenapa: "Uang koperasi adalah uang bersama seluruh anggota. Saat pembelian besar mengalir ke pihak yang dekat dengan pengurus, anggota berhak memastikan harganya wajar dan barangnya benar diterima.",
+      bukti: ["Pembelian Rp 15.000.000 ke Toko Berkah, 14 Juni 2026", "Alamat vendor sama dengan alamat bendahara, Jl. Melati No. 12"],
+      tanya: "Bisakah pengurus menjelaskan alasan memilih Toko Berkah untuk pembelian Rp 15.000.000 dan bagaimana harganya dibandingkan penjual lain?" },
+    { id: "an4", sev: "kuning", agent: "Pemeriksa Kesehatan Keuangan",
+      judul: "Kas koperasi menurun 37 persen dalam tiga bulan",
+      penjelasan: "Uang kas koperasi turun dari Rp 58.000.000 pada April menjadi Rp 36.500.000 pada Juni. Seperti rumah tangga, koperasi perlu pegangan uang tunai yang cukup.",
+      kenapa: "Jika kas terus menurun, koperasi bisa kesulitan melayani penarikan simpanan anggota. Penurunan yang cepat perlu dijelaskan penyebabnya, bukan didiamkan.",
+      bukti: ["Saldo kas April Rp 58.000.000, Juni Rp 36.500.000"],
+      tanya: "Apa penyebab kas koperasi menurun sejak April dan bagaimana rencana memulihkannya?" },
+    { id: "an2", sev: "kuning", agent: "Pemeriksa Transaksi",
+      judul: "Lima pinjaman disetujui pada hari yang sama",
+      penjelasan: "Pada 20 Juni 2026 ada lima pinjaman disetujui sekaligus dengan total Rp 30.000.000. Biasanya koperasi menyetujui satu sampai dua pinjaman per minggu.",
+      kenapa: "Persetujuan yang menumpuk dalam satu hari bisa berarti antrean biasa, bisa juga berarti pemeriksaan yang terburu buru. Anggota berhak tahu prosesnya tetap teliti.",
+      bukti: ["Lima pencairan pinjaman pada 20 Juni 2026, total Rp 30.000.000", "Kebiasaan sebelumnya satu sampai dua persetujuan per minggu"],
+      tanya: "Apa alasan lima pinjaman disetujui bersamaan pada 20 Juni dan bagaimana pemeriksaannya dilakukan?",
+      tanggapan: "Kelima pinjaman merupakan program musim tanam yang disetujui rapat pengurus 18 Juni, dokumen tersedia di kantor koperasi." },
+    { id: "an3", sev: "kuning", agent: "Pemeriksa Transaksi",
+      judul: "Satu pembelian besar dipecah menjadi tiga pembelian kecil",
+      penjelasan: "Dalam lima hari ada tiga pembelian ke CV Sumber Rejeki, masing masing Rp 4.900.000, sedikit di bawah batas Rp 5.000.000 yang memerlukan persetujuan tambahan.",
+      kenapa: "Memecah satu pembelian besar menjadi beberapa pembelian kecil dapat membuat pembelian lolos tanpa pemeriksaan yang seharusnya. Ini pola yang wajar untuk ditanyakan.",
+      bukti: ["Tiga pembelian Rp 4.900.000 ke CV Sumber Rejeki, 9 sampai 13 Juni 2026"],
+      tanya: "Mengapa pembelian ke CV Sumber Rejeki dipecah menjadi tiga kali dalam lima hari?" },
+    { id: "an5", sev: "kuning", agent: "Pemeriksa Kepatuhan",
+      judul: "Pinjaman melebihi batas dengan dokumen belum lengkap",
+      penjelasan: "Ada pinjaman Rp 12.000.000, di atas batas Rp 10.000.000 per anggota, dan dokumen persyaratannya tercatat belum lengkap.",
+      kenapa: "Batas pinjaman dibuat untuk menjaga uang bersama. Melewatinya boleh saja dalam keadaan tertentu, tetapi harus dengan alasan dan dokumen yang jelas.",
+      bukti: ["Pinjaman Rp 12.000.000, batas per anggota Rp 10.000.000", "Dokumen persyaratan tercatat belum lengkap"],
+      tanya: "Atas dasar apa pinjaman Rp 12.000.000 disetujui melebihi batas dan kapan dokumennya akan dilengkapi?" },
+    { id: "an6", sev: "info", agent: "Pemeriksa Kepatuhan",
+      judul: "Rapat Anggota Tahunan 2026 belum dijadwalkan",
+      penjelasan: "Sampai akhir Juni 2026 koperasi belum melaksanakan Rapat Anggota Tahunan untuk tahun buku 2025.",
+      kenapa: "Rapat tahunan adalah tempat anggota mendengar laporan dan mengambil keputusan bersama. Tanpa rapat, anggota tidak punya ruang resmi untuk bertanya.",
+      bukti: ["Belum ada jadwal Rapat Anggota Tahunan untuk tahun buku 2025"],
+      tanya: "Kapan Rapat Anggota Tahunan akan dilaksanakan?" }
+  ];
+
+  componentDidMount() {
+    window.pramanaApp = {
+      go: (s) => this.setState({ screen: s }),
+      set: (p) => this.setState(p)
+    };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.mulaiDari !== this.props.mulaiDari) {
+      this.setState({ screen: null });
+    }
+  }
+
+  chipFor(sev) {
+    if (sev === "merah") return { tint: "--merah-tint", tintInk: "--merah-tint-ink", chip: "Perlu Dijelaskan", clip: "none", rad: "2px" };
+    if (sev === "kuning") return { tint: "--kuning-tint", tintInk: "--kuning-tint-ink", chip: "Perlu Perhatian", clip: "polygon(50% 0,100% 100%,0 100%)", rad: "0" };
+    return { tint: "--border", tintInk: "--muted", chip: "Catatan", clip: "polygon(50% 0,100% 50%,50% 100%,0 50%)", rad: "0" };
+  }
+
+  renderVals() {
+    const p = this.props, st = this.state;
+    const tema = st.temaO ?? p.tema ?? "terang";
+    const verdict = st.verdictO ?? p.verdict ?? "merah";
+    const kondisi = st.kondisiO ?? p.kondisi ?? "normal";
+    const screen = st.screen ?? (p.mulaiDari ?? "login");
+
+    const kMuat = kondisi === "memuat";
+    const kKosong = kondisi === "kosong";
+    const kGagal = kondisi === "gagal";
+    const kIsi = !kMuat && !kKosong;
+
+    const V = {
+      merah: { tok: "--merah", on: "--merah-on", cta: "--merah", label: "Perlu Dijelaskan",
+        ringkasan: "Kas koperasi menurun dan ada satu pembelian besar yang perlu dijelaskan pengurus." },
+      kuning: { tok: "--kuning", on: "--kuning-on", cta: "--ink", label: "Perlu Perhatian",
+        ringkasan: "Ada beberapa hal yang sebaiknya Anda tanyakan kepada pengurus bulan ini." },
+      hijau: { tok: "--hijau", on: "--hijau-on", cta: "--hijau", label: "Sehat",
+        ringkasan: "Tidak ada hal yang perlu dikhawatirkan pada pemeriksaan bulan ini." }
+    }[verdict];
+
+    const raw = verdict === "hijau" ? [] : verdict === "kuning" ? this.FIND.filter(f => f.id !== "an1") : this.FIND;
+    const n = raw.filter(f => f.sev !== "info").length;
+
+    const findings = raw.map(f => {
+      const c = this.chipFor(f.sev);
+      const open = !!st.open[f.id];
+      const added = !!st.added[f.id];
+      return {
+        id: f.id, agent: f.agent, judul: f.judul, penjelasan: f.penjelasan, kenapa: f.kenapa,
+        tanya: f.tanya, tint: c.tint, tintInk: c.tintInk, chip: c.chip, clip: c.clip, rad: c.rad,
+        open, chev: open ? "\u25B4" : "\u25BE", added, notAdded: !added,
+        bukti: f.bukti.map(t => ({ t })),
+        hasTanggapan: !!f.tanggapan, tanggapan: f.tanggapan || "",
+        onToggle: () => this.setState(s => ({ open: { ...s.open, [f.id]: !s.open[f.id] } })),
+        onAdd: () => this.setState(s => ({ added: { ...s.added, [f.id]: true } }))
+      };
+    });
+
+    const baseQ = [
+      { id: "an1", base: 12, judul: "Pembelian Rp 15.000.000 ke Toko Berkah" },
+      { id: "an4", base: 7, judul: "Penurunan kas koperasi sejak April" },
+      { id: "an2", base: 5, judul: "Lima pinjaman disetujui dalam sehari" }
+    ].filter(q => raw.some(f => f.id === q.id));
+    const suaraQs = baseQ.map(q => {
+      const you = !!st.added[q.id];
+      const count = q.base + (you ? 1 : 0);
+      return {
+        line: count + " anggota menanyakan hal yang sama",
+        judul: q.judul, you,
+        onOpen: () => this.setState(s => ({ screen: "temuan", open: { ...s.open, [q.id]: true } }))
+      };
+    }).sort((a, b) => parseInt(b.line) - parseInt(a.line));
+
+    const masuk = [
+      { label: "Penjualan gerai", v: 43600000 }, { label: "Angsuran pinjaman", v: 7800000 },
+      { label: "Setoran simpanan", v: 4500000 }, { label: "Lainnya", v: 1300000 }
+    ];
+    const keluar = [
+      { label: "Pembelian stok", v: 32700000 }, { label: "Pencairan pinjaman", v: 30000000 },
+      { label: "Gaji dan honor", v: 4000000 }, { label: "Operasional", v: 1500000 }
+    ];
+    const fmt = (v) => "Rp " + v.toLocaleString("id-ID");
+    const bars = (arr) => {
+      const max = Math.max(...arr.map(x => x.v));
+      return arr.map(x => ({ label: x.label, amt: fmt(x.v), w: Math.max(3, Math.round(x.v / max * 100)) + "%" }));
+    };
+
+    const sorotanAll = [
+      { id: "an1", label: "Rp 15.000.000 ke Toko Berkah", sub: "Pembelian 14 Juni, terkait satu temuan" },
+      { id: "an2", label: "Rp 30.000.000 pencairan lima pinjaman", sub: "20 Juni, terkait satu temuan" },
+      { id: "an3", label: "Rp 14.700.000 ke CV Sumber Rejeki", sub: "Tiga pembelian beruntun, terkait satu temuan" }
+    ].filter(x => raw.some(f => f.id === x.id));
+    const sorotan = sorotanAll.map(x => ({
+      label: x.label, sub: x.sub,
+      onOpen: () => this.setState(s => ({ screen: "temuan", open: { ...s.open, [x.id]: true } }))
+    }));
+
+    const voted = st.voted;
+    const sCount = 9 + (voted === "setuju" ? 1 : 0);
+    const tCount = 3 + (voted === "tidak" ? 1 : 0);
+    const tot = sCount + tCount;
+
+    const inApp = ["beranda", "temuan", "uang", "arus", "suara"].includes(screen);
+    const tabTok = (act) => act ? "--accent" : "--muted";
+    const tB = screen === "beranda" || screen === "temuan";
+
+    return {
+      tema,
+      sLogin: screen === "login", sDaftar: screen === "daftar", sBeranda: screen === "beranda",
+      sTemuan: screen === "temuan", sUang: screen === "uang", sArus: screen === "arus", sSuara: screen === "suara",
+      showTabs: inApp,
+      tabB: tB ? "page" : "false", tabU: screen === "uang" ? "page" : "false",
+      tabA: screen === "arus" ? "page" : "false", tabS: screen === "suara" ? "page" : "false",
+      tabBc: tabTok(tB), tabUc: tabTok(screen === "uang"), tabAc: tabTok(screen === "arus"), tabSc: tabTok(screen === "suara"),
+
+      email: st.email, pass: st.pass, loginErr: st.loginErr,
+      btnMasuk: st.busyL ? "Memeriksa..." : "Masuk",
+      onEmail: (e) => this.setState({ email: e.target.value }),
+      onPass: (e) => this.setState({ pass: e.target.value }),
+      onLogin: () => {
+        if (st.busyL) return;
+        this.setState({ busyL: true });
+        setTimeout(() => {
+          const s = this.state;
+          const ok = (s.email.trim() === "juri.anggota@pramana.id" && s.pass === "PramanaJuri2026") ||
+                     (s.email.trim() === "sari@pramana.id" && s.pass === "SariSukamaju1");
+          this.setState(ok ? { busyL: false, loginErr: false, screen: "beranda" } : { busyL: false, loginErr: true });
+        }, 550);
+      },
+      fillJuri: () => this.setState({ email: "juri.anggota@pramana.id", pass: "PramanaJuri2026", loginErr: false }),
+      goDaftar: () => this.setState({ screen: "daftar" }),
+      goLogin: () => this.setState({ screen: "login" }),
+
+      dFormShown: !st.dOk, dOk: st.dOk, nikErr: st.nikErr,
+      nama: st.nama, nik: st.nik, alamat: st.alamat, dEmail: st.dEmail, dPass: st.dPass,
+      btnDaftar: st.busyD ? "Memeriksa..." : "Daftar dan verifikasi",
+      kartuNama: st.nama.trim() || "Anggota Baru",
+      onNama: (e) => this.setState({ nama: e.target.value }),
+      onNik: (e) => this.setState({ nik: e.target.value.replace(/[^0-9]/g, "") }),
+      onAlamat: (e) => this.setState({ alamat: e.target.value }),
+      onDEmail: (e) => this.setState({ dEmail: e.target.value }),
+      onDPass: (e) => this.setState({ dPass: e.target.value }),
+      onDaftar: () => {
+        if (this.state.busyD) return;
+        if (!/^[0-9]{16}$/.test(this.state.nik)) { this.setState({ nikErr: true }); return; }
+        this.setState({ busyD: true, nikErr: false });
+        setTimeout(() => this.setState({ busyD: false, dOk: true }), 700);
+      },
+      masukDariKartu: () => this.setState({ screen: "beranda" }),
+
+      goBeranda: () => this.setState({ screen: "beranda" }),
+      goTemuan: () => this.setState({ screen: "temuan" }),
+      goUang: () => this.setState({ screen: "uang" }),
+      goArus: () => this.setState({ screen: "arus" }),
+      goSuara: () => this.setState({ screen: "suara" }),
+      keluar: () => this.setState({ screen: "login", email: "", pass: "", loginErr: false }),
+
+      kMuat, kKosong, kGagal, kIsi,
+      vTok: V.tok, vOn: V.on, vCta: V.cta, vLabel: V.label, vRingkasan: V.ringkasan,
+      isMerah: verdict === "merah", isKuning: verdict === "kuning", isHijau: verdict === "hijau",
+      notifText: "Pengawas menemukan " + n + " hal yang sebaiknya Anda tanyakan kepada pengurus bulan ini.",
+      showNotif: n > 0,
+
+      temuanSub: "Pemeriksaan Juni 2026, " + raw.length + " temuan",
+      temuanKosong: !kMuat && (kKosong || raw.length === 0),
+      temuanIsi: kIsi && raw.length > 0,
+      findings,
+
+      masukBars: bars(masuk), keluarBars: bars(keluar),
+      sorotan, showSorotan: sorotan.length > 0,
+
+      suaraQs, adaPertanyaan: suaraQs.length > 0, tanpaPertanyaan: suaraQs.length === 0,
+      belumVote: !voted, sudahVote: !!voted,
+      voteSetuju: () => this.setState({ voted: "setuju" }),
+      voteTidak: () => this.setState({ voted: "tidak" }),
+      vSetujuLabel: sCount + " suara", vTidakLabel: tCount + " suara",
+      vSetujuW: Math.round(sCount / tot * 100) + "%", vTidakW: Math.round(tCount / tot * 100) + "%",
+      vLockText: voted === "setuju" ? "Pilihan Anda: Setuju." : "Pilihan Anda: Tidak Setuju."
+    };
+  }
+}
+</script>
+</body>
+</html>

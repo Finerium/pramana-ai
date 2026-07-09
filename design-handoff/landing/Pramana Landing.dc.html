@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --latar:oklch(0.975 0.004 250);
+  --permukaan:oklch(0.955 0.006 250);
+  --kartu:oklch(0.995 0.002 250);
+  --garis:oklch(0.905 0.008 252);
+  --garis-kuat:oklch(0.82 0.012 252);
+  --tinta:oklch(0.215 0.02 265);
+  --tinta-2:oklch(0.45 0.018 262);
+  --tinta-3:oklch(0.52 0.014 260);
+  --aksen:oklch(0.49 0.1 255);
+  --aksen-kuat:oklch(0.42 0.105 256);
+  --aksen-teks:oklch(0.985 0.003 250);
+  --hijau:oklch(0.55 0.1 158);
+  --kuning:oklch(0.62 0.12 85);
+  --merah:oklch(0.55 0.16 25);
+  --cincin:oklch(0.49 0.1 255);
+  --bayang-kartu:0 24px 64px -28px oklch(0.215 0.02 265 / 0.3);
+  --aksen-lembut:color-mix(in oklch, var(--aksen) 9%, var(--latar));
+  --hijau-lembut:color-mix(in oklch, var(--hijau) 12%, var(--latar));
+  --kuning-lembut:color-mix(in oklch, var(--kuning) 14%, var(--latar));
+  --merah-lembut:color-mix(in oklch, var(--merah) 12%, var(--latar));
+  --font-teks:'Plus Jakarta Sans',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+}
+.dark{
+  color-scheme:dark;
+  --latar:oklch(0.185 0.016 262);
+  --permukaan:oklch(0.215 0.017 262);
+  --kartu:oklch(0.235 0.018 262);
+  --garis:oklch(0.31 0.018 262);
+  --garis-kuat:oklch(0.4 0.02 260);
+  --tinta:oklch(0.945 0.006 250);
+  --tinta-2:oklch(0.74 0.012 255);
+  --tinta-3:oklch(0.65 0.013 257);
+  --aksen:oklch(0.72 0.095 250);
+  --aksen-kuat:oklch(0.78 0.09 248);
+  --aksen-teks:oklch(0.17 0.016 262);
+  --hijau:oklch(0.7 0.11 158);
+  --kuning:oklch(0.75 0.12 88);
+  --merah:oklch(0.68 0.15 25);
+  --cincin:oklch(0.72 0.095 250);
+  --bayang-kartu:0 24px 64px -28px oklch(0 0 0 / 0.55);
+}
+@media (prefers-color-scheme: dark){
+  :root:not(.light){
+    color-scheme:dark;
+    --latar:oklch(0.185 0.016 262);
+    --permukaan:oklch(0.215 0.017 262);
+    --kartu:oklch(0.235 0.018 262);
+    --garis:oklch(0.31 0.018 262);
+    --garis-kuat:oklch(0.4 0.02 260);
+    --tinta:oklch(0.945 0.006 250);
+    --tinta-2:oklch(0.74 0.012 255);
+    --tinta-3:oklch(0.65 0.013 257);
+    --aksen:oklch(0.72 0.095 250);
+    --aksen-kuat:oklch(0.78 0.09 248);
+    --aksen-teks:oklch(0.17 0.016 262);
+    --hijau:oklch(0.7 0.11 158);
+    --kuning:oklch(0.75 0.12 88);
+    --merah:oklch(0.68 0.15 25);
+    --cincin:oklch(0.72 0.095 250);
+    --bayang-kartu:0 24px 64px -28px oklch(0 0 0 / 0.55);
+  }
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--latar);color:var(--tinta);font-family:var(--font-teks);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:var(--aksen)}
+a:hover{color:var(--aksen-kuat)}
+::selection{background:var(--aksen);color:var(--aksen-teks)}
+:where(a,button):focus-visible{outline:2px solid var(--cincin);outline-offset:3px;border-radius:8px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.3);opacity:.65}}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+@container pg (max-width: 899px){
+  [data-cq="devices"]{flex-direction:column;align-items:center;gap:30px}
+  [data-cq="phone"]{margin:0!important;transform:none!important}
+  [data-cq="captions"]{grid-template-columns:1fr!important}
+  [data-cq="connectors"]{display:none!important}
+  [data-cq="spine"]{display:block!important}
+  [data-cq="cards"]{grid-template-columns:1fr!important;max-width:430px;margin-inline:auto}
+  [data-cq="footgrid"]{grid-template-columns:1fr!important;gap:30px!important}
+  [data-cq="herocta"]{flex-direction:column;align-items:stretch!important;max-width:340px;margin-inline:auto}
+}
+@container pg (max-width: 519px){
+  [data-cq="navcta"]{display:none!important}
+}
+</style>
+</helmet>
+
+<div id="pg" style="container-type:inline-size;container-name:pg;background:var(--latar);color:var(--tinta);min-height:100vh;overflow-x:clip">
+
+<nav style="position:sticky;top:0;z-index:60;background:color-mix(in srgb, var(--latar) 84%, transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--garis)">
+<div style="max-width:1216px;margin:0 auto;padding:0 clamp(18px, 4cqw, 40px);height:64px;display:flex;align-items:center;gap:14px">
+<div style="display:flex;align-items:center;gap:9px">
+<span style="width:18px;height:18px;border-radius:6px;background:var(--aksen);display:inline-flex;align-items:center;justify-content:center;flex:none"><span style="width:6px;height:6px;border-radius:50%;background:var(--aksen-teks)"></span></span>
+<span style="font:800 16px/1 var(--font-teks);letter-spacing:-0.02em">Pramana</span>
+<span style="font:600 9px/1 var(--font-mono);letter-spacing:.1em;color:var(--tinta-3);border:1px solid var(--garis-kuat);border-radius:5px;padding:3px 5px">AI</span>
+</div>
+<div style="margin-left:auto;display:flex;align-items:center;gap:10px">
+<button onClick="{{ gantiTema }}" aria-label="{{ ariaTema }}" style="display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:999px;box-shadow:inset 0 0 0 1.5px var(--garis-kuat);color:var(--tinta);font:600 12.5px/1 var(--font-teks);white-space:nowrap" style-hover="box-shadow:inset 0 0 0 1.5px var(--tinta-3)">
+<span style="{{ temaIkon }}"></span>
+<span>{{ temaLabel }}</span>
+</button>
+<a href="#masuk-anggota" data-route="/login" data-cq="navcta" style="display:inline-flex;align-items:center;height:40px;padding:0 18px;border-radius:999px;background:var(--aksen);color:var(--aksen-teks);font:600 13px/1 var(--font-teks);text-decoration:none;white-space:nowrap" style-hover="background:var(--aksen-kuat);color:var(--aksen-teks)">Masuk sebagai Anggota</a>
+</div>
+</div>
+</nav>
+
+<main>
+
+<section data-screen-label="Hero" style="position:relative;padding:clamp(64px, 8cqw, 118px) clamp(18px, 4cqw, 40px) 0;text-align:center">
+<div style="max-width:1216px;margin:0 auto">
+<div style="display:inline-flex;align-items:center;gap:9px;height:34px;padding:0 15px;border-radius:999px;background:var(--kartu);box-shadow:inset 0 0 0 1px var(--garis)">
+<span style="width:7px;height:7px;border-radius:50%;background:var(--hijau);flex:none"></span>
+<span style="width:0;height:0;border-left:4.5px solid transparent;border-right:4.5px solid transparent;border-bottom:7.5px solid var(--kuning);flex:none"></span>
+<span style="width:6px;height:6px;transform:rotate(45deg);background:var(--merah);flex:none"></span>
+<span style="font:600 10.5px/1 var(--font-mono);letter-spacing:.18em;color:var(--tinta-2)">PRAMANA AI</span>
+</div>
+<h1 style="margin:24px auto 0;max-width:1060px;font:800 clamp(38px, 6.6cqw, 96px)/1.04 var(--font-teks);letter-spacing:-0.035em;text-wrap:balance">Pengawas koperasi desa, di genggaman setiap anggota</h1>
+<p style="margin:26px auto 0;max-width:640px;font:400 clamp(15.5px, 1.35cqw, 18.5px)/1.65 var(--font-teks);color:var(--tinta-2);text-wrap:pretty">Empat pemeriksa AI membaca transaksi koperasi Anda. Satu adjudikator menimbang temuannya menjadi verdict hijau, kuning, atau merah, lengkap dengan pertanyaan siap pakai untuk Rapat Anggota Tahunan.</p>
+<div data-cq="herocta" style="margin-top:38px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap">
+<a href="#masuk-anggota" data-route="/login" style="display:inline-flex;align-items:center;justify-content:center;height:52px;padding:0 27px;border-radius:999px;white-space:nowrap;background:var(--aksen);color:var(--aksen-teks);font:600 15.5px/1 var(--font-teks);text-decoration:none" style-hover="background:var(--aksen-kuat);color:var(--aksen-teks)">Masuk sebagai Anggota</a>
+<a href="#masuk-pemerintah" data-route="/login" style="display:inline-flex;align-items:center;justify-content:center;height:52px;padding:0 27px;border-radius:999px;white-space:nowrap;box-shadow:inset 0 0 0 1.5px var(--garis-kuat);color:var(--tinta);font:600 15.5px/1 var(--font-teks);text-decoration:none" style-hover="box-shadow:inset 0 0 0 1.5px var(--tinta-3);color:var(--tinta)">Masuk sebagai Pemerintah</a>
+</div>
+<div style="margin-top:20px"><a href="#daftar" data-route="/daftar" style="font:600 14.5px/1 var(--font-teks);color:var(--aksen);text-decoration:underline;text-underline-offset:4px">Daftar sebagai Anggota Baru</a></div>
+<p style="margin:26px 0 0;font:400 11.5px/1.5 var(--font-mono);color:var(--tinta-3)">Akun uji untuk juri tersedia di halaman masuk.</p>
+</div>
+</section>
+
+<section data-screen-label="Preview produk" style="position:relative;padding:clamp(52px, 6.5cqw, 92px) clamp(18px, 4cqw, 40px) clamp(64px, 8cqw, 110px)">
+<div data-cq="devices" style="position:relative;z-index:1;max-width:1216px;margin:0 auto;display:flex;align-items:flex-end;justify-content:center">
+
+<div data-cq="phone" style="flex:none;width:270px;margin-right:-16px;transform:translateY(26px);z-index:2;position:relative">
+<div data-reveal>
+<div style="background:var(--kartu);border-radius:42px;padding:10px;box-shadow:var(--bayang-kartu), inset 0 0 0 1px var(--garis)">
+<div style="border-radius:34px;background:var(--latar);box-shadow:inset 0 0 0 1px var(--garis);overflow:hidden;height:566px;display:flex;flex-direction:column;padding:12px 13px 10px;gap:10px">
+<div style="width:52px;height:5px;border-radius:999px;background:var(--garis);margin:0 auto;flex:none"></div>
+<div style="display:flex;align-items:center;justify-content:space-between;flex:none">
+<span style="font:600 10px/1 var(--font-mono);color:var(--tinta-2)">09.41</span>
+<span style="display:inline-flex;align-items:flex-end;gap:4px">
+<span style="display:inline-flex;align-items:flex-end;gap:1.5px"><span style="width:2.5px;height:4px;background:var(--tinta-3);border-radius:1px"></span><span style="width:2.5px;height:6px;background:var(--tinta-3);border-radius:1px"></span><span style="width:2.5px;height:8px;background:var(--tinta-3);border-radius:1px"></span></span>
+<span style="width:18px;height:9px;border:1px solid var(--tinta-3);border-radius:2.5px;display:inline-flex;align-items:center;padding:1px"><span style="width:70%;height:100%;background:var(--tinta-3);border-radius:1px"></span></span>
+</span>
+</div>
+<div style="font:700 14px/1.3 var(--font-teks);letter-spacing:-0.01em;flex:none">Selamat pagi, Ibu Sari</div>
+<div style="background:var(--permukaan);border-radius:12px;padding:10px 12px;flex:none">
+<p style="margin:0;font:500 10px/1.55 var(--font-teks);color:var(--tinta-2)">Pengawas menemukan 5 hal yang sebaiknya Anda tanyakan kepada pengurus bulan ini.</p>
+</div>
+<div style="background:var(--merah-lembut);box-shadow:inset 0 0 0 1px color-mix(in oklch, var(--merah) 38%, var(--latar));border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:9px;flex:none">
+<div style="display:flex;align-items:center;gap:7px">
+<span style="width:9px;height:9px;transform:rotate(45deg);background:var(--merah);flex:none"></span>
+<span style="font:600 8.5px/1 var(--font-mono);letter-spacing:.14em;color:var(--merah)">MERAH · PERLU DIJELASKAN</span>
+</div>
+<p style="margin:0;font:700 13px/1.45 var(--font-teks);letter-spacing:-0.01em">Kas koperasi menurun dan ada satu pembelian besar yang perlu dijelaskan pengurus.</p>
+<span style="font:400 9px/1.4 var(--font-mono);color:var(--tinta-3)">Koperasi Desa Merah Putih Sukamaju · Juni 2026</span>
+<span style="display:inline-flex;align-items:center;justify-content:center;height:34px;border-radius:999px;background:var(--tinta);color:var(--latar);font:600 10.5px/1 var(--font-teks)">Lihat yang perlu Anda tahu</span>
+</div>
+<div style="background:var(--kartu);box-shadow:inset 0 0 0 1px var(--garis);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px;flex:none">
+<span style="font:600 8px/1 var(--font-mono);letter-spacing:.14em;color:var(--tinta-3)">TEMUAN · KONFLIK KEPENTINGAN</span>
+<span style="font:700 11.5px/1.4 var(--font-teks)">Pembelian Rp15.000.000 ke Toko Berkah</span>
+<span style="font:400 10px/1.5 var(--font-teks);color:var(--tinta-2)">Alamat vendor tercatat sama dengan alamat bendahara.</span>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:2px">
+<span style="font:600 9.5px/1 var(--font-teks);color:var(--aksen);text-decoration:underline;text-underline-offset:3px">Kenapa ini penting?</span>
+</div>
+<span style="display:inline-flex;align-items:center;justify-content:center;height:30px;border-radius:999px;box-shadow:inset 0 0 0 1px var(--garis-kuat);font:600 9.5px/1 var(--font-teks);color:var(--tinta)">Tambahkan ke pertanyaan rapat</span>
+</div>
+<div style="flex:1"></div>
+<div style="border-top:1px solid var(--garis);padding-top:8px;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;flex:none">
+<span style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="width:7px;height:7px;border-radius:50%;background:var(--aksen)"></span><span style="font:600 7.5px/1 var(--font-teks);color:var(--aksen)">Beranda</span></span>
+<span style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="width:7px;height:7px;border-radius:2px;background:var(--tinta-3);opacity:.6"></span><span style="font:500 7.5px/1 var(--font-teks);color:var(--tinta-3)">Uang Anda</span></span>
+<span style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:7px solid var(--tinta-3);opacity:.6"></span><span style="font:500 7.5px/1 var(--font-teks);color:var(--tinta-3)">Arus Dana</span></span>
+<span style="display:flex;flex-direction:column;align-items:center;gap:4px"><span style="display:inline-flex;gap:2px"><span style="width:6px;height:6px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--tinta-3);opacity:.6"></span><span style="width:6px;height:6px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--tinta-3);opacity:.6"></span></span><span style="font:500 7.5px/1 var(--font-teks);color:var(--tinta-3)">Suara Anda</span></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div style="flex:0 1 850px;min-width:0">
+<div data-reveal data-reveal-delay="140">
+<div style="background:var(--kartu);border-radius:20px 20px 12px 12px;padding:10px 10px 14px;box-shadow:var(--bayang-kartu), inset 0 0 0 1px var(--garis)">
+<div style="display:flex;justify-content:center;padding:2px 0 7px"><span style="width:4px;height:4px;border-radius:50%;background:var(--garis-kuat)"></span></div>
+<div style="border-radius:10px;background:var(--latar);box-shadow:inset 0 0 0 1px var(--garis);overflow:hidden;padding:14px 16px 16px;display:flex;flex-direction:column;gap:11px">
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+<span style="width:8px;height:8px;border-radius:3px;background:var(--aksen);flex:none"></span>
+<span style="font:700 11.5px/1 var(--font-teks);letter-spacing:-0.01em">Pramana · Dasbor Pemerintah</span>
+<span style="margin-left:auto;font:500 8.5px/1 var(--font-mono);letter-spacing:.1em;color:var(--tinta-3);border:1px solid var(--garis);border-radius:5px;padding:4px 7px">PERIODE JUNI 2026</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(92px, 1fr));gap:8px">
+<div style="background:var(--kartu);box-shadow:inset 0 0 0 1px var(--garis);border-radius:11px;padding:10px 12px"><div style="font:800 18px/1.1 var(--font-teks);font-variant-numeric:tabular-nums">12</div><div style="margin-top:4px;font:500 8px/1.3 var(--font-mono);letter-spacing:.08em;color:var(--tinta-3)">KOPERASI TERPANTAU</div></div>
+<div style="background:var(--kartu);box-shadow:inset 0 0 0 1px var(--garis);border-radius:11px;padding:10px 12px"><div style="display:flex;align-items:center;gap:6px"><span style="font:800 18px/1.1 var(--font-teks);font-variant-numeric:tabular-nums">6</span><span style="width:8px;height:8px;border-radius:50%;background:var(--hijau)"></span></div><div style="margin-top:4px;font:500 8px/1.3 var(--font-mono);letter-spacing:.08em;color:var(--tinta-3)">HIJAU</div></div>
+<div style="background:var(--kartu);box-shadow:inset 0 0 0 1px var(--garis);border-radius:11px;padding:10px 12px"><div style="display:flex;align-items:center;gap:6px"><span style="font:800 18px/1.1 var(--font-teks);font-variant-numeric:tabular-nums">4</span><span style="width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:8.5px solid var(--kuning)"></span></div><div style="margin-top:4px;font:500 8px/1.3 var(--font-mono);letter-spacing:.08em;color:var(--tinta-3)">KUNING</div></div>
+<div style="background:var(--kartu);box-shadow:inset 0 0 0 1px var(--garis);border-radius:11px;padding:10px 12px"><div style="display:flex;align-items:center;gap:6px"><span style="font:800 18px/1.1 var(--font-teks);font-variant-numeric:tabular-nums">2</span><span style="width:7px;height:7px;transform:rotate(45deg);background:var(--merah)"></span></div><div style="margin-top:4px;font:500 8px/1.3 var(--font-mono);letter-spacing:.08em;color:var(--tinta-3)">MERAH</div></div>
+<div style="background:var(--kartu);box-shadow:inset 0 0 0 1px var(--garis);border-radius:11px;padding:10px 12px"><div style="font:800 18px/1.1 var(--font-teks);font-variant-numeric:tabular-nums">17</div><div style="margin-top:4px;font:500 8px/1.3 var(--font-mono);letter-spacing:.08em;color:var(--tinta-3)">TEMUAN TERBUKA</div></div>
+</div>
+<div>
+<div style="font:500 8px/1 var(--font-mono);letter-spacing:.12em;color:var(--tinta-3);margin-bottom:6px">DISTRIBUSI VERDICT</div>
+<div style="height:8px;border-radius:999px;overflow:hidden;display:flex;background:var(--permukaan)">
+<span style="width:50%;background:var(--hijau)"></span><span style="width:33.4%;background:var(--kuning)"></span><span style="width:16.6%;background:var(--merah)"></span>
+</div>
+</div>
+<div style="background:var(--kartu);box-shadow:inset 0 0 0 1px var(--garis);border-radius:12px;overflow:hidden">
+<div style="display:grid;grid-template-columns:1.7fr 1fr 0.95fr 0.5fr;gap:8px;padding:8px 12px;font:500 8px/1 var(--font-mono);letter-spacing:.1em;color:var(--tinta-3)"><span>KOPERASI</span><span>PROVINSI</span><span>VERDICT</span><span style="text-align:right">TEMUAN</span></div>
+<div style="display:grid;grid-template-columns:1.7fr 1fr 0.95fr 0.5fr;gap:8px;padding:9px 12px;border-top:1px solid var(--garis);align-items:center;font:400 10.5px/1.35 var(--font-teks)"><span style="font-weight:600">Merah Putih Sukamaju</span><span style="color:var(--tinta-2)">Jawa Barat</span><span style="display:inline-flex;align-items:center;gap:5px"><span style="width:7px;height:7px;transform:rotate(45deg);background:var(--merah);flex:none"></span><span style="font:600 9px/1 var(--font-teks)">Merah</span></span><span style="text-align:right;font-variant-numeric:tabular-nums">6</span></div>
+<div style="display:grid;grid-template-columns:1.7fr 1fr 0.95fr 0.5fr;gap:8px;padding:9px 12px;border-top:1px solid var(--garis);align-items:center;font:400 10.5px/1.35 var(--font-teks)"><span style="font-weight:600">Merah Putih Lembah Sari</span><span style="color:var(--tinta-2)">Sumatera Barat</span><span style="display:inline-flex;align-items:center;gap:5px"><span style="width:7px;height:7px;transform:rotate(45deg);background:var(--merah);flex:none"></span><span style="font:600 9px/1 var(--font-teks)">Merah</span></span><span style="text-align:right;font-variant-numeric:tabular-nums">4</span></div>
+<div style="display:grid;grid-template-columns:1.7fr 1fr 0.95fr 0.5fr;gap:8px;padding:9px 12px;border-top:1px solid var(--garis);align-items:center;font:400 10.5px/1.35 var(--font-teks)"><span style="font-weight:600">Merah Putih Cempaka Wangi</span><span style="color:var(--tinta-2)">Lampung</span><span style="display:inline-flex;align-items:center;gap:5px"><span style="width:0;height:0;border-left:4.5px solid transparent;border-right:4.5px solid transparent;border-bottom:8px solid var(--kuning);flex:none"></span><span style="font:600 9px/1 var(--font-teks)">Kuning</span></span><span style="text-align:right;font-variant-numeric:tabular-nums">2</span></div>
+<div style="display:grid;grid-template-columns:1.7fr 1fr 0.95fr 0.5fr;gap:8px;padding:9px 12px;border-top:1px solid var(--garis);align-items:center;font:400 10.5px/1.35 var(--font-teks)"><span style="font-weight:600">Merah Putih Wanasaba</span><span style="color:var(--tinta-2)">Nusa Tenggara Barat</span><span style="display:inline-flex;align-items:center;gap:5px"><span style="width:0;height:0;border-left:4.5px solid transparent;border-right:4.5px solid transparent;border-bottom:8px solid var(--kuning);flex:none"></span><span style="font:600 9px/1 var(--font-teks)">Kuning</span></span><span style="text-align:right;font-variant-numeric:tabular-nums">2</span></div>
+<div style="display:grid;grid-template-columns:1.7fr 1fr 0.95fr 0.5fr;gap:8px;padding:9px 12px;border-top:1px solid var(--garis);align-items:center;font:400 10.5px/1.35 var(--font-teks)"><span style="font-weight:600">Merah Putih Mekarsari</span><span style="color:var(--tinta-2)">Jawa Barat</span><span style="display:inline-flex;align-items:center;gap:5px"><span style="width:7px;height:7px;border-radius:50%;background:var(--hijau);flex:none"></span><span style="font:600 9px/1 var(--font-teks)">Hijau</span></span><span style="text-align:right;font-variant-numeric:tabular-nums">0</span></div>
+</div>
+</div>
+</div>
+<div style="height:13px;width:106%;margin:0 -3%;background:var(--permukaan);border-radius:0 0 14px 14px;box-shadow:inset 0 0 0 1px var(--garis);display:flex;justify-content:center"><span style="width:88px;height:5px;border-radius:0 0 6px 6px;background:var(--garis)"></span></div>
+</div>
+</div>
+
+</div>
+
+<div data-cq="captions" data-reveal data-reveal-delay="120" style="max-width:1216px;margin:44px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:24px">
+<div style="border-top:1px solid var(--garis-kuat);padding-top:14px">
+<span style="font:600 10px/1 var(--font-mono);letter-spacing:.16em;color:var(--tinta-3)">APLIKASI ANGGOTA · MOBILE</span>
+<p style="margin:7px 0 0;font:400 13.5px/1.6 var(--font-teks);color:var(--tinta-2)">Verdict dan temuan dalam bahasa awam, dipahami dalam waktu kurang dari satu menit.</p>
+</div>
+<div style="border-top:1px solid var(--garis-kuat);padding-top:14px">
+<span style="font:600 10px/1 var(--font-mono);letter-spacing:.16em;color:var(--tinta-3)">DASBOR PEMERINTAH · DESKTOP</span>
+<p style="margin:7px 0 0;font:400 13.5px/1.6 var(--font-teks);color:var(--tinta-2)">Kesehatan seluruh koperasi binaan dalam satu layar, dari agregat sampai detail temuan.</p>
+</div>
+</div>
+</section>
+
+<section data-screen-label="Masalah" style="padding:clamp(72px, 9cqw, 130px) clamp(18px, 4cqw, 40px) 0">
+<div style="max-width:1216px;margin:0 auto">
+<div style="display:flex;align-items:center;gap:16px">
+<span style="font:600 11px/1 var(--font-mono);letter-spacing:.18em;color:var(--tinta-3);flex:none">01 · MASALAH</span>
+<span style="height:1px;background:var(--garis);flex:1"></span>
+</div>
+<h2 style="margin:22px 0 0;max-width:780px;font:800 clamp(30px, 4.4cqw, 54px)/1.08 var(--font-teks);letter-spacing:-0.03em;text-wrap:balance">Dananya sudah mengalir. Pengawasannya belum.</h2>
+<p style="margin:18px 0 0;max-width:620px;font:400 15.5px/1.65 var(--font-teks);color:var(--tinta-2);text-wrap:pretty">Program Koperasi Desa Merah Putih menyalurkan plafon hingga Rp3 miliar ke setiap koperasi desa. Badan pengawasnya sering kali hanya formalitas, dan anggota tidak punya alat untuk memeriksa sendiri.</p>
+<div style="margin-top:clamp(36px, 5cqw, 60px);display:grid;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));gap:clamp(24px, 3cqw, 48px)">
+<div data-reveal style="border-top:1px solid var(--garis-kuat);padding-top:18px;display:grid;grid-template-rows:16px auto auto auto;gap:8px">
+<span></span>
+<span style="font:800 clamp(46px, 5.4cqw, 82px)/1 var(--font-teks);letter-spacing:-0.04em;font-variant-numeric:tabular-nums">83.383</span>
+<span style="font:600 15px/1.4 var(--font-teks)">koperasi desa berdiri</span>
+<span style="font:400 10px/1.5 var(--font-mono);letter-spacing:.08em;color:var(--tinta-3)">SIMKOPDES VIA KATADATA · 29 JUNI 2026</span>
+</div>
+<div data-reveal data-reveal-delay="110" style="border-top:1px solid var(--garis-kuat);padding-top:18px;display:grid;grid-template-rows:16px auto auto auto;gap:8px">
+<span style="font:600 11px/1 var(--font-mono);letter-spacing:.14em;color:var(--tinta-3)">BARU SEKITAR</span>
+<span style="font:800 clamp(46px, 5.4cqw, 82px)/1 var(--font-teks);letter-spacing:-0.04em;font-variant-numeric:tabular-nums">50.383</span>
+<span style="font:600 15px/1.4 var(--font-teks)">yang telah RAT</span>
+<span style="font:400 10px/1.5 var(--font-mono);letter-spacing:.08em;color:var(--tinta-3)">SIMKOPDES · AKHIR JUNI 2026</span>
+</div>
+<div data-reveal data-reveal-delay="220" style="border-top:1px solid var(--garis-kuat);padding-top:18px;display:grid;grid-template-rows:16px auto auto auto;gap:8px">
+<span style="font:600 11px/1 var(--font-mono);letter-spacing:.14em;color:var(--tinta-3)">RISIKO KEBOCORAN SEKITAR</span>
+<span style="font:800 clamp(46px, 5.4cqw, 82px)/1 var(--font-teks);letter-spacing:-0.04em;font-variant-numeric:tabular-nums">Rp60 juta</span>
+<span style="font:600 15px/1.4 var(--font-teks)">per koperasi per tahun</span>
+<span style="font:400 10px/1.5 var(--font-mono);letter-spacing:.08em;color:var(--tinta-3)">ESTIMASI STUDI CELIOS</span>
+</div>
+</div>
+</div>
+</section>
+
+<section data-screen-label="Wawasan" style="margin-top:clamp(72px, 9cqw, 130px);background:var(--permukaan);border-top:1px solid var(--garis);border-bottom:1px solid var(--garis);padding:clamp(64px, 8.5cqw, 118px) clamp(18px, 4cqw, 40px);text-align:center">
+<div data-reveal style="max-width:880px;margin:0 auto">
+<div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:22px">
+<span style="width:7px;height:7px;border-radius:50%;background:var(--hijau)"></span>
+<span style="width:0;height:0;border-left:4.5px solid transparent;border-right:4.5px solid transparent;border-bottom:7.5px solid var(--kuning)"></span>
+<span style="width:6px;height:6px;transform:rotate(45deg);background:var(--merah)"></span>
+</div>
+<p style="margin:0;font:600 clamp(24px, 3.4cqw, 42px)/1.25 var(--font-teks);letter-spacing:-0.025em;color:var(--tinta-2);text-wrap:balance">Aplikasi koperasi selama ini dibangun untuk pengurus.</p>
+<p style="margin:8px 0 0;font:800 clamp(24px, 3.4cqw, 42px)/1.25 var(--font-teks);letter-spacing:-0.025em;color:var(--tinta);text-wrap:balance">Pramana dibangun untuk Anda, anggotanya.</p>
+</div>
+</section>
+
+<section data-screen-label="Cara kerja" style="padding:clamp(72px, 9cqw, 130px) clamp(18px, 4cqw, 40px) 0">
+<div style="max-width:1216px;margin:0 auto">
+<div style="display:flex;align-items:center;gap:16px">
+<span style="font:600 11px/1 var(--font-mono);letter-spacing:.18em;color:var(--tinta-3);flex:none">02 · CARA KERJA</span>
+<span style="height:1px;background:var(--garis);flex:1"></span>
+</div>
+<h2 style="margin:22px 0 0;max-width:780px;font:800 clamp(30px, 4.4cqw, 54px)/1.08 var(--font-teks);letter-spacing:-0.03em;text-wrap:balance">Pramana bertanya, tidak menuduh.</h2>
+<p style="margin:18px 0 0;max-width:640px;font:400 15.5px/1.65 var(--font-teks);color:var(--tinta-2);text-wrap:pretty">Empat pemeriksa membaca data koperasi dari sisi yang berbeda, berjalan bersamaan. Satu adjudikator menimbang seluruh temuan, menulis ulang dalam bahasa awam, lalu menyusun pertanyaan yang siap Anda bawa ke rapat.</p>
+
+<div data-dg-root style="position:relative;margin-top:clamp(40px, 5cqw, 62px)">
+<span data-dg="spine" data-cq="spine" aria-hidden="true" style="display:none;position:absolute;left:50%;top:10px;bottom:10px;width:1.5px;margin-left:-0.75px;background:var(--garis-kuat)"></span>
+
+<div data-cq="cards" style="position:relative;z-index:1;display:grid;grid-template-columns:repeat(4, 1fr);gap:16px">
+<div data-dg="card" style="background:var(--kartu);border-radius:18px;padding:20px 20px 22px;box-shadow:inset 0 0 0 1px var(--garis), 0 12px 32px -22px oklch(0.215 0.02 265 / 0.35)">
+<div style="display:flex;align-items:center"><span style="font:600 10.5px/1 var(--font-mono);letter-spacing:.14em;color:var(--tinta-3)">P1</span><span style="margin-left:auto;width:6px;height:6px;border-radius:50%;background:var(--aksen)"></span></div>
+<div style="margin-top:12px;font:800 16.5px/1.25 var(--font-teks);letter-spacing:-0.015em">Konflik Kepentingan</div>
+<p style="margin:8px 0 0;font:400 13px/1.55 var(--font-teks);color:var(--tinta-2)">Mencocokkan vendor transaksi dengan alamat dan nama pengurus.</p>
+</div>
+<div data-dg="card" style="background:var(--kartu);border-radius:18px;padding:20px 20px 22px;box-shadow:inset 0 0 0 1px var(--garis), 0 12px 32px -22px oklch(0.215 0.02 265 / 0.35)">
+<div style="display:flex;align-items:center"><span style="font:600 10.5px/1 var(--font-mono);letter-spacing:.14em;color:var(--tinta-3)">P2</span><span style="margin-left:auto;width:6px;height:6px;border-radius:50%;background:var(--aksen)"></span></div>
+<div style="margin-top:12px;font:800 16.5px/1.25 var(--font-teks);letter-spacing:-0.015em">Anomali Transaksi</div>
+<p style="margin:8px 0 0;font:400 13px/1.55 var(--font-teks);color:var(--tinta-2)">Menandai lonjakan persetujuan, pemecahan nilai, dan pembelian janggal.</p>
+</div>
+<div data-dg="card" style="background:var(--kartu);border-radius:18px;padding:20px 20px 22px;box-shadow:inset 0 0 0 1px var(--garis), 0 12px 32px -22px oklch(0.215 0.02 265 / 0.35)">
+<div style="display:flex;align-items:center"><span style="font:600 10.5px/1 var(--font-mono);letter-spacing:.14em;color:var(--tinta-3)">P3</span><span style="margin-left:auto;width:6px;height:6px;border-radius:50%;background:var(--aksen)"></span></div>
+<div style="margin-top:12px;font:800 16.5px/1.25 var(--font-teks);letter-spacing:-0.015em">Kesehatan Finansial</div>
+<p style="margin:8px 0 0;font:400 13px/1.55 var(--font-teks);color:var(--tinta-2)">Membaca tren kas dan pinjaman macet dengan analogi rumah tangga.</p>
+</div>
+<div data-dg="card" style="background:var(--kartu);border-radius:18px;padding:20px 20px 22px;box-shadow:inset 0 0 0 1px var(--garis), 0 12px 32px -22px oklch(0.215 0.02 265 / 0.35)">
+<div style="display:flex;align-items:center"><span style="font:600 10.5px/1 var(--font-mono);letter-spacing:.14em;color:var(--tinta-3)">P4</span><span style="margin-left:auto;width:6px;height:6px;border-radius:50%;background:var(--aksen)"></span></div>
+<div style="margin-top:12px;font:800 16.5px/1.25 var(--font-teks);letter-spacing:-0.015em">Kepatuhan Proses</div>
+<p style="margin:8px 0 0;font:400 13px/1.55 var(--font-teks);color:var(--tinta-2)">Memeriksa kelengkapan dokumen, plafon, wewenang, dan status RAT.</p>
+</div>
+</div>
+
+<div data-cq="connectors" aria-hidden="true">
+<div style="display:grid;grid-template-columns:repeat(4, 1fr);height:30px">
+<span style="display:flex;justify-content:center"><span data-dg="vline" style="width:1.5px;height:100%;background:var(--garis-kuat)"></span></span>
+<span style="display:flex;justify-content:center"><span data-dg="vline" style="width:1.5px;height:100%;background:var(--garis-kuat)"></span></span>
+<span style="display:flex;justify-content:center"><span data-dg="vline" style="width:1.5px;height:100%;background:var(--garis-kuat)"></span></span>
+<span style="display:flex;justify-content:center"><span data-dg="vline" style="width:1.5px;height:100%;background:var(--garis-kuat)"></span></span>
+</div>
+<div style="position:relative;height:1.5px">
+<span data-dg="hline" style="position:absolute;left:12.5%;right:12.5%;height:1.5px;background:var(--garis-kuat)"></span>
+</div>
+<div style="display:flex;justify-content:center;height:30px">
+<span data-dg="mid" style="width:1.5px;height:100%;background:var(--garis-kuat)"></span>
+</div>
+</div>
+
+<div data-dg="adj" style="position:relative;z-index:1;max-width:470px;margin:16px auto 0;background:color-mix(in oklch, var(--aksen) 9%, var(--latar));box-shadow:inset 0 0 0 1px color-mix(in oklch, var(--aksen) 35%, var(--latar));border-radius:20px;padding:22px 24px;text-align:center">
+<div style="display:inline-flex;align-items:center;gap:8px">
+<span style="width:7px;height:7px;border-radius:50%;background:var(--aksen);animation:pulseDot 2.4s ease-in-out infinite"></span>
+<span style="font:600 10.5px/1 var(--font-mono);letter-spacing:.18em;color:var(--aksen)">ADJUDIKATOR</span>
+</div>
+<p style="margin:10px 0 0;font:400 13.5px/1.6 var(--font-teks);color:var(--tinta-2)">Menghapus duplikasi, menimbang bobot temuan, menulis ulang dalam bahasa awam, lalu mengusulkan satu verdict beserta daftar pertanyaan untuk rapat.</p>
+</div>
+
+<div data-cq="connectors" aria-hidden="true" style="display:flex;justify-content:center;height:30px;margin-top:0">
+<span data-dg="last" style="width:1.5px;height:100%;background:var(--garis-kuat)"></span>
+</div>
+
+<div style="position:relative;z-index:1;margin-top:16px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+<span data-dg="chip" style="display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 17px;border-radius:999px;background:var(--hijau-lembut);box-shadow:inset 0 0 0 1px color-mix(in oklch, var(--hijau) 40%, var(--latar))"><span style="width:9px;height:9px;border-radius:50%;background:var(--hijau);flex:none"></span><span style="font:700 13px/1 var(--font-teks)">Hijau · Sehat</span></span>
+<span data-dg="chip" style="display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 17px;border-radius:999px;background:var(--kuning-lembut);box-shadow:inset 0 0 0 1px color-mix(in oklch, var(--kuning) 45%, var(--latar))"><span style="width:0;height:0;border-left:5.5px solid transparent;border-right:5.5px solid transparent;border-bottom:9.5px solid var(--kuning);flex:none"></span><span style="font:700 13px/1 var(--font-teks)">Kuning · Perlu perhatian</span></span>
+<span data-dg="chip" style="display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 17px;border-radius:999px;background:var(--merah-lembut);box-shadow:inset 0 0 0 1px color-mix(in oklch, var(--merah) 40%, var(--latar))"><span style="width:8px;height:8px;transform:rotate(45deg);background:var(--merah);flex:none"></span><span style="font:700 13px/1 var(--font-teks)">Merah · Perlu dijelaskan</span></span>
+</div>
+
+<p style="position:relative;z-index:1;margin:20px 0 0;text-align:center;font:400 11px/1.6 var(--font-mono);color:var(--tinta-3)">Setiap verdict kuning atau merah membawa pertanyaan siap pakai untuk Rapat Anggota Tahunan.</p>
+</div>
+</div>
+</section>
+
+<section data-screen-label="Fitur inti" style="padding:clamp(72px, 9cqw, 130px) clamp(18px, 4cqw, 40px) 0">
+<div style="max-width:1216px;margin:0 auto">
+<div style="display:flex;align-items:center;gap:16px">
+<span style="font:600 11px/1 var(--font-mono);letter-spacing:.18em;color:var(--tinta-3);flex:none">03 · FITUR INTI</span>
+<span style="height:1px;background:var(--garis);flex:1"></span>
+</div>
+<h2 style="margin:22px 0 0;max-width:780px;font:800 clamp(30px, 4.4cqw, 54px)/1.08 var(--font-teks);letter-spacing:-0.03em;text-wrap:balance">Empat layar, satu alur.</h2>
+<div style="margin-top:clamp(36px, 5cqw, 56px);display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:clamp(20px, 2.5cqw, 32px)">
+<div data-reveal style="border-top:1px solid var(--garis-kuat);padding-top:20px">
+<span style="display:inline-block;width:14px;height:14px;border-radius:50%;border:2px solid var(--aksen)"></span>
+<h3 style="margin:14px 0 0;font:800 17px/1.3 var(--font-teks);letter-spacing:-0.015em">Koperasi Anda Sehat?</h3>
+<p style="margin:8px 0 0;font:400 13.5px/1.6 var(--font-teks);color:var(--tinta-2)">Satu warna, satu kalimat ringkasan. Anda tahu kondisi koperasi dalam waktu kurang dari satu menit.</p>
+</div>
+<div data-reveal data-reveal-delay="90" style="border-top:1px solid var(--garis-kuat);padding-top:20px">
+<span style="display:inline-block;width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-bottom:15px solid var(--aksen)"></span>
+<h3 style="margin:14px 0 0;font:800 17px/1.3 var(--font-teks);letter-spacing:-0.015em">Yang Perlu Anda Tahu</h3>
+<p style="margin:8px 0 0;font:400 13.5px/1.6 var(--font-teks);color:var(--tinta-2)">Temuan dalam bahasa awam beserta bukti, tanggapan pengurus, dan pertanyaan siap pakai untuk rapat.</p>
+</div>
+<div data-reveal data-reveal-delay="180" style="border-top:1px solid var(--garis-kuat);padding-top:20px">
+<span style="display:inline-flex;align-items:flex-end;gap:3px;height:16px"><span style="width:4.5px;height:8px;background:var(--aksen);border-radius:1.5px"></span><span style="width:4.5px;height:16px;background:var(--aksen);border-radius:1.5px"></span><span style="width:4.5px;height:12px;background:var(--aksen);border-radius:1.5px"></span></span>
+<h3 style="margin:14px 0 0;font:800 17px/1.3 var(--font-teks);letter-spacing:-0.015em">Ke Mana Uang Koperasi Pergi</h3>
+<p style="margin:8px 0 0;font:400 13.5px/1.6 var(--font-teks);color:var(--tinta-2)">Arus dana bulanan sebagai cerita visual sederhana. Aliran yang sedang diperiksa Pengawas diberi tanda.</p>
+</div>
+<div data-reveal data-reveal-delay="270" style="border-top:1px solid var(--garis-kuat);padding-top:20px">
+<span style="display:inline-flex;height:16px;align-items:center"><span style="width:11px;height:11px;border-radius:50%;border:2px solid var(--aksen)"></span><span style="width:11px;height:11px;border-radius:50%;border:2px solid var(--aksen);margin-left:-5px"></span></span>
+<h3 style="margin:14px 0 0;font:800 17px/1.3 var(--font-teks);letter-spacing:-0.015em">Suara Anda</h3>
+<p style="margin:8px 0 0;font:400 13.5px/1.6 var(--font-teks);color:var(--tinta-2)">Pertanyaan Anda digabungkan dengan anggota lain, lalu dibawa bersama ke Rapat Anggota Tahunan.</p>
+</div>
+</div>
+</div>
+</section>
+
+</main>
+
+<footer data-screen-label="Footer" style="margin-top:clamp(72px, 9cqw, 130px);background:var(--permukaan);border-top:1px solid var(--garis)">
+<div style="max-width:1216px;margin:0 auto;padding:clamp(48px, 6cqw, 76px) clamp(18px, 4cqw, 40px) 0">
+<div data-cq="footgrid" data-reveal style="display:grid;grid-template-columns:1.5fr 1fr 1.2fr;gap:44px">
+<div>
+<div style="display:flex;align-items:center;gap:9px">
+<span style="width:18px;height:18px;border-radius:6px;background:var(--aksen);display:inline-flex;align-items:center;justify-content:center;flex:none"><span style="width:6px;height:6px;border-radius:50%;background:var(--aksen-teks)"></span></span>
+<span style="font:800 16px/1 var(--font-teks);letter-spacing:-0.02em">Pramana</span>
+<span style="font:600 9px/1 var(--font-mono);letter-spacing:.1em;color:var(--tinta-3);border:1px solid var(--garis-kuat);border-radius:5px;padding:3px 5px">AI</span>
+</div>
+<p style="margin:14px 0 0;max-width:300px;font:400 13.5px/1.6 var(--font-teks);color:var(--tinta-2)">Pengawas koperasi desa, di genggaman setiap anggota.</p>
+<p style="margin:16px 0 0;font:400 11px/1.6 var(--font-mono);color:var(--tinta-3)">Akun uji untuk juri tersedia di halaman masuk.</p>
+</div>
+<div>
+<span style="font:600 10px/1 var(--font-mono);letter-spacing:.16em;color:var(--tinta-3)">TIM</span>
+<p style="margin:12px 0 0;font:600 14.5px/1.5 var(--font-teks)">Tim Daulat</p>
+<p style="margin:4px 0 0;font:400 13.5px/1.6 var(--font-teks);color:var(--tinta-2)">Politeknik Negeri Bandung</p>
+</div>
+<div>
+<span style="font:600 10px/1 var(--font-mono);letter-spacing:.16em;color:var(--tinta-3)">AJANG</span>
+<p style="margin:12px 0 0;font:600 14.5px/1.5 var(--font-teks)">Hackathon Digital Cooperatives Expo 2026</p>
+<p style="margin:10px 0 0"><a href="{{ repoHref }}" title="Slot tautan repositori, diisi saat implementasi" style="font:600 13.5px/1.5 var(--font-teks);color:var(--aksen);text-decoration:underline;text-underline-offset:4px">Repositori proyek</a></p>
+</div>
+</div>
+<div aria-hidden="true" style="overflow:hidden;margin-top:clamp(36px, 5cqw, 64px)">
+<div style="text-align:center;font:800 clamp(88px, 14cqw, 188px)/0.92 var(--font-teks);letter-spacing:-0.05em;color:color-mix(in oklch, var(--tinta) 8%, var(--permukaan));user-select:none;transform:translateY(10%)">PRAMANA</div>
+</div>
+<div style="border-top:1px solid var(--garis);padding:16px 0 22px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+<span style="font:400 10.5px/1.6 var(--font-mono);color:var(--tinta-3)">© 2026 Tim Daulat</span>
+<span style="font:400 10.5px/1.6 var(--font-mono);color:var(--tinta-3)">Purwarupa untuk penjurian. Seluruh data bersifat sintetis, tanpa data pribadi nyata.</span>
+</div>
+</div>
+</footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;tema&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;sistem&quot;, &quot;terang&quot;, &quot;gelap&quot;], &quot;default&quot;: &quot;sistem&quot;, &quot;tsType&quot;: &quot;\&quot;sistem\&quot; | \&quot;terang\&quot; | \&quot;gelap\&quot;&quot;, &quot;section&quot;: &quot;Tampilan&quot; },
+  &quot;motionAktif&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Gerak&quot; },
+  &quot;repoUrl&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Tautan&quot; }
+}">
+class Component extends DCLogic {
+  state = { tema: "sistem" };
+
+  componentDidMount() {
+    this.mqGerak = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let tersimpan = null;
+    try { tersimpan = localStorage.getItem("pramana-tema"); } catch (e) {}
+    const propTema = this.props.tema;
+    const awal = (propTema && propTema !== "sistem")
+      ? propTema
+      : ((tersimpan === "terang" || tersimpan === "gelap") ? tersimpan : "sistem");
+    this.terapkanTema(awal, false);
+    window.__revealAll = () => this.bukaSemua();
+    const gerakAktif = (this.props.motionAktif ?? true) && !this.mqGerak.matches;
+    if (gerakAktif) {
+      this.siapkanReveal();
+      this.siapkanDiagram();
+    }
+  }
+
+  componentDidUpdate(prev) {
+    if (prev.tema !== this.props.tema && this.props.tema) {
+      this.terapkanTema(this.props.tema, true);
+    }
+    if (prev.motionAktif !== this.props.motionAktif && this.props.motionAktif === false) {
+      this.bukaSemua();
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.io) this.io.disconnect();
+    if (this.ioDg) this.ioDg.disconnect();
+    (this.timer || []).forEach((t) => clearTimeout(t));
+  }
+
+  terapkanTema(t, simpan) {
+    const el = document.documentElement;
+    el.classList.remove("dark", "light");
+    if (t === "gelap") el.classList.add("dark");
+    if (t === "terang") el.classList.add("light");
+    this.setState({ tema: t });
+    if (simpan) { try { localStorage.setItem("pramana-tema", t); } catch (e) {} }
+  }
+
+  siapkanReveal() {
+    const els = Array.from(document.querySelectorAll("[data-reveal]"));
+    const tinggi = window.innerHeight;
+    const target = els.filter((el) => el.getBoundingClientRect().top > tinggi * 0.82);
+    target.forEach((el) => {
+      el.style.opacity = "0";
+      el.style.transform = "translateY(26px)";
+    });
+    this.io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        const el = en.target;
+        const tunda = Number(el.getAttribute("data-reveal-delay") || 0);
+        el.style.transition = "opacity .8s cubic-bezier(.22,.61,.21,1) " + tunda + "ms, transform .8s cubic-bezier(.22,.61,.21,1) " + tunda + "ms";
+        el.style.opacity = "1";
+        el.style.transform = "translateY(0)";
+        this.io.unobserve(el);
+      });
+    }, { threshold: 0.12 });
+    target.forEach((el) => this.io.observe(el));
+  }
+
+  siapkanDiagram() {
+    const akar = document.querySelector("[data-dg-root]");
+    if (!akar) return;
+    const q = (s) => Array.from(akar.querySelectorAll(s));
+    const kartu = q('[data-dg="card"]');
+    const vlines = q('[data-dg="vline"]');
+    const hline = q('[data-dg="hline"]');
+    const tengah = q('[data-dg="mid"]');
+    const adj = q('[data-dg="adj"]');
+    const akhir = q('[data-dg="last"]');
+    const chip = q('[data-dg="chip"]');
+    const spine = q('[data-dg="spine"]');
+    kartu.forEach((el) => { el.style.opacity = "0"; el.style.transform = "translateY(18px)"; });
+    vlines.concat(tengah, akhir).forEach((el) => { el.style.transform = "scaleY(0)"; el.style.transformOrigin = "top center"; });
+    spine.forEach((el) => { el.style.transform = "scaleY(0)"; el.style.transformOrigin = "top center"; });
+    hline.forEach((el) => { el.style.transform = "scaleX(0)"; el.style.transformOrigin = "center"; });
+    adj.forEach((el) => { el.style.opacity = "0"; el.style.transform = "translateY(14px) scale(.98)"; });
+    chip.forEach((el) => { el.style.opacity = "0"; el.style.transform = "scale(.9)"; });
+    this.timer = [];
+    const jalan = () => {
+      const t = (ms, fn) => this.timer.push(setTimeout(fn, ms));
+      const buka = (el, dur) => {
+        el.style.transition = "opacity " + dur + "ms cubic-bezier(.22,.61,.21,1), transform " + dur + "ms cubic-bezier(.22,.61,.21,1)";
+        el.style.opacity = "1";
+        el.style.transform = "none";
+      };
+      kartu.forEach((el, i) => t(90 * i, () => buka(el, 550)));
+      t(430, () => vlines.forEach((el) => buka(el, 380)));
+      t(430, () => spine.forEach((el) => buka(el, 1100)));
+      t(780, () => hline.forEach((el) => buka(el, 420)));
+      t(1150, () => tengah.forEach((el) => buka(el, 300)));
+      t(1330, () => adj.forEach((el) => buka(el, 480)));
+      t(1700, () => akhir.forEach((el) => buka(el, 300)));
+      chip.forEach((el, i) => t(1900 + 110 * i, () => buka(el, 420)));
+    };
+    this.ioDg = new IntersectionObserver((ens) => {
+      ens.forEach((en) => {
+        if (!en.isIntersecting) return;
+        this.ioDg.disconnect();
+        jalan();
+      });
+    }, { threshold: 0.08 });
+    this.ioDg.observe(akar);
+  }
+
+  bukaSemua() {
+    Array.from(document.querySelectorAll("[data-reveal],[data-dg]")).forEach((el) => {
+      el.style.transition = "none";
+      el.style.opacity = "";
+      el.style.transform = "";
+    });
+    if (this.io) this.io.disconnect();
+    if (this.ioDg) this.ioDg.disconnect();
+    (this.timer || []).forEach((t) => clearTimeout(t));
+  }
+
+  gantiTema = () => {
+    const urutan = { sistem: "terang", terang: "gelap", gelap: "sistem" };
+    this.terapkanTema(urutan[this.state.tema] || "sistem", true);
+  };
+
+  renderVals() {
+    const tema = this.state.tema;
+    const label = ({ sistem: "Sistem", terang: "Terang", gelap: "Gelap" })[tema] || "Sistem";
+    const ikon = {
+      width: "11px",
+      height: "11px",
+      borderRadius: "50%",
+      flex: "none",
+      border: "1.5px solid currentColor",
+      background: tema === "gelap"
+        ? "currentColor"
+        : (tema === "sistem" ? "linear-gradient(90deg, currentColor 0 50%, transparent 50% 100%)" : "transparent")
+    };
+    const repo = (this.props.repoUrl || "").trim();
+    return {
+      temaLabel: label,
+      temaIkon: ikon,
+      gantiTema: this.gantiTema,
+      ariaTema: "Ganti tema tampilan, tema saat ini " + label,
+      repoHref: repo || "#repositori"
+    };
+  }
+}
+</script>
+</body>
+</html>

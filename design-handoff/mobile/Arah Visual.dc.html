@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#edeae4;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#8a4b2f;text-decoration:none}
+a:hover{color:#6e3a23;text-decoration:underline}
+[id]:target{outline:2px solid #8a4b2f;outline-offset:8px;border-radius:16px}
+</style>
+</helmet>
+<section id="t1" style="padding:44px 48px 60px;display:flex;flex-direction:column;gap:36px;scroll-margin-top:16px">
+
+  <header style="max-width:960px;display:flex;flex-direction:column;gap:14px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <a href="#t1" style="font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1f1d1a;color:#ffffff;border-radius:4px">1</a>
+      <span style="font-size:13px;font-weight:600;color:#1f1d1a">Pramana AI, arah visual: palet dan huruf</span>
+    </div>
+    <h1 style="margin:0;font-size:25px;font-weight:700;letter-spacing:-0.4px;color:#1f1d1a;max-width:760px">Pilih satu palet dan satu huruf, lalu saya kunci token dan mulai layar Beranda</h1>
+    <p style="margin:0;font-size:13px;line-height:1.6;color:rgba(0,0,0,0.6);max-width:760px">Sesuai arahan, belum ada layar. Ini papan token untuk dikunci dulu: tiga arah palet OKLCH dengan tema terang dan gelap memakai nama token yang sama, lalu tiga arah huruf dari Google Fonts. Semua rasio kontras pada papan ini dihitung langsung dari nilai warnanya saat halaman dibuka, bukan klaim.</p>
+    <div style="display:flex;flex-direction:column;gap:6px;max-width:760px">
+      <div style="display:flex;gap:8px;align-items:baseline"><span style="width:5px;height:5px;border-radius:50%;background:rgba(0,0,0,0.4);flex:none;transform:translateY(-2px)"></span><span style="font-size:12.5px;line-height:1.5;color:rgba(0,0,0,0.62)">Token verdict identik di ketiga arah. Palet hanya mengubah netral dan aksen, sehingga hijau, kuning, merah tetap bahasa inti yang stabil.</span></div>
+      <div style="display:flex;gap:8px;align-items:baseline"><span style="width:5px;height:5px;border-radius:50%;background:rgba(0,0,0,0.4);flex:none;transform:translateY(-2px)"></span><span style="font-size:12.5px;line-height:1.5;color:rgba(0,0,0,0.62)">Verdict tidak pernah warna saja: lingkaran centang, segitiga seru, dan kotak silang selalu berdampingan dengan kata.</span></div>
+      <div style="display:flex;gap:8px;align-items:baseline"><span style="width:5px;height:5px;border-radius:50%;background:rgba(0,0,0,0.4);flex:none;transform:translateY(-2px)"></span><span style="font-size:12.5px;line-height:1.5;color:rgba(0,0,0,0.62)">Label verdict masih placeholder sesuai catatan Anda: Sehat, Perlu Perhatian, Perlu Dijelaskan.</span></div>
+      <div style="display:flex;gap:8px;align-items:baseline"><span style="width:5px;height:5px;border-radius:50%;background:rgba(0,0,0,0.4);flex:none;transform:translateY(-2px)"></span><span style="font-size:12.5px;line-height:1.5;color:rgba(0,0,0,0.62)">Register dijaga: sapaan Anda, tanpa em dash, tanpa emoji, tanpa jargon akuntansi.</span></div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px">
+      <span style="padding:4px 10px;border-radius:999px;border:1px solid rgba(0,0,0,0.14);font-size:11px;color:rgba(0,0,0,0.6)">tenang</span>
+      <span style="padding:4px 10px;border-radius:999px;border:1px solid rgba(0,0,0,0.14);font-size:11px;color:rgba(0,0,0,0.6)">terpercaya</span>
+      <span style="padding:4px 10px;border-radius:999px;border:1px solid rgba(0,0,0,0.14);font-size:11px;color:rgba(0,0,0,0.6)">lapang</span>
+      <span style="padding:4px 10px;border-radius:999px;border:1px solid rgba(0,0,0,0.14);font-size:11px;color:rgba(0,0,0,0.6)">hangat</span>
+      <span style="padding:4px 10px;border-radius:999px;border:1px solid rgba(0,0,0,0.14);font-size:11px;color:rgba(0,0,0,0.6)">presisi</span>
+      <span style="padding:4px 10px;border-radius:999px;border:1px solid rgba(0,0,0,0.14);font-size:11px;color:rgba(0,0,0,0.6)">jernih</span>
+      <span style="padding:4px 10px;border-radius:999px;border:1px solid rgba(0,0,0,0.14);font-size:11px;color:rgba(0,0,0,0.6)">bermartabat</span>
+      <span style="padding:4px 10px;border-radius:999px;border:1px solid rgba(0,0,0,0.14);font-size:11px;color:rgba(0,0,0,0.6)">membumi</span>
+    </div>
+  </header>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <span style="font-size:11px;font-weight:800;letter-spacing:1.4px;color:rgba(0,0,0,0.45)">PALET, TIGA ARAH</span>
+    <div style="display:flex;flex-wrap:wrap;gap:26px;align-items:flex-start">
+      <sc-for list="{{dirs}}" as="d" hint-placeholder-count="3">
+        <article id="{{d.id}}" style="width:470px;background:#fcfbf8;border:1px solid rgba(0,0,0,0.09);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:13px;scroll-margin-top:16px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
+          <div style="display:flex;align-items:baseline;gap:9px">
+            <a href="#{{d.id}}" style="font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,0.08);color:#1f1d1a;border-radius:5px">{{d.id}}</a>
+            <span style="font-size:16px;font-weight:700;color:#1f1d1a">{{d.name}}</span>
+            <span style="font-size:11.5px;color:rgba(0,0,0,0.5)">{{d.sub}}</span>
+          </div>
+          <p style="margin:0;font-size:12px;line-height:1.55;color:rgba(0,0,0,0.62)">{{d.desc}}</p>
+          <sc-for list="{{d.themes}}" as="th" hint-placeholder-count="2">
+            <div style="border-radius:13px;border:1px solid rgba(0,0,0,0.10);background:{{th.bg}};padding:15px;display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <span style="font-size:10.5px;font-weight:700;letter-spacing:0.9px;text-transform:uppercase;color:{{th.muted}}">{{th.label}}</span>
+                <span style="font:10px ui-monospace,Menlo,monospace;color:{{th.muted}}">{{th.bgHex}}</span>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px">
+                <sc-for list="{{th.tokens}}" as="t" hint-placeholder-count="9">
+                  <div style="display:flex;flex-direction:column;gap:4px">
+                    <div style="height:40px;border-radius:8px;background:{{t.css}};border:1px solid rgba(127,127,127,0.28)"></div>
+                    <span style="font:600 10px ui-monospace,Menlo,monospace;color:{{th.ink}}">{{t.name}}</span>
+                    <span style="font:9.5px ui-monospace,Menlo,monospace;color:{{th.muted}}">{{t.hex}}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <span style="font-size:10.5px;font-weight:600;color:{{th.muted}}">Verdict, selalu bentuk berdampingan kata</span>
+                <div style="display:flex;gap:7px">
+                  <div style="flex:1;display:flex;flex-direction:column;gap:3px">
+                    <div style="display:flex;align-items:center;gap:7px;padding:9px 10px;border-radius:10px;background:{{th.hijau}};border:1px solid rgba(0,0,0,0.06)">
+                      <span style="display:flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:{{th.hijauOn}};color:{{th.hijau}};font-size:11px;font-weight:800;flex:none">&#10003;</span>
+                      <span style="font-size:11px;font-weight:700;line-height:1.15;color:{{th.hijauOn}}">Sehat</span>
+                    </div>
+                    <span style="font:9.5px ui-monospace,Menlo,monospace;color:{{th.muted}};padding-left:2px">{{th.hijauRatio}}</span>
+                  </div>
+                  <div style="flex:1.25;display:flex;flex-direction:column;gap:3px">
+                    <div style="display:flex;align-items:center;gap:7px;padding:9px 10px;border-radius:10px;background:{{th.kuning}};border:1px solid rgba(0,0,0,0.06)">
+                      <span style="display:flex;align-items:flex-end;justify-content:center;width:20px;height:20px;clip-path:polygon(50% 4%,100% 96%,0 96%);background:{{th.kuningOn}};color:{{th.kuning}};font-size:10px;font-weight:800;padding-bottom:2px;box-sizing:border-box;flex:none">!</span>
+                      <span style="font-size:11px;font-weight:700;line-height:1.15;color:{{th.kuningOn}}">Perlu Perhatian</span>
+                    </div>
+                    <span style="font:9.5px ui-monospace,Menlo,monospace;color:{{th.muted}};padding-left:2px">{{th.kuningRatio}}</span>
+                  </div>
+                  <div style="flex:1.25;display:flex;flex-direction:column;gap:3px">
+                    <div style="display:flex;align-items:center;gap:7px;padding:9px 10px;border-radius:10px;background:{{th.merah}};border:1px solid rgba(0,0,0,0.06)">
+                      <span style="display:flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:4px;background:{{th.merahOn}};color:{{th.merah}};font-size:10px;font-weight:800;flex:none">&#10005;</span>
+                      <span style="font-size:11px;font-weight:700;line-height:1.15;color:{{th.merahOn}}">Perlu Dijelaskan</span>
+                    </div>
+                    <span style="font:9.5px ui-monospace,Menlo,monospace;color:{{th.muted}};padding-left:2px">{{th.merahRatio}}</span>
+                  </div>
+                </div>
+                <div style="display:flex;gap:7px">
+                  <span style="flex:1;display:flex;align-items:center;gap:6px;padding:6px 9px;border-radius:8px;background:{{th.hijauTint}};border:1px solid rgba(127,127,127,0.22)"><span style="width:8px;height:8px;border-radius:50%;background:{{th.hijauTintText}};flex:none"></span><span style="font-size:10.5px;font-weight:600;color:{{th.hijauTintText}}">Sehat</span></span>
+                  <span style="flex:1.25;display:flex;align-items:center;gap:6px;padding:6px 9px;border-radius:8px;background:{{th.kuningTint}};border:1px solid rgba(127,127,127,0.22)"><span style="width:9px;height:8px;clip-path:polygon(50% 0,100% 100%,0 100%);background:{{th.kuningTintText}};flex:none"></span><span style="font-size:10.5px;font-weight:600;color:{{th.kuningTintText}}">Perlu Perhatian</span></span>
+                  <span style="flex:1.25;display:flex;align-items:center;gap:6px;padding:6px 9px;border-radius:8px;background:{{th.merahTint}};border:1px solid rgba(127,127,127,0.22)"><span style="width:8px;height:8px;border-radius:2px;background:{{th.merahTintText}};flex:none"></span><span style="font-size:10.5px;font-weight:600;color:{{th.merahTintText}}">Perlu Dijelaskan</span></span>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px;border-top:1px solid {{th.border}};padding-top:10px">
+                <div style="display:flex;justify-content:space-between"><span style="font:10px ui-monospace,Menlo,monospace;color:{{th.muted}}">--ink pada --bg</span><span style="font:600 10px ui-monospace,Menlo,monospace;color:{{th.ink}}">{{th.cInkBg}}</span></div>
+                <div style="display:flex;justify-content:space-between"><span style="font:10px ui-monospace,Menlo,monospace;color:{{th.muted}}">--muted pada --surface</span><span style="font:600 10px ui-monospace,Menlo,monospace;color:{{th.ink}}">{{th.cMutedSurface}}</span></div>
+                <div style="display:flex;justify-content:space-between"><span style="font:10px ui-monospace,Menlo,monospace;color:{{th.muted}}">teks pada --accent</span><span style="font:600 10px ui-monospace,Menlo,monospace;color:{{th.ink}}">{{th.cAccent}}</span></div>
+              </div>
+            </div>
+          </sc-for>
+        </article>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <span style="font-size:11px;font-weight:800;letter-spacing:1.4px;color:rgba(0,0,0,0.45)">HURUF, TIGA ARAH</span>
+    <div style="display:flex;flex-wrap:wrap;gap:26px;align-items:flex-start">
+
+      <article id="1d" style="width:470px;background:#fcfbf8;border:1px solid rgba(0,0,0,0.09);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:16px;scroll-margin-top:16px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
+        <div style="display:flex;align-items:baseline;gap:9px">
+          <a href="#1d" style="font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,0.08);color:#1f1d1a;border-radius:5px">1d</a>
+          <span style="font-size:16px;font-weight:700;color:#1f1d1a">Plus Jakarta Sans</span>
+          <span style="font-size:11.5px;color:rgba(0,0,0,0.5)">satu keluarga, identitas lokal</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:2px;font-family:'Plus Jakarta Sans',sans-serif">
+          <span style="font-size:12px;font-weight:600;color:rgba(0,0,0,0.55)">Total simpanan Anda</span>
+          <span style="font-size:54px;font-weight:800;letter-spacing:-1.5px;color:#1f1d1a;font-variant-numeric:tabular-nums lining-nums">Rp 600.000</span>
+          <span style="font-size:14px;color:rgba(0,0,0,0.6);font-variant-numeric:tabular-nums lining-nums">Sisa pinjaman Rp 1.200.000, cicilan Rp 200.000 tiap tanggal 5</span>
+        </div>
+        <p style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-size:19px;line-height:1.45;font-weight:500;color:#1f1d1a">Kas koperasi menurun dan ada satu pembelian besar yang perlu dijelaskan pengurus.</p>
+        <div style="display:flex;flex-direction:column;gap:12px;font-family:'Plus Jakarta Sans',sans-serif">
+          <span style="align-self:flex-start;padding:13px 20px;border-radius:999px;background:#221f1b;color:#ffffff;font-size:15px;font-weight:600">Lihat yang perlu Anda tahu</span>
+          <div style="display:flex;gap:18px;font-size:12px;font-weight:600;color:rgba(0,0,0,0.5)"><span style="color:#1f1d1a">Beranda</span><span>Uang Anda</span><span>Arus Dana</span><span>Suara Anda</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-variant-numeric:tabular-nums lining-nums;font-feature-settings:'tnum' 1;font-size:15px;font-weight:600;color:#1f1d1a;border:1px dashed rgba(0,0,0,0.22);border-radius:8px;padding:8px 12px;display:flex;flex-direction:column;flex:none;white-space:nowrap">
+            <span>Rp 111.111</span><span>Rp 000.000</span>
+          </div>
+          <span style="font-size:11px;line-height:1.5;color:rgba(0,0,0,0.55)">Uji angka tabular: <b>{{tnumPjs}}</b>. Kolom nominal harus tetap rata saat digitnya berbeda.</span>
+        </div>
+        <p style="margin:0;font-size:12px;line-height:1.55;color:rgba(0,0,0,0.6)">Dirancang Tokotype di Jakarta, jadi produk bicara dengan huruf asli Indonesia. Bentuk terbuka dan ramah untuk pembaca yang jarang membaca layar. Delapan bobot, cukup untuk seluruh sistem tanpa font kedua.</p>
+      </article>
+
+      <article id="1e" style="width:470px;background:#fcfbf8;border:1px solid rgba(0,0,0,0.09);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:16px;scroll-margin-top:16px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
+        <div style="display:flex;align-items:baseline;gap:9px">
+          <a href="#1e" style="font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,0.08);color:#1f1d1a;border-radius:5px">1e</a>
+          <span style="font-size:16px;font-weight:700;color:#1f1d1a">Manrope + Source Serif 4</span>
+          <span style="font-size:11.5px;color:rgba(0,0,0,0.5)">serif hanya untuk kalimat verdict</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:2px;font-family:Manrope,sans-serif">
+          <span style="font-size:12px;font-weight:600;color:rgba(0,0,0,0.55)">Total simpanan Anda</span>
+          <span style="font-size:54px;font-weight:800;letter-spacing:-1px;color:#1f1d1a;font-variant-numeric:tabular-nums lining-nums">Rp 600.000</span>
+          <span style="font-size:14px;color:rgba(0,0,0,0.6);font-variant-numeric:tabular-nums lining-nums">Sisa pinjaman Rp 1.200.000, cicilan Rp 200.000 tiap tanggal 5</span>
+        </div>
+        <p style="margin:0;font-family:'Source Serif 4',serif;font-size:21px;line-height:1.45;font-weight:400;color:#1f1d1a">Kas koperasi menurun dan ada satu pembelian besar yang perlu dijelaskan pengurus.</p>
+        <div style="display:flex;flex-direction:column;gap:12px;font-family:Manrope,sans-serif">
+          <span style="align-self:flex-start;padding:13px 20px;border-radius:999px;background:#221f1b;color:#ffffff;font-size:15px;font-weight:600">Lihat yang perlu Anda tahu</span>
+          <div style="display:flex;gap:18px;font-size:12px;font-weight:600;color:rgba(0,0,0,0.5)"><span style="color:#1f1d1a">Beranda</span><span>Uang Anda</span><span>Arus Dana</span><span>Suara Anda</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="font-family:Manrope,sans-serif;font-variant-numeric:tabular-nums lining-nums;font-feature-settings:'tnum' 1;font-size:15px;font-weight:600;color:#1f1d1a;border:1px dashed rgba(0,0,0,0.22);border-radius:8px;padding:8px 12px;display:flex;flex-direction:column;flex:none;white-space:nowrap">
+            <span>Rp 111.111</span><span>Rp 000.000</span>
+          </div>
+          <span style="font-size:11px;line-height:1.5;color:rgba(0,0,0,0.55)">Uji angka tabular: <b>{{tnumMan}}</b>. Kolom nominal harus tetap rata saat digitnya berbeda.</span>
+        </div>
+        <p style="margin:0;font-size:12px;line-height:1.55;color:rgba(0,0,0,0.6)">Manrope tenang dan sedikit membulat untuk UI serta angka. Source Serif 4 dipakai satu tempat saja, kalimat ringkasan verdict, memberi nada bermartabat seperti suara orang yang tenang. Biaya: dua keluarga font.</p>
+      </article>
+
+      <article id="1f" style="width:470px;background:#fcfbf8;border:1px solid rgba(0,0,0,0.09);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:16px;scroll-margin-top:16px;box-shadow:0 1px 3px rgba(0,0,0,0.05)">
+        <div style="display:flex;align-items:baseline;gap:9px">
+          <a href="#1f" style="font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,0.08);color:#1f1d1a;border-radius:5px">1f</a>
+          <span style="font-size:16px;font-weight:700;color:#1f1d1a">Geist</span>
+          <span style="font-size:11.5px;color:rgba(0,0,0,0.5)">presisi netral</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:2px;font-family:Geist,sans-serif">
+          <span style="font-size:12px;font-weight:600;color:rgba(0,0,0,0.55)">Total simpanan Anda</span>
+          <span style="font-size:54px;font-weight:700;letter-spacing:-1px;color:#1f1d1a;font-variant-numeric:tabular-nums lining-nums">Rp 600.000</span>
+          <span style="font-size:14px;color:rgba(0,0,0,0.6);font-variant-numeric:tabular-nums lining-nums">Sisa pinjaman Rp 1.200.000, cicilan Rp 200.000 tiap tanggal 5</span>
+        </div>
+        <p style="margin:0;font-family:Geist,sans-serif;font-size:19px;line-height:1.45;font-weight:500;color:#1f1d1a">Kas koperasi menurun dan ada satu pembelian besar yang perlu dijelaskan pengurus.</p>
+        <div style="display:flex;flex-direction:column;gap:12px;font-family:Geist,sans-serif">
+          <span style="align-self:flex-start;padding:13px 20px;border-radius:999px;background:#221f1b;color:#ffffff;font-size:15px;font-weight:600">Lihat yang perlu Anda tahu</span>
+          <div style="display:flex;gap:18px;font-size:12px;font-weight:600;color:rgba(0,0,0,0.5)"><span style="color:#1f1d1a">Beranda</span><span>Uang Anda</span><span>Arus Dana</span><span>Suara Anda</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="font-family:Geist,sans-serif;font-variant-numeric:tabular-nums lining-nums;font-feature-settings:'tnum' 1;font-size:15px;font-weight:600;color:#1f1d1a;border:1px dashed rgba(0,0,0,0.22);border-radius:8px;padding:8px 12px;display:flex;flex-direction:column;flex:none;white-space:nowrap">
+            <span>Rp 111.111</span><span>Rp 000.000</span>
+          </div>
+          <span style="font-size:11px;line-height:1.5;color:rgba(0,0,0,0.55)">Uji angka tabular: <b>{{tnumGeist}}</b>. Kolom nominal harus tetap rata saat digitnya berbeda.</span>
+        </div>
+        <p style="margin:0;font-size:12px;line-height:1.55;color:rgba(0,0,0,0.6)">Presisi seperti alat ukur, angka sangat jernih. Risikonya terasa teknologi dan agak dingin untuk anggota desa. Catatan soal SF stack sistem: mayoritas anggota memakai Android, SF tidak tersedia di sana dan jatuh ke Roboto, jadi tidak saya usulkan; font tertanam menjamin tampilan sama di semua perangkat.</p>
+      </article>
+
+    </div>
+  </div>
+
+  <div style="max-width:960px;background:#fcfbf8;border:1px solid rgba(0,0,0,0.09);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px">
+    <span style="font-size:12px;font-weight:700;color:#1f1d1a">Pandangan saya</span>
+    <p style="margin:0;font-size:12.5px;line-height:1.6;color:rgba(0,0,0,0.62)"><a href="#1a">1a</a> dengan <a href="#1d">1d</a> paling dekat dengan kata kunci hangat, membumi, bermartabat, dan membawa cerita huruf asli Indonesia. Pilih <a href="#1b">1b</a> bila ingin terasa lebih seperti lembaga resmi, atau <a href="#1c">1c</a> bila ingin warna verdict menjadi satu-satunya warna yang bicara.</p>
+    <p style="margin:0;font-size:12px;line-height:1.6;color:rgba(0,0,0,0.5)">Balas misalnya: "kunci 1a dengan 1d", "1b tapi aksen sedikit lebih terang", "coba merah yang lebih tenang". Setelah Anda mengunci, saya tulis token OKLCH final untuk :root dan .dark lalu mulai dari layar Beranda.</p>
+  </div>
+
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tnum: {} };
+
+  oklch(l, c, h) {
+    const rad = h * Math.PI / 180;
+    const a = c * Math.cos(rad), b2 = c * Math.sin(rad);
+    const l_ = l + 0.3963377774 * a + 0.2158037573 * b2;
+    const m_ = l - 0.1055613458 * a - 0.0638541728 * b2;
+    const s_ = l - 0.0894841775 * a - 1.2914855480 * b2;
+    const L = l_ ** 3, M = m_ ** 3, S = s_ ** 3;
+    let r = 4.0767416621 * L - 3.3077115913 * M + 0.2309699292 * S;
+    let g = -1.2684380046 * L + 2.6097574011 * M - 0.3413193965 * S;
+    let b = -0.0041960863 * L - 0.7034186147 * M + 1.7076147010 * S;
+    const cl = (x) => Math.min(1, Math.max(0, x));
+    r = cl(r); g = cl(g); b = cl(b);
+    const y = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    const gam = (x) => x <= 0.0031308 ? 12.92 * x : 1.055 * Math.pow(x, 1 / 2.4) - 0.055;
+    const hx = (x) => Math.round(gam(x) * 255).toString(16).padStart(2, "0");
+    return { hex: ("#" + hx(r) + hx(g) + hx(b)).toUpperCase(), y };
+  }
+
+  tok(name, l, c, h) {
+    const v = this.oklch(l, c, h);
+    return { name, css: "oklch(" + l + " " + c + " " + h + ")", hex: v.hex, y: v.y };
+  }
+
+  ratio(y1, y2) {
+    const hi = Math.max(y1, y2), lo = Math.min(y1, y2);
+    return (hi + 0.05) / (lo + 0.05);
+  }
+
+  fmt(r) {
+    const n = (r >= 10 ? r.toFixed(0) : r.toFixed(1)).replace(".", ",");
+    const lvl = r >= 7 ? "AAA" : r >= 4.5 ? "AA" : r >= 3 ? "AA besar" : "gagal";
+    return n + ":1 " + lvl;
+  }
+
+  buildTheme(cfg) {
+    const bg = this.tok("--bg", ...cfg.bg);
+    const surface = this.tok("--surface", ...cfg.surface);
+    const ink = this.tok("--ink", ...cfg.ink);
+    const muted = this.tok("--muted", ...cfg.muted);
+    const border = this.tok("--border", ...cfg.border);
+    const accent = this.tok("--accent", ...cfg.accent);
+    const white = { css: "#FFFFFF", hex: "#FFFFFF", y: 1 };
+    const dark = cfg.dark;
+    const V = dark
+      ? { hijau: [0.68, 0.115, 152], kuning: [0.80, 0.13, 82], merah: [0.64, 0.15, 30] }
+      : { hijau: [0.53, 0.115, 152], kuning: [0.79, 0.135, 82], merah: [0.53, 0.165, 27] };
+    const TN = dark
+      ? { hijau: [[0.31, 0.045, 152], [0.86, 0.09, 150]], kuning: [[0.31, 0.04, 85], [0.88, 0.10, 90]], merah: [[0.31, 0.05, 28], [0.87, 0.07, 25]] }
+      : { hijau: [[0.93, 0.04, 152], [0.38, 0.10, 152]], kuning: [[0.94, 0.05, 90], [0.44, 0.10, 75]], merah: [[0.93, 0.035, 25], [0.42, 0.13, 27]] };
+    const t = { label: cfg.label, bg: bg.css, bgHex: bg.hex, surface: surface.css, ink: ink.css, muted: muted.css, border: border.css, accent: accent.css };
+    const fills = [];
+    for (const key of ["hijau", "kuning", "merah"]) {
+      const fill = this.tok("--" + key, ...V[key]);
+      const on = dark ? bg : (key === "kuning" ? ink : white);
+      const tintBg = this.tok("", ...TN[key][0]);
+      const tintTx = this.tok("", ...TN[key][1]);
+      t[key] = fill.css;
+      t[key + "On"] = on.css;
+      t[key + "Ratio"] = "teks " + this.fmt(this.ratio(fill.y, on.y));
+      t[key + "Tint"] = tintBg.css;
+      t[key + "TintText"] = tintTx.css;
+      fills.push(fill);
+    }
+    const accentOn = dark ? bg : white;
+    t.accentOn = accentOn.css;
+    t.tokens = [bg, surface, ink, muted, border, accent, ...fills];
+    t.cInkBg = this.fmt(this.ratio(ink.y, bg.y));
+    t.cMutedSurface = this.fmt(this.ratio(muted.y, surface.y));
+    t.cAccent = this.fmt(this.ratio(accent.y, accentOn.y));
+    return t;
+  }
+
+  dirsData() {
+    if (!this._dirs) {
+      this._dirs = [
+        {
+          id: "1a", name: "Lempung", sub: "hangat, membumi",
+          desc: "Gerabah dan tanah. Paling hangat dan membumi. Aksen terakota dipakai hemat, hanya untuk tombol dan tautan, supaya tidak bersaing dengan merah verdict.",
+          themes: [
+            this.buildTheme({ label: "Terang", dark: false, bg: [0.965, 0.010, 80], surface: [0.993, 0.004, 85], ink: [0.26, 0.018, 55], muted: [0.50, 0.025, 55], border: [0.90, 0.012, 80], accent: [0.52, 0.10, 50] }),
+            this.buildTheme({ label: "Gelap", dark: true, bg: [0.215, 0.012, 55], surface: [0.265, 0.013, 55], ink: [0.945, 0.008, 80], muted: [0.68, 0.015, 60], border: [0.335, 0.012, 55], accent: [0.70, 0.10, 55] })
+          ]
+        },
+        {
+          id: "1b", name: "Nila", sub: "terpercaya, tenang",
+          desc: "Biru nila seperti pewarna batik. Paling terasa lembaga yang bisa dipercaya. Netralnya tetap hangat supaya tidak dingin dan steril.",
+          themes: [
+            this.buildTheme({ label: "Terang", dark: false, bg: [0.968, 0.006, 75], surface: [0.995, 0.002, 75], ink: [0.255, 0.02, 275], muted: [0.50, 0.022, 270], border: [0.905, 0.008, 75], accent: [0.45, 0.085, 265] }),
+            this.buildTheme({ label: "Gelap", dark: true, bg: [0.215, 0.015, 275], surface: [0.262, 0.016, 275], ink: [0.94, 0.006, 80], muted: [0.67, 0.015, 270], border: [0.335, 0.015, 272], accent: [0.73, 0.085, 265] })
+          ]
+        },
+        {
+          id: "1c", name: "Tinta", sub: "hening, presisi",
+          desc: "Hampir tanpa warna. Aksen adalah tinta itu sendiri, sehingga hijau, kuning, dan merah verdict menjadi satu-satunya warna yang bicara. Paling hening dan mahal.",
+          themes: [
+            this.buildTheme({ label: "Terang", dark: false, bg: [0.972, 0.006, 90], surface: [0.996, 0.003, 90], ink: [0.235, 0.012, 75], muted: [0.50, 0.015, 75], border: [0.905, 0.008, 85], accent: [0.27, 0.014, 75] }),
+            this.buildTheme({ label: "Gelap", dark: true, bg: [0.205, 0.008, 75], surface: [0.255, 0.009, 75], ink: [0.945, 0.006, 85], muted: [0.67, 0.010, 80], border: [0.33, 0.010, 78], accent: [0.93, 0.010, 85] })
+          ]
+        }
+      ];
+    }
+    return this._dirs;
+  }
+
+  async componentDidMount() {
+    try {
+      await Promise.all([
+        document.fonts.load('600 16px "Plus Jakarta Sans"'),
+        document.fonts.load("600 16px Manrope"),
+        document.fonts.load("600 16px Geist")
+      ]);
+      await document.fonts.ready;
+    } catch (e) {}
+    const host = document.createElement("div");
+    host.style.cssText = "position:absolute;left:-9999px;top:0;visibility:hidden;font-size:100px;font-weight:600";
+    const fams = { pjs: '"Plus Jakarta Sans", sans-serif', man: "Manrope, sans-serif", geist: "Geist, sans-serif" };
+    const spans = {};
+    for (const k in fams) {
+      const mk = (txt) => {
+        const s = document.createElement("span");
+        s.textContent = txt;
+        s.style.fontFamily = fams[k];
+        s.style.fontFeatureSettings = '"tnum" 1, "lnum" 1';
+        s.style.display = "block";
+        s.style.width = "max-content";
+        host.appendChild(s);
+        return s;
+      };
+      spans[k] = [mk("1111111"), mk("0000000")];
+    }
+    document.body.appendChild(host);
+    const out = {};
+    for (const k in spans) {
+      const [a, b] = spans[k];
+      out[k] = Math.abs(a.getBoundingClientRect().width - b.getBoundingClientRect().width) < 0.75;
+    }
+    host.remove();
+    this.setState({ tnum: out });
+  }
+
+  badge(k) {
+    const v = this.state.tnum[k];
+    return v === undefined ? "sedang diperiksa" : v ? "didukung, kolom rata" : "tidak rata pada font ini";
+  }
+
+  renderVals() {
+    return {
+      dirs: this.dirsData(),
+      tnumPjs: this.badge("pjs"),
+      tnumMan: this.badge("man"),
+      tnumGeist: this.badge("geist")
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&amp;family=Figtree:wght@400;500;600&amp;family=Schibsted+Grotesk:wght@500;600;700&amp;family=Albert+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f0eee9;font-family:system-ui,sans-serif}
+a{color:inherit}
+a:hover{color:#000}
+.dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}
+.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+.dv-tname{font:600 13px/1.2 system-ui,sans-serif;color:#1a1a1a}
+.dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}
+.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}
+.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 system-ui,sans-serif;color:rgba(0,0,0,.55)}
+.dv-card{max-width:100%;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}
+.dv-opt:target .dv-oid{background:#2a78d6;color:#fff}
+.dv-next{margin:22px 0 0;font:12px/1.5 system-ui,sans-serif;color:rgba(0,0,0,.5)}
+.dv-group{margin:30px 0 14px;font:600 10px ui-monospace,Menlo,monospace;letter-spacing:.14em;color:rgba(0,0,0,.45)}
+</style>
+</helmet>
+
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Proposal token: 3 arah palet + 3 pasangan huruf. Belum ada desain halaman, ini gerbang keputusan.</span></div>
+
+<div class="dv-card" style="width:100%;max-width:952px;margin-bottom:6px">
+<div style="padding:20px 24px;display:flex;flex-direction:column;gap:10px">
+<div style="font:700 15px/1.3 system-ui,sans-serif;color:#1a1a1a">Pramana AI · Landing page · Proposal token sebelum generate</div>
+<ul style="margin:0;padding-left:16px;display:flex;flex-direction:column;gap:6px;font:400 12.5px/1.55 system-ui,sans-serif;color:rgba(0,0,0,.65)">
+<li>Slot token dari sesi aplikasi anggota kosong, jadi tiap palet membawa usulan token verdict sendiri. Hijau, kuning, merah diperlakukan sebagai token semantik, bukan dekorasi.</li>
+<li>Papan palet memakai huruf netral sistem, papan huruf memakai warna netral. Keduanya sengaja dipisah supaya keputusan tidak saling memengaruhi, dan pilihan boleh disilang, misalnya palet <a class="dv-oid" href="#1b">1b</a> dengan huruf <a class="dv-oid" href="#1f">1f</a>.</li>
+<li>Semua nilai OKLCH. Kontras AA, teks 4.5:1 dan UI 3:1, diverifikasi ulang per tema saat halaman digenerate.</li>
+<li>Jawab formulir pertanyaan di panel chat, lalu kunci pilihan palet dan huruf Anda lewat balasan chat.</li>
+</ul>
+</div>
+</div>
+
+<div class="dv-group">PALET · PILIH SATU</div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1a">
+<div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Tanah Liat · hangat, membumi, tembikar; kredibel dengan kehangatan desa</div>
+<div class="dv-card" style="width:452px">
+<div style="background:oklch(0.976 0.009 85);padding:20px 22px 18px;display:flex;flex-direction:column;gap:13px">
+<div style="display:flex;align-items:center;gap:8px">
+<span style="width:9px;height:9px;border-radius:50%;background:oklch(0.55 0.115 42)"></span>
+<span style="font:700 13px/1 system-ui,sans-serif;color:oklch(0.235 0.018 55);letter-spacing:-0.01em">Pramana</span>
+<span style="margin-left:auto;font:600 8.5px/1 ui-monospace,Menlo,monospace;color:oklch(0.47 0.02 55);letter-spacing:.12em">TERANG</span>
+</div>
+<div style="font:650 20px/1.28 system-ui,sans-serif;color:oklch(0.235 0.018 55);letter-spacing:-0.015em">Pengawas koperasi desa, di genggaman setiap anggota</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<span style="display:inline-flex;align-items:center;height:33px;padding:0 14px;border-radius:999px;background:oklch(0.55 0.115 42);color:#fff;font:600 11.5px/1 system-ui,sans-serif">Masuk sebagai Anggota</span>
+<span style="display:inline-flex;align-items:center;height:33px;padding:0 14px;border-radius:999px;box-shadow:inset 0 0 0 1px oklch(0.235 0.018 55 / .35);color:oklch(0.235 0.018 55);font:600 11.5px/1 system-ui,sans-serif">Masuk sebagai Pemerintah</span>
+</div>
+<div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">
+<span style="font:600 10.5px/1 system-ui,sans-serif;color:oklch(0.5 0.11 42);text-decoration:underline;text-underline-offset:3px">Daftar sebagai Anggota Baru</span>
+<span style="font:400 10px/1.4 system-ui,sans-serif;color:oklch(0.47 0.02 55)">Akun uji untuk juri tersedia di halaman masuk.</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:2px">
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.976 0.009 85);box-shadow:inset 0 0 0 1px rgba(0,0,0,.09)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.235 0.018 55)">Latar</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.47 0.02 55);white-space:nowrap">.976 .009 85</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.95 0.012 83);box-shadow:inset 0 0 0 1px rgba(0,0,0,.07)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.235 0.018 55)">Permukaan</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.47 0.02 55);white-space:nowrap">.95 .012 83</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.235 0.018 55)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.235 0.018 55)">Tinta</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.47 0.02 55);white-space:nowrap">.235 .018 55</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.47 0.02 55)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.235 0.018 55)">Sekunder</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.47 0.02 55);white-space:nowrap">.47 .02 55</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.55 0.115 42)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.235 0.018 55)">Aksen</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.47 0.02 55);white-space:nowrap">.55 .115 42</span></div>
+</div>
+</div>
+<div style="background:oklch(0.205 0.012 55);padding:20px 22px 18px;display:flex;flex-direction:column;gap:13px">
+<div style="display:flex;align-items:center;gap:8px">
+<span style="width:9px;height:9px;border-radius:50%;background:oklch(0.72 0.11 50)"></span>
+<span style="font:700 13px/1 system-ui,sans-serif;color:oklch(0.945 0.01 85);letter-spacing:-0.01em">Pramana</span>
+<span style="margin-left:auto;font:600 8.5px/1 ui-monospace,Menlo,monospace;color:oklch(0.73 0.015 75);letter-spacing:.12em">GELAP</span>
+</div>
+<div style="font:650 20px/1.28 system-ui,sans-serif;color:oklch(0.945 0.01 85);letter-spacing:-0.015em">Pengawas koperasi desa, di genggaman setiap anggota</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<span style="display:inline-flex;align-items:center;height:33px;padding:0 14px;border-radius:999px;background:oklch(0.72 0.11 50);color:oklch(0.205 0.012 55);font:600 11.5px/1 system-ui,sans-serif">Masuk sebagai Anggota</span>
+<span style="display:inline-flex;align-items:center;height:33px;padding:0 14px;border-radius:999px;box-shadow:inset 0 0 0 1px oklch(0.945 0.01 85 / .38);color:oklch(0.945 0.01 85);font:600 11.5px/1 system-ui,sans-serif">Masuk sebagai Pemerintah</span>
+</div>
+<div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">
+<span style="font:600 10.5px/1 system-ui,sans-serif;color:oklch(0.72 0.11 50);text-decoration:underline;text-underline-offset:3px">Daftar sebagai Anggota Baru</span>
+<span style="font:400 10px/1.4 system-ui,sans-serif;color:oklch(0.73 0.015 75)">Akun uji untuk juri tersedia di halaman masuk.</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:2px">
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.205 0.012 55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.945 0.01 85)">Latar</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.73 0.015 75);white-space:nowrap">.205 .012 55</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.248 0.014 55);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.945 0.01 85)">Permukaan</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.73 0.015 75);white-space:nowrap">.248 .014 55</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.945 0.01 85)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.945 0.01 85)">Tinta</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.73 0.015 75);white-space:nowrap">.945 .01 85</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.73 0.015 75)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.945 0.01 85)">Sekunder</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.73 0.015 75);white-space:nowrap">.73 .015 75</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.72 0.11 50)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.945 0.01 85)">Aksen</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.73 0.015 75);white-space:nowrap">.72 .11 50</span></div>
+</div>
+</div>
+<div style="background:#fff;border-top:1px solid rgba(0,0,0,.08);padding:13px 22px 15px;display:flex;flex-direction:column;gap:8px">
+<span style="font:600 8.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:rgba(0,0,0,.45)">TOKEN VERDICT · IKON BENTUK + LABEL, BUKAN WARNA SAJA</span>
+<div style="display:flex;gap:6px;flex-wrap:wrap">
+<span style="display:inline-flex;align-items:center;gap:6px;height:27px;padding:0 11px;border-radius:999px;background:color-mix(in oklch, oklch(0.55 0.105 152) 13%, white);box-shadow:inset 0 0 0 1px color-mix(in oklch, oklch(0.55 0.105 152) 40%, white)"><span style="width:9px;height:9px;border-radius:50%;background:oklch(0.55 0.105 152)"></span><span style="font:600 10.5px/1 system-ui,sans-serif;color:oklch(0.235 0.018 55)">Hijau · Sehat</span></span>
+<span style="display:inline-flex;align-items:center;gap:6px;height:27px;padding:0 11px;border-radius:999px;background:color-mix(in oklch, oklch(0.66 0.115 80) 16%, white);box-shadow:inset 0 0 0 1px color-mix(in oklch, oklch(0.66 0.115 80) 45%, white)"><span style="width:0;height:0;border-left:5.5px solid transparent;border-right:5.5px solid transparent;border-bottom:9.5px solid oklch(0.66 0.115 80)"></span><span style="font:600 10.5px/1 system-ui,sans-serif;color:oklch(0.235 0.018 55)">Kuning · Perlu perhatian</span></span>
+<span style="display:inline-flex;align-items:center;gap:6px;height:27px;padding:0 11px;border-radius:999px;background:color-mix(in oklch, oklch(0.545 0.155 30) 13%, white);box-shadow:inset 0 0 0 1px color-mix(in oklch, oklch(0.545 0.155 30) 40%, white)"><span style="width:8px;height:8px;transform:rotate(45deg);background:oklch(0.545 0.155 30)"></span><span style="font:600 10.5px/1 system-ui,sans-serif;color:oklch(0.235 0.018 55)">Merah · Perlu dijelaskan</span></span>
+</div>
+<span style="font:400 8.5px/1.5 ui-monospace,Menlo,monospace;color:rgba(0,0,0,.45)">hijau .55 .105 152 · kuning .66 .115 80 · merah .545 .155 30 · varian gelap disetel ulang agar AA saat generate</span>
+</div>
+</div>
+</div>
+
+<div class="dv-opt" id="1b">
+<div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Arsip Hijau · kertas arsip, hijau institusi; paling dekat identitas koperasi</div>
+<div class="dv-card" style="width:452px">
+<div style="background:oklch(0.972 0.007 100);padding:20px 22px 18px;display:flex;flex-direction:column;gap:13px">
+<div style="display:flex;align-items:center;gap:8px">
+<span style="width:9px;height:9px;border-radius:50%;background:oklch(0.43 0.085 158)"></span>
+<span style="font:700 13px/1 system-ui,sans-serif;color:oklch(0.225 0.02 160);letter-spacing:-0.01em">Pramana</span>
+<span style="margin-left:auto;font:600 8.5px/1 ui-monospace,Menlo,monospace;color:oklch(0.46 0.02 160);letter-spacing:.12em">TERANG</span>
+</div>
+<div style="font:650 20px/1.28 system-ui,sans-serif;color:oklch(0.225 0.02 160);letter-spacing:-0.015em">Pengawas koperasi desa, di genggaman setiap anggota</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<span style="display:inline-flex;align-items:center;height:33px;padding:0 14px;border-radius:999px;background:oklch(0.43 0.085 158);color:#fff;font:600 11.5px/1 system-ui,sans-serif">Masuk sebagai Anggota</span>
+<span style="display:inline-flex;align-items:center;height:33px;padding:0 14px;border-radius:999px;box-shadow:inset 0 0 0 1px oklch(0.225 0.02 160 / .35);color:oklch(0.225 0.02 160);font:600 11.5px/1 system-ui,sans-serif">Masuk sebagai Pemerintah</span>
+</div>
+<div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">
+<span style="font:600 10.5px/1 system-ui,sans-serif;color:oklch(0.43 0.085 158);text-decoration:underline;text-underline-offset:3px">Daftar sebagai Anggota Baru</span>
+<span style="font:400 10px/1.4 system-ui,sans-serif;color:oklch(0.46 0.02 160)">Akun uji untuk juri tersedia di halaman masuk.</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:2px">
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.972 0.007 100);box-shadow:inset 0 0 0 1px rgba(0,0,0,.09)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.225 0.02 160)">Latar</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.46 0.02 160);white-space:nowrap">.972 .007 100</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.945 0.009 100);box-shadow:inset 0 0 0 1px rgba(0,0,0,.07)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.225 0.02 160)">Permukaan</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.46 0.02 160);white-space:nowrap">.945 .009 100</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.225 0.02 160)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.225 0.02 160)">Tinta</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.46 0.02 160);white-space:nowrap">.225 .02 160</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.46 0.02 160)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.225 0.02 160)">Sekunder</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.46 0.02 160);white-space:nowrap">.46 .02 160</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.43 0.085 158)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.225 0.02 160)">Aksen</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.46 0.02 160);white-space:nowrap">.43 .085 158</span></div>
+</div>
+</div>
+<div style="background:oklch(0.195 0.018 165);padding:20px 22px 18px;display:flex;flex-direction:column;gap:13px">
+<div style="display:flex;align-items:center;gap:8px">
+<span style="width:9px;height:9px;border-radius:50%;background:oklch(0.68 0.1 150)"></span>
+<span style="font:700 13px/1 system-ui,sans-serif;color:oklch(0.94 0.008 100);letter-spacing:-0.01em">Pramana</span>
+<span style="margin-left:auto;font:600 8.5px/1 ui-monospace,Menlo,monospace;color:oklch(0.72 0.015 130);letter-spacing:.12em">GELAP</span>
+</div>
+<div style="font:650 20px/1.28 system-ui,sans-serif;color:oklch(0.94 0.008 100);letter-spacing:-0.015em">Pengawas koperasi desa, di genggaman setiap anggota</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<span style="display:inline-flex;align-items:center;height:33px;padding:0 14px;border-radius:999px;background:oklch(0.68 0.1 150);color:oklch(0.195 0.018 165);font:600 11.5px/1 system-ui,sans-serif">Masuk sebagai Anggota</span>
+<span style="display:inline-flex;align-items:center;height:33px;padding:0 14px;border-radius:999px;box-shadow:inset 0 0 0 1px oklch(0.94 0.008 100 / .38);color:oklch(0.94 0.008 100);font:600 11.5px/1 system-ui,sans-serif">Masuk sebagai Pemerintah</span>
+</div>
+<div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">
+<span style="font:600 10.5px/1 system-ui,sans-serif;color:oklch(0.68 0.1 150);text-decoration:underline;text-underline-offset:3px">Daftar sebagai Anggota Baru</span>
+<span style="font:400 10px/1.4 system-ui,sans-serif;color:oklch(0.72 0.015 130)">Akun uji untuk juri tersedia di halaman masuk.</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:2px">
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.195 0.018 165);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.94 0.008 100)">Latar</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.72 0.015 130);white-space:nowrap">.195 .018 165</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.238 0.02 165);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.94 0.008 100)">Permukaan</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.72 0.015 130);white-space:nowrap">.238 .02 165</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.94 0.008 100)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.94 0.008 100)">Tinta</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.72 0.015 130);white-space:nowrap">.94 .008 100</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.72 0.015 130)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.94 0.008 100)">Sekunder</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.72 0.015 130);white-space:nowrap">.72 .015 130</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.68 0.1 150)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.94 0.008 100)">Aksen</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.72 0.015 130);white-space:nowrap">.68 .1 150</span></div>
+</div>
+</div>
+<div style="background:#fff;border-top:1px solid rgba(0,0,0,.08);padding:13px 22px 15px;display:flex;flex-direction:column;gap:8px">
+<span style="font:600 8.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:rgba(0,0,0,.45)">TOKEN VERDICT · IKON BENTUK + LABEL, BUKAN WARNA SAJA</span>
+<div style="display:flex;gap:6px;flex-wrap:wrap">
+<span style="display:inline-flex;align-items:center;gap:6px;height:27px;padding:0 11px;border-radius:999px;background:color-mix(in oklch, oklch(0.56 0.115 150) 13%, white);box-shadow:inset 0 0 0 1px color-mix(in oklch, oklch(0.56 0.115 150) 40%, white)"><span style="width:9px;height:9px;border-radius:50%;background:oklch(0.56 0.115 150)"></span><span style="font:600 10.5px/1 system-ui,sans-serif;color:oklch(0.225 0.02 160)">Hijau · Sehat</span></span>
+<span style="display:inline-flex;align-items:center;gap:6px;height:27px;padding:0 11px;border-radius:999px;background:color-mix(in oklch, oklch(0.68 0.12 84) 16%, white);box-shadow:inset 0 0 0 1px color-mix(in oklch, oklch(0.68 0.12 84) 45%, white)"><span style="width:0;height:0;border-left:5.5px solid transparent;border-right:5.5px solid transparent;border-bottom:9.5px solid oklch(0.68 0.12 84)"></span><span style="font:600 10.5px/1 system-ui,sans-serif;color:oklch(0.225 0.02 160)">Kuning · Perlu perhatian</span></span>
+<span style="display:inline-flex;align-items:center;gap:6px;height:27px;padding:0 11px;border-radius:999px;background:color-mix(in oklch, oklch(0.55 0.16 28) 13%, white);box-shadow:inset 0 0 0 1px color-mix(in oklch, oklch(0.55 0.16 28) 40%, white)"><span style="width:8px;height:8px;transform:rotate(45deg);background:oklch(0.55 0.16 28)"></span><span style="font:600 10.5px/1 system-ui,sans-serif;color:oklch(0.225 0.02 160)">Merah · Perlu dijelaskan</span></span>
+</div>
+<span style="font:400 8.5px/1.5 ui-monospace,Menlo,monospace;color:rgba(0,0,0,.45)">hijau .56 .115 150 · kuning .68 .12 84 · merah .55 .16 28 · varian gelap disetel ulang agar AA saat generate</span>
+</div>
+</div>
+</div>
+
+<div class="dv-opt" id="1c">
+<div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Malam Jernih · porselen dan tinta malam; presisi instrumen, paling sejuk</div>
+<div class="dv-card" style="width:452px">
+<div style="background:oklch(0.975 0.004 250);padding:20px 22px 18px;display:flex;flex-direction:column;gap:13px">
+<div style="display:flex;align-items:center;gap:8px">
+<span style="width:9px;height:9px;border-radius:50%;background:oklch(0.49 0.1 255)"></span>
+<span style="font:700 13px/1 system-ui,sans-serif;color:oklch(0.215 0.02 265);letter-spacing:-0.01em">Pramana</span>
+<span style="margin-left:auto;font:600 8.5px/1 ui-monospace,Menlo,monospace;color:oklch(0.46 0.018 262);letter-spacing:.12em">TERANG</span>
+</div>
+<div style="font:650 20px/1.28 system-ui,sans-serif;color:oklch(0.215 0.02 265);letter-spacing:-0.015em">Pengawas koperasi desa, di genggaman setiap anggota</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<span style="display:inline-flex;align-items:center;height:33px;padding:0 14px;border-radius:999px;background:oklch(0.49 0.1 255);color:#fff;font:600 11.5px/1 system-ui,sans-serif">Masuk sebagai Anggota</span>
+<span style="display:inline-flex;align-items:center;height:33px;padding:0 14px;border-radius:999px;box-shadow:inset 0 0 0 1px oklch(0.215 0.02 265 / .35);color:oklch(0.215 0.02 265);font:600 11.5px/1 system-ui,sans-serif">Masuk sebagai Pemerintah</span>
+</div>
+<div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">
+<span style="font:600 10.5px/1 system-ui,sans-serif;color:oklch(0.49 0.1 255);text-decoration:underline;text-underline-offset:3px">Daftar sebagai Anggota Baru</span>
+<span style="font:400 10px/1.4 system-ui,sans-serif;color:oklch(0.46 0.018 262)">Akun uji untuk juri tersedia di halaman masuk.</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:2px">
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.975 0.004 250);box-shadow:inset 0 0 0 1px rgba(0,0,0,.09)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.215 0.02 265)">Latar</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.46 0.018 262);white-space:nowrap">.975 .004 250</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.949 0.006 250);box-shadow:inset 0 0 0 1px rgba(0,0,0,.07)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.215 0.02 265)">Permukaan</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.46 0.018 262);white-space:nowrap">.949 .006 250</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.215 0.02 265)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.215 0.02 265)">Tinta</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.46 0.018 262);white-space:nowrap">.215 .02 265</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.46 0.018 262)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.215 0.02 265)">Sekunder</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.46 0.018 262);white-space:nowrap">.46 .018 262</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.49 0.1 255)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.215 0.02 265)">Aksen</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.46 0.018 262);white-space:nowrap">.49 .1 255</span></div>
+</div>
+</div>
+<div style="background:oklch(0.185 0.016 262);padding:20px 22px 18px;display:flex;flex-direction:column;gap:13px">
+<div style="display:flex;align-items:center;gap:8px">
+<span style="width:9px;height:9px;border-radius:50%;background:oklch(0.7 0.09 250)"></span>
+<span style="font:700 13px/1 system-ui,sans-serif;color:oklch(0.942 0.006 250);letter-spacing:-0.01em">Pramana</span>
+<span style="margin-left:auto;font:600 8.5px/1 ui-monospace,Menlo,monospace;color:oklch(0.71 0.012 255);letter-spacing:.12em">GELAP</span>
+</div>
+<div style="font:650 20px/1.28 system-ui,sans-serif;color:oklch(0.942 0.006 250);letter-spacing:-0.015em">Pengawas koperasi desa, di genggaman setiap anggota</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+<span style="display:inline-flex;align-items:center;height:33px;padding:0 14px;border-radius:999px;background:oklch(0.7 0.09 250);color:oklch(0.185 0.016 262);font:600 11.5px/1 system-ui,sans-serif">Masuk sebagai Anggota</span>
+<span style="display:inline-flex;align-items:center;height:33px;padding:0 14px;border-radius:999px;box-shadow:inset 0 0 0 1px oklch(0.942 0.006 250 / .38);color:oklch(0.942 0.006 250);font:600 11.5px/1 system-ui,sans-serif">Masuk sebagai Pemerintah</span>
+</div>
+<div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">
+<span style="font:600 10.5px/1 system-ui,sans-serif;color:oklch(0.7 0.09 250);text-decoration:underline;text-underline-offset:3px">Daftar sebagai Anggota Baru</span>
+<span style="font:400 10px/1.4 system-ui,sans-serif;color:oklch(0.71 0.012 255)">Akun uji untuk juri tersedia di halaman masuk.</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:2px">
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.185 0.016 262);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.942 0.006 250)">Latar</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.71 0.012 255);white-space:nowrap">.185 .016 262</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.228 0.018 262);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.942 0.006 250)">Permukaan</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.71 0.012 255);white-space:nowrap">.228 .018 262</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.942 0.006 250)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.942 0.006 250)">Tinta</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.71 0.012 255);white-space:nowrap">.942 .006 250</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.71 0.012 255)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.942 0.006 250)">Sekunder</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.71 0.012 255);white-space:nowrap">.71 .012 255</span></div>
+<div style="display:flex;flex-direction:column;gap:3px;min-width:0"><div style="height:26px;border-radius:5px;background:oklch(0.7 0.09 250)"></div><span style="font:500 9px/1.1 system-ui,sans-serif;color:oklch(0.942 0.006 250)">Aksen</span><span style="font:400 8px/1.1 ui-monospace,Menlo,monospace;color:oklch(0.71 0.012 255);white-space:nowrap">.7 .09 250</span></div>
+</div>
+</div>
+<div style="background:#fff;border-top:1px solid rgba(0,0,0,.08);padding:13px 22px 15px;display:flex;flex-direction:column;gap:8px">
+<span style="font:600 8.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:rgba(0,0,0,.45)">TOKEN VERDICT · IKON BENTUK + LABEL, BUKAN WARNA SAJA</span>
+<div style="display:flex;gap:6px;flex-wrap:wrap">
+<span style="display:inline-flex;align-items:center;gap:6px;height:27px;padding:0 11px;border-radius:999px;background:color-mix(in oklch, oklch(0.57 0.11 158) 13%, white);box-shadow:inset 0 0 0 1px color-mix(in oklch, oklch(0.57 0.11 158) 40%, white)"><span style="width:9px;height:9px;border-radius:50%;background:oklch(0.57 0.11 158)"></span><span style="font:600 10.5px/1 system-ui,sans-serif;color:oklch(0.215 0.02 265)">Hijau · Sehat</span></span>
+<span style="display:inline-flex;align-items:center;gap:6px;height:27px;padding:0 11px;border-radius:999px;background:color-mix(in oklch, oklch(0.7 0.12 86) 16%, white);box-shadow:inset 0 0 0 1px color-mix(in oklch, oklch(0.7 0.12 86) 45%, white)"><span style="width:0;height:0;border-left:5.5px solid transparent;border-right:5.5px solid transparent;border-bottom:9.5px solid oklch(0.7 0.12 86)"></span><span style="font:600 10.5px/1 system-ui,sans-serif;color:oklch(0.215 0.02 265)">Kuning · Perlu perhatian</span></span>
+<span style="display:inline-flex;align-items:center;gap:6px;height:27px;padding:0 11px;border-radius:999px;background:color-mix(in oklch, oklch(0.55 0.16 25) 13%, white);box-shadow:inset 0 0 0 1px color-mix(in oklch, oklch(0.55 0.16 25) 40%, white)"><span style="width:8px;height:8px;transform:rotate(45deg);background:oklch(0.55 0.16 25)"></span><span style="font:600 10.5px/1 system-ui,sans-serif;color:oklch(0.215 0.02 265)">Merah · Perlu dijelaskan</span></span>
+</div>
+<span style="font:400 8.5px/1.5 ui-monospace,Menlo,monospace;color:rgba(0,0,0,.45)">hijau .57 .11 158 · kuning .7 .12 86 · merah .55 .16 25 · varian gelap disetel ulang agar AA saat generate</span>
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="dv-group">TIPOGRAFI · PILIH SATU · SEMUA GOOGLE FONTS, TANPA SF PRO, TANPA INTER/ROBOTO</div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1d">
+<div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>Jakarta · Plus Jakarta Sans untuk display dan teks</div>
+<div class="dv-card" style="width:440px;background:oklch(0.977 0.005 95)">
+<div style="padding:24px 26px;display:flex;flex-direction:column;gap:15px">
+<span style="font:600 8.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:oklch(0.5 0.014 70)">DISPLAY · PLUS JAKARTA SANS 700</span>
+<div style="font:700 27px/1.18 'Plus Jakarta Sans',sans-serif;letter-spacing:-0.025em;color:oklch(0.235 0.012 70);text-wrap:balance">Pengawas koperasi desa, di genggaman setiap anggota</div>
+<div style="height:1px;background:oklch(0.905 0.008 90)"></div>
+<span style="font:600 8.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:oklch(0.5 0.014 70)">TEKS · PLUS JAKARTA SANS 400 · 14.5/1.65</span>
+<p style="margin:0;font:400 14.5px/1.65 'Plus Jakarta Sans',sans-serif;color:oklch(0.38 0.012 70);max-width:380px">Empat pemeriksa membaca transaksi koperasi Anda secara paralel. Satu penimbang menyusun temuannya menjadi jawaban yang Anda pahami dalam waktu kurang dari satu menit.</p>
+<span style="font:600 8.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:oklch(0.5 0.014 70)">ANGKA · TABULAR</span>
+<div style="font:600 19px/1.3 'Plus Jakarta Sans',sans-serif;font-variant-numeric:tabular-nums;color:oklch(0.235 0.012 70)">83.383 · 50.383 · Rp60.000.000</div>
+<p style="margin:0;font:400 11.5px/1.55 system-ui,sans-serif;color:oklch(0.5 0.014 70)">Keluarga huruf yang lahir dari identitas Jakarta. Geometrik humanis, hangat namun tegas. Satu keluarga untuk semua peran, handoff paling sederhana.</p>
+</div>
+</div>
+</div>
+
+<div class="dv-opt" id="1e">
+<div class="dv-olabel"><a class="dv-oid" href="#1e">1e</a>Wibawa · Source Serif 4 display + Figtree teks</div>
+<div class="dv-card" style="width:440px;background:oklch(0.977 0.005 95)">
+<div style="padding:24px 26px;display:flex;flex-direction:column;gap:15px">
+<span style="font:600 8.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:oklch(0.5 0.014 70)">DISPLAY · SOURCE SERIF 4 600</span>
+<div style="font:600 27px/1.2 'Source Serif 4',serif;letter-spacing:-0.012em;color:oklch(0.235 0.012 70);text-wrap:balance">Pengawas koperasi desa, di genggaman setiap anggota</div>
+<div style="height:1px;background:oklch(0.905 0.008 90)"></div>
+<span style="font:600 8.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:oklch(0.5 0.014 70)">TEKS · FIGTREE 400 · 14.5/1.65</span>
+<p style="margin:0;font:400 14.5px/1.65 Figtree,sans-serif;color:oklch(0.38 0.012 70);max-width:380px">Empat pemeriksa membaca transaksi koperasi Anda secara paralel. Satu penimbang menyusun temuannya menjadi jawaban yang Anda pahami dalam waktu kurang dari satu menit.</p>
+<span style="font:600 8.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:oklch(0.5 0.014 70)">ANGKA · TABULAR</span>
+<div style="font:600 19px/1.3 'Source Serif 4',serif;font-variant-numeric:tabular-nums;color:oklch(0.235 0.012 70)">83.383 · 50.383 · Rp60.000.000</div>
+<p style="margin:0;font:400 11.5px/1.55 system-ui,sans-serif;color:oklch(0.5 0.014 70)">Serif untuk pernyataan besar memberi wibawa lembaga dan rasa arsip negara. Figtree menjaga teks tetap ringan dan kontemporer.</p>
+</div>
+</div>
+</div>
+
+<div class="dv-opt" id="1f">
+<div class="dv-olabel"><a class="dv-oid" href="#1f">1f</a>Presisi · Schibsted Grotesk display + Albert Sans teks</div>
+<div class="dv-card" style="width:440px;background:oklch(0.977 0.005 95)">
+<div style="padding:24px 26px;display:flex;flex-direction:column;gap:15px">
+<span style="font:600 8.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:oklch(0.5 0.014 70)">DISPLAY · SCHIBSTED GROTESK 700</span>
+<div style="font:700 27px/1.18 'Schibsted Grotesk',sans-serif;letter-spacing:-0.022em;color:oklch(0.235 0.012 70);text-wrap:balance">Pengawas koperasi desa, di genggaman setiap anggota</div>
+<div style="height:1px;background:oklch(0.905 0.008 90)"></div>
+<span style="font:600 8.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:oklch(0.5 0.014 70)">TEKS · ALBERT SANS 400 · 14.5/1.65</span>
+<p style="margin:0;font:400 14.5px/1.65 'Albert Sans',sans-serif;color:oklch(0.38 0.012 70);max-width:380px">Empat pemeriksa membaca transaksi koperasi Anda secara paralel. Satu penimbang menyusun temuannya menjadi jawaban yang Anda pahami dalam waktu kurang dari satu menit.</p>
+<span style="font:600 8.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;color:oklch(0.5 0.014 70)">ANGKA · TABULAR</span>
+<div style="font:600 19px/1.3 'Schibsted Grotesk',sans-serif;font-variant-numeric:tabular-nums;color:oklch(0.235 0.012 70)">83.383 · 50.383 · Rp60.000.000</div>
+<p style="margin:0;font:400 11.5px/1.55 system-ui,sans-serif;color:oklch(0.5 0.014 70)">Grotesk editorial yang presisi dan terasa mahal, paling dekat dengan register Linear dan Stripe. Paling sejuk dari ketiganya.</p>
+</div>
+</div>
+</div>
+
+</div>
+
+<p class="dv-next">Balas di chat, misalnya: "kunci <a class="dv-oid" href="#1b">1b</a> + <a class="dv-oid" href="#1d">1d</a>" · "kunci <a class="dv-oid" href="#1a">1a</a> tapi aksen lebih redup" · "usulkan palet keempat yang lebih gelap". Palet dan huruf boleh disilang bebas.</p>
+</section>
+
+</x-dc>
+</body>
+</html>

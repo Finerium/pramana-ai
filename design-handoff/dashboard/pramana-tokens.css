@@ -1,0 +1,147 @@
+/*
+  Pramana AI · Dasbor Pengawasan Kemenkop
+  Token resmi bundle handoff. Palet terkunci: 1a Porselen Hangat.
+  Tema gelap terkunci: 1e Tepi Mesin (tepi atas 1px + gradasi tipis + satu bayangan jatuh).
+  Tipografi terkunci: Archivo (judul, label KPI) + Public Sans (teks, tabel, angka, tabular-nums).
+
+  ATURAN KERAS (lihat README.md):
+  - Seluruh warna HANYA lewat token ini. Dilarang hex atau oklch hard-coded di komponen.
+  - Verdict tidak pernah dikomunikasikan lewat warna saja: selalu ikon bentuk + teks label.
+    hijau = lingkaran, kuning = segitiga, merah = belah ketupat, info = persegi.
+  - Tema gelap diaktifkan dengan class "dark" pada <html> (strategi class, cocok shadcn/ui).
+*/
+
+:root {
+  /* Permukaan */
+  --background: oklch(0.93 0.009 84);
+  --surface: oklch(0.955 0.007 84);
+  --surface-fill: oklch(0.955 0.007 84);           /* isi panel terangkat; di gelap berupa gradasi */
+  --control-fill: oklch(0.955 0.007 84);           /* isi tombol material */
+  --well: oklch(0.93 0.009 84);                    /* latar kontrol tenggelam */
+  --row-hover: oklch(0.945 0.011 84);
+  --border-hairline: oklch(0.865 0.014 84);
+  --edge-top: transparent;                          /* tepi 1e, hanya hidup di gelap */
+  --edge-bottom-well: transparent;
+
+  /* Tinta */
+  --foreground: oklch(0.23 0.015 75);
+  --muted-foreground: oklch(0.46 0.02 78);
+  --disabled-foreground: oklch(0.60 0.015 80);      /* non-teks, dekoratif saja */
+
+  /* Aksen */
+  --primary: oklch(0.46 0.075 205);
+  --primary-hover: oklch(0.41 0.075 205);
+  --primary-foreground: oklch(0.985 0.003 84);
+  --ring: oklch(0.46 0.075 205);
+
+  /* Verdict, token semantik. Dilarang dipakai dekoratif. */
+  --verdict-hijau: oklch(0.43 0.10 152);
+  --verdict-kuning: oklch(0.45 0.10 78);
+  --verdict-merah: oklch(0.45 0.13 30);
+  --verdict-info: oklch(0.46 0.02 78);
+  --verdict-hijau-surface: oklch(0.88 0.035 152);
+  --verdict-kuning-surface: oklch(0.89 0.045 85);
+  --verdict-merah-surface: oklch(0.885 0.04 30);
+  --verdict-info-surface: oklch(0.905 0.01 84);
+  --verdict-on: oklch(0.985 0.003 84);              /* teks di atas segmen bar verdict */
+
+  /* Bayangan neumorfik, terang: bayangan ganda klasik */
+  --shadow-raised: 7px 7px 16px oklch(0.74 0.03 84 / 0.45), -6px -6px 14px oklch(1 0 0 / 0.9);
+  --shadow-raised-sm: 4px 4px 10px oklch(0.74 0.03 84 / 0.4), -3px -3px 8px oklch(1 0 0 / 0.85);
+  --shadow-pressed: inset 3px 3px 7px oklch(0.74 0.03 84 / 0.5), inset -3px -3px 7px oklch(1 0 0 / 0.9);
+  --shadow-pressed-sm: inset 2px 2px 5px oklch(0.74 0.03 84 / 0.5), inset -2px -2px 5px oklch(1 0 0 / 0.9);
+
+  --shadow-raised-lg: 12px 12px 26px oklch(0.74 0.03 84 / 0.5), -9px -9px 20px oklch(1 0 0 / 0.95);
+  --scrim: oklch(0.35 0.02 80 / 0.4);
+
+  /* Gerak */
+  --ease-mewah: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Bentuk */
+  --radius-panel: 24px;
+  --radius-tile: 20px;
+  --radius-field: 16px;
+  --radius-chip: 999px;
+
+  /* Tipografi */
+  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Public Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+.dark {
+  --background: oklch(0.225 0.012 80);
+  --surface: oklch(0.27 0.013 80);
+  --surface-fill: linear-gradient(180deg, oklch(0.305 0.014 80), oklch(0.262 0.013 80) 32%);
+  --control-fill: linear-gradient(180deg, oklch(0.31 0.014 80), oklch(0.26 0.013 80) 55%);
+  --well: oklch(0.205 0.012 80);
+  --row-hover: oklch(0.30 0.014 80);
+  --border-hairline: oklch(0.345 0.012 80);
+  --edge-top: oklch(1 0 0 / 0.16);
+  --edge-bottom-well: oklch(1 0 0 / 0.08);
+
+  --foreground: oklch(0.93 0.008 84);
+  --muted-foreground: oklch(0.71 0.015 82);
+  --disabled-foreground: oklch(0.55 0.012 80);
+
+  --primary: oklch(0.75 0.08 200);
+  --primary-hover: oklch(0.80 0.08 200);
+  --primary-foreground: oklch(0.20 0.02 210);
+  --ring: oklch(0.78 0.08 200);
+
+  --verdict-hijau: oklch(0.74 0.11 152);
+  --verdict-kuning: oklch(0.78 0.11 85);
+  --verdict-merah: oklch(0.72 0.13 28);
+  --verdict-info: oklch(0.71 0.015 82);
+  --verdict-hijau-surface: oklch(0.33 0.05 152);
+  --verdict-kuning-surface: oklch(0.34 0.05 85);
+  --verdict-merah-surface: oklch(0.33 0.055 28);
+  --verdict-info-surface: oklch(0.30 0.012 80);
+  --verdict-on: oklch(0.20 0.012 80);
+
+  /* Bayangan 1e Tepi Mesin: satu bayangan jatuh; cahaya = tepi atas + gradasi permukaan */
+  --shadow-raised: 0 14px 28px oklch(0 0 0 / 0.5);
+  --shadow-raised-sm: 0 8px 18px oklch(0 0 0 / 0.45);
+  --shadow-raised-lg: 0 22px 44px oklch(0 0 0 / 0.58);
+  --shadow-pressed: inset 0 3px 7px oklch(0 0 0 / 0.5);
+  --shadow-pressed-sm: inset 0 2px 5px oklch(0 0 0 / 0.5);
+  --scrim: oklch(0.1 0.01 80 / 0.55);
+}
+
+/*
+  Pemetaan Tailwind v4. Tempel bersama blok di atas ke app/globals.css.
+  Contoh pemakaian: bg-background, text-foreground, text-verdict-merah,
+  shadow-raised, rounded-panel, font-display.
+*/
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-well: var(--well);
+  --color-row-hover: var(--row-hover);
+  --color-hairline: var(--border-hairline);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-ring: var(--ring);
+  --color-verdict-hijau: var(--verdict-hijau);
+  --color-verdict-kuning: var(--verdict-kuning);
+  --color-verdict-merah: var(--verdict-merah);
+  --color-verdict-info: var(--verdict-info);
+  --color-verdict-hijau-surface: var(--verdict-hijau-surface);
+  --color-verdict-kuning-surface: var(--verdict-kuning-surface);
+  --color-verdict-merah-surface: var(--verdict-merah-surface);
+  --color-verdict-info-surface: var(--verdict-info-surface);
+  --color-verdict-on: var(--verdict-on);
+  --shadow-raised: var(--shadow-raised);
+  --shadow-raised-sm: var(--shadow-raised-sm);
+  --shadow-raised-lg: var(--shadow-raised-lg);
+  --shadow-pressed: var(--shadow-pressed);
+  --shadow-pressed-sm: var(--shadow-pressed-sm);
+  --radius-panel: var(--radius-panel);
+  --radius-tile: var(--radius-tile);
+  --radius-field: var(--radius-field);
+  --radius-chip: var(--radius-chip);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+}

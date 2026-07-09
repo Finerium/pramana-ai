@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="./pramana-tokens.css" rel="stylesheet">
+<style>
+body{margin:0;background:oklch(0.93 0.009 84);font-family:'Public Sans',ui-sans-serif,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:oklch(0.46 0.075 205)}a:hover{color:oklch(0.41 0.075 205)}
+button{font:inherit;border:0;background:none;padding:0;margin:0;cursor:pointer;color:inherit;text-align:left}
+input{font:inherit;border:0;background:none;outline:none;color:inherit}
+input::placeholder{color:var(--muted-foreground);opacity:1}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+@keyframes prm-spin{to{transform:rotate(360deg)}}
+@keyframes prm-enter{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes prm-pagein{from{opacity:0}to{opacity:1}}
+@keyframes prm-napas{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes prm-pop{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}}
+</style>
+</helmet>
+
+<div class="{{ temaKelas }}" data-screen-label="Login v2" style="min-height:100vh;background:var(--background);color:var(--foreground);position:relative;overflow:hidden;opacity:{{ pageOp }};transform:{{ pageTf }};transition:opacity .3s var(--ease-mewah), transform .3s var(--ease-mewah)">
+
+  <div aria-hidden="true" style="position:absolute;top:-90px;left:-70px;width:300px;height:300px;border-radius:50%;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised);animation:prm-napas 9s ease-in-out infinite"></div>
+  <div aria-hidden="true" style="position:absolute;bottom:-120px;right:-60px;width:340px;height:340px;border-radius:50%;background:var(--well);box-shadow:var(--shadow-pressed);border-bottom:1px solid var(--edge-bottom-well);animation:prm-napas 11s ease-in-out 1.5s infinite"></div>
+  <div aria-hidden="true" style="position:absolute;top:22%;right:14%;width:88px;height:88px;border-radius:50%;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised-sm);animation:prm-napas 7s ease-in-out .8s infinite"></div>
+  <div aria-hidden="true" style="position:absolute;bottom:18%;left:12%;width:52px;height:52px;border-radius:50%;background:var(--well);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well);animation:prm-napas 8s ease-in-out 2.2s infinite"></div>
+
+  <div style="position:absolute;top:26px;right:48px;animation:prm-pagein .8s ease both">
+    <div role="group" aria-label="Pilihan tema" style="display:flex;gap:4px;padding:5px;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well)">
+      <button type="button" onClick="{{ setTerang }}" aria-pressed="{{ terangAktif }}" style="padding:8px 16px;border-radius:999px;font:700 11.5px/1 'Public Sans',sans-serif;background:{{ tTerangBg }};box-shadow:{{ tTerangSh }};border-top:1px solid {{ tTerangTepi }};color:{{ tTerangC }}">Terang</button>
+      <button type="button" onClick="{{ setGelap }}" aria-pressed="{{ gelapAktif }}" style="padding:8px 16px;border-radius:999px;font:700 11.5px/1 'Public Sans',sans-serif;background:{{ tGelapBg }};box-shadow:{{ tGelapSh }};border-top:1px solid {{ tGelapTepi }};color:{{ tGelapC }}">Gelap</button>
+    </div>
+  </div>
+
+  <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;position:relative">
+
+    <div style="width:410px;padding:38px 40px 34px;border-radius:28px;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised);animation:prm-enter .8s var(--ease-mewah) both">
+
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;animation:prm-enter .8s var(--ease-mewah) .08s both">
+        <div aria-hidden="true" style="width:56px;height:56px;border-radius:50%;background:var(--surface-fill);border-top:1px solid var(--edge-top);box-shadow:var(--shadow-raised-sm);display:flex;align-items:center;justify-content:center">
+          <div style="width:22px;height:22px;border-radius:50%;background:var(--well);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well)"></div>
+        </div>
+        <div style="font:800 24px/1 'Archivo',sans-serif;letter-spacing:-0.01em;margin-top:16px">Pramana</div>
+        <div style="font:600 9.5px/1.5 'Public Sans',sans-serif;letter-spacing:.15em;color:var(--muted-foreground);margin-top:7px">DASBOR PENGAWASAN KEMENKOP RI</div>
+      </div>
+
+      <form onSubmit="{{ kirim }}" style="margin-top:28px;animation:prm-enter .8s var(--ease-mewah) .16s both">
+        <label for="prm-email" style="display:block;font:700 12px/1 'Public Sans',sans-serif;margin-bottom:8px">Email</label>
+        <input id="prm-email" type="email" autocomplete="email" value="{{ email }}" onChange="{{ ubahEmail }}" placeholder="nama@instansi.go.id" style="width:100%;box-sizing:border-box;padding:14px 20px;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed);border-bottom:1px solid var(--edge-bottom-well);font:500 13.5px/1 'Public Sans',sans-serif;color:var(--foreground)">
+
+        <label for="prm-sandi" style="display:block;font:700 12px/1 'Public Sans',sans-serif;margin:18px 0 8px">Kata Sandi</label>
+        <input id="prm-sandi" type="password" autocomplete="current-password" value="{{ sandi }}" onChange="{{ ubahSandi }}" placeholder="Masukkan kata sandi Anda" style="width:100%;box-sizing:border-box;padding:14px 20px;border-radius:999px;background:var(--well);box-shadow:var(--shadow-pressed);border-bottom:1px solid var(--edge-bottom-well);font:500 13.5px/1 'Public Sans',sans-serif;color:var(--foreground)">
+
+        <sc-if value="{{ gagalFlag }}" hint-placeholder-val="{{ false }}">
+          <div role="alert" style="display:flex;align-items:center;gap:10px;margin-top:16px;padding:12px 16px;border-radius:14px;background:var(--verdict-merah-surface);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well);animation:prm-pop .45s var(--ease-mewah) both">
+            <div aria-hidden="true" style="width:11px;height:11px;background:var(--verdict-merah);clip-path:polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);flex:none"></div>
+            <div style="font:600 12.5px/1.5 'Public Sans',sans-serif;color:var(--verdict-merah)">Email atau kata sandi belum tepat. Silakan coba lagi.</div>
+          </div>
+        </sc-if>
+
+        <button type="submit" aria-disabled="{{ memuatFlag }}" style-hover="transform:translateY(-2px);box-shadow:var(--shadow-raised-lg)" style="width:100%;display:flex;align-items:center;justify-content:center;gap:9px;margin-top:22px;padding:15px 24px;border-radius:999px;background:var(--primary);color:var(--primary-foreground);font:700 13.5px/1 'Public Sans',sans-serif;box-shadow:var(--shadow-raised-sm);opacity:{{ btnOpacity }};transition:transform .4s var(--ease-mewah), box-shadow .4s var(--ease-mewah)">
+          <sc-if value="{{ memuatFlag }}" hint-placeholder-val="{{ false }}">
+            <span aria-hidden="true" style="width:14px;height:14px;border-radius:50%;border:2px solid var(--primary-foreground);border-top-color:transparent;animation:prm-spin .9s linear infinite;display:inline-block"></span>
+          </sc-if>
+          {{ btnLabel }}
+        </button>
+      </form>
+
+      <div style="margin-top:24px;padding:15px 18px;border-radius:16px;background:var(--well);box-shadow:var(--shadow-pressed-sm);border-bottom:1px solid var(--edge-bottom-well);animation:prm-enter .8s var(--ease-mewah) .24s both">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="font:700 9.5px/1 'Archivo',sans-serif;letter-spacing:.13em;color:var(--muted-foreground)">AKUN UJI JURI</div>
+          <div style="flex:1"></div>
+          <button type="button" onClick="{{ isiOtomatis }}" style="font:700 11.5px/1 'Public Sans',sans-serif;color:var(--primary)">Isi otomatis</button>
+        </div>
+        <div style="font:600 12px/1.7 'Public Sans',sans-serif;margin-top:8px;font-variant-numeric:tabular-nums">juri.pemerintah@pramana.id</div>
+        <div style="font:600 12px/1.4 'Public Sans',sans-serif;color:var(--muted-foreground);font-variant-numeric:tabular-nums">PramanaJuri2026</div>
+      </div>
+
+    </div>
+
+    <div style="font:500 11px/1.6 'Public Sans',sans-serif;color:var(--muted-foreground);margin-top:24px;text-align:center;animation:prm-enter .8s var(--ease-mewah) .32s both">Pramana AI · Purwarupa Digital Cooperatives Expo 2026<br>Akses hanya untuk analis pemerintah yang terdaftar.</div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1440, &quot;height&quot;: 900 },
+  &quot;tema&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;terang&quot;, &quot;gelap&quot;], &quot;default&quot;: &quot;terang&quot;, &quot;tsType&quot;: &quot;\&quot;terang\&quot; | \&quot;gelap\&quot;&quot;, &quot;section&quot;: &quot;Tampilan&quot; },
+  &quot;mode&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;default&quot;, &quot;memuat&quot;, &quot;gagal&quot;], &quot;default&quot;: &quot;default&quot;, &quot;tsType&quot;: &quot;\&quot;default\&quot; | \&quot;memuat\&quot; | \&quot;gagal\&quot;&quot;, &quot;section&quot;: &quot;State&quot; }
+}">
+class Component extends DCLogic {
+  state = { tOv: null, mOv: null, email: '', sandi: '', exit: false };
+
+  tm() { return this.state.tOv ?? this.props.tema ?? 'terang'; }
+  md() { return this.state.mOv ?? this.props.mode ?? 'default'; }
+  kurangiGerak() { return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }
+
+  sinkronTema() { document.documentElement.classList.toggle('dark', this.tm() === 'gelap'); }
+
+  componentDidMount() {
+    window.__pv = (p) => this.setState(p);
+    this.sinkronTema();
+  }
+
+  componentDidUpdate(prev) {
+    if (prev.tema !== this.props.tema) this.setState({ tOv: null });
+    if (prev.mode !== this.props.mode) this.setState({ mOv: null });
+    this.sinkronTema();
+  }
+
+  componentWillUnmount() {
+    if (this.timer) clearTimeout(this.timer);
+    if (this.exitT) clearTimeout(this.exitT);
+  }
+
+  nav(href) {
+    if (this.kurangiGerak()) { window.location.href = href; return; }
+    this.setState({ exit: true });
+    this.exitT = setTimeout(() => { window.location.href = href; }, 300);
+  }
+
+  kirim(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    if (this.md() === 'memuat') return;
+    this.setState({ mOv: 'memuat' });
+    if (this.timer) clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      const cocok = this.state.email.trim().toLowerCase() === 'juri.pemerintah@pramana.id' && this.state.sandi === 'PramanaJuri2026';
+      if (cocok) {
+        this.nav('./Dasbor - Overview v2.dc.html');
+      } else {
+        this.setState({ mOv: 'gagal' });
+      }
+    }, 1100);
+  }
+
+  renderVals() {
+    const tema = this.tm();
+    const mode = this.md();
+
+    const aktifBtn = { bg: 'var(--surface-fill)', sh: 'var(--shadow-raised-sm)', tepi: 'var(--edge-top)', c: 'var(--foreground)' };
+    const pasifBtn = { bg: 'transparent', sh: 'none', tepi: 'transparent', c: 'var(--muted-foreground)' };
+    const bT = tema === 'terang' ? aktifBtn : pasifBtn;
+    const bG = tema === 'gelap' ? aktifBtn : pasifBtn;
+
+    return {
+      temaKelas: tema === 'gelap' ? 'dark' : '',
+      pageOp: this.state.exit ? '0' : '1',
+      pageTf: this.state.exit ? 'translateY(-12px)' : 'none',
+      terangAktif: tema === 'terang', gelapAktif: tema === 'gelap',
+      setTerang: () => this.setState({ tOv: 'terang' }),
+      setGelap: () => this.setState({ tOv: 'gelap' }),
+      tTerangBg: bT.bg, tTerangSh: bT.sh, tTerangTepi: bT.tepi, tTerangC: bT.c,
+      tGelapBg: bG.bg, tGelapSh: bG.sh, tGelapTepi: bG.tepi, tGelapC: bG.c,
+
+      gagalFlag: mode === 'gagal',
+      memuatFlag: mode === 'memuat',
+      btnLabel: mode === 'memuat' ? 'Memeriksa...' : 'Masuk',
+      btnOpacity: mode === 'memuat' ? '0.8' : '1',
+
+      email: this.state.email,
+      sandi: this.state.sandi,
+      ubahEmail: (e) => this.setState({ email: e.target.value }),
+      ubahSandi: (e) => this.setState({ sandi: e.target.value }),
+      kirim: (e) => this.kirim(e),
+      isiOtomatis: () => this.setState({ email: 'juri.pemerintah@pramana.id', sandi: 'PramanaJuri2026', mOv: 'default' })
+    };
+  }
+}
+</script>
+</body>
+</html>
