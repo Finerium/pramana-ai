@@ -1,11 +1,24 @@
 import type { NextRequest } from "next/server";
 import { and, asc, eq } from "drizzle-orm";
 import { getDb } from "../../../../../db/client";
-import { auditRun, koperasi, temuan, unitUsaha } from "../../../../../db/schema";
+import {
+  auditRun,
+  koperasi,
+  temuan,
+  unitUsaha,
+} from "../../../../../db/schema";
 import { ApiError, ok, runRoute } from "../../../../../lib/api";
 import { requireRole } from "../../../../../lib/auth";
-import { bukanMarker, latestRun, type AuditRunRow } from "../../../../../lib/audit/persist";
-import type { EvidenceRef, Severity } from "../../../../../lib/contracts";
+import {
+  bukanMarker,
+  latestRun,
+  type AuditRunRow,
+} from "../../../../../lib/audit/persist";
+import type {
+  AgentFinding,
+  EvidenceRef,
+  Severity,
+} from "../../../../../lib/contracts";
 
 const RANK: Record<Severity, number> = { merah: 0, kuning: 1, info: 2 };
 
@@ -50,17 +63,18 @@ export async function GET(
     temuanRows.sort(
       (a, b) => RANK[a.severity] - RANK[b.severity] || a.id.localeCompare(b.id),
     );
-    const temuanOut = temuanRows.map((r) => ({
-      id: r.id,
-      agent: r.agent,
-      severity: r.severity,
-      judul: r.judul,
-      penjelasanAwam: r.penjelasanAwam,
-      kenapaPenting: r.kenapaPenting,
-      pertanyaanRat: r.pertanyaanRat,
-      bukti: JSON.parse(r.buktiJson) as EvidenceRef[],
-      tanggapanPengurus: r.tanggapanPengurus,
-    }));
+    const temuanOut: (AgentFinding & { tanggapanPengurus: string | null })[] =
+      temuanRows.map((r) => ({
+        id: r.id,
+        agent: r.agent,
+        severity: r.severity,
+        judul: r.judul,
+        penjelasan_awam: r.penjelasanAwam,
+        kenapa_penting: r.kenapaPenting,
+        pertanyaan_rat: r.pertanyaanRat,
+        bukti: JSON.parse(r.buktiJson) as EvidenceRef[],
+        tanggapanPengurus: r.tanggapanPengurus,
+      }));
 
     const trenRows = await db
       .select({

@@ -33,7 +33,11 @@ import { GET as auditStatus } from "./audit/[id]/status/route";
 
 type Role = SessionData["role"];
 const SESS: Record<Role, SessionData> = {
-  anggota: { userId: "usr-juri-anggota", role: "anggota", anggotaId: "ang-juri" },
+  anggota: {
+    userId: "usr-juri-anggota",
+    role: "anggota",
+    anggotaId: "ang-juri",
+  },
   pemerintah: { userId: "usr-juri-pemerintah", role: "pemerintah" },
   pengurus: { userId: "usr-bendahara", role: "pengurus" },
 };
@@ -100,21 +104,82 @@ async function voteCall(pilihan: string) {
 // --- Matrix role guard (AC-SEC-01/02, AC-SUBJ-03) ---------------------------
 type Caller = (s: SessionData | null) => Promise<Response>;
 const GUARDED: { name: string; role: Role; call: Caller }[] = [
-  { name: "member/summary", role: "anggota", call: async (s) => memberSummary(await mkReq(s)) },
-  { name: "member/verdict", role: "anggota", call: async (s) => memberVerdict(await mkReq(s)) },
-  { name: "member/findings", role: "anggota", call: async (s) => memberFindings(await mkReq(s)) },
-  { name: "findings/[id]/rat", role: "anggota", call: async (s) => findingsRat(await mkReq(s, { method: "POST" }), P("tmn-an1")) },
-  { name: "member/flow", role: "anggota", call: async (s) => memberFlow(await mkReq(s)) },
-  { name: "member/voice", role: "anggota", call: async (s) => memberVoice(await mkReq(s)) },
-  { name: "vote", role: "anggota", call: async (s) => vote(await mkReq(s, { method: "POST" })) },
-  { name: "subjek/transaksi", role: "pengurus", call: async (s) => subjekTransaksi(await mkReq(s, { method: "POST" })) },
-  { name: "subjek/pinjaman", role: "pengurus", call: async (s) => subjekPinjaman(await mkReq(s, { method: "POST" })) },
-  { name: "subjek/rat", role: "pengurus", call: async (s) => subjekRat(await mkReq(s, { method: "POST" })) },
-  { name: "subjek/recent", role: "pengurus", call: async (s) => subjekRecent(await mkReq(s)) },
-  { name: "gov/overview", role: "pemerintah", call: async (s) => govOverview(await mkReq(s)) },
-  { name: "gov/koperasi/[id]", role: "pemerintah", call: async (s) => govKoperasi(await mkReq(s), P("kop-sukamaju")) },
-  { name: "gov/audit/run", role: "pemerintah", call: async (s) => govAuditRun(await mkReq(s, { method: "POST" })) },
-  { name: "audit/[id]/status", role: "pemerintah", call: async (s) => auditStatus(await mkReq(s), P("x")) },
+  {
+    name: "member/summary",
+    role: "anggota",
+    call: async (s) => memberSummary(await mkReq(s)),
+  },
+  {
+    name: "member/verdict",
+    role: "anggota",
+    call: async (s) => memberVerdict(await mkReq(s)),
+  },
+  {
+    name: "member/findings",
+    role: "anggota",
+    call: async (s) => memberFindings(await mkReq(s)),
+  },
+  {
+    name: "findings/[id]/rat",
+    role: "anggota",
+    call: async (s) =>
+      findingsRat(await mkReq(s, { method: "POST" }), P("tmn-an1")),
+  },
+  {
+    name: "member/flow",
+    role: "anggota",
+    call: async (s) => memberFlow(await mkReq(s)),
+  },
+  {
+    name: "member/voice",
+    role: "anggota",
+    call: async (s) => memberVoice(await mkReq(s)),
+  },
+  {
+    name: "vote",
+    role: "anggota",
+    call: async (s) => vote(await mkReq(s, { method: "POST" })),
+  },
+  {
+    name: "subjek/transaksi",
+    role: "pengurus",
+    call: async (s) => subjekTransaksi(await mkReq(s, { method: "POST" })),
+  },
+  {
+    name: "subjek/pinjaman",
+    role: "pengurus",
+    call: async (s) => subjekPinjaman(await mkReq(s, { method: "POST" })),
+  },
+  {
+    name: "subjek/rat",
+    role: "pengurus",
+    call: async (s) => subjekRat(await mkReq(s, { method: "POST" })),
+  },
+  {
+    name: "subjek/recent",
+    role: "pengurus",
+    call: async (s) => subjekRecent(await mkReq(s)),
+  },
+  {
+    name: "gov/overview",
+    role: "pemerintah",
+    call: async (s) => govOverview(await mkReq(s)),
+  },
+  {
+    name: "gov/koperasi/[id]",
+    role: "pemerintah",
+    call: async (s) => govKoperasi(await mkReq(s), P("kop-sukamaju")),
+  },
+  {
+    name: "gov/audit/run",
+    role: "pemerintah",
+    call: async (s) => govAuditRun(await mkReq(s, { method: "POST" })),
+  },
+  {
+    name: "audit/[id]/status",
+    role: "pemerintah",
+    call: async (s) => auditStatus(await mkReq(s), P("x")),
+  },
 ];
 
 describe("role guard matrix (AC-SEC-01/02, AC-SUBJ-03)", () => {
@@ -416,6 +481,12 @@ describe("perilaku endpoint", () => {
     };
     expect(d.auditRun?.verdictWarna).toBe("merah");
     expect(d.temuan.length).toBe(6);
+    expect(
+      typeof (d.temuan[0] as { penjelasan_awam?: unknown }).penjelasan_awam,
+    ).toBe("string");
+    expect(
+      (d.temuan[0] as { penjelasanAwam?: unknown }).penjelasanAwam,
+    ).toBeUndefined();
     expect(d.tren.map((t) => t.warna)).toEqual([
       "hijau",
       "hijau",
@@ -427,7 +498,9 @@ describe("perilaku endpoint", () => {
   });
 
   it("live audit tanpa key -> marker gagal_langsung + status baca cache", async () => {
-    await runLiveAudit("live-marker-1", "kop-sukamaju", { hasKey: () => false });
+    await runLiveAudit("live-marker-1", "kop-sukamaju", {
+      hasKey: () => false,
+    });
     const res = await auditStatus(
       await mkReq(SESS.pemerintah),
       P("live-marker-1"),
@@ -437,7 +510,7 @@ describe("perilaku endpoint", () => {
       auditRun: { source: string; verdictWarna: string } | null;
     };
     expect(d.status).toBe("gagal_langsung");
-    expect(d.auditRun?.source).toBe("seed");
+    expect(d.auditRun?.source).toBe("cache");
     expect(d.auditRun?.verdictWarna).toBe("merah");
     const last = await latestRun(testDb, "kop-sukamaju");
     expect(last?.source).toBe("seed");

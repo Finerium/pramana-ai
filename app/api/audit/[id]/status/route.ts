@@ -47,7 +47,7 @@ export async function GET(
       const last = await latestRun(db, row.koperasiId);
       return ok({
         status: "gagal_langsung",
-        auditRun: last ? compact(last) : null,
+        auditRun: last ? { ...compact(last), source: "cache" as const } : null,
       });
     }
     return ok({ status: "selesai", auditRun: compact(row) });
