@@ -1,0 +1,116 @@
+/*
+  Pramana AI — Landing page design tokens (PORT VERBATIM dari
+  design-handoff/landing/tokens.css). Palet "Malam Jernih".
+
+  Perbedaan terhadap bundle (didokumentasikan, bukan pergeseran nilai):
+  1. --font-teks / --font-mono diwire ke variabel next/font/google
+     (--font-jakarta / --font-jetbrains) sesuai kontrak (self-host, tanpa
+     request runtime ke Google). Nama keluarga bundle dipertahankan sebagai
+     fallback. Nilai warna/radius/shadow TIDAK digeser (AC-UI-01).
+  2. Blok Tailwind `@theme inline` bundle sengaja tidak diikutkan: komponen
+     memakai var(--token) langsung (setia prototype yang juga inline var()),
+     dan pemetaan `--font-sans`/`--font-mono` global akan bentrok dengan
+     app/globals.css (shadcn) lintas rute. Custom property tetap verbatim.
+
+  ATURAN KERAS: semua warna OKLCH; komponen hanya memakai token semantik.
+  Verdict = ikon bentuk + label, tidak pernah warna saja (hijau lingkaran,
+  kuning segitiga, merah belah ketupat 45deg).
+*/
+
+:root {
+  color-scheme: light;
+
+  --latar: oklch(0.975 0.004 250);
+  --permukaan: oklch(0.955 0.006 250);
+  --kartu: oklch(0.995 0.002 250);
+  --garis: oklch(0.905 0.008 252);
+  --garis-kuat: oklch(0.82 0.012 252);
+
+  --tinta: oklch(0.215 0.02 265);
+  --tinta-2: oklch(0.45 0.018 262);
+  --tinta-3: oklch(0.52 0.014 260);
+
+  --aksen: oklch(0.49 0.1 255);
+  --aksen-kuat: oklch(0.42 0.105 256);
+  --aksen-teks: oklch(0.985 0.003 250);
+
+  --hijau: oklch(0.55 0.1 158);
+  --kuning: oklch(0.62 0.12 85);
+  --merah: oklch(0.55 0.16 25);
+
+  --cincin: oklch(0.49 0.1 255);
+  --bayang-kartu: 0 24px 64px -28px oklch(0.215 0.02 265 / 0.3);
+  /* Tambahan (6.19.4): tokenisasi bayangan kartu diagram yang di prototype
+     ditulis literal oklch inline, agar komponen bebas warna hardcode. Fixed
+     lintas tema (sama seperti literal prototype); border via var(--garis). */
+  --bayang-diagram: 0 12px 32px -22px oklch(0.215 0.02 265 / 0.35);
+
+  /* Turunan otomatis: ikut berubah antar tema karena memakai var() */
+  --aksen-lembut: color-mix(in oklch, var(--aksen) 9%, var(--latar));
+  --hijau-lembut: color-mix(in oklch, var(--hijau) 12%, var(--latar));
+  --kuning-lembut: color-mix(in oklch, var(--kuning) 14%, var(--latar));
+  --merah-lembut: color-mix(in oklch, var(--merah) 12%, var(--latar));
+
+  --font-teks: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, Menlo,
+    monospace;
+
+  --radius-kartu: 18px;
+  --radius-pil: 999px;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --latar: oklch(0.185 0.016 262);
+  --permukaan: oklch(0.215 0.017 262);
+  --kartu: oklch(0.235 0.018 262);
+  --garis: oklch(0.31 0.018 262);
+  --garis-kuat: oklch(0.4 0.02 260);
+
+  --tinta: oklch(0.945 0.006 250);
+  --tinta-2: oklch(0.74 0.012 255);
+  --tinta-3: oklch(0.65 0.013 257);
+
+  --aksen: oklch(0.72 0.095 250);
+  --aksen-kuat: oklch(0.78 0.09 248);
+  --aksen-teks: oklch(0.17 0.016 262);
+
+  --hijau: oklch(0.7 0.11 158);
+  --kuning: oklch(0.75 0.12 88);
+  --merah: oklch(0.68 0.15 25);
+
+  --cincin: oklch(0.72 0.095 250);
+  --bayang-kartu: 0 24px 64px -28px oklch(0 0 0 / 0.55);
+}
+
+/*
+  Default "ikut sistem": tanpa kelas .light atau .dark pada <html>,
+  preferensi OS yang menang. Toggle menulis kelas eksplisit.
+*/
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+
+    --latar: oklch(0.185 0.016 262);
+    --permukaan: oklch(0.215 0.017 262);
+    --kartu: oklch(0.235 0.018 262);
+    --garis: oklch(0.31 0.018 262);
+    --garis-kuat: oklch(0.4 0.02 260);
+
+    --tinta: oklch(0.945 0.006 250);
+    --tinta-2: oklch(0.74 0.012 255);
+    --tinta-3: oklch(0.65 0.013 257);
+
+    --aksen: oklch(0.72 0.095 250);
+    --aksen-kuat: oklch(0.78 0.09 248);
+    --aksen-teks: oklch(0.17 0.016 262);
+
+    --hijau: oklch(0.7 0.11 158);
+    --kuning: oklch(0.75 0.12 88);
+    --merah: oklch(0.68 0.15 25);
+
+    --cincin: oklch(0.72 0.095 250);
+    --bayang-kartu: 0 24px 64px -28px oklch(0 0 0 / 0.55);
+  }
+}
