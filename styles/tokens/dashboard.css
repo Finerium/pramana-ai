@@ -1,0 +1,200 @@
+/*
+  Pramana AI — Dasbor pemerintah design tokens.
+  PORT VERBATIM dari bundle dashboard (pramana-tokens.css). Palet terkunci 1a
+  "Porselen Hangat"; tema gelap terkunci 1e "Tepi Mesin".
+
+  Fidelity token (AC-UI-01, check:tokens): SEMUA custom property bundle hadir
+  di sini dengan nilai identik, termasuk blok @theme. Yang berbeda hanya SCOPE:
+  token :root/.dark bundle dipindah ke `.gov` / `.dark .gov` agar empat namespace
+  token tetap terpisah (CLAUDE.md aturan keras 5) dan tidak menabrak token shadcn
+  di app/globals.css yang memakai nama sama. Nilai tidak digeser.
+
+  Font: --font-display / --font-sans dipertahankan verbatim (nilai bundle) untuk
+  fidelity token; RENDER memakai next/font (self-host, tanpa request Google)
+  lewat variabel --font-archivo / --font-public-sans yang dipasang layout gov.
+
+  ATURAN NEUMORFIK (README bundle): bayangan dan gradasi dark DIBAKAR DI TOKEN.
+  Komponen DILARANG menulis kondisi dark untuk shadow/gradasi. Neumorfik hanya
+  pada surface dan control; teks/angka/tabel tetap tinta datar kontras tinggi.
+  Verdict = bentuk + label, tidak pernah warna saja (hijau lingkaran, kuning
+  segitiga, merah belah ketupat, info persegi; clip-path, bukan ikon font).
+*/
+
+.gov {
+  /* Permukaan */
+  --background: oklch(0.93 0.009 84);
+  --surface: oklch(0.955 0.007 84);
+  --surface-fill: oklch(0.955 0.007 84);
+  --control-fill: oklch(0.955 0.007 84);
+  --well: oklch(0.93 0.009 84);
+  --row-hover: oklch(0.945 0.011 84);
+  --border-hairline: oklch(0.865 0.014 84);
+  --edge-top: transparent;
+  --edge-bottom-well: transparent;
+
+  /* Tinta */
+  --foreground: oklch(0.23 0.015 75);
+  --muted-foreground: oklch(0.46 0.02 78);
+  --disabled-foreground: oklch(0.60 0.015 80);
+
+  /* Aksen */
+  --primary: oklch(0.46 0.075 205);
+  --primary-hover: oklch(0.41 0.075 205);
+  --primary-foreground: oklch(0.985 0.003 84);
+  --ring: oklch(0.46 0.075 205);
+
+  /* Verdict, token semantik. Dilarang dipakai dekoratif. */
+  --verdict-hijau: oklch(0.43 0.10 152);
+  --verdict-kuning: oklch(0.45 0.10 78);
+  --verdict-merah: oklch(0.45 0.13 30);
+  --verdict-info: oklch(0.46 0.02 78);
+  --verdict-hijau-surface: oklch(0.88 0.035 152);
+  --verdict-kuning-surface: oklch(0.89 0.045 85);
+  --verdict-merah-surface: oklch(0.885 0.04 30);
+  --verdict-info-surface: oklch(0.905 0.01 84);
+  --verdict-on: oklch(0.985 0.003 84);
+
+  /* Bayangan neumorfik, terang: bayangan ganda klasik */
+  --shadow-raised: 7px 7px 16px oklch(0.74 0.03 84 / 0.45), -6px -6px 14px oklch(1 0 0 / 0.9);
+  --shadow-raised-sm: 4px 4px 10px oklch(0.74 0.03 84 / 0.4), -3px -3px 8px oklch(1 0 0 / 0.85);
+  --shadow-pressed: inset 3px 3px 7px oklch(0.74 0.03 84 / 0.5), inset -3px -3px 7px oklch(1 0 0 / 0.9);
+  --shadow-pressed-sm: inset 2px 2px 5px oklch(0.74 0.03 84 / 0.5), inset -2px -2px 5px oklch(1 0 0 / 0.9);
+  --shadow-raised-lg: 12px 12px 26px oklch(0.74 0.03 84 / 0.5), -9px -9px 20px oklch(1 0 0 / 0.95);
+  --scrim: oklch(0.35 0.02 80 / 0.4);
+
+  /* Gerak */
+  --ease-mewah: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Bentuk */
+  --radius-panel: 24px;
+  --radius-tile: 20px;
+  --radius-field: 16px;
+  --radius-chip: 999px;
+
+  /* Tipografi (nilai bundle verbatim; render via next/font di bawah) */
+  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Public Sans", ui-sans-serif, system-ui, sans-serif;
+
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-public-sans), "Public Sans", ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.dark .gov,
+.gov.dark {
+  --background: oklch(0.225 0.012 80);
+  --surface: oklch(0.27 0.013 80);
+  --surface-fill: linear-gradient(180deg, oklch(0.305 0.014 80), oklch(0.262 0.013 80) 32%);
+  --control-fill: linear-gradient(180deg, oklch(0.31 0.014 80), oklch(0.26 0.013 80) 55%);
+  --well: oklch(0.205 0.012 80);
+  --row-hover: oklch(0.30 0.014 80);
+  --border-hairline: oklch(0.345 0.012 80);
+  --edge-top: oklch(1 0 0 / 0.16);
+  --edge-bottom-well: oklch(1 0 0 / 0.08);
+
+  --foreground: oklch(0.93 0.008 84);
+  --muted-foreground: oklch(0.71 0.015 82);
+  --disabled-foreground: oklch(0.55 0.012 80);
+
+  --primary: oklch(0.75 0.08 200);
+  --primary-hover: oklch(0.80 0.08 200);
+  --primary-foreground: oklch(0.20 0.02 210);
+  --ring: oklch(0.78 0.08 200);
+
+  --verdict-hijau: oklch(0.74 0.11 152);
+  --verdict-kuning: oklch(0.78 0.11 85);
+  --verdict-merah: oklch(0.72 0.13 28);
+  --verdict-info: oklch(0.71 0.015 82);
+  --verdict-hijau-surface: oklch(0.33 0.05 152);
+  --verdict-kuning-surface: oklch(0.34 0.05 85);
+  --verdict-merah-surface: oklch(0.33 0.055 28);
+  --verdict-info-surface: oklch(0.30 0.012 80);
+  --verdict-on: oklch(0.20 0.012 80);
+
+  --shadow-raised: 0 14px 28px oklch(0 0 0 / 0.5);
+  --shadow-raised-sm: 0 8px 18px oklch(0 0 0 / 0.45);
+  --shadow-raised-lg: 0 22px 44px oklch(0 0 0 / 0.58);
+  --shadow-pressed: inset 0 3px 7px oklch(0 0 0 / 0.5);
+  --shadow-pressed-sm: inset 0 2px 5px oklch(0 0 0 / 0.5);
+  --scrim: oklch(0.1 0.01 80 / 0.55);
+}
+
+/*
+  Pemetaan Tailwind bundle verbatim (fidelity check:tokens). Di runtime blok ini
+  inert kecuali diproses Tailwind; komponen gov memakai var(--token) langsung.
+*/
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-well: var(--well);
+  --color-row-hover: var(--row-hover);
+  --color-hairline: var(--border-hairline);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-ring: var(--ring);
+  --color-verdict-hijau: var(--verdict-hijau);
+  --color-verdict-kuning: var(--verdict-kuning);
+  --color-verdict-merah: var(--verdict-merah);
+  --color-verdict-info: var(--verdict-info);
+  --color-verdict-hijau-surface: var(--verdict-hijau-surface);
+  --color-verdict-kuning-surface: var(--verdict-kuning-surface);
+  --color-verdict-merah-surface: var(--verdict-merah-surface);
+  --color-verdict-info-surface: var(--verdict-info-surface);
+  --color-verdict-on: var(--verdict-on);
+  --shadow-raised: var(--shadow-raised);
+  --shadow-raised-sm: var(--shadow-raised-sm);
+  --shadow-raised-lg: var(--shadow-raised-lg);
+  --shadow-pressed: var(--shadow-pressed);
+  --shadow-pressed-sm: var(--shadow-pressed-sm);
+  --radius-panel: var(--radius-panel);
+  --radius-tile: var(--radius-tile);
+  --radius-field: var(--radius-field);
+  --radius-chip: var(--radius-chip);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+}
+
+/* ---- Base bundle (blok style prototype), di-scope ke .gov ---- */
+.gov a { color: var(--primary); }
+.gov a:hover { color: var(--primary-hover); }
+.gov button { font: inherit; border: 0; background: none; padding: 0; margin: 0; cursor: pointer; color: inherit; text-align: left; }
+.gov input { font: inherit; border: 0; background: none; outline: none; color: inherit; }
+.gov input::placeholder { color: var(--muted-foreground); opacity: 1; }
+.gov abbr { text-decoration: underline dotted; text-underline-offset: 3px; cursor: help; }
+.gov button:focus-visible,
+.gov a:focus-visible,
+.gov input:focus-visible,
+.gov [tabindex]:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+
+/* Keluarga font display (Archivo) via next/font; teks default = Public Sans (.gov). */
+.gov-disp { font-family: var(--font-archivo), "Archivo", ui-sans-serif, system-ui, sans-serif; }
+.gov-num { font-variant-numeric: tabular-nums; }
+
+/* ---- Atom permukaan neumorfik (mengurangi pengulangan inline) ---- */
+.gov-panel { border-radius: var(--radius-panel); background: var(--surface-fill); border-top: 1px solid var(--edge-top); box-shadow: var(--shadow-raised); }
+.gov-raised-sm { background: var(--surface-fill); border-top: 1px solid var(--edge-top); box-shadow: var(--shadow-raised-sm); }
+.gov-control { background: var(--control-fill); border-top: 1px solid var(--edge-top); box-shadow: var(--shadow-raised-sm); }
+.gov-well { background: var(--well); box-shadow: var(--shadow-pressed); border-bottom: 1px solid var(--edge-bottom-well); }
+.gov-well-sm { background: var(--well); box-shadow: var(--shadow-pressed-sm); border-bottom: 1px solid var(--edge-bottom-well); }
+.gov-primary { background: var(--primary); color: var(--primary-foreground); box-shadow: var(--shadow-raised-sm); }
+
+/* Hover baris tabel (prototype: style-hover background var(--row-hover)). */
+.gov-row { cursor: pointer; }
+.gov-row:hover { background: var(--row-hover); }
+
+@keyframes prm-pulse { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+@keyframes prm-spin { to { transform: rotate(360deg); } }
+@keyframes prm-slide { 0% { transform: translateX(-120%); } 100% { transform: translateX(300%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .gov *, .gov *::before, .gov *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
