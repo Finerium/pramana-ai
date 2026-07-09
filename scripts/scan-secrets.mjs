@@ -4,7 +4,7 @@
 // history for API-key patterns. Never prints matched values, only file + line +
 // pattern label, so a .env value is never echoed. Exit 0 clean, exit 1 with hits.
 
-import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
+import { readFileSync, readdirSync, statSync } from "node:fs";
 import { execSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
 
