@@ -84,6 +84,11 @@ function ArusIsi({ f, gagal, onOpen }: { f: FlowResp; gagal: boolean; onOpen: (t
   const masuk = flowBars(f.masuk);
   const keluar = flowBars(f.keluar);
   const selisih = f.totalKeluar - f.totalMasuk;
+  // ponytail: kartu kas seluruhnya fallback seed (KAS_TREND_FALLBACK), jadi
+  // deep-link memakai id seed temuan kesehatan_finansial AN-4 = "tmn-an4"
+  // (scripts/seed/data.ts memberi id berpola tmn-anN, bukan "an4"). Naik kelas:
+  // resolusi dari respons findings/flow bila id temuan menjadi dinamis (ULID).
+  const kasTemuanId = "tmn-an4";
 
   return (
     <>
@@ -97,7 +102,7 @@ function ArusIsi({ f, gagal, onOpen }: { f: FlowResp; gagal: boolean; onOpen: (t
           </div>
           <button
             type="button"
-            onClick={() => onOpen("an4")}
+            onClick={() => onOpen(kasTemuanId)}
             className="tnum"
             style={{
               display: "flex",
