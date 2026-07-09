@@ -1,0 +1,19 @@
+{
+  "gate": 7,
+  "at": "2026-07-09T23:22:38Z",
+  "pass": true,
+  "results": [
+    {"id": "AC-DEMO-01", "pass": true, "note": "demo:hash dua run byte-identik (demo-hash.txt)"},
+    {"id": "AC-DEMO-02", "pass": true, "note": "reseed lokal 274 ms <= 60000 (seed-verify.json)"},
+    {"id": "AC-DEMO-03", "pass": true, "note": "project e2e nollm: journey lengkap dari seed, hits mock LLM = 0, nol panggilan keluar"},
+    {"id": "AC-UAT-01", "pass": true, "note": "persona juri-anggota: 2 pass bersih beruntun terhadap URL live; 6 fix terverifikasi; 1 catatan kosmetik non-blocking (badge per-sesi)"},
+    {"id": "AC-UAT-02", "pass": true, "note": "persona juri-pemerintah: 2 pass bersih beruntun; toggle tema login klik-mouse, fallback cache jujur, tren 6 sel, 1 kosmetik non-blocking"},
+    {"id": "AC-UAT-03", "pass": true, "note": "persona bendahara: 2 pass bersih beruntun; pinjaman jabatan sukses+persist, nol sukses palsu, 1 kosmetik non-blocking (label peminjam pasca-reload)"},
+    {"id": "GATE7-SHOTS", "pass": true, "note": "screenshot deck kanonik crisp (temuan AN-1, Suara 12 anggota, dua antarmuka) di .crown/evidence/deck-shots/; capture UAT live tersimpan"}
+  ],
+  "catatan_kosmetik": [
+    "Badge Termasuk pertanyaan Anda di Suara bersifat per-sesi (persist RAT per-pengguna benar; badge tidak muncul ulang di sesi login baru). Non-blocking, di luar jalur demo.",
+    "Baris pinjaman menampilkan nama peminjam saat dibuat lalu label generik Anggota pasca-reload (data finansial utuh; join nama belum di-hydrate recent).",
+    "Kas dapat negatif setelah uji berulang: komputasi jujur; reseed sebelum demo (sudah dilakukan; state live bersih AN-1=12, freezer belum dipilih)."
+  ]
+}
