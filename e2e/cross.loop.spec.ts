@@ -20,6 +20,7 @@ test.afterAll(() => reseed());
 test("AC-SUBJ-02 loop lintas surface: entri konsol -> audit live -> temuan merujuk trx baru", async ({
   page,
 }) => {
+  test.setTimeout(60_000); // expect terpanjang 45 detik (review #4)
   await setMockMode("ok");
 
   // 1. Bendahara catat preset konflik (transaksi baru) via konsol.

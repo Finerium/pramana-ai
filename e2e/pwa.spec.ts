@@ -3,12 +3,11 @@
  * lang id) terpasang di layout member. AC-PWA-02: SW cache shell; offline reload
  * menampilkan shell + pesan luring (bukan error putih). SW hanya di build produksi.
  *
- * CATATAN VERIFIKASI (bug app): components/member/RegisterSW.tsx memasang
- * listener 'load' di dalam useEffect; pada praktiknya 'load' sudah terjadi saat
- * efek berjalan sehingga SW TIDAK PERNAH teregistrasi (getRegistrations() == 0).
- * Test memicu ulang event 'load' agar handler registrasi milik app benar-benar
- * berjalan, lalu memverifikasi logika cache SW-nya. Perbaikan app: registrasi
- * langsung bila document.readyState === "complete".
+ * AC-PWA-02 menguji jalur registrasi milik app APA ADANYA (TANPA event 'load'
+ * sintetis). Bug RegisterSW (listener 'load' terpasang setelah event terjadi)
+ * membuat SW tidak pernah teregistrasi; fix sudah mendarat di main (register
+ * langsung saat document.readyState === "complete"). Pada pohon TANPA fix itu
+ * test ini GAGAL pada assert registrasi, dan itu hasil yang benar.
  */
 import { test, expect } from "./helpers/fixtures";
 import { reseed, login } from "./helpers/sesi";
@@ -41,20 +40,31 @@ test("AC-PWA-02 SW cache shell; offline reload -> shell luring bukan error putih
   context,
 }) => {
   await login(page, "anggota");
-  await page.goto("/beranda");
-  await page.waitForLoadState("networkidle").catch(() => {});
+  await page.goto("/beranda", { waitUntil: "load" });
 
-  // Jalankan handler registrasi SW milik app (RegisterSW mendengar 'load' yang
-  // sudah lewat). Picu ulang lalu tunggu SW aktif dan mengendalikan halaman.
-  await page.evaluate(() => window.dispatchEvent(new Event("load")));
-  await page.evaluate(async () => {
-    await navigator.serviceWorker.ready;
-  });
-  await page
-    .waitForFunction(() => navigator.serviceWorker.controller !== null, null, {
-      timeout: 15_000,
-    })
-    .catch(() => {});
+  // Registrasi HARUS terjadi lewat jalur app sendiri (RegisterSW), tanpa
+  // bantuan test. Gagal di sini = bug registrasi app (lihat header file).
+  const teregistrasi = await page
+    .waitForFunction(
+      () => navigator.serviceWorker.getRegistrations().then((r) => r.length > 0),
+      null,
+      { timeout: 15_000 },
+    )
+    .then(() => true)
+    .catch(() => false);
+  expect(
+    teregistrasi,
+    "RegisterSW harus mendaftarkan /sw.js lewat jalur app sendiri; " +
+      "gagal = listener 'load' terpasang setelah event (fix: register langsung " +
+      "saat document.readyState === 'complete')",
+  ).toBe(true);
+
+  // SW aktif mengendalikan halaman (sw.js: skipWaiting + clients.claim).
+  await page.waitForFunction(
+    () => navigator.serviceWorker.controller !== null,
+    null,
+    { timeout: 15_000 },
+  );
 
   // Kunjungan kedua terkendali SW: shell /beranda tersimpan di cache.
   await page.goto("/beranda");

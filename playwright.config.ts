@@ -1,7 +1,11 @@
 import { defineConfig, devices } from "@playwright/test";
 
 const PROC_ENV = process["env"];
-const REUSE = !PROC_ENV.CI;
+// Mock boleh reuse (stateless per /control). Server next TIDAK reuse: server
+// yatim di port 3000/3100 membuat run memakai binary/state basi (sumber run
+// kacau reviewer). false = fail-fast bila port terpakai + selalu mulai dari
+// seed segar; trade-off: tiap run membayar boot server dan port harus bersih.
+const REUSE_MOCK = !PROC_ENV.CI;
 
 // Secret dev/test tetap (>= 32 char) untuk `next start` produksi (lib/env
 // fail-fast tanpa ini). BUKAN nilai produksi.
@@ -77,7 +81,7 @@ export default defineConfig({
       // Mock LLM deterministik lebih dulu (dipakai server utama sebagai provider).
       command: "npx tsx e2e/helpers/mock-llm.ts",
       url: "http://localhost:4545/control/health",
-      reuseExistingServer: REUSE,
+      reuseExistingServer: REUSE_MOCK,
       timeout: 60_000,
     },
     {
@@ -85,7 +89,7 @@ export default defineConfig({
       // provider diarahkan ke mock, kunci hadir (memicu audit live).
       command: "pnpm seed && pnpm start",
       url: "http://localhost:3000/api/health",
-      reuseExistingServer: REUSE,
+      reuseExistingServer: false,
       timeout: 180_000,
       env: {
         TURSO_DATABASE_URL: "",
@@ -100,7 +104,7 @@ export default defineConfig({
       // Server tanpa kunci model (AC-DEMO-03) pada port 3100, berbagi dev.db.
       command: "pnpm start",
       url: "http://localhost:3100/api/health",
-      reuseExistingServer: REUSE,
+      reuseExistingServer: false,
       timeout: 180_000,
       env: {
         PORT: "3100",
