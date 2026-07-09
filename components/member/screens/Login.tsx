@@ -14,7 +14,7 @@ import { postJson } from "@/components/member/data";
 import { Banner, rise } from "@/components/member/ui";
 import { BelahKetupat } from "@/components/member/icons";
 
-type LoginResp = { role?: string; redirect?: string };
+type LoginResp = { role?: string; redirectTo?: string };
 
 function tujuan(role?: string): string {
   if (role === "pemerintah") return "/pemerintah";
@@ -56,7 +56,7 @@ export function Login() {
         email: email.trim(),
         password: pass,
       });
-      router.push(data.redirect ?? tujuan(data.role));
+      router.push(data.redirectTo ?? tujuan(data.role));
     } catch {
       setBusy(false);
       setErr(true);

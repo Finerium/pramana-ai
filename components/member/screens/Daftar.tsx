@@ -84,7 +84,7 @@ export function Daftar() {
             <KartuAnggota
               nama={kartu.nama}
               noAnggota={kartu.noAnggota}
-              koperasiCaps={kartu.koperasi.toUpperCase()}
+              koperasiCaps={kartu.koperasi?.toUpperCase() ?? ""}
               bergabung={`Bergabung ${fmtTanggal(kartu.bergabungPada)}`}
             />
           </div>

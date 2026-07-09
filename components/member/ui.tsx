@@ -105,27 +105,6 @@ export function Skeleton({ heights }: { heights: number[] }) {
   );
 }
 
-/** Header lengket berlatar blur. */
-export function StickyHeader({ children, style }: { children: ReactNode; style?: CSSProperties }) {
-  return (
-    <header
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 30,
-        margin: "0 -20px",
-        padding: "66px 20px 12px",
-        background: "color-mix(in srgb, var(--bg) 82%, transparent)",
-        backdropFilter: "blur(18px) saturate(1.6)",
-        WebkitBackdropFilter: "blur(18px) saturate(1.6)",
-        ...style,
-      }}
-    >
-      {children}
-    </header>
-  );
-}
-
 /** Tautan kembali (chevron kiri + label). */
 export function BackLink({ label, onClick }: { label: string; onClick: () => void }) {
   return (
