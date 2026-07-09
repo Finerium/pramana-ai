@@ -1,0 +1,77 @@
+{
+  "surface": "Dasbor Pemerintah (bundle dashboard — Porselen Hangat / Tepi Mesin, neumorfik)",
+  "grader": "AC-UI-02 fresh-context visual fidelity",
+  "kanvas": "1440x900",
+  "verdict": "fail",
+  "ringkasan": "27 dari 28 layar/varian yang dinilai adalah MATCH setia (banyak nyaris pixel-faithful) di tema terang dan gelap: login (default+gagal), overview (default/memuat/kosong/gagal + sort + search hit/kosong), detail Sukamaju tersimpan, berjalan, dan gagal_langsung. SATU downgrade: pada state pemeriksaan 'langsung' (sukses live), panel Tren Verdict 6 Bulan menampilkan sel bulan ganda (Jun duplikat) karena live re-run menambah audit_run periode 2026-06 dan query tren tidak meng-collapse per-bulan; hasilnya 7 sel (satu re-run) yang membungkus ke baris kedua dan melanggar bingkai 'Januari sampai Juni'. Terjangkau di alur juri inti (klik Jalankan Pemeriksaan Ulang di Sukamaju). Karena kontrak 6.19 = nol downgrade, verdict surface = fail; perbaikan satu baris (dedupe/collapse tren per periode).",
+  "metode": {
+    "server": "TURSO_DATABASE_URL=file:.grader-g.db PORT=3011 pnpm start (production .next); seed: pnpm seed pada db yang sama",
+    "capture": "Playwright chromium, viewport 1440x900, reducedMotion=reduce, deviceScaleFactor=1, screenshot fullPage",
+    "tema": "diset via mekanisme app (kelas .dark pada <html> + localStorage gov-tema + event gov-tema-change; identik terapkanTema); toggle Terang/Gelap tampil aktif benar",
+    "oracle": "design-handoff/dashboard/screenshots (924x540 = viewport crop prototype, skala ~0.64). Runtime fullPage menampilkan lebih banyak baris; region atas dibandingkan langsung.",
+    "stateSulitDijangkau": {
+      "overview.memuat": "route-intercept /api/gov/overview ditahan 25s; header+skeleton tertangkap (terang+gelap). Juga terverifikasi kode OverviewClient (branch status==='memuat').",
+      "overview.kosong": "route-intercept fulfill {kpi semua 0, koperasi:[]} -> branch kosong (terang+gelap).",
+      "overview.gagal": "route-intercept fulfill 500 -> branch gagal banner+panel (terang+gelap).",
+      "detail.berjalan": "klik Jalankan lalu screenshot sebelum poll (peri='berjalan'); progress bar indeterminate.",
+      "detail.langsung": "mock /control mode=ok; trigger live audit sukses (poll -> selesai).",
+      "detail.gagal_langsung": "mock /control mode=gagal; live audit gagal -> baris marker (dikecualikan) -> banner; hasil tersimpan tetap pristine.",
+      "login.memuat": "TIDAK di WAJIB (hanya default+gagal); terverifikasi kode login-variant.tsx (busy spinner + 'Memeriksa...')."
+    },
+    "mockReset": "mode dikembalikan ke ok di akhir (verified {mode:ok})"
+  },
+  "layar": [
+    {"nama": "login-terang-default", "tema": "terang", "klasifikasi": "match", "catatan": "Kartu raised + lencana emboss (raised luar/pressed dalam), pill wells email+sandi, tombol Masuk teal raised, hint AKUN UJI JURI + Isi otomatis, footer purwarupa, lingkaran emboss dekoratif, toggle Terang aktif. Identik."},
+    {"nama": "login-terang-gagal", "tema": "terang", "klasifikasi": "match", "catatan": "Kotak error red-tint dengan belah-ketupat merah + teks 'Email atau kata sandi belum tepat...' di antara sandi dan Masuk; posisi/warna/tipografi identik. Field terisi (salah@pramana.id + dots) karena error dipicu nyata — bukan perbedaan desain."},
+    {"nama": "login-gelap-default", "tema": "gelap", "klasifikasi": "match", "catatan": "Tepi Mesin: kartu charcoal gradient raised, wells gelap pressed, tombol Masuk cyan terang (--primary 0.75) teks gelap, hint box gelap, toggle Gelap aktif. Neumorfik dark dibakar token (tanpa dark: di komponen). Identik."},
+    {"nama": "login-gelap-gagal", "tema": "gelap", "klasifikasi": "match", "catatan": "Banner error red-tint dark + belah-ketupat, Masuk cyan. Identik."},
+    {"nama": "overview-terang-default", "tema": "terang", "klasifikasi": "match", "catatan": "Header (lencana/brand/Periode pill/toggle/user chip), judul Peta Kesehatan, 5 KPI (12/6/4/2/17 + bentuk verdict + persen), Distribusi bar 50/33/17% (verdict-on white), tabel 12 baris sortable (VERDICT desc aktif+caret; tie-break temuan desc lalu nama asc benar), chip verdict = bentuk+label-warna, footer. Identik."},
+    {"nama": "overview-gelap-default", "tema": "gelap", "klasifikasi": "match", "catatan": "Panel dark raised + edge-top highlight, segmen distribusi pastel terang + teks gelap, chip verdict terang. Identik."},
+    {"nama": "overview-terang-memuat", "tema": "terang", "klasifikasi": "match", "catatan": "Skeleton: 5 KPI (bar label + bar angka), 1 panel distribusi, 6 baris tabel (4 bar), spinner + 'Memuat data pengawasan...'. Wells pressed pulse. Identik (route-delay)."},
+    {"nama": "overview-gelap-memuat", "tema": "gelap", "klasifikasi": "match", "catatan": "Skeleton dark identik."},
+    {"nama": "overview-terang-kosong", "tema": "terang", "klasifikasi": "match", "catatan": "KPI 0 + 'menunggu sinkronisasi' (bentuk verdict tetap), panel empty: lingkaran emboss + 'Belum ada koperasi dalam pengawasan.' + sub + tombol Muat Ulang (control raised). Identik (route-mock 0)."},
+    {"nama": "overview-gelap-kosong", "tema": "gelap", "klasifikasi": "match", "catatan": "Empty-state dark identik."},
+    {"nama": "overview-terang-gagal", "tema": "terang", "klasifikasi": "match", "catatan": "Banner merah (belah-ketupat + 'Gagal memuat data pengawasan...') + Coba Lagi primary; KPI dash '-' + 'tidak dapat dimuat'; panel 'Data tidak dapat dimuat.'. Identik (route-mock 500)."},
+    {"nama": "overview-gelap-gagal", "tema": "gelap", "klasifikasi": "match", "catatan": "Banner merah dark + Coba Lagi cyan. Identik."},
+    {"nama": "overview-terang-sort-nama", "tema": "terang", "klasifikasi": "match", "catatan": "Interaksi tanpa oracle langsung: klik header KOPERASI -> pill pressed (well-sm) + caret naik (asc), baris terurut alfabet. Konsisten sistem desain (default: VERDICT aktif+caret turun). Fitur benar."},
+    {"nama": "overview-terang-search-hit", "tema": "terang", "klasifikasi": "match", "catatan": "Ketik 'Jawa' -> input fokus ring teal (--ring, a11y focus-visible), sub 'Menampilkan 4 dari 12 koperasi', 4 baris provinsi Jawa terurut verdict desc. Cari nama+provinsi benar."},
+    {"nama": "overview-terang-search-kosong", "tema": "terang", "klasifikasi": "match", "catatan": "Ketik non-match -> 'Menampilkan 0 dari 12 koperasi' + baris kosong 'Tidak ada koperasi yang cocok dengan pencarian Anda.' (header tetap). Empty-filter state sesuai spec."},
+    {"nama": "detail-terang-tersimpan", "tema": "terang", "klasifikasi": "match", "catatan": "Breadcrumb, panel profil + 4 chip unit, kartu verdict Merah (belah-ketupat + label + red-tint surface + 'Verdict Juni 2026' + ringkasan beku + 'Pemeriksaan terakhir ... 6 temuan'), aksi Jalankan Pemeriksaan Ulang + chip tersimpan (info square), Tren 6 sel (Hijau x3 / Kuning x2 / Merah, bentuk+label di tint), tabel 6 temuan sorted severity, sub-row TANGGAPAN PENGURUS (well inset). Layout/hierarki/token identik. Perbedaan hanya DATA (lihat dataDifferences)."},
+    {"nama": "detail-gelap-tersimpan", "tema": "gelap", "klasifikasi": "match", "catatan": "Kartu verdict red-tint dark + belah-ketupat terang, tren tint dark, chip verdict terang, TANGGAPAN box dark inset, tombol cyan. Identik."},
+    {"nama": "detail-terang-berjalan", "tema": "terang", "klasifikasi": "match", "catatan": "Tombol 'Sedang Memeriksa' (spinner) + chip 'Pengawas sedang memeriksa...' + progress bar indeterminate. Tren tetap 6 sel bersih (belum ada run selesai). Offset bar berbeda hanya karena reducedMotion=reduce membekukan animasi prm-slide di posisi rest (bundle mid-animation) — bukan downgrade desain."},
+    {"nama": "detail-gelap-berjalan", "tema": "gelap", "klasifikasi": "match", "catatan": "Sama, dark; tren 6 sel bersih; progress bar teal on dark track. Match."},
+    {"nama": "detail-terang-gagal-langsung", "tema": "terang", "klasifikasi": "match", "catatan": "Banner merah 'Pemeriksaan langsung gagal. Menampilkan hasil tersimpan terakhir.' (belah-ketupat) di atas hasil tersimpan pristine; tren 6 sel bersih (gagal hanya menulis baris marker yang dikecualikan). Identik."},
+    {"nama": "detail-gelap-gagal-langsung", "tema": "gelap", "klasifikasi": "match", "catatan": "Banner merah dark + hasil tersimpan pristine + tren 6 sel bersih. Identik."},
+    {"nama": "detail-terang-langsung", "tema": "terang", "klasifikasi": "downgrade", "catatan": "Chip hijau 'Hasil pemeriksaan langsung, baru saja dijalankan.' benar & kartu verdict/temuan gaya identik. NAMUN panel Tren menampilkan 7 sel (Jan,Feb,Mar,Apr,Mei,Jun,Jun) setelah SATU re-run: Jun duplikat, membungkus ke baris kedua, melanggar bingkai 'Tren Verdict 6 Bulan · Januari sampai Juni 2026'. Bundle langsung = 6 sel bersih. Perbedaan konten lain (1 temuan konflik live, ringkasan adjudikator live, tanggal 9/10 Juli) = DATA, bukan downgrade."},
+    {"nama": "detail-gelap-langsung", "tema": "gelap", "klasifikasi": "downgrade", "catatan": "Sama; menampilkan 8 sel (3x Jun) karena capture ini adalah run sukses ke-2 dalam sekuens grader — memperbesar duplikasi. Kasus minimal representatif = 7 sel (satu re-run, lihat terang)."}
+  ],
+  "downgrades": [
+    {
+      "layar": "detail-*-langsung (state pemeriksaan 'langsung' / live sukses), kedua tema",
+      "apa": "Panel Tren Verdict 6 Bulan menampilkan sel bulan DUPLIKAT setelah pemeriksaan live sukses. Setiap live re-run menambah audit_run baru dengan periode 2026-06 (Juni), dan tren dirender satu sel per baris audit_run tanpa collapse per periode. Setelah satu re-run: 7 sel (Jun muncul 2x) yang membungkus ke baris kedua dan melanggar bingkai 'Januari sampai Juni'. Bundle oracle = 6 sel bersih.",
+      "buktiBundle": "design-handoff/dashboard/screenshots/detail-terang-langsung.png & detail-gelap-langsung.png (Tren = 6 sel Jan..Jun, satu baris)",
+      "buktiRuntime": "rt-detail-terang-langsung.png (7 sel, Jun duplikat baris kedua) ; rt-detail-gelap-langsung.png (8 sel)",
+      "fix": "Di app/api/gov/koperasi/[id]/route.ts (query trenRows, ~baris 80-91): collapse per periode — GROUP BY periode ambil run terbaru per bulan (mis. subquery MAX(dibuatPada) per periode), ATAU batasi ke 6 bulan distinct terakhir. Verifikasi: run live pada Sukamaju lalu buka detail -> tren tetap 6 sel (Juni ter-update, tidak ditambah)."
+    }
+  ],
+  "improvementBaru": [
+    "detail temuan: format mata uang kanonik 'Rp 15.000.000' (dengan spasi, sesuai 6.15) vs prototype dashboard 'Rp15.000.000' tanpa spasi — arah ke atas (kepatuhan format kontrak). Kandidat catatan ledger jika ingin didokumentasikan eksplisit.",
+    "detail temuan RAT: judul dieja penuh 'Rapat Anggota Tahunan 2026 belum dijadwalkan' + <abbr title> tooltip vs prototype 'RAT tahun 2026' — lebih jelas/aksesibel (teks dari fixture beku). Kandidat catatan ledger.",
+    "overview search: input fokus menampilkan ring fokus teal (--ring) yang terlihat (focus-visible) — a11y basic benar; bukan di screenshot default bundle karena tak fokus."
+  ],
+  "dataDifferences": [
+    "TANGGAPAN PENGURUS: runtime '24 JUNI 2026' vs bundle dashboard '21 JUNI 2026' — SESUAI D-02/F-02 (unify ke tanggal mobile, precedence 6.19.6). Documented improve, BUKAN downgrade.",
+    "Kartu verdict tersimpan: 'Pemeriksaan terakhir 28 Juni 2026' (seed) vs bundle '30 Juni 2026' — data seed audit_run.dibuatPada; bukan downgrade.",
+    "Kolom BUKTI: runtime '1 pinjaman'/'1 transaksi' vs bundle '5 pinjaman'/'3 transaksi' — buktiLabel menghitung panjang array bukti fixture beku (temuan-seed.ts), bukan ringkasan real-world; catatan buktiLabel (detail.ts) menyebut ini eksplisit. Data/fixture, bukan downgrade visual.",
+    "Teks judul/penjelasan temuan runtime = fixture beku (ekstraksi prototype mobile, notes F-02/precedence) yang berbeda draf dari prototype dashboard; kontrak menang untuk data. Gaya baris identik.",
+    "Profil: 'Kab. Bandung' (formatProfilLokasi) vs bundle 'Kabupaten Bandung'; chip 'Unit Simpan Pinjam' vs 'Simpan Pinjam' — nilai data profil/unitUsaha seed. Bukan downgrade.",
+    "State langsung: 1 temuan konflik merah + ringkasan 'Ada pembelian yang perlu Anda tanyakan...' = output live audit (mock ok hanya deteksi konflik) vs bundle mockup 6 temuan beku. Data live, gaya identik."
+  ],
+  "catatanTambahan": [
+    "Neumorfik gelap 'Tepi Mesin' terverifikasi: shadow raised/pressed + edge-top highlight dibakar di token (.dark .gov), komponen tanpa kondisi dark: untuk shadow — sesuai aturan bundle.",
+    "Verdict selalu bentuk+label (lingkaran/Hijau, segitiga/Kuning, belah-ketupat/Merah, persegi/Info), bukan warna saja — konsisten di KPI, distribusi, tabel, tren, kartu detail.",
+    "D-13 (token merah/muted gelap) adalah scope MOBILE; token gov dark merah (verdict-merah 0.72) verbatim bundle, banner/chip dark merah cocok bundle."
+  ],
+  "screenshotDir": "/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/fidelity/dashboard",
+  "runtimeShots": 23
+}

@@ -1,0 +1,102 @@
+{
+  "surface": "landing publik (bundle landing, Malam Jernih) — rute /",
+  "grader": "AC-UI-02 fresh-context visual fidelity grader",
+  "contract": "6.19 (bundle = kebenaran visual + lantai kualitas; nol downgrade; naik hanya ARAH KE ATAS + terdokumentasi D-xx)",
+  "gradedAt": "2026-07-10",
+  "verdict": "pass",
+  "server": {
+    "base": "http://localhost:3012",
+    "command": "TURSO_DATABASE_URL=file:.grader-l.db SESSION_SECRET=… LLM_API_KEY= PORT=3012 pnpm start (background, prod .next)",
+    "seeded": "pnpm seed OK (406 transaksi, 30 anggota, 17 audit_run) — landing statis, tanpa panggilan API, seed hanya untuk konsistensi",
+    "note": "HANDOFF: halaman statis tanpa API; TIDAK ADA state memuat/gagal/kosong pada surface ini"
+  },
+  "method": {
+    "oracle": "design-handoff/landing/screenshots/{1440-terang,1440-gelap,390-terang,390-gelap} (4 set: 8+8+9+9 file)",
+    "capture": "Playwright chromium, deviceScaleFactor 2, emulateMedia reducedMotion=reduce, tema di-set pre-paint via localStorage pramana-tema (terang -> .light, gelap -> .dark), waitUntil networkidle + fonts.ready + settle",
+    "viewports": ["1440x900", "390x844"],
+    "themes": ["terang (.light)", "gelap (.dark)"],
+    "diagram": "self-draw diagram dinilai pada KEADAAN AKHIR (reduced motion => server render statis penuh; MotionController baca kode: one-shot, berakhir opacity 1/transform none == identik keadaan akhir animasi)",
+    "sectionShots": "per-section element screenshots (nav, hero, preview, masalah, wawasan, carakerja, fitur, footer) x 4 combos = 32 + 4 full-page"
+  },
+  "sections": [
+    {
+      "nama": "Nav (sticky)",
+      "bundleIdx": "bagian atas 01",
+      "klasifikasi": "match",
+      "combos": {"1440-terang": "match", "1440-gelap": "match", "390-terang": "match", "390-gelap": "match"},
+      "detail": "Wordmark (kotak aksen + dot aksen-teks + 'Pramana' 800 + badge 'AI' mono ber-border), toggle tema pil 3-state, CTA 'Masuk sebagai Anggota' pil aksen. Border-bottom garis + backdrop blur. Di 390 (<519px) CTA nav HILANG, hanya toggle tersisa — verified sesuai container query 519.",
+      "catatan": "Screenshot bundle set GELAP menampilkan toggle pada state ikon-lingkaran-kosong (gelap dicapai lewat preferensi sistem, label bukan 'Gelap'); runtime saya paksa tema eksplisit sehingga toggle menampilkan 'Gelap' ikon-penuh. Keduanya state sah dari kontrol 3-state (kosong=terang, penuh=gelap, setengah=sistem per HANDOFF); tampilan halaman identik. Bukan downgrade — perilaku toggle setia spesifikasi, label runtime justru konsisten dengan tema aktif."
+    },
+    {
+      "nama": "Hero",
+      "bundleIdx": "01",
+      "klasifikasi": "match",
+      "combos": {"1440-terang": "match", "1440-gelap": "match", "390-terang": "match", "390-gelap": "match"},
+      "detail": "Badge pil (lingkaran hijau + segitiga kuning + belah-ketupat merah + 'PRAMANA AI' mono), H1 clamp 800 tracking -0.035em (3 baris identik termasuk pemenggalan 'desa , di genggaman'), sub tinta-2, 2 CTA (aksen isi + garis), link 'Daftar sebagai Anggota Baru' underline aksen, baris juri mono tinta-3. Di 390 CTA menumpuk kolom penuh (herocta <899px), stretch max 340px.",
+      "catatan": "Gelap: CTA anggota jadi pil aksen biru-muda teks gelap, CTA pemerintah garis — sesuai token .dark. Bentuk verdict di badge = bentuk CSS murni."
+    },
+    {
+      "nama": "Preview produk (device duo + captions)",
+      "bundleIdx": "1440: 02 · 390: 02 (phone) + 03 (laptop)",
+      "klasifikasi": "match",
+      "combos": {"1440-terang": "match", "1440-gelap": "match", "390-terang": "match", "390-gelap": "match"},
+      "detail": "Phone frame (mini-UI: 09.41 + status, 'Selamat pagi, Ibu Sari', notif n=5, kartu verdict MERAH belah-ketupat + 'PERLU DIJELASKAN' + ringkasan + meta Sukamaju Juni 2026 + CTA gelap, kartu temuan KONFLIK KEPENTINGAN Rp15.000.000 Toko Berkah + 'Kenapa ini penting?' + 'Tambahkan ke pertanyaan rapat', tab bar 4). Laptop frame (Dasbor Pemerintah, PERIODE JUNI 2026, 5 KPI 12/6/4/2/17, distribusi bar 50/33.4/16.6, tabel 5 baris + tanda verdict). Captions 2 kolom (APLIKASI ANGGOTA·MOBILE / DASBOR PEMERINTAH·DESKTOP). Di 390: device menumpuk vertikal (phone tanpa offset), captions 1 kolom, KPI membungkus 3+2.",
+      "catatan": "Layar mini-UI = placeholder stand-in per D-04 (penggantian screenshot e2e asli DIRENCANAKAN). Stand-in setia ke bundle (teks, warna, bentuk, tata letak identik) => bukan downgrade per aturan D-04. Bayang-kartu + inset border pada kedua frame hadir."
+    },
+    {
+      "nama": "01 · Masalah (3 stat)",
+      "bundleIdx": "1440: 03 · 390: 04",
+      "klasifikasi": "improve",
+      "combos": {"1440-terang": "match+D09", "1440-gelap": "match+D09", "390-terang": "match+D09", "390-gelap": "match+D09"},
+      "detail": "Eyebrow '01 · MASALAH' + garis, H2 clamp 800 'Dananya sudah mengalir. Pengawasannya belum.', lede, 3 stat (83.383 / 50.383 / Rp60 juta) tabular-nums 800 + label + caption sumber mono. Grid auto-fit minmax(250px) => 3 kolom @1440, 1 kolom @390. Angka + tipografi + tata letak IDENTIK.",
+      "catatan": "Satu-satunya delta: caption SUMBER dirender dari lib/facts.ts (runtime: 'SIMKOPDES VIA KATADATA · 29 JUNI 2026' untuk stat 1&2, 'STUDI CELIOS · 2026' untuk stat 3) menggantikan caption ketikan-tangan prototype ('SIMKOPDES · AKHIR JUNI 2026', 'ESTIMASI STUDI CELIOS'). Ini D-09 (kontrak menang untuk data per 6.19.5; sumber+tanggal resmi; tipografi caption tetap bundle). Terdokumentasi + arah ke atas (sumber otoritatif) => BUKAN downgrade."
+    },
+    {
+      "nama": "Wawasan (band permukaan)",
+      "bundleIdx": "1440: 04 · 390: 05",
+      "klasifikasi": "match",
+      "combos": {"1440-terang": "match", "1440-gelap": "match", "390-terang": "match", "390-gelap": "match"},
+      "detail": "Band permukaan (border atas+bawah garis), 3 tanda verdict (lingkaran/segitiga/belah), baris1 muted 600 'Aplikasi koperasi selama ini dibangun untuk pengurus.', baris2 tinta 800 'Pramana dibangun untuk Anda, anggotanya.'. Terpusat.",
+      "catatan": "Permukaan (0.215 dark / 0.955 light) subtil beda dari latar — dipertahankan di kedua tema."
+    },
+    {
+      "nama": "02 · Cara kerja (diagram P1-P4 -> adjudikator -> 3 chip)",
+      "bundleIdx": "1440: 05 (atas) + 06 (bawah) · 390: 06 + 07",
+      "klasifikasi": "match",
+      "combos": {"1440-terang": "match", "1440-gelap": "match", "390-terang": "match", "390-gelap": "match"},
+      "detail": "Eyebrow + H2 'Pramana bertanya, tidak menuduh.' + lede. 4 kartu pemeriksa (P1 Konflik Kepentingan, P2 Anomali Transaksi, P3 Kesehatan Finansial, P4 Kepatuhan Proses) + dot aksen kanan-atas + bayang-diagram. Konektor bertemu di tengah -> kartu Adjudikator (aksen-lembut bg + border aksen, pulseDot + 'ADJUDIKATOR' + teks) -> 3 chip verdict (Hijau·Sehat lingkaran, Kuning·Perlu perhatian segitiga, Merah·Perlu dijelaskan belah; masing-masing bg *-lembut + border color-mix) + caption RAT. Di 390: konektor horizontal HILANG, spine vertikal MUNCUL menembus kartu (kartu 1 kolom max 430px), chip membungkus (Hijau+Kuning lalu Merah).",
+      "catatan": "Dinilai keadaan akhir (reduced motion): diagram tergambar penuh, spine mobile scaleY penuh, pulseDot statis. Struktur/warna/bentuk/label identik kedua tema kedua lebar."
+    },
+    {
+      "nama": "03 · Fitur inti (4 kartu)",
+      "bundleIdx": "1440: 07 · 390: 08",
+      "klasifikasi": "match",
+      "combos": {"1440-terang": "match", "1440-gelap": "match", "390-terang": "match", "390-gelap": "match"},
+      "detail": "Eyebrow + H2 'Empat layar, satu alur.'. 4 kartu (border-atas garis-kuat) + ikon aksen bentuk-CSS: lingkaran outline 'Koperasi Anda Sehat?', segitiga isi 'Yang Perlu Anda Tahu', bar-chart 3 batang 'Ke Mana Uang Koperasi Pergi', dua-cincin 'Suara Anda'. Grid auto-fit minmax(240px) => 4 kolom @1440, 1 kolom @390.",
+      "catatan": "Ikon aksen = light-blue di gelap (token .dark) — konsisten bundle."
+    },
+    {
+      "nama": "Footer",
+      "bundleIdx": "1440: 08 · 390: 09",
+      "klasifikasi": "match",
+      "combos": {"1440-terang": "match", "1440-gelap": "match", "390-terang": "match", "390-gelap": "match"},
+      "detail": "Grid 3 kolom (1.5/1/1.2fr): Wordmark + tagline + baris juri mono | TIM / Tim Daulat / Politeknik Negeri Bandung | AJANG / Hackathon Digital Cooperatives Expo 2026 / 'Repositori proyek' (link aksen underline). Ghost wordmark 'PRAMANA' raksasa samar (aria-hidden, overflow clip => terpotong di 390). Baris legal: '© 2026 Tim Daulat' | 'Purwarupa untuk penjurian. Seluruh data bersifat sintetis, tanpa data pribadi nyata.'. Di 390: 1 kolom, legal 2 baris.",
+      "catatan": "Ghost wordmark = color-mix(in oklch, var(--tinta) 8%, var(--permukaan)). Gelap: render coklat-kemerahan samar IDENTIK di bundle & runtime (konversi oklch->sRGB deterministik) — bukti port token setia. Terang: near-neutral samar (chroma ~0.007), selisih hangat/dingin sub-ambang = artefak kompresi/tampilan, bukan downgrade."
+    }
+  ],
+  "downgrades": [],
+  "documentedDeviationsSeen": [
+    "D-04: mini-UI placeholder di device frame landing (stand-in setia, penggantian screenshot e2e direncanakan) — teramati, bukan downgrade",
+    "D-09: caption sumber statistik dari lib/facts.ts menggantikan caption ketikan-tangan prototype — teramati di section Masalah, bukan downgrade"
+  ],
+  "improvementBaru": [],
+  "statesVerifiedByCode": {
+    "reduced-motion": "landing.css @media reduce menetralkan animasi + MotionController return early; konten dirender statis penuh oleh server => keadaan akhir grade-able (verified)",
+    "tema-sistem": "ThemeToggle ikonBackground: sistem = setengah lingkaran (linear-gradient 50%); bacaTema default 'sistem' tanpa kelas => ikut OS (verified via kode)",
+    "loading/error/empty": "TIDAK ADA pada surface ini — landing statis tanpa panggilan API (HANDOFF)"
+  },
+  "screenshots": {
+    "dir": "/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/fidelity/landing",
+    "pattern": "run-{1440,390}-{terang,gelap}-{nav,hero,preview,masalah,wawasan,carakerja,fitur,footer,full}.png (36 file)"
+  }
+}

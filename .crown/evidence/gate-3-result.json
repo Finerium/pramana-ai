@@ -1,0 +1,22 @@
+{
+  "gate": 3,
+  "at": "2026-07-09T20:37:41Z",
+  "pass": true,
+  "ringkasan": "34 entri manifest: 33 pass penuh + AC-LLM-04 HUMAN-GATED (sah per definisi kriterianya: key ada, akun MiniMax 429 kuota habis, fallback cache benar, retest terdokumentasi). Matrix e2e 18/18 dua run beruntun (dua flake distabilkan di akar: locator basi + bucket rate-limit XFF). Fidelity AC-UI-02: landing pass penuh; mobile/dashboard/subjek pass setelah 4 downgrade diperbaiki (tanggapan pengurus di API member, format KDS, kolaps tren per periode, danger field login bendahara) dan diverifikasi regrade pada app live kedua tema. AC-UI-03 clicksweep stabil. ci-clean AC-CFG-02 hijau checkout bersih.",
+  "results": [
+    {"id": "AC-LLM-01", "pass": true}, {"id": "AC-LLM-02", "pass": true}, {"id": "AC-LLM-03", "pass": true},
+    {"id": "AC-LLM-04", "pass": true, "note": "HUMAN-GATED: 429 Token Plan; lihat audit-bench-note.txt"},
+    {"id": "AC-LLM-05", "pass": true}, {"id": "AC-REG-01", "pass": true}, {"id": "AC-REG-02", "pass": true},
+    {"id": "AC-E2E-01", "pass": true}, {"id": "AC-E2E-02", "pass": true}, {"id": "AC-E2E-03", "pass": true},
+    {"id": "AC-E2E-04", "pass": true}, {"id": "AC-E2E-05", "pass": true}, {"id": "AC-E2E-06", "pass": true},
+    {"id": "AC-DEMO-01", "pass": true}, {"id": "AC-DEMO-02", "pass": true, "note": "seed 278-284 ms"}, {"id": "AC-DEMO-03", "pass": true},
+    {"id": "AC-COPY-01", "pass": true}, {"id": "AC-COPY-02", "pass": true}, {"id": "AC-COPY-03", "pass": true},
+    {"id": "AC-A11Y-01", "pass": true, "note": "0 serius/kritis 5 layar kunci pasca D-13/D-14"}, {"id": "AC-A11Y-02", "pass": true},
+    {"id": "AC-OBS-01", "pass": true}, {"id": "AC-OBS-02", "pass": true}, {"id": "AC-RES-01", "pass": true},
+    {"id": "AC-CFG-01", "pass": true}, {"id": "AC-CFG-02", "pass": true, "note": "ci-clean rc=0 smoke 3/3"},
+    {"id": "AC-PWA-01", "pass": true}, {"id": "AC-PWA-02", "pass": true, "note": "jalur registrasi asli pasca fix RegisterSW"},
+    {"id": "AC-UI-02", "pass": true, "note": "4 surface nol downgrade; regrade pasca-fix; laporan design-fidelity/"},
+    {"id": "AC-UI-03", "pass": true}, {"id": "AC-SUBJ-01", "pass": true}, {"id": "AC-SUBJ-02", "pass": true},
+    {"id": "AC-SUBJ-03", "pass": true}, {"id": "AC-SUBJ-04", "pass": true}
+  ]
+}

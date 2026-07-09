@@ -1,0 +1,89 @@
+{
+  "surface": "Aplikasi anggota (bundle mobile, palet Nila, kanvas 390x844)",
+  "grader": "AC-UI-02 fidelity fresh-context",
+  "tanggal": "2026-07-10",
+  "metode": {
+    "server": "TURSO_DATABASE_URL=file:.grader-m.db PORT=3010 pnpm start (production .next), seed idempoten sebelum menilai",
+    "capture": "Playwright chromium via @playwright/test; viewport 390x844 dSF2; emulateMedia reducedMotion=reduce; colorScheme per tema; localStorage pramana-tema=terang|gelap (kelas .light/.dark pra-paint); fullPage per layar per tema",
+    "oracle": "design-handoff/mobile/handoff/screenshots (30 file, crop viewport 430x540) + prototype produksi Pramana App.dc.html (markup detail) + .crown/design-inventory.md section 2",
+    "state_tak_terjangkau": "route interception Playwright untuk memaksa verdict 404 (kosong), source=cache (gagal-cache), delay (memuat), warna hijau/kuning; findings kosong (temuan kosong-hijau); summary 404 (uang kosong). Mutasi (tambah RAT, vote) dijalankan pada DB grader; reseed antar tema."
+  },
+  "temuan_kunci": {
+    "screenshots_oracle_STALE_vs_prototype": "Beberapa screenshot bundle adalah iterasi LAMA; prototype .dc.html (produksi, yang WAJIB di-PORT per CLAUDE.md) sudah lebih baru. Runtime setia ke PROTOTYPE (bukan screenshot). Tiga kasus: (1) header Beranda greeting+avatar {{sapaan}}='Selamat pagi, Bu Sari' + tombol 'Buka profil' SR [proto L178-186] vs screenshot 'Koperasi Anda Sehat?'+Keluar; (2) ikon verdict outline stroke:currentColor [proto L217] vs screenshot badge putih terisi + X merah; (3) hasil voting = grid 30 titik + legend [proto L656-664] vs screenshot bar proporsi. design-inventory L24/L28 juga menggambarkan grid 30 titik + panel greeting, SEJALAN dengan runtime. Jadi ketiganya MATCH-ke-prototype, BUKAN downgrade; screenshot yang usang.",
+    "downgrade_nyata_1": "Blok TANGGAPAN PENGURUS pada kartu AN-2 HILANG di runtime. Prototype L402 merender 'TANGGAPAN PENGURUS, 24 JUNI 2026' + teks; design-inventory L25 mendaftarkannya; DB .grader-m.db menyimpan temuan.tanggapanPengurus untuk tmn-an2; lib/copy/member.ts L82 punya label; components/member/types.ts + components/member/screens/Temuan.tsx L387 merender blok bila f.tanggapanPengurus ada. TAPI app/api/member/findings/route.ts memetakan baris DB tanpa field tanggapanPengurus -> selalu undefined -> blok tak pernah tampil. Diverifikasi visual: kartu AN-2 di temuan-atas & temuan-aksi runtime berakhir pada tombol Tambah tanpa blok tanggapan.",
+    "downgrade_nyata_2": "Nomor anggota pada kartu sukses daftar = 'SKM-31'. Prototype daftar card L156 = 'KDS-0031'; Sari (seed, layar Uang/Profil yang sama) = 'KDS-0007'. app/api/onboarding/route.ts L68 memakai prefix 'SKM' + padStart(2) alih-alih 'KDS' + padStart(4). Tidak konsisten dengan format nomor anggota yang mapan di app yang sama.",
+    "minor_ordering": "Urutan temuan runtime = severity lalu id (AN-1,2,3,4,5,6); prototype/oracle mengurasi (AN-1,4,2,3,5,6) sehingga 'Kas menurun 37%' (AN-4, alasan headline verdict) tampil ke-2. Runtime menurunkannya ke-4. Urut severity-first defensibel; kehilangan kurasi = polish minor.",
+    "improvement_addition": "Layar login runtime menambah blok 'AKUN UJI LAIN' (juri.pemerintah@pramana.id + bendahara@pramana.id) di bawah 'AKUN UJI JURI'; oracle login-akun-juri hanya menampilkan akun juri.anggota. Tambahan membantu demo/juri, arah ke atas (robustness), belum tercatat ledger -> kandidat D-15."
+  },
+  "layar": [
+    {"nama":"Login default", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"Belah ketupat indigo, 'Pramana', tagline, kartu email/kata sandi (placeholder benar), tombol Masuk pill, box AKUN UJI JURI dashed + Isi otomatis, footer 'Belum menjadi anggota? Daftar'. Identik struktur/warna/tipografi/radius oracle login-terang + login-akun-juri."},
+    {"nama":"Login + AKUN UJI LAIN", "tema":"terang & gelap", "klasifikasi":"improve", "catatan":"Menambah baris mono juri.pemerintah + bendahara (tak ada di oracle). Arah ke atas untuk demo; kandidat ledger D-15."},
+    {"nama":"Login gagal", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"salah@contoh.id + dot sandi + Banner galat (merah-tint, ikon kotak-silang) 'Email atau kata sandi belum tepat. Silakan coba lagi.' Sesuai oracle login-gagal."},
+    {"nama":"Daftar form", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"'< Masuk', 'Menjadi anggota', sub koperasi, 5 field (Nama/NIK/Alamat/Email/Kata sandi placeholder benar), tombol 'Daftar dan verifikasi', footer verifikasi. Sesuai oracle daftar-terang."},
+    {"nama":"Daftar NIK gagal", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"NIK '123' + Banner galat inline 'Nomor NIK harus 16 angka. Silakan periksa kembali KTP Anda.' setelah field NIK. Sesuai oracle daftar-nik-gagal."},
+    {"nama":"Daftar kartu sukses", "tema":"terang & gelap", "klasifikasi":"downgrade", "catatan":"Struktur match (teks sukses, kartu indigo dengan koperasi/nama/emblem/tanggal, tombol 'Masuk ke Beranda', footer). NAMUN nomor anggota 'SKM-31' vs prototype 'KDS-0031' dan Sari 'KDS-0007' (prefix+padding salah). Lihat downgrade D-m2."},
+    {"nama":"Beranda verdict merah (normal)", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"Kartu verdict merah full-bleed, ikon kotak-silang 58px outline, 'Perlu Dijelaskan' 37px, ringkasan beku, CTA putih 'Lihat yang perlu Anda tahu'; notif n=5; panel Pengawas (4 agen check + chip temuan, D-12 'angka keuangan diperiksa' benar); pintasan Simpanan Rp 600.000 + RAT; Aktivitas Terbaru + chip 'Diperiksa'. Header = greeting+avatar (setia prototype). GELAP: --merah lebih terang (D-13, oklch 0.68) + teks gelap, setia prototype (ikon outline)."},
+    {"nama":"Beranda header (greeting vs 'Koperasi Anda Sehat?')", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"Runtime: kicker tanggal + 'Selamat pagi, Bu Sari' + koperasi + avatar SR 'Buka profil'. IDENTIK prototype L178-186 (dan design-inventory L24). Screenshot oracle 'Koperasi Anda Sehat?'+Keluar = iterasi usang. Bukan downgrade; +Profil screen (tema/notif/kontak/keluar/versi)."},
+    {"nama":"Beranda ikon verdict", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"Outline rect+X stroke:currentColor (putih di terang, gelap di gelap). IDENTIK prototype L217. Screenshot oracle (badge putih terisi + X merah) = usang."},
+    {"nama":"Beranda memuat", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"Skeleton pulse [320,150,88,88] di bawah header. Dipaksa via delay verdict. Sesuai oracle beranda-memuat (pola skeleton)."},
+    {"nama":"Beranda kosong", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"EmptyCard ikon jam + 'Pengawas belum menyelesaikan pemeriksaan pertama...' + 'Hasil pemeriksaan akan muncul di sini.' Dipaksa via verdict 404. Sesuai oracle beranda-kosong."},
+    {"nama":"Beranda gagal (cache banner)", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"Banner peringatan 'Menampilkan hasil pemeriksaan tersimpan...' + kartu verdict merah penuh. Dipaksa via source=cache. Sesuai oracle beranda-gagal-cache."},
+    {"nama":"Beranda verdict hijau (via route)", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"Kartu hijau, ikon lingkaran-centang, 'Sehat', ringkasan, CTA putih (teks hijau); tanpa notif (n=0); Aktivitas tanpa chip 'Diperiksa'. Warna+bentuk+label+CTA benar. Sesuai oracle beranda-hijau-terang."},
+    {"nama":"Beranda verdict kuning (via route)", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"Kartu kuning, ikon segitiga-seru, 'Perlu Perhatian' teks GELAP (--kuning-on), CTA teks --ink; notif n=4; chip 'Diperiksa' tampil. Sesuai oracle beranda-kuning-terang."},
+    {"nama":"Temuan atas", "tema":"terang & gelap", "klasifikasi":"downgrade", "catatan":"6 kartu render lengkap (chip severity+ikon bentuk, agen, judul, penjelasan, BUKTI, 'Kenapa ini penting?', PERTANYAAN UNTUK RAPAT, tombol Tambah). AN-6 = chip 'Catatan' belah-ketupat. NAMUN kartu AN-2 TANPA blok TANGGAPAN PENGURUS (lihat downgrade D-m1). Urutan severity+id (kurasi AN-4 hilang, minor)."},
+    {"nama":"Temuan aksi (sesudah tambah)", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"Klik 'Tambahkan ke pertanyaan rapat' AN-1 -> box hijau '✓ Tersimpan. Pertanyaan ini akan dibawa ke Rapat Anggota Tahunan.' Sesuai oracle temuan-terang-aksi."},
+    {"nama":"Temuan kosong-hijau (via route)", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"EmptyCard ikon lingkaran-centang hijau + 'Tidak ada hal yang perlu ditanyakan bulan ini. Koperasi Anda dalam keadaan baik.' Dipaksa via findings kosong. Sesuai oracle temuan-kosong-hijau."},
+    {"nama":"Uang Anda", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"'Uang Anda' + 'Sari Rahayu, No. Anggota KDS-0007'; Total Rp 600.000 (52px); pokok/wajib/sukarela 100k/350k/150k; Sisa Rp 1.200.000 + progress 40% + 'Sudah diangsur Rp 800.000 dari Rp 2.000.000'; Cicilan Rp 200.000 jatuh tempo 5 Juli 2026. GELAP: surface gelap + aksen periwinkle, identik oracle uang-gelap."},
+    {"nama":"Uang kosong (via route)", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"EmptyCard ikon dompet + judul/sub kosong. Dipaksa via summary 404. Sesuai oracle uang-kosong."},
+    {"nama":"Arus Dana (atas + sorotan)", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"Kas 3 bulan bar (April 58,0 / Mei 47,5 [D-03 kontrak menang] / Juni 36,5 kuning) + chip 'Turun 37%'; masuk Rp 57.100.000 / keluar Rp 68.100.000 (data kontrak); bar kategori kanonik; SEDANG DIPERIKSA PENGAWAS 2 chip -> temuan. Sesuai oracle arus-terang-atas + arus-terang-sorotan + arus-gelap."},
+    {"nama":"Suara belum-vote / voting-belum", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"PERTANYAAN UNTUK RAT (AN-1 12 / AN-4 7 / AN-2 5), KEPUTUSAN freezer Rp 8.500.000 TERBUKA + tombol Setuju/Tidak Setuju + 'Hasil sementara terlihat setelah Anda memilih'. (Clean: 12 tanpa badge; oracle 13+badge = timing seed, data). Sesuai oracle suara-terang-belum-vote + suara-voting-belum + suara-gelap."},
+    {"nama":"Suara sudah-vote (badge)", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"Sesudah tambah AN-1 di Temuan: '13 anggota menanyakan hal yang sama' + badge hijau '✓ Termasuk pertanyaan Anda'. Cocok oracle suara-terang-sudah-vote (13 + badge)."},
+    {"nama":"Suara voting-sudah", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"Klik Setuju -> '13 dari 30 anggota sudah memilih' + grid 30 titik (10 setuju indigo, 3 tidak abu, 17 belum outline) + legend + box gembok terkunci. Angka 10/3/13 cocok oracle. Bentuk = grid titik (setia prototype L656-664); screenshot bar = usang."},
+    {"nama":"Profil", "tema":"terang & gelap", "klasifikasi":"match", "catatan":"'< Beranda' + 'Profil'; kartu anggota Sari KDS-0007 (emblem); DATA DIRI (NIK masked 3208 **** **** 0042, alamat); TAMPILAN tema segmented Sistem/Terang/Gelap (aktif sesuai); LAINNYA notif toggle + Hubungi Pengawas; Keluar (merah); 'Pramana purwarupa, v1.0'. Tanpa screenshot oracle; setia prototype+inventory."}
+  ],
+  "downgrades": [
+    {
+      "layar": "Temuan (kartu AN-2)",
+      "apa": "Blok 'TANGGAPAN PENGURUS, 24 JUNI 2026' + teks tanggapan tidak dirender (hilang total dari runtime).",
+      "buktiBundle": "prototype Pramana App.dc.html L402 (label) + L844 (teks); design-inventory.md L25; lib/copy/member.ts L82 label ada; DB temuan.tanggapanPengurus tmn-an2 terisi.",
+      "buktiRuntime": "app/api/member/findings/route.ts memetakan rows->AgentFinding TANPA field tanggapanPengurus (selalu undefined). components/member/screens/Temuan.tsx L387 hanya render bila f.tanggapanPengurus ada. Screenshot temuan-atas-*/temuan-aksi-* runtime: kartu AN-2 berhenti di tombol Tambah, tanpa blok tanggapan.",
+      "fix": "Di app/api/member/findings/route.ts tambahkan pada objek temuanList: tanggapanPengurus: r.tanggapanPengurus ?? undefined (field DB & tipe & komponen sudah siap). Satu baris."
+    },
+    {
+      "layar": "Daftar kartu sukses",
+      "apa": "Nomor anggota baru 'SKM-31' menyimpang dari format 'KDS-0031' (prototype) dan 'KDS-0007' (Sari, layar sama). Prefix SKM (bukan KDS) + padding 2 digit (bukan 4).",
+      "buktiBundle": "prototype Pramana App.dc.html L156 = 'KDS-0031'; L417/L700 = 'KDS-0007'; design-inventory.md L23 = 'KDS-0031'.",
+      "buktiRuntime": "app/api/onboarding/route.ts L68: noAnggota = `SKM-${padStart(2)}`. Screenshot daftar-kartu-sukses-* runtime menampilkan 'SKM-31'.",
+      "fix": "Ubah generator ke prefix 'KDS' + padStart(4) agar konsisten dengan seed (mis. `KDS-${String(count+1).padStart(4,'0')}`)."
+    }
+  ],
+  "downgrade_minor": [
+    {
+      "layar": "Temuan (urutan kartu)",
+      "apa": "Urutan temuan severity+id (AN-1,2,3,4,5,6) menghilangkan kurasi prototype (AN-1,4,2,3,5,6) yang menaruh 'Kas menurun 37%' (AN-4) ke-2; runtime ke-4.",
+      "buktiBundle": "prototype FIND L826-857 urut an1,an4,an2,an3,an5,an6.",
+      "buktiRuntime": "app/api/member/findings/route.ts sort RANK[severity] lalu id.localeCompare.",
+      "fix": "Opsional: pertahankan urutan kurasi dalam severity, atau terima urut severity-first (defensibel). Severity rendah."
+    }
+  ],
+  "improvementBaru": [
+    "Login: blok 'AKUN UJI LAIN' (juri.pemerintah + bendahara) di bawah AKUN UJI JURI — melebihi oracle, membantu juri/demo. Kandidat ledger D-15.",
+    "Header Beranda greeting+avatar + layar Profil penuh (tema/notif/kontak/keluar/versi) = setia prototype dan lebih kaya dari screenshot usang ('Koperasi Anda Sehat?'+Keluar).",
+    "D-12 hadir & benar: metrik agen 'Pemeriksa Kesehatan Keuangan' = 'angka keuangan diperiksa' (bukan 'rasio' yang dilarang register 6.8).",
+    "D-13 hadir & benar: tema gelap --merah dinaikkan (oklch 0.68) + --muted (0.71) untuk kontras AA pada kartu verdict merah & chip."
+  ],
+  "data_bukan_downgrade": [
+    "Kas Mei 47,5 jt (runtime, kontrak 6.7b) vs 47,2 jt (teks bar prototype) — D-03, kontrak menang.",
+    "Uang masuk/keluar 57.100.000 / 68.100.000 (kontrak seed) vs inventory '57.2/68.2 jt' — data.",
+    "Tanggal tanggapan '24 JUNI 2026' — D-02 (mobile menang); relevan hanya bila blok dirender (lihat downgrade D-m1).",
+    "Suara agregat 12/7/5 (clean) vs 13 sesudah anggota menambahkan — timing seed/data, bukan visual.",
+    "Deskripsi freezer 'Rp8.500.000' (tanpa spasi, string deskripsi kontrak) vs nominal terformat 'Rp 8.500.000' — teks data kontrak."
+  ],
+  "artefak_capture_bukan_cacat": [
+    "Screenshot fullPage merender TabBar position:fixed di tengah halaman (menutupi sebagian panel Pengawas/kartu), dan header position:sticky terduplikasi pada stitch panjang (mis. suara-voting-sudah, temuan-aksi). Ini artefak Playwright fullPage + elemen fixed/sticky; oracle adalah crop viewport sehingga tak terlihat. Konten terverifikasi ada via kode + region yang tak tertutup."
+  ],
+  "shots_dir": "/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/fidelity/mobile/shots",
+  "oracle_dir": "/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/fidelity/mobile/oracle",
+  "verdict": "fail",
+  "verdict_alasan": "Fidelitas keseluruhan SANGAT tinggi dan setia pada prototype produksi (banyak 'perbedaan' vs screenshot ternyata screenshot yang usang; runtime mengikuti .dc.html + design-inventory). Namun kontrak 6.19 menuntut NOL downgrade: ditemukan 2 downgrade nyata — (1) blok Tanggapan Pengurus AN-2 hilang (endpoint findings men-drop field yang seluruh rantai lain sudah dukung), (2) nomor anggota 'SKM-31' tak konsisten dengan format 'KDS-####'. Keduanya kecil & satu-baris untuk diperbaiki, tetapi melewati ambang nol-downgrade sehingga verdict = fail sampai diperbaiki."
+}
