@@ -12,7 +12,7 @@
  */
 import { writeFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
-import { percentile } from "./perf-api";
+import { login, percentile } from "./perf-api";
 
 /** Live bench needs a real model key; without one the run is deferred to a human. */
 export function isHumanGated(env: Record<string, string | undefined>): boolean {
@@ -31,34 +31,18 @@ const RUNS = 5;
 const POLL_INTERVAL_MS = 2000;
 const POLL_TIMEOUT_MS = 120_000;
 
-async function login(): Promise<string | null> {
-  try {
-    const res = await fetch(`${BASE}/api/auth/login`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(CRED),
-      redirect: "manual",
-    });
-    const raw = res.headers.get("set-cookie");
-    return raw ? (raw.split(";")[0] ?? null) : null;
-  } catch {
-    return null;
-  }
-}
-
 const sleep = (ms: number): Promise<void> =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
-/** Reads the {ok,data} success envelope (6.3) or a bare body; both accepted. */
+/** Reads the frozen {ok,data} success envelope (6.3). */
 function unwrap(body: unknown): Record<string, unknown> {
-  if (body && typeof body === "object") {
-    const o = body as Record<string, unknown>;
-    if (o.data && typeof o.data === "object") {
-      return o.data as Record<string, unknown>;
-    }
-    return o;
-  }
-  return {};
+  const data =
+    body && typeof body === "object"
+      ? (body as Record<string, unknown>).data
+      : null;
+  return data && typeof data === "object"
+    ? (data as Record<string, unknown>)
+    : {};
 }
 
 /**
@@ -115,7 +99,7 @@ async function main(): Promise<void> {
     );
     process.exit(0);
   }
-  const cookie = await login();
+  const cookie = await login(CRED.email, CRED.password);
   if (!cookie) {
     console.error(
       `audit-bench: login pemerintah gagal atau server ${BASE} tidak tersedia.`,

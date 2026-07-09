@@ -4,7 +4,7 @@
 // history for API-key patterns. Never prints matched values, only file + line +
 // pattern label, so a .env value is never echoed. Exit 0 clean, exit 1 with hits.
 
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { readFileSync, statSync } from "node:fs";
 import { execSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
 
@@ -49,33 +49,20 @@ function isBinary(buf) {
   return false;
 }
 
-function walk(dir, out) {
-  for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    if (entry.isDirectory()) {
-      if (SKIP_DIRS.has(entry.name)) continue;
-      walk(`${dir}/${entry.name}`, out);
-    } else if (entry.isFile()) {
-      out.push(`${dir}/${entry.name}`);
-    }
-  }
-}
-
-function scanWorkingTree(root = ".") {
+function scanWorkingTree() {
   // Permukaan risiko repo = file tracked + untracked yang TIDAK gitignored.
   // File gitignored (.env, .env.local) memang tempat rahasia lokal dan tidak
   // pernah bisa masuk commit; memindainya hanya menghasilkan false positive.
-  let files = [];
-  try {
-    files = execSync("git ls-files --cached --others --exclude-standard", {
-      encoding: "utf8",
-      maxBuffer: 64 * 1024 * 1024,
-    })
-      .split("\n")
-      .filter(Boolean)
-      .filter((f) => ![...SKIP_DIRS].some((d) => f === d || f.startsWith(`${d}/`)));
-  } catch {
-    walk(root, files); // repo tanpa git: fallback jalan kaki
-  }
+  // Scanner memang butuh git (scan riwayat); tanpa git biarkan gagal nyaring.
+  const files = execSync("git ls-files --cached --others --exclude-standard", {
+    encoding: "utf8",
+    maxBuffer: 64 * 1024 * 1024,
+  })
+    .split("\n")
+    .filter(Boolean)
+    .filter(
+      (f) => ![...SKIP_DIRS].some((d) => f === d || f.startsWith(`${d}/`)),
+    );
   const findings = [];
   for (const f of files) {
     let buf;

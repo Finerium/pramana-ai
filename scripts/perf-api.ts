@@ -105,7 +105,10 @@ const BASE = process.env.E2E_BASE_URL || "http://localhost:3000";
 const RUNS = 50;
 const THRESHOLD_MS = 500;
 
-async function login(email: string, password: string): Promise<string | null> {
+export async function login(
+  email: string,
+  password: string,
+): Promise<string | null> {
   try {
     const res = await fetch(`${BASE}/api/auth/login`, {
       method: "POST",
