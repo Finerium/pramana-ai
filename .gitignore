@@ -42,3 +42,6 @@ coverage/
 .playwright-mcp/
 /seed-verify.json
 /seed-timing.json
+
+# DB test terpisah (vitest)
+.vitest-*.db
