@@ -61,14 +61,7 @@ export function buildForensicPayload(s: KoperasiSnapshot): string {
 }
 
 /** Ringkasan snapshot untuk adjudikator (bukan payload penuh). */
-export function buildRingkasanSnapshot(s: KoperasiSnapshot): {
-  koperasi: string;
-  saldoKasPerBulan: Array<{ periode: string; saldo: number }>;
-  statusRat: string;
-  plafonPerAnggota: number;
-  jumlahTransaksi: number;
-  jumlahPinjaman: number;
-} {
+export function buildRingkasanSnapshot(s: KoperasiSnapshot) {
   return {
     koperasi: s.koperasi.nama,
     saldoKasPerBulan: s.koperasi.saldoKasPerBulan,
