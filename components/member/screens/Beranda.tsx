@@ -614,6 +614,7 @@ function PengawasPanel({
             />
           ) : g.isActive ? (
             <span
+              role="status"
               aria-label={MEMBER_COPY["beranda.pengawas.ariaPeriksa"]}
               style={{
                 width: 17,

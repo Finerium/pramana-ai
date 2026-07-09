@@ -13,6 +13,12 @@ export function RegisterSW() {
     const on = () => {
       navigator.serviceWorker.register("/sw.js").catch(() => {});
     };
+    // Effect berjalan SETELAH event load pada muatan pertama; daftar langsung
+    // bila dokumen sudah selesai, listener hanya untuk kasus belum selesai.
+    if (document.readyState === "complete") {
+      on();
+      return;
+    }
     window.addEventListener("load", on);
     return () => window.removeEventListener("load", on);
   }, []);
