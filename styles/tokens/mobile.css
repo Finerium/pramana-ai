@@ -132,6 +132,11 @@
   color: var(--ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  /* Knob switch (iOS): putih di kedua tema. Bukan token surface bertema, jadi
+     TIDAK diletakkan di :root verbatim; ditambahkan demi aturan keras #5 (nol
+     hex di komponen). Nilai = #ffffff knob bundle (Pramana App.dc.html).
+     check:tokens aman: hanya memverifikasi token bundle ADA di app, bukan sebaliknya. */
+  --switch-knob: #ffffff;
 }
 .m-app button {
   font: inherit;

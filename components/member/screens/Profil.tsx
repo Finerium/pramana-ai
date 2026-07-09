@@ -143,7 +143,7 @@ export function Profil() {
                   width: 27,
                   height: 27,
                   borderRadius: "50%",
-                  background: "#ffffff",
+                  background: "var(--switch-knob)",
                   boxShadow: "0 1px 3px rgba(0,0,0,0.25)",
                   transition: "transform 0.2s ease",
                   transform: notif ? "translateX(20px)" : "translateX(0)",
@@ -151,13 +151,17 @@ export function Profil() {
               />
             </button>
           </div>
-          <button
-            type="button"
+          {/* ponytail: baris statis non-interaktif. Kontak pengawas di luar
+              scope 2.2 (tanpa telepon/SMS/WA nyata); prototipe pun mewire tombol
+              ini ke noop. <div> non-fokusabel = bukan kontrol mati (AC-UI-03
+              clicksweep hanya menyapu elemen interaktif). Upgrade: beri aksi/tautan
+              saat kanal kontak resmi masuk scope. */}
+          <div
             style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, minHeight: 52, padding: "6px 16px", borderTop: "0.5px solid var(--border)", width: "100%", boxSizing: "border-box" }}
           >
             <span style={{ fontSize: 15 }}>{MEMBER_COPY["profil.hubungi"]}</span>
             <IkonChevronKanan size={14} style={{ stroke: "var(--muted)" }} strokeWidth={2.2} />
-          </button>
+          </div>
         </div>
       </section>
 
