@@ -86,6 +86,13 @@ describe("registerGuard.periksaTemuan (6.5, AC-REG-01/02)", () => {
     expect(r.ok).toBe(false);
   });
 
+  it("menolak kata vonis di judul", () => {
+    const r = periksaTemuan(
+      ubah({ judul: "Bendahara melakukan korupsi dana koperasi" }),
+    );
+    expect(r.ok).toBe(false);
+  });
+
   it("menolak karakter em dash", () => {
     const r = periksaTemuan(
       ubah({

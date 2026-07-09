@@ -89,6 +89,7 @@ function periksaPertanyaan(teks: string): string[] {
 export function periksaTemuan(t: TemuanTeks): GuardResult {
   const alasan = [
     ...periksaRegister(t.judul),
+    ...periksaVonis(t.judul),
     ...periksaRegister(t.penjelasan_awam),
     ...periksaVonis(t.penjelasan_awam),
     ...periksaRegister(t.kenapa_penting),
