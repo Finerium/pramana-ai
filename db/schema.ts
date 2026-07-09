@@ -159,9 +159,7 @@ export const auditRun = sqliteTable(
     rawJson: text("rawJson").notNull(),
     dibuatPada: text("dibuatPada").notNull(),
   },
-  (t) => [
-    index("idx_audit_run_koperasi_periode").on(t.koperasiId, t.periode),
-  ],
+  (t) => [index("idx_audit_run_koperasi_periode").on(t.koperasiId, t.periode)],
 );
 
 export const temuan = sqliteTable(
@@ -233,7 +231,9 @@ export const vote = sqliteTable(
       .references(() => anggota.id),
     pilihan: text("pilihan", { enum: ["setuju", "tidak"] }).notNull(),
   },
-  (t) => [uniqueIndex("uq_vote_keputusan_anggota").on(t.keputusanId, t.anggotaId)],
+  (t) => [
+    uniqueIndex("uq_vote_keputusan_anggota").on(t.keputusanId, t.anggotaId),
+  ],
 );
 
 export const notifikasi = sqliteTable("notifikasi", {

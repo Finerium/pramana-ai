@@ -31,7 +31,13 @@ export function parseHeadings(text) {
 }
 
 export function checkReadme(text, exists = true) {
-  const r = { ok: false, fileMissing: !exists, missing: [], order: [], content: [] };
+  const r = {
+    ok: false,
+    fileMissing: !exists,
+    missing: [],
+    order: [],
+    content: [],
+  };
   const heads = parseHeadings(text);
   const firstH1 = heads.findIndex((h) => h.level === 1);
 
@@ -50,10 +56,15 @@ export function checkReadme(text, exists = true) {
 
   if (exists) {
     if (!/DEMO_MODE/.test(text)) r.content.push("catatan DEMO_MODE");
-    if (!/juri\.\w+@pramana\.id/i.test(text)) r.content.push("tabel kredensial juri");
+    if (!/juri\.\w+@pramana\.id/i.test(text))
+      r.content.push("tabel kredensial juri");
   }
 
-  r.ok = exists && r.missing.length === 0 && r.order.length === 0 && r.content.length === 0;
+  r.ok =
+    exists &&
+    r.missing.length === 0 &&
+    r.order.length === 0 &&
+    r.content.length === 0;
   return r;
 }
 
@@ -67,10 +78,14 @@ function main() {
     process.exit(0);
   }
   if (r.fileMissing) console.error("check-readme: README.md belum ada.");
-  if (r.missing.length) console.error(`  section kurang: ${r.missing.join(", ")}`);
-  if (r.order.length) console.error(`  section di luar urutan: ${r.order.join(", ")}`);
-  if (r.content.length) console.error(`  konten kurang: ${r.content.join(", ")}`);
+  if (r.missing.length)
+    console.error(`  section kurang: ${r.missing.join(", ")}`);
+  if (r.order.length)
+    console.error(`  section di luar urutan: ${r.order.join(", ")}`);
+  if (r.content.length)
+    console.error(`  konten kurang: ${r.content.join(", ")}`);
   process.exit(1);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href)
+  main();

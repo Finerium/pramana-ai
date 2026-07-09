@@ -1,0 +1,18 @@
+{
+  "gate": 1,
+  "entries": [
+    {"id": "AC-BLD-01", "check": "pnpm build", "expect": "exit 0", "artifact": ".crown/evidence/build.log"},
+    {"id": "AC-TYP-01", "check": "pnpm typecheck && grep -rn \": any\" lib/contracts.ts lib/audit lib/llm.ts", "expect": "exit 0; grep kosong", "artifact": ".crown/evidence/typecheck.log"},
+    {"id": "AC-LNT-01", "check": "pnpm lint", "expect": "exit 0, 0 warning", "artifact": ".crown/evidence/lint.log"},
+    {"id": "AC-UNI-01", "check": "pnpm test (vitest run --coverage, threshold global 70; branch 100 aturan warna/denylist/plafon)", "expect": "pass + threshold", "artifact": ".crown/evidence/coverage/"},
+    {"id": "AC-SEED-01", "check": "pnpm seed && pnpm seed && pnpm seed:verify", "expect": "checksum identik", "artifact": ".crown/evidence/seed-verify.json"},
+    {"id": "AC-SEED-02", "check": "vitest scripts/seed/seed.anomalies.test.ts", "expect": "6/6 anomali pass", "artifact": ".crown/evidence/junit-seed.xml"},
+    {"id": "AC-DB-01", "check": "vitest db/db.design.test.ts (FK aktif + EXPLAIN QUERY PLAN pakai indeks)", "expect": "pass", "artifact": ".crown/evidence/junit-db.xml"},
+    {"id": "AC-LLM-01", "check": "vitest lib/llm.contract.test.ts (zod, retry-1, LLMUnavailable, mock provider)", "expect": "pass", "artifact": ".crown/evidence/junit-llm.xml"},
+    {"id": "AC-LLM-02", "check": "vitest lib/audit/audit.an1.test.ts (fixture deterministik menemukan AN-1 konflik merah Toko Berkah)", "expect": "pass", "artifact": ".crown/evidence/junit-llm.xml"},
+    {"id": "AC-LLM-03", "check": "vitest lib/audit/verdict.rules.test.ts (aturan warna 6.1 server-side menang, fixture adversarial)", "expect": "pass", "artifact": ".crown/evidence/junit-llm.xml"},
+    {"id": "AC-REG-01", "check": "vitest lib/registerGuard.test.ts (>= 12 fixture, denylist + pola edukatif)", "expect": "pass", "artifact": ".crown/evidence/junit-reg.xml"},
+    {"id": "AC-REG-02", "check": "vitest properti pertanyaan_rat diakhiri ? pada seed", "expect": "pass", "artifact": ".crown/evidence/junit-reg.xml"},
+    {"id": "AC-UI-01", "check": "pnpm check:tokens (4 surface vs design-handoff, drift terdokumentasi di design-deviations)", "expect": "0 undocumented drift", "artifact": ".crown/evidence/token-fidelity.json"}
+  ]
+}

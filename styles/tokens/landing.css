@@ -52,8 +52,8 @@
   --merah-lembut: color-mix(in oklch, var(--merah) 12%, var(--latar));
 
   --font-teks: var(--font-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, Menlo,
-    monospace;
+  --font-mono:
+    var(--font-jetbrains), "JetBrains Mono", ui-monospace, Menlo, monospace;
 
   --radius-kartu: 18px;
   --radius-pil: 999px;

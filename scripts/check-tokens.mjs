@@ -14,10 +14,22 @@ import { readFileSync, existsSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 
 const SURFACES = [
-  ["mobile", "design-handoff/mobile/handoff/tokens.css", "styles/tokens/mobile.css"],
-  ["dashboard", "design-handoff/dashboard/pramana-tokens.css", "styles/tokens/dashboard.css"],
+  [
+    "mobile",
+    "design-handoff/mobile/handoff/tokens.css",
+    "styles/tokens/mobile.css",
+  ],
+  [
+    "dashboard",
+    "design-handoff/dashboard/pramana-tokens.css",
+    "styles/tokens/dashboard.css",
+  ],
   ["landing", "design-handoff/landing/tokens.css", "styles/tokens/landing.css"],
-  ["subjek", "design-handoff/subjek/handoff/tokens.css", "styles/tokens/subjek.css"],
+  [
+    "subjek",
+    "design-handoff/subjek/handoff/tokens.css",
+    "styles/tokens/subjek.css",
+  ],
 ];
 const DEVIATIONS = ".crown/design-deviations.md";
 
@@ -48,7 +60,12 @@ export function compareTokens(bundleMap, appMap, documented) {
     const appValues = appMap.get(name);
     for (const value of values) {
       if (appValues && appValues.has(value)) continue;
-      drift.push({ name, value, present: !!appValues, documented: documented.has(name) });
+      drift.push({
+        name,
+        value,
+        present: !!appValues,
+        documented: documented.has(name),
+      });
     }
   }
   return drift;
@@ -56,12 +73,22 @@ export function compareTokens(bundleMap, appMap, documented) {
 
 export function evaluateSurface(bundlePath, appPath, documented) {
   if (!existsSync(bundlePath)) {
-    return { status: "missing-bundle", bundleFile: bundlePath, appFile: appPath, tokenCount: 0 };
+    return {
+      status: "missing-bundle",
+      bundleFile: bundlePath,
+      appFile: appPath,
+      tokenCount: 0,
+    };
   }
   const bundleMap = parseTokens(readFileSync(bundlePath, "utf8"));
   const tokenCount = bundleMap.size;
   if (!existsSync(appPath)) {
-    return { status: "missing-app", bundleFile: bundlePath, appFile: appPath, tokenCount };
+    return {
+      status: "missing-app",
+      bundleFile: bundlePath,
+      appFile: appPath,
+      tokenCount,
+    };
   }
   const appMap = parseTokens(readFileSync(appPath, "utf8"));
   const drift = compareTokens(bundleMap, appMap, documented);
@@ -77,7 +104,8 @@ export function evaluateSurface(bundlePath, appPath, documented) {
 }
 
 // strict=true makes a still-missing app token file fail the run (post-wave-2 gate).
-export function buildReport(strict = false) {
+// surfaceList injectable supaya test deterministik terhadap state repo.
+export function buildReport(strict = false, surfaceList = SURFACES) {
   const documented = existsSync(DEVIATIONS)
     ? documentedTokenNames(readFileSync(DEVIATIONS, "utf8"))
     : new Set();
@@ -85,7 +113,7 @@ export function buildReport(strict = false) {
   let undocumentedTotal = 0;
   let missingBundle = false;
   let missingApp = false;
-  for (const [name, bundlePath, appPath] of SURFACES) {
+  for (const [name, bundlePath, appPath] of surfaceList) {
     const r = evaluateSurface(bundlePath, appPath, documented);
     surfaces[name] = r;
     if (r.status === "drift") undocumentedTotal += r.undocumentedDrift.length;
@@ -108,4 +136,5 @@ function main() {
   process.exit(report.ok ? 0 : 1);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href)
+  main();

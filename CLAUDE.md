@@ -3,11 +3,13 @@
 Pengawas tata kelola koperasi desa berbasis AI multi-agent. Next.js 16 App Router, React 19, TS strict, Tailwind v4, shadcn/ui, Drizzle + libSQL (Turso prod, SQLite dev), Vitest, Playwright, deploy Vercel.
 
 ## WAJIB BACA sebelum menulis kode
+
 - `blueprint-pramana-ai.md` **section 6** (kontrak BEKU: tipe, skema DB, API, prompt, copy, env, scripts, porting) dan **section 8** (acceptance matrix = definisi selesai).
 - `.crown/design-inventory.md` — peta empat bundle desain; `design-handoff/` adalah kebenaran visual (read-only, PORT jangan redesign, nol downgrade per 6.19).
 - `.crown/notes.md` — flags rekonsiliasi (F-01..F-08) yang sudah diputuskan.
 
 ## Perintah kerja
+
 - `pnpm dev` · `pnpm build` · `pnpm start`
 - `pnpm typecheck` · `pnpm lint` · `pnpm lint:fix` · `pnpm test` · `pnpm e2e`
 - `pnpm seed` (idempoten, deterministik) · `pnpm seed:verify` · `pnpm demo:hash`
@@ -15,6 +17,7 @@ Pengawas tata kelola koperasi desa berbasis AI multi-agent. Next.js 16 App Route
 - `pnpm check-register` · `pnpm scan-secrets` · `pnpm check-readme` · `pnpm check-keputusan` · `pnpm check-env` · `pnpm check:tokens`
 
 ## Peta modul
+
 - `lib/contracts.ts` — SATU-SATUNYA sumber tipe domain (Zod, 6.1 + 6.3b verbatim).
 - `lib/llm.ts` — klien OpenAI-compatible MiniMax; chatJSON (Zod, retry-1, LLMUnavailable); TANPA provider fallback (cache satu-satunya jaring).
 - `lib/audit/` — runAudit: 4 forensik paralel (allSettled) + adjudikator; warna dihitung ulang server-side (6.1 menang).
@@ -27,6 +30,7 @@ Pengawas tata kelola koperasi desa berbasis AI multi-agent. Next.js 16 App Route
 - `deck/` Marp; `deliverables/`; `docs/keputusan-teknis.md`.
 
 ## Aturan keras
+
 1. Kontrak section 6 beku. Perubahan = stop-and-ask, bukan improvisasi.
 2. Register copy (6.8): sapaan "Anda", TANPA em dash, TANPA emoji, layar anggota tanpa jargon (likuiditas/rasio/aktiva/NPL/CAR). Ditegakkan hook + check-register; pelanggaran = gate failure.
 3. Pramana bertanya, tidak menuduh (6.5): denylist kosakata vonis pada output model; pertanyaan_rat wajib kalimat tanya.
@@ -39,4 +43,5 @@ Pengawas tata kelola koperasi desa berbasis AI multi-agent. Next.js 16 App Route
 10. Error envelope: sukses `{ok:true,data}`; gagal `{ok:false,error:{code,message}}`, code ∈ {UNAUTHORIZED, FORBIDDEN, NOT_FOUND, VALIDATION, LLM_UNAVAILABLE, INTERNAL}.
 
 ## Akun uji (seed, boleh dicetak — bukan rahasia)
+
 juri.anggota@pramana.id / PramanaJuri2026 · juri.pemerintah@pramana.id / PramanaJuri2026 · sari@pramana.id / SariSukamaju1 · bendahara@pramana.id / PramanaBendahara2026

@@ -9,7 +9,11 @@ import type { LibSQLDatabase } from "drizzle-orm/libsql";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const defaultFolder = join(dirname(fileURLToPath(import.meta.url)), "..", "drizzle");
+const defaultFolder = join(
+  dirname(fileURLToPath(import.meta.url)),
+  "..",
+  "drizzle",
+);
 
 export async function runMigrations<TSchema extends Record<string, unknown>>(
   db: LibSQLDatabase<TSchema>,

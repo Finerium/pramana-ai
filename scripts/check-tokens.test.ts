@@ -67,15 +67,24 @@ describe("check-tokens evaluateSurface", () => {
 });
 
 describe("check-tokens buildReport strict mode (AC-UI-01, no vacuous pass)", () => {
-  it("tolerates unwritten app token files by default (wave 1 stays green)", () => {
-    const r = buildReport(false);
-    // Wave 1: styles/tokens/*.css not ported yet -> missing-app, but ok holds.
+  // Fixture surface: bundle nyata, file app sengaja tidak ada, supaya test
+  // deterministik terhadap state repo (wave berapa pun).
+  const FIXTURE: Array<[string, string, string]> = [
+    [
+      "mobile",
+      "design-handoff/mobile/handoff/tokens.css",
+      "styles/tokens/__fixture-does-not-exist__.css",
+    ],
+  ];
+
+  it("tolerates an unwritten app token file by default (pre-port stays green)", () => {
+    const r = buildReport(false, FIXTURE);
     expect(r.missingApp).toBe(true);
     expect(r.ok).toBe(true);
   });
 
   it("fails when a surface still lacks its app token file under --strict", () => {
-    const r = buildReport(true);
+    const r = buildReport(true, FIXTURE);
     expect(r.strict).toBe(true);
     expect(r.missingApp).toBe(true);
     expect(r.ok).toBe(false);

@@ -41,7 +41,9 @@ export function checkKeputusan(text) {
   const missingAlternatives = [];
 
   for (const req of REQUIRED) {
-    const found = headings.find((h) => h.toLowerCase().includes(req.toLowerCase()));
+    const found = headings.find((h) =>
+      h.toLowerCase().includes(req.toLowerCase()),
+    );
     if (!found) {
       missingHeadings.push(req);
       continue;
@@ -67,14 +69,19 @@ function main() {
   }
   const r = checkKeputusan(readFileSync(path, "utf8"));
   if (r.ok) {
-    console.log("check-keputusan: LULUS (6 heading wajib + alternatif ditolak lengkap).");
+    console.log(
+      "check-keputusan: LULUS (6 heading wajib + alternatif ditolak lengkap).",
+    );
     process.exit(0);
   }
   if (r.missingHeadings.length)
     console.error(`  heading wajib kurang: ${r.missingHeadings.join(", ")}`);
   if (r.missingAlternatives.length)
-    console.error(`  tanpa pembahasan alternatif yang ditolak: ${r.missingAlternatives.join(", ")}`);
+    console.error(
+      `  tanpa pembahasan alternatif yang ditolak: ${r.missingAlternatives.join(", ")}`,
+    );
   process.exit(1);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href)
+  main();

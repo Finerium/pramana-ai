@@ -203,13 +203,19 @@ describe("agregat sosial 6.7", () => {
     const an4 = await idOf("an4");
     const an2 = await idOf("an2");
     expect(
-      await scalar("SELECT COUNT(*) FROM pertanyaan_rat WHERE temuanId = ?", [an1]),
+      await scalar("SELECT COUNT(*) FROM pertanyaan_rat WHERE temuanId = ?", [
+        an1,
+      ]),
     ).toBe(SEED_AGREGAT.an1);
     expect(
-      await scalar("SELECT COUNT(*) FROM pertanyaan_rat WHERE temuanId = ?", [an4]),
+      await scalar("SELECT COUNT(*) FROM pertanyaan_rat WHERE temuanId = ?", [
+        an4,
+      ]),
     ).toBe(SEED_AGREGAT.an4);
     expect(
-      await scalar("SELECT COUNT(*) FROM pertanyaan_rat WHERE temuanId = ?", [an2]),
+      await scalar("SELECT COUNT(*) FROM pertanyaan_rat WHERE temuanId = ?", [
+        an2,
+      ]),
     ).toBe(SEED_AGREGAT.an2);
     const juriOnAn1 = await scalar(
       "SELECT COUNT(*) FROM pertanyaan_rat WHERE temuanId = ? AND anggotaId = 'ang-juri'",
@@ -292,7 +298,9 @@ describe("distribusi transaksi 6.7b", () => {
         "SUM(CASE WHEN arah='masuk' THEN jumlah ELSE -jumlah END) net " +
         "FROM transaksi WHERE koperasiId='kop-sukamaju' GROUP BY periode ORDER BY periode",
     );
-    const net = new Map(perBulan.map((r) => [String(r.periode), Number(r.net)]));
+    const net = new Map(
+      perBulan.map((r) => [String(r.periode), Number(r.net)]),
+    );
     const saldoAkhir: Record<string, number> = {
       "2026-01": 52000000,
       "2026-02": 54500000,
@@ -306,7 +314,9 @@ describe("distribusi transaksi 6.7b", () => {
       const delta = saldoAkhir[bulan[i]!]! - saldoAkhir[bulan[i - 1]!]!;
       expect(net.get(bulan[i]!)).toBe(delta);
     }
-    const kop = await one("SELECT saldoKas FROM koperasi WHERE id = 'kop-sukamaju'");
+    const kop = await one(
+      "SELECT saldoKas FROM koperasi WHERE id = 'kop-sukamaju'",
+    );
     expect(kop.saldoKas).toBe(36500000);
   });
 });
@@ -376,7 +386,9 @@ describe("komposisi bulanan 6.7b", () => {
 
   it("buku pinjaman: 12 total, 9 aktif, 2 lunas, 1 tunggak > 30 hari", async () => {
     expect(await scalar("SELECT COUNT(*) FROM pinjaman")).toBe(12);
-    expect(await scalar("SELECT COUNT(*) FROM pinjaman WHERE sisa = 0")).toBe(2);
+    expect(await scalar("SELECT COUNT(*) FROM pinjaman WHERE sisa = 0")).toBe(
+      2,
+    );
     // tunggak: sisa>0 dan jatuh tempo lebih dari 30 hari sebelum 2026-06-30
     const tunggak = await scalar(
       "SELECT COUNT(*) FROM pinjaman WHERE sisa > 0 AND jatuhTempoBerikut < '2026-05-31'",
@@ -390,13 +402,19 @@ describe("komposisi bulanan 6.7b", () => {
 
   it("4 unit usaha sukamaju + 5 pengurus + 30 anggota", async () => {
     expect(
-      await scalar("SELECT COUNT(*) FROM unit_usaha WHERE koperasiId='kop-sukamaju'"),
+      await scalar(
+        "SELECT COUNT(*) FROM unit_usaha WHERE koperasiId='kop-sukamaju'",
+      ),
     ).toBe(4);
     expect(
-      await scalar("SELECT COUNT(*) FROM pengurus WHERE koperasiId='kop-sukamaju'"),
+      await scalar(
+        "SELECT COUNT(*) FROM pengurus WHERE koperasiId='kop-sukamaju'",
+      ),
     ).toBe(5);
     expect(
-      await scalar("SELECT COUNT(*) FROM anggota WHERE koperasiId='kop-sukamaju'"),
+      await scalar(
+        "SELECT COUNT(*) FROM anggota WHERE koperasiId='kop-sukamaju'",
+      ),
     ).toBe(30);
     const kadesPengawas = await one(
       "SELECT * FROM pengurus WHERE jabatan='pengawas' AND koperasiId='kop-sukamaju'",

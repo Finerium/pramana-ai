@@ -17,7 +17,10 @@ const PATTERNS = [
   { label: "slack-token", re: /\bxox[baprs]-[0-9A-Za-z-]{10,}\b/ },
   { label: "aws-access-key", re: /\bAKIA[0-9A-Z]{16}\b/ },
   { label: "private-key", re: /-----BEGIN [A-Z0-9 ]*PRIVATE KEY-----/ },
-  { label: "jwt", re: /\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b/ },
+  {
+    label: "jwt",
+    re: /\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b/,
+  },
 ];
 
 const SKIP_DIRS = new Set([
@@ -58,8 +61,21 @@ function walk(dir, out) {
 }
 
 function scanWorkingTree(root = ".") {
-  const files = [];
-  walk(root, files);
+  // Permukaan risiko repo = file tracked + untracked yang TIDAK gitignored.
+  // File gitignored (.env, .env.local) memang tempat rahasia lokal dan tidak
+  // pernah bisa masuk commit; memindainya hanya menghasilkan false positive.
+  let files = [];
+  try {
+    files = execSync("git ls-files --cached --others --exclude-standard", {
+      encoding: "utf8",
+      maxBuffer: 64 * 1024 * 1024,
+    })
+      .split("\n")
+      .filter(Boolean)
+      .filter((f) => ![...SKIP_DIRS].some((d) => f === d || f.startsWith(`${d}/`)));
+  } catch {
+    walk(root, files); // repo tanpa git: fallback jalan kaki
+  }
   const findings = [];
   for (const f of files) {
     let buf;
@@ -71,7 +87,11 @@ function scanWorkingTree(root = ".") {
     }
     if (isBinary(buf)) continue;
     for (const h of findSecrets(buf.toString("utf8"))) {
-      findings.push({ where: f.replace(/^\.\//, ""), line: h.line, pattern: h.pattern });
+      findings.push({
+        where: f.replace(/^\.\//, ""),
+        line: h.line,
+        pattern: h.pattern,
+      });
     }
   }
   return findings;
@@ -80,7 +100,10 @@ function scanWorkingTree(root = ".") {
 function scanHistory() {
   let out;
   try {
-    out = execSync("git log -p --no-color", { encoding: "utf8", maxBuffer: 256 * 1024 * 1024 });
+    out = execSync("git log -p --no-color", {
+      encoding: "utf8",
+      maxBuffer: 256 * 1024 * 1024,
+    });
   } catch {
     return []; // no git or empty history: nothing to scan
   }
@@ -94,7 +117,8 @@ function scanHistory() {
       continue;
     }
     for (const { label, re } of PATTERNS) {
-      if (re.test(line)) findings.push({ where: `history@${commit}`, pattern: label });
+      if (re.test(line))
+        findings.push({ where: `history@${commit}`, pattern: label });
     }
   }
   return findings;
@@ -105,14 +129,19 @@ function main() {
   const history = scanHistory();
   const all = [...tree, ...history];
   if (all.length === 0) {
-    console.log("scan-secrets: LULUS (0 pola rahasia di working tree dan git log -p).");
+    console.log(
+      "scan-secrets: LULUS (0 pola rahasia di working tree dan git log -p).",
+    );
     process.exit(0);
   }
-  console.error(`scan-secrets: ${all.length} pola rahasia terdeteksi (nilai TIDAK dicetak)`);
+  console.error(
+    `scan-secrets: ${all.length} pola rahasia terdeteksi (nilai TIDAK dicetak)`,
+  );
   for (const f of all) {
     console.error(`  ${f.where}${f.line ? ":" + f.line : ""}  ${f.pattern}`);
   }
   process.exit(1);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href)
+  main();

@@ -4,6 +4,9 @@ out
 design-handoff
 .crown
 .claude
+blueprint-pramana-ai.md
+prompt-orchestrator-pramana-ai.md
+env-prep-pramana-ai.md
 coverage
 test-results
 playwright-report

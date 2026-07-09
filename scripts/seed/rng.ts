@@ -13,7 +13,11 @@ export function mulberry32(seed: number): () => number {
 }
 
 /** Bilangan bulat inklusif [min, max]. */
-export function intBetween(rng: () => number, min: number, max: number): number {
+export function intBetween(
+  rng: () => number,
+  min: number,
+  max: number,
+): number {
   return min + Math.floor(rng() * (max - min + 1));
 }
 

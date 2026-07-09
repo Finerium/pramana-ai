@@ -46,11 +46,14 @@ export function scanText(path, text) {
       push("em-dash", EM_DASH, idx);
       idx = line.indexOf(EM_DASH, idx + 1);
     }
-    for (const m of line.matchAll(new RegExp(EMOJI_SRC, "gu"))) push("emoji", m[0], m.index);
+    for (const m of line.matchAll(new RegExp(EMOJI_SRC, "gu")))
+      push("emoji", m[0], m.index);
     for (const m of line.matchAll(/\bkamu\b/gi)) push("kamu", m[0], m.index);
     if (member) {
-      for (const m of line.matchAll(new RegExp(JARGON_CI_SRC, "gi"))) push("jargon", m[0], m.index);
-      for (const m of line.matchAll(new RegExp(JARGON_CS_SRC, "g"))) push("jargon", m[0], m.index);
+      for (const m of line.matchAll(new RegExp(JARGON_CI_SRC, "gi")))
+        push("jargon", m[0], m.index);
+      for (const m of line.matchAll(new RegExp(JARGON_CS_SRC, "g")))
+        push("jargon", m[0], m.index);
     }
   }
   return findings;
@@ -116,9 +119,12 @@ function main() {
   }
   console.error(`check-register: ${all.length} pelanggaran register 6.8`);
   for (const v of all) {
-    console.error(`  ${v.path}:${v.line}:${v.col}  ${v.kind}  ${JSON.stringify(v.match)}`);
+    console.error(
+      `  ${v.path}:${v.line}:${v.col}  ${v.kind}  ${JSON.stringify(v.match)}`,
+    );
   }
   process.exit(1);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href)
+  main();

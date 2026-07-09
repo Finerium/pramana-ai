@@ -12,10 +12,8 @@ export type Db = LibSQLDatabase<typeof schema>;
 export type Created = { db: Db; client: Client };
 
 export function resolveDbUrl(): { url: string; authToken?: string } {
-  // Akses bracket disengaja; membaca variabel lingkungan runtime.
-  const runtime = process["env"];
-  const url = runtime["TURSO_DATABASE_URL"];
-  const authToken = runtime["TURSO_AUTH_TOKEN"];
+  const url = process.env.TURSO_DATABASE_URL;
+  const authToken = process.env.TURSO_AUTH_TOKEN;
   if (url && url.length > 0) {
     return authToken ? { url, authToken } : { url };
   }

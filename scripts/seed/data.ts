@@ -84,27 +84,152 @@ const KOPERASI_LAIN: {
   warna: "hijau" | "kuning" | "merah";
   temuanCount: number;
 }[] = [
-  { id: "kop-lembahsari", nama: "Koperasi Desa Merah Putih Lembah Sari", desa: "Lembah Sari", kabupaten: "Kab. Agam", provinsi: "Sumatera Barat", warna: "merah", temuanCount: 4 },
-  { id: "kop-cempakawangi", nama: "Koperasi Desa Merah Putih Cempaka Wangi", desa: "Cempaka Wangi", kabupaten: "Kab. Lampung Tengah", provinsi: "Lampung", warna: "kuning", temuanCount: 2 },
-  { id: "kop-wanasaba", nama: "Koperasi Desa Merah Putih Wanasaba", desa: "Wanasaba", kabupaten: "Kab. Lombok Timur", provinsi: "Nusa Tenggara Barat", warna: "kuning", temuanCount: 2 },
-  { id: "kop-batulicin", nama: "Koperasi Desa Merah Putih Batulicin", desa: "Batulicin", kabupaten: "Kab. Tanah Bumbu", provinsi: "Kalimantan Selatan", warna: "kuning", temuanCount: 1 },
-  { id: "kop-airmolek", nama: "Koperasi Desa Merah Putih Air Molek", desa: "Air Molek", kabupaten: "Kab. Indragiri Hulu", provinsi: "Riau", warna: "kuning", temuanCount: 1 },
-  { id: "kop-mekarsari", nama: "Koperasi Desa Merah Putih Mekarsari", desa: "Mekarsari", kabupaten: "Kab. Bogor", provinsi: "Jawa Barat", warna: "hijau", temuanCount: 0 },
-  { id: "kop-tirtayasa", nama: "Koperasi Desa Merah Putih Tirtayasa", desa: "Tirtayasa", kabupaten: "Kab. Serang", provinsi: "Banten", warna: "hijau", temuanCount: 0 },
-  { id: "kop-argomulyo", nama: "Koperasi Desa Merah Putih Argomulyo", desa: "Argomulyo", kabupaten: "Kab. Magelang", provinsi: "Jawa Tengah", warna: "hijau", temuanCount: 0 },
-  { id: "kop-sidodadi", nama: "Koperasi Desa Merah Putih Sidodadi", desa: "Sidodadi", kabupaten: "Kab. Malang", provinsi: "Jawa Timur", warna: "hijau", temuanCount: 1 },
-  { id: "kop-karangasem", nama: "Koperasi Desa Merah Putih Karangasem", desa: "Karangasem", kabupaten: "Kab. Karangasem", provinsi: "Bali", warna: "hijau", temuanCount: 0 },
-  { id: "kop-mattirowalie", nama: "Koperasi Desa Merah Putih Mattiro Walie", desa: "Mattiro Walie", kabupaten: "Kab. Wajo", provinsi: "Sulawesi Selatan", warna: "hijau", temuanCount: 0 },
+  {
+    id: "kop-lembahsari",
+    nama: "Koperasi Desa Merah Putih Lembah Sari",
+    desa: "Lembah Sari",
+    kabupaten: "Kab. Agam",
+    provinsi: "Sumatera Barat",
+    warna: "merah",
+    temuanCount: 4,
+  },
+  {
+    id: "kop-cempakawangi",
+    nama: "Koperasi Desa Merah Putih Cempaka Wangi",
+    desa: "Cempaka Wangi",
+    kabupaten: "Kab. Lampung Tengah",
+    provinsi: "Lampung",
+    warna: "kuning",
+    temuanCount: 2,
+  },
+  {
+    id: "kop-wanasaba",
+    nama: "Koperasi Desa Merah Putih Wanasaba",
+    desa: "Wanasaba",
+    kabupaten: "Kab. Lombok Timur",
+    provinsi: "Nusa Tenggara Barat",
+    warna: "kuning",
+    temuanCount: 2,
+  },
+  {
+    id: "kop-batulicin",
+    nama: "Koperasi Desa Merah Putih Batulicin",
+    desa: "Batulicin",
+    kabupaten: "Kab. Tanah Bumbu",
+    provinsi: "Kalimantan Selatan",
+    warna: "kuning",
+    temuanCount: 1,
+  },
+  {
+    id: "kop-airmolek",
+    nama: "Koperasi Desa Merah Putih Air Molek",
+    desa: "Air Molek",
+    kabupaten: "Kab. Indragiri Hulu",
+    provinsi: "Riau",
+    warna: "kuning",
+    temuanCount: 1,
+  },
+  {
+    id: "kop-mekarsari",
+    nama: "Koperasi Desa Merah Putih Mekarsari",
+    desa: "Mekarsari",
+    kabupaten: "Kab. Bogor",
+    provinsi: "Jawa Barat",
+    warna: "hijau",
+    temuanCount: 0,
+  },
+  {
+    id: "kop-tirtayasa",
+    nama: "Koperasi Desa Merah Putih Tirtayasa",
+    desa: "Tirtayasa",
+    kabupaten: "Kab. Serang",
+    provinsi: "Banten",
+    warna: "hijau",
+    temuanCount: 0,
+  },
+  {
+    id: "kop-argomulyo",
+    nama: "Koperasi Desa Merah Putih Argomulyo",
+    desa: "Argomulyo",
+    kabupaten: "Kab. Magelang",
+    provinsi: "Jawa Tengah",
+    warna: "hijau",
+    temuanCount: 0,
+  },
+  {
+    id: "kop-sidodadi",
+    nama: "Koperasi Desa Merah Putih Sidodadi",
+    desa: "Sidodadi",
+    kabupaten: "Kab. Malang",
+    provinsi: "Jawa Timur",
+    warna: "hijau",
+    temuanCount: 1,
+  },
+  {
+    id: "kop-karangasem",
+    nama: "Koperasi Desa Merah Putih Karangasem",
+    desa: "Karangasem",
+    kabupaten: "Kab. Karangasem",
+    provinsi: "Bali",
+    warna: "hijau",
+    temuanCount: 0,
+  },
+  {
+    id: "kop-mattirowalie",
+    nama: "Koperasi Desa Merah Putih Mattiro Walie",
+    desa: "Mattiro Walie",
+    kabupaten: "Kab. Wajo",
+    provinsi: "Sulawesi Selatan",
+    warna: "hijau",
+    temuanCount: 0,
+  },
 ];
 
 const DEPAN = [
-  "Ahmad", "Siti", "Eko", "Rina", "Joko", "Sri", "Agus", "Wati", "Hendra", "Yuni",
-  "Bambang", "Ani", "Dedi", "Nur", "Rudi", "Lina", "Asep", "Tuti", "Wawan", "Ida",
-  "Iwan", "Endang", "Slamet", "Umi", "Tono", "Ratna", "Gunawan", "Yanti", "Rahmat", "Mega",
+  "Ahmad",
+  "Siti",
+  "Eko",
+  "Rina",
+  "Joko",
+  "Sri",
+  "Agus",
+  "Wati",
+  "Hendra",
+  "Yuni",
+  "Bambang",
+  "Ani",
+  "Dedi",
+  "Nur",
+  "Rudi",
+  "Lina",
+  "Asep",
+  "Tuti",
+  "Wawan",
+  "Ida",
+  "Iwan",
+  "Endang",
+  "Slamet",
+  "Umi",
+  "Tono",
+  "Ratna",
+  "Gunawan",
+  "Yanti",
+  "Rahmat",
+  "Mega",
 ];
 const BELAKANG = [
-  "Santoso", "Wijaya", "Kusuma", "Pratama", "Halim", "Saputra", "Nugroho",
-  "Permata", "Hidayat", "Maulana", "Sanjaya", "Utami",
+  "Santoso",
+  "Wijaya",
+  "Kusuma",
+  "Pratama",
+  "Halim",
+  "Saputra",
+  "Nugroho",
+  "Permata",
+  "Hidayat",
+  "Maulana",
+  "Sanjaya",
+  "Utami",
 ];
 
 // Template temuan generik untuk 11 koperasi ringkas. Register 6.8: pertanyaan
@@ -118,7 +243,13 @@ const GENERIK_MERAH = {
     "Uang koperasi adalah uang bersama. Pembelian besar sebaiknya dijelaskan agar anggota yakin harganya wajar.",
   pertanyaanRat:
     "Bisakah pengurus menjelaskan alasan dan harga pembelian besar bulan ini?",
-  bukti: [{ jenis: "transaksi", id: "ringkas-pembelian", label: "Pembelian besar bulan ini" }],
+  bukti: [
+    {
+      jenis: "transaksi",
+      id: "ringkas-pembelian",
+      label: "Pembelian besar bulan ini",
+    },
+  ],
 };
 const GENERIK_KUNING = [
   {
@@ -130,7 +261,13 @@ const GENERIK_KUNING = [
       "Persetujuan yang menumpuk perlu dipastikan tetap melewati pemeriksaan yang teliti.",
     pertanyaanRat:
       "Bagaimana pemeriksaan dilakukan untuk pinjaman yang disetujui berdekatan itu?",
-    bukti: [{ jenis: "rasio", id: "ringkas-persetujuan", label: "Persetujuan pinjaman berdekatan" }],
+    bukti: [
+      {
+        jenis: "rasio",
+        id: "ringkas-persetujuan",
+        label: "Persetujuan pinjaman berdekatan",
+      },
+    ],
   },
   {
     agent: "kesehatan_finansial" as const,
@@ -152,7 +289,13 @@ const GENERIK_KUNING = [
       "Kelengkapan dokumen menjaga agar keputusan pinjaman dapat dipertanggungjawabkan.",
     pertanyaanRat:
       "Kapan dokumen pinjaman yang belum lengkap itu akan dilengkapi?",
-    bukti: [{ jenis: "pinjaman", id: "ringkas-dokumen", label: "Pinjaman dokumen belum lengkap" }],
+    bukti: [
+      {
+        jenis: "pinjaman",
+        id: "ringkas-dokumen",
+        label: "Pinjaman dokumen belum lengkap",
+      },
+    ],
   },
   {
     agent: "anomali_transaksi" as const,
@@ -163,7 +306,13 @@ const GENERIK_KUNING = [
       "Pola pembelian berulang perlu ditanyakan agar tidak ada nilai yang terpecah tanpa pemeriksaan.",
     pertanyaanRat:
       "Mengapa pembelian ke pemasok yang sama dilakukan berulang dalam waktu singkat?",
-    bukti: [{ jenis: "transaksi", id: "ringkas-berulang", label: "Pembelian berulang ke pemasok sama" }],
+    bukti: [
+      {
+        jenis: "transaksi",
+        id: "ringkas-berulang",
+        label: "Pembelian berulang ke pemasok sama",
+      },
+    ],
   },
 ];
 const GENERIK_INFO = {
@@ -174,7 +323,9 @@ const GENERIK_INFO = {
   kenapaPenting:
     "Rapat tahunan adalah ruang resmi anggota untuk bertanya dan mengambil keputusan bersama.",
   pertanyaanRat: "Kapan Rapat Anggota Tahunan akan dilaksanakan?",
-  bukti: [{ jenis: "jadwal", id: "ringkas-rat", label: "Jadwal RAT belum ada" }],
+  bukti: [
+    { jenis: "jadwal", id: "ringkas-rat", label: "Jadwal RAT belum ada" },
+  ],
 };
 
 export function buildSeedData(): SeedData {
@@ -209,26 +360,75 @@ export function buildSeedData(): SeedData {
       isDetailSeeded: false,
       saldoKas: 40_000_000 + intBetween(rng, 0, 40) * M,
       ratStatus: (k.warna === "hijau" ? "terlaksana" : "belum") as
-        | "belum"
-        | "terlaksana",
+        "belum" | "terlaksana",
       ratTanggal: k.warna === "hijau" ? "2026-02-20" : null,
       dibentukPada: "2024-01-15",
     })),
   ];
 
   const unitUsahaRows: Row<typeof unitUsaha>[] = [
-    { id: "uu-gerai", koperasiId: "kop-sukamaju", nama: "Gerai Sembako", jenis: "sembako" },
-    { id: "uu-sp", koperasiId: "kop-sukamaju", nama: "Unit Simpan Pinjam", jenis: "simpan_pinjam" },
-    { id: "uu-apotek", koperasiId: "kop-sukamaju", nama: "Apotek Desa", jenis: "apotek" },
-    { id: "uu-gudang", koperasiId: "kop-sukamaju", nama: "Gudang", jenis: "gudang" },
+    {
+      id: "uu-gerai",
+      koperasiId: "kop-sukamaju",
+      nama: "Gerai Sembako",
+      jenis: "sembako",
+    },
+    {
+      id: "uu-sp",
+      koperasiId: "kop-sukamaju",
+      nama: "Unit Simpan Pinjam",
+      jenis: "simpan_pinjam",
+    },
+    {
+      id: "uu-apotek",
+      koperasiId: "kop-sukamaju",
+      nama: "Apotek Desa",
+      jenis: "apotek",
+    },
+    {
+      id: "uu-gudang",
+      koperasiId: "kop-sukamaju",
+      nama: "Gudang",
+      jenis: "gudang",
+    },
   ];
 
   const pengurusRows: Row<typeof pengurus>[] = [
-    { id: "png-ketua", koperasiId: "kop-sukamaju", nama: "Haji Suhendar", jabatan: "ketua", alamat: "Jl. Mawar No. 3, Sukamaju" },
-    { id: "png-wakil", koperasiId: "kop-sukamaju", nama: "Iwan Setiawan", jabatan: "wakil", alamat: "Jl. Anggrek No. 7, Sukamaju" },
-    { id: "png-sekretaris", koperasiId: "kop-sukamaju", nama: "Dewi Lestari", jabatan: "sekretaris", alamat: "Jl. Kenanga No. 5, Sukamaju" },
-    { id: "png-budi", koperasiId: "kop-sukamaju", nama: "Budi Santoso", jabatan: "bendahara", alamat: BUDI_ALAMAT },
-    { id: "png-pengawas", koperasiId: "kop-sukamaju", nama: "Kepala Desa Sukamaju", jabatan: "pengawas", alamat: "Kantor Desa Sukamaju" },
+    {
+      id: "png-ketua",
+      koperasiId: "kop-sukamaju",
+      nama: "Haji Suhendar",
+      jabatan: "ketua",
+      alamat: "Jl. Mawar No. 3, Sukamaju",
+    },
+    {
+      id: "png-wakil",
+      koperasiId: "kop-sukamaju",
+      nama: "Iwan Setiawan",
+      jabatan: "wakil",
+      alamat: "Jl. Anggrek No. 7, Sukamaju",
+    },
+    {
+      id: "png-sekretaris",
+      koperasiId: "kop-sukamaju",
+      nama: "Dewi Lestari",
+      jabatan: "sekretaris",
+      alamat: "Jl. Kenanga No. 5, Sukamaju",
+    },
+    {
+      id: "png-budi",
+      koperasiId: "kop-sukamaju",
+      nama: "Budi Santoso",
+      jabatan: "bendahara",
+      alamat: BUDI_ALAMAT,
+    },
+    {
+      id: "png-pengawas",
+      koperasiId: "kop-sukamaju",
+      nama: "Kepala Desa Sukamaju",
+      jabatan: "pengawas",
+      alamat: "Kantor Desa Sukamaju",
+    },
   ];
 
   const anggotaRows: Row<typeof anggota>[] = [];
@@ -255,15 +455,55 @@ export function buildSeedData(): SeedData {
       id === "ang-juri" ? 150_000 : intBetween(rng, 0, 50) * 10_000;
     simpananRows.push(
       { id: `simp-${id}-pokok`, anggotaId: id, jenis: "pokok", saldo: 100_000 },
-      { id: `simp-${id}-wajib`, anggotaId: id, jenis: "wajib", saldo: 50_000 * monthsAgo },
-      { id: `simp-${id}-sukarela`, anggotaId: id, jenis: "sukarela", saldo: sukarela },
+      {
+        id: `simp-${id}-wajib`,
+        anggotaId: id,
+        jenis: "wajib",
+        saldo: 50_000 * monthsAgo,
+      },
+      {
+        id: `simp-${id}-sukarela`,
+        anggotaId: id,
+        jenis: "sukarela",
+        saldo: sukarela,
+      },
     );
   });
 
   const pinjamanRows: Row<typeof pinjaman>[] = [
-    { id: "pj-juri", anggotaId: "ang-juri", pokok: 2_400_000, sisa: 1_200_000, cicilanBulanan: 200_000, jatuhTempoBerikut: "2026-07-05", disetujuiPada: "2025-12-05", disetujuiOleh: "png-budi", dokumenLengkap: true },
-    { id: "pj-sari", anggotaId: "ang-sari", pokok: 2_400_000, sisa: 1_200_000, cicilanBulanan: 200_000, jatuhTempoBerikut: "2026-07-05", disetujuiPada: "2025-12-05", disetujuiOleh: "png-budi", dokumenLengkap: true },
-    { id: "pj-an5", anggotaId: "ang-g01", pokok: 12_000_000, sisa: 12_000_000, cicilanBulanan: 1_000_000, jatuhTempoBerikut: "2026-07-10", disetujuiPada: "2026-06-15", disetujuiOleh: "png-budi", dokumenLengkap: false },
+    {
+      id: "pj-juri",
+      anggotaId: "ang-juri",
+      pokok: 2_400_000,
+      sisa: 1_200_000,
+      cicilanBulanan: 200_000,
+      jatuhTempoBerikut: "2026-07-05",
+      disetujuiPada: "2025-12-05",
+      disetujuiOleh: "png-budi",
+      dokumenLengkap: true,
+    },
+    {
+      id: "pj-sari",
+      anggotaId: "ang-sari",
+      pokok: 2_400_000,
+      sisa: 1_200_000,
+      cicilanBulanan: 200_000,
+      jatuhTempoBerikut: "2026-07-05",
+      disetujuiPada: "2025-12-05",
+      disetujuiOleh: "png-budi",
+      dokumenLengkap: true,
+    },
+    {
+      id: "pj-an5",
+      anggotaId: "ang-g01",
+      pokok: 12_000_000,
+      sisa: 12_000_000,
+      cicilanBulanan: 1_000_000,
+      jatuhTempoBerikut: "2026-07-10",
+      disetujuiPada: "2026-06-15",
+      disetujuiOleh: "png-budi",
+      dokumenLengkap: false,
+    },
     ...Array.from({ length: 5 }, (_, i) => ({
       id: `pj-an2-${i + 1}`,
       anggotaId: `ang-g${pad2(i + 2)}`,
@@ -275,25 +515,114 @@ export function buildSeedData(): SeedData {
       disetujuiOleh: "png-budi",
       dokumenLengkap: true,
     })),
-    { id: "pj-gen-1", anggotaId: "ang-g07", pokok: 3_000_000, sisa: 1_500_000, cicilanBulanan: 300_000, jatuhTempoBerikut: "2026-07-08", disetujuiPada: "2026-03-08", disetujuiOleh: "png-budi", dokumenLengkap: true },
-    { id: "pj-lunas-1", anggotaId: "ang-g08", pokok: 2_000_000, sisa: 0, cicilanBulanan: 200_000, jatuhTempoBerikut: "2026-06-01", disetujuiPada: "2025-06-01", disetujuiOleh: "png-budi", dokumenLengkap: true },
-    { id: "pj-lunas-2", anggotaId: "ang-g09", pokok: 1_500_000, sisa: 0, cicilanBulanan: 150_000, jatuhTempoBerikut: "2026-05-01", disetujuiPada: "2025-05-01", disetujuiOleh: "png-budi", dokumenLengkap: true },
-    { id: "pj-tunggak-1", anggotaId: "ang-g10", pokok: 4_000_000, sisa: 2_000_000, cicilanBulanan: 400_000, jatuhTempoBerikut: "2026-05-10", disetujuiPada: "2025-10-10", disetujuiOleh: "png-budi", dokumenLengkap: true },
+    {
+      id: "pj-gen-1",
+      anggotaId: "ang-g07",
+      pokok: 3_000_000,
+      sisa: 1_500_000,
+      cicilanBulanan: 300_000,
+      jatuhTempoBerikut: "2026-07-08",
+      disetujuiPada: "2026-03-08",
+      disetujuiOleh: "png-budi",
+      dokumenLengkap: true,
+    },
+    {
+      id: "pj-lunas-1",
+      anggotaId: "ang-g08",
+      pokok: 2_000_000,
+      sisa: 0,
+      cicilanBulanan: 200_000,
+      jatuhTempoBerikut: "2026-06-01",
+      disetujuiPada: "2025-06-01",
+      disetujuiOleh: "png-budi",
+      dokumenLengkap: true,
+    },
+    {
+      id: "pj-lunas-2",
+      anggotaId: "ang-g09",
+      pokok: 1_500_000,
+      sisa: 0,
+      cicilanBulanan: 150_000,
+      jatuhTempoBerikut: "2026-05-01",
+      disetujuiPada: "2025-05-01",
+      disetujuiOleh: "png-budi",
+      dokumenLengkap: true,
+    },
+    {
+      id: "pj-tunggak-1",
+      anggotaId: "ang-g10",
+      pokok: 4_000_000,
+      sisa: 2_000_000,
+      cicilanBulanan: 400_000,
+      jatuhTempoBerikut: "2026-05-10",
+      disetujuiPada: "2025-10-10",
+      disetujuiOleh: "png-budi",
+      dokumenLengkap: true,
+    },
   ];
 
   const MONTHS = [
-    { p: "2026-01", angsuran: 12, penjualan: 8, pembelian: [1, 1, 1, 1, 1], pencairan: 2, operasional: 2, delta: 2 * M },
-    { p: "2026-02", angsuran: 13, penjualan: 8, pembelian: [1, 1, 1, 1], pencairan: 1, operasional: 2, delta: 2.5 * M },
-    { p: "2026-03", angsuran: 14, penjualan: 9, pembelian: [1, 1, 1, 1, 1], pencairan: 2, operasional: 2, delta: 1.5 * M },
-    { p: "2026-04", angsuran: 14, penjualan: 10, pembelian: [1, 1, 1, 1, 1], pencairan: 2, operasional: 3, delta: 2 * M },
-    { p: "2026-05", angsuran: 12, penjualan: 9, pembelian: [4, 4, 4, 2, 2], pencairan: 1, operasional: 2, delta: -10.5 * M },
-    { p: "2026-06", angsuran: 16, penjualan: 12, pembelian: [1, 1, 1], pencairan: 1, operasional: 3, delta: -11 * M },
+    {
+      p: "2026-01",
+      angsuran: 12,
+      penjualan: 8,
+      pembelian: [1, 1, 1, 1, 1],
+      pencairan: 2,
+      operasional: 2,
+      delta: 2 * M,
+    },
+    {
+      p: "2026-02",
+      angsuran: 13,
+      penjualan: 8,
+      pembelian: [1, 1, 1, 1],
+      pencairan: 1,
+      operasional: 2,
+      delta: 2.5 * M,
+    },
+    {
+      p: "2026-03",
+      angsuran: 14,
+      penjualan: 9,
+      pembelian: [1, 1, 1, 1, 1],
+      pencairan: 2,
+      operasional: 2,
+      delta: 1.5 * M,
+    },
+    {
+      p: "2026-04",
+      angsuran: 14,
+      penjualan: 10,
+      pembelian: [1, 1, 1, 1, 1],
+      pencairan: 2,
+      operasional: 3,
+      delta: 2 * M,
+    },
+    {
+      p: "2026-05",
+      angsuran: 12,
+      penjualan: 9,
+      pembelian: [4, 4, 4, 2, 2],
+      pencairan: 1,
+      operasional: 2,
+      delta: -10.5 * M,
+    },
+    {
+      p: "2026-06",
+      angsuran: 16,
+      penjualan: 12,
+      pembelian: [1, 1, 1],
+      pencairan: 1,
+      operasional: 3,
+      delta: -11 * M,
+    },
   ];
 
   const transaksiRows: Row<typeof transaksi>[] = [];
   const day = (periode: string) => `${periode}-${pad2(intBetween(rng, 1, 28))}`;
   let seq = 0;
-  const tid = (periode: string) => `trx-${periode.replace("-", "")}-${pad2(++seq)}`;
+  const tid = (periode: string) =>
+    `trx-${periode.replace("-", "")}-${pad2(++seq)}`;
 
   MONTHS.forEach((mo, idx) => {
     const bulanName = NAMA_BULAN[idx]!;
@@ -303,44 +632,175 @@ export function buildSeedData(): SeedData {
       net += r.arah === "masuk" ? r.jumlah : -r.jumlah;
     };
     for (const aid of anggotaIds) {
-      push({ id: tid(mo.p), koperasiId: "kop-sukamaju", unitUsahaId: "uu-sp", tanggal: day(mo.p), jenis: "setoran_simpanan", arah: "masuk", jumlah: 50_000, deskripsi: "Setoran simpanan wajib anggota", vendorNama: null, vendorAlamat: null, anggotaId: aid });
+      push({
+        id: tid(mo.p),
+        koperasiId: "kop-sukamaju",
+        unitUsahaId: "uu-sp",
+        tanggal: day(mo.p),
+        jenis: "setoran_simpanan",
+        arah: "masuk",
+        jumlah: 50_000,
+        deskripsi: "Setoran simpanan wajib anggota",
+        vendorNama: null,
+        vendorAlamat: null,
+        anggotaId: aid,
+      });
     }
     for (let g = 0; g < 5; g++) {
-      push({ id: tid(mo.p), koperasiId: "kop-sukamaju", unitUsahaId: null, tanggal: day(mo.p), jenis: "gaji", arah: "keluar", jumlah: 500_000, deskripsi: `Honor pengurus bulan ${bulanName}`, vendorNama: null, vendorAlamat: null, anggotaId: null });
+      push({
+        id: tid(mo.p),
+        koperasiId: "kop-sukamaju",
+        unitUsahaId: null,
+        tanggal: day(mo.p),
+        jenis: "gaji",
+        arah: "keluar",
+        jumlah: 500_000,
+        deskripsi: `Honor pengurus bulan ${bulanName}`,
+        vendorNama: null,
+        vendorAlamat: null,
+        anggotaId: null,
+      });
     }
     for (let a = 0; a < mo.angsuran; a++) {
-      push({ id: tid(mo.p), koperasiId: "kop-sukamaju", unitUsahaId: "uu-sp", tanggal: day(mo.p), jenis: "angsuran", arah: "masuk", jumlah: 250_000, deskripsi: "Angsuran pinjaman anggota", vendorNama: null, vendorAlamat: null, anggotaId: pick(rng, anggotaIds) });
+      push({
+        id: tid(mo.p),
+        koperasiId: "kop-sukamaju",
+        unitUsahaId: "uu-sp",
+        tanggal: day(mo.p),
+        jenis: "angsuran",
+        arah: "masuk",
+        jumlah: 250_000,
+        deskripsi: "Angsuran pinjaman anggota",
+        vendorNama: null,
+        vendorAlamat: null,
+        anggotaId: pick(rng, anggotaIds),
+      });
     }
     for (const amt of mo.pembelian) {
-      push({ id: tid(mo.p), koperasiId: "kop-sukamaju", unitUsahaId: "uu-gudang", tanggal: day(mo.p), jenis: "pembelian", arah: "keluar", jumlah: amt * M, deskripsi: "Pembelian stok barang gerai", vendorNama: pick(rng, ["UD Sejahtera", "Toko Makmur", "CV Andalan"]), vendorAlamat: "Pasar Sukamaju", anggotaId: null });
+      push({
+        id: tid(mo.p),
+        koperasiId: "kop-sukamaju",
+        unitUsahaId: "uu-gudang",
+        tanggal: day(mo.p),
+        jenis: "pembelian",
+        arah: "keluar",
+        jumlah: amt * M,
+        deskripsi: "Pembelian stok barang gerai",
+        vendorNama: pick(rng, ["UD Sejahtera", "Toko Makmur", "CV Andalan"]),
+        vendorAlamat: "Pasar Sukamaju",
+        anggotaId: null,
+      });
     }
     for (let c = 0; c < mo.pencairan; c++) {
-      push({ id: tid(mo.p), koperasiId: "kop-sukamaju", unitUsahaId: "uu-sp", tanggal: day(mo.p), jenis: "pencairan_pinjaman", arah: "keluar", jumlah: 2 * M, deskripsi: "Pencairan pinjaman anggota", vendorNama: null, vendorAlamat: null, anggotaId: pick(rng, anggotaIds) });
+      push({
+        id: tid(mo.p),
+        koperasiId: "kop-sukamaju",
+        unitUsahaId: "uu-sp",
+        tanggal: day(mo.p),
+        jenis: "pencairan_pinjaman",
+        arah: "keluar",
+        jumlah: 2 * M,
+        deskripsi: "Pencairan pinjaman anggota",
+        vendorNama: null,
+        vendorAlamat: null,
+        anggotaId: pick(rng, anggotaIds),
+      });
     }
     for (let o = 0; o < mo.operasional; o++) {
-      push({ id: tid(mo.p), koperasiId: "kop-sukamaju", unitUsahaId: null, tanggal: day(mo.p), jenis: "operasional", arah: "keluar", jumlah: 300_000, deskripsi: "Biaya operasional koperasi", vendorNama: null, vendorAlamat: null, anggotaId: null });
+      push({
+        id: tid(mo.p),
+        koperasiId: "kop-sukamaju",
+        unitUsahaId: null,
+        tanggal: day(mo.p),
+        jenis: "operasional",
+        arah: "keluar",
+        jumlah: 300_000,
+        deskripsi: "Biaya operasional koperasi",
+        vendorNama: null,
+        vendorAlamat: null,
+        anggotaId: null,
+      });
     }
     if (mo.p === "2026-06") {
-      push({ id: "trx-an1", koperasiId: "kop-sukamaju", unitUsahaId: "uu-gerai", tanggal: "2026-06-14", jenis: "pembelian", arah: "keluar", jumlah: 15 * M, deskripsi: "Pembelian peralatan dari Toko Berkah", vendorNama: "Toko Berkah", vendorAlamat: BUDI_ALAMAT, anggotaId: null });
+      push({
+        id: "trx-an1",
+        koperasiId: "kop-sukamaju",
+        unitUsahaId: "uu-gerai",
+        tanggal: "2026-06-14",
+        jenis: "pembelian",
+        arah: "keluar",
+        jumlah: 15 * M,
+        deskripsi: "Pembelian peralatan dari Toko Berkah",
+        vendorNama: "Toko Berkah",
+        vendorAlamat: BUDI_ALAMAT,
+        anggotaId: null,
+      });
       ["2026-06-09", "2026-06-11", "2026-06-13"].forEach((d, i) => {
-        push({ id: `trx-an3-${i + 1}`, koperasiId: "kop-sukamaju", unitUsahaId: "uu-gudang", tanggal: d, jenis: "pembelian", arah: "keluar", jumlah: 4_900_000, deskripsi: "Pembelian barang dari CV Sumber Rejeki", vendorNama: "CV Sumber Rejeki", vendorAlamat: "Jl. Industri No. 8, Bandung", anggotaId: null });
+        push({
+          id: `trx-an3-${i + 1}`,
+          koperasiId: "kop-sukamaju",
+          unitUsahaId: "uu-gudang",
+          tanggal: d,
+          jenis: "pembelian",
+          arah: "keluar",
+          jumlah: 4_900_000,
+          deskripsi: "Pembelian barang dari CV Sumber Rejeki",
+          vendorNama: "CV Sumber Rejeki",
+          vendorAlamat: "Jl. Industri No. 8, Bandung",
+          anggotaId: null,
+        });
       });
       for (let i = 0; i < 5; i++) {
-        push({ id: `trx-an2-${i + 1}`, koperasiId: "kop-sukamaju", unitUsahaId: "uu-sp", tanggal: "2026-06-20", jenis: "pencairan_pinjaman", arah: "keluar", jumlah: 6 * M, deskripsi: "Pencairan pinjaman program musim tanam", vendorNama: null, vendorAlamat: null, anggotaId: `ang-g${pad2(i + 2)}` });
+        push({
+          id: `trx-an2-${i + 1}`,
+          koperasiId: "kop-sukamaju",
+          unitUsahaId: "uu-sp",
+          tanggal: "2026-06-20",
+          jenis: "pencairan_pinjaman",
+          arah: "keluar",
+          jumlah: 6 * M,
+          deskripsi: "Pencairan pinjaman program musim tanam",
+          vendorNama: null,
+          vendorAlamat: null,
+          anggotaId: `ang-g${pad2(i + 2)}`,
+        });
       }
     }
     const penjualanTotal = mo.delta - net;
-    if (penjualanTotal <= 0) throw new Error(`penjualan ${mo.p} non-positif: ${penjualanTotal}`);
+    if (penjualanTotal <= 0)
+      throw new Error(`penjualan ${mo.p} non-positif: ${penjualanTotal}`);
     splitAmount(rng, penjualanTotal, mo.penjualan).forEach((amt, i) => {
       const apotek = i % 3 === 0;
-      push({ id: tid(mo.p), koperasiId: "kop-sukamaju", unitUsahaId: apotek ? "uu-apotek" : "uu-gerai", tanggal: day(mo.p), jenis: "penjualan", arah: "masuk", jumlah: amt, deskripsi: apotek ? "Penjualan apotek desa" : "Penjualan gerai sembako", vendorNama: null, vendorAlamat: null, anggotaId: null });
+      push({
+        id: tid(mo.p),
+        koperasiId: "kop-sukamaju",
+        unitUsahaId: apotek ? "uu-apotek" : "uu-gerai",
+        tanggal: day(mo.p),
+        jenis: "penjualan",
+        arah: "masuk",
+        jumlah: amt,
+        deskripsi: apotek ? "Penjualan apotek desa" : "Penjualan gerai sembako",
+        vendorNama: null,
+        vendorAlamat: null,
+        anggotaId: null,
+      });
     });
   });
 
   const auditRunRows: Row<typeof auditRun>[] = [];
   const temuanRows: Row<typeof temuan>[] = [];
-  const SUKAMAJU_TREN = ["hijau", "hijau", "hijau", "kuning", "kuning", "merah"] as const;
-  const rawSeed = JSON.stringify({ source: "seed", metadata: { agenGagal: [] } });
+  const SUKAMAJU_TREN = [
+    "hijau",
+    "hijau",
+    "hijau",
+    "kuning",
+    "kuning",
+    "merah",
+  ] as const;
+  const rawSeed = JSON.stringify({
+    source: "seed",
+    metadata: { agenGagal: [] },
+  });
 
   MONTHS.forEach((mo, idx) => {
     const warna = SUKAMAJU_TREN[idx]!;
@@ -352,7 +812,9 @@ export function buildSeedData(): SeedData {
       periode: mo.p,
       source: "seed",
       verdictWarna: warna,
-      ringkasan: isJun ? RINGKASAN_MERAH : RINGKASAN_LIVE[warna === "merah" ? "kuning" : warna],
+      ringkasan: isJun
+        ? RINGKASAN_MERAH
+        : RINGKASAN_LIVE[warna === "merah" ? "kuning" : warna],
       durasiMs: 1500,
       rawJson: rawSeed,
       dibuatPada: `${mo.p}-28T09:00:00.000Z`,
@@ -384,7 +846,12 @@ export function buildSeedData(): SeedData {
       periode: "2026-06",
       source: "seed",
       verdictWarna: k.warna,
-      ringkasan: k.warna === "merah" ? RINGKASAN_MERAH : k.warna === "kuning" ? RINGKASAN_LIVE.kuning : RINGKASAN_LIVE.hijau,
+      ringkasan:
+        k.warna === "merah"
+          ? RINGKASAN_MERAH
+          : k.warna === "kuning"
+            ? RINGKASAN_LIVE.kuning
+            : RINGKASAN_LIVE.hijau,
       durasiMs: 1500,
       rawJson: rawSeed,
       dibuatPada: "2026-06-28T09:00:00.000Z",
@@ -396,14 +863,17 @@ export function buildSeedData(): SeedData {
     const picks: Gen[] = [];
     if (k.warna === "merah") {
       picks.push(GENERIK_MERAH);
-      for (let i = 0; i < k.temuanCount - 1; i++) picks.push(GENERIK_KUNING[i % GENERIK_KUNING.length]!);
+      for (let i = 0; i < k.temuanCount - 1; i++)
+        picks.push(GENERIK_KUNING[i % GENERIK_KUNING.length]!);
     } else if (k.warna === "kuning") {
-      for (let i = 0; i < k.temuanCount; i++) picks.push(GENERIK_KUNING[i % GENERIK_KUNING.length]!);
+      for (let i = 0; i < k.temuanCount; i++)
+        picks.push(GENERIK_KUNING[i % GENERIK_KUNING.length]!);
     } else if (k.temuanCount > 0) {
       picks.push(GENERIK_INFO);
     }
     picks.forEach((t, i) => {
-      const severity = t === GENERIK_MERAH ? "merah" : t === GENERIK_INFO ? "info" : "kuning";
+      const severity =
+        t === GENERIK_MERAH ? "merah" : t === GENERIK_INFO ? "info" : "kuning";
       temuanRows.push({
         id: `tmn-${k.id}-${i + 1}`,
         auditRunId: id,
@@ -457,15 +927,59 @@ export function buildSeedData(): SeedData {
 
   const notifTeks = COPY["notif.template"].replace("{n}", "5");
   const notifikasiRows: Row<typeof notifikasi>[] = [
-    { id: "notif-ang-juri", anggotaId: "ang-juri", teks: notifTeks, dibacaPada: null, dibuatPada: "2026-06-25T08:00:00.000Z" },
-    { id: "notif-ang-sari", anggotaId: "ang-sari", teks: notifTeks, dibacaPada: null, dibuatPada: "2026-06-25T08:00:00.000Z" },
+    {
+      id: "notif-ang-juri",
+      anggotaId: "ang-juri",
+      teks: notifTeks,
+      dibacaPada: null,
+      dibuatPada: "2026-06-25T08:00:00.000Z",
+    },
+    {
+      id: "notif-ang-sari",
+      anggotaId: "ang-sari",
+      teks: notifTeks,
+      dibacaPada: null,
+      dibuatPada: "2026-06-25T08:00:00.000Z",
+    },
   ];
 
   const usersRows: Row<typeof users>[] = [
-    { id: "usr-juri-anggota", email: "juri.anggota@pramana.id", passwordHash: hash("PramanaJuri2026"), role: "anggota", anggotaId: "ang-juri", pengurusId: null, createdAt: "2026-01-01T00:00:00.000Z" },
-    { id: "usr-juri-pemerintah", email: "juri.pemerintah@pramana.id", passwordHash: hash("PramanaJuri2026"), role: "pemerintah", anggotaId: null, pengurusId: null, createdAt: "2026-01-01T00:00:00.000Z" },
-    { id: "usr-sari", email: "sari@pramana.id", passwordHash: hash("SariSukamaju1"), role: "anggota", anggotaId: "ang-sari", pengurusId: null, createdAt: "2026-01-01T00:00:00.000Z" },
-    { id: "usr-bendahara", email: "bendahara@pramana.id", passwordHash: hash("PramanaBendahara2026"), role: "pengurus", anggotaId: null, pengurusId: "png-budi", createdAt: "2026-01-01T00:00:00.000Z" },
+    {
+      id: "usr-juri-anggota",
+      email: "juri.anggota@pramana.id",
+      passwordHash: hash("PramanaJuri2026"),
+      role: "anggota",
+      anggotaId: "ang-juri",
+      pengurusId: null,
+      createdAt: "2026-01-01T00:00:00.000Z",
+    },
+    {
+      id: "usr-juri-pemerintah",
+      email: "juri.pemerintah@pramana.id",
+      passwordHash: hash("PramanaJuri2026"),
+      role: "pemerintah",
+      anggotaId: null,
+      pengurusId: null,
+      createdAt: "2026-01-01T00:00:00.000Z",
+    },
+    {
+      id: "usr-sari",
+      email: "sari@pramana.id",
+      passwordHash: hash("SariSukamaju1"),
+      role: "anggota",
+      anggotaId: "ang-sari",
+      pengurusId: null,
+      createdAt: "2026-01-01T00:00:00.000Z",
+    },
+    {
+      id: "usr-bendahara",
+      email: "bendahara@pramana.id",
+      passwordHash: hash("PramanaBendahara2026"),
+      role: "pengurus",
+      anggotaId: null,
+      pengurusId: "png-budi",
+      createdAt: "2026-01-01T00:00:00.000Z",
+    },
   ];
 
   return {

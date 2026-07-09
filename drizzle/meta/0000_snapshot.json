@@ -60,9 +60,7 @@
       "indexes": {
         "anggota_noAnggota_unique": {
           "name": "anggota_noAnggota_unique",
-          "columns": [
-            "noAnggota"
-          ],
+          "columns": ["noAnggota"],
           "isUnique": true
         }
       },
@@ -71,12 +69,8 @@
           "name": "anggota_koperasiId_koperasi_id_fk",
           "tableFrom": "anggota",
           "tableTo": "koperasi",
-          "columnsFrom": [
-            "koperasiId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["koperasiId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -155,10 +149,7 @@
       "indexes": {
         "idx_audit_run_koperasi_periode": {
           "name": "idx_audit_run_koperasi_periode",
-          "columns": [
-            "koperasiId",
-            "periode"
-          ],
+          "columns": ["koperasiId", "periode"],
           "isUnique": false
         }
       },
@@ -167,12 +158,8 @@
           "name": "audit_run_koperasiId_koperasi_id_fk",
           "tableFrom": "audit_run",
           "tableTo": "koperasi",
-          "columnsFrom": [
-            "koperasiId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["koperasiId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -240,12 +227,8 @@
           "name": "keputusan_koperasiId_koperasi_id_fk",
           "tableFrom": "keputusan",
           "tableTo": "koperasi",
-          "columnsFrom": [
-            "koperasiId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["koperasiId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -379,12 +362,8 @@
           "name": "notifikasi_anggotaId_anggota_id_fk",
           "tableFrom": "notifikasi",
           "tableTo": "anggota",
-          "columnsFrom": [
-            "anggotaId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["anggotaId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -438,12 +417,8 @@
           "name": "pengurus_koperasiId_koperasi_id_fk",
           "tableFrom": "pengurus",
           "tableTo": "koperasi",
-          "columnsFrom": [
-            "koperasiId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["koperasiId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -487,10 +462,7 @@
       "indexes": {
         "uq_pertanyaan_temuan_anggota": {
           "name": "uq_pertanyaan_temuan_anggota",
-          "columns": [
-            "temuanId",
-            "anggotaId"
-          ],
+          "columns": ["temuanId", "anggotaId"],
           "isUnique": true
         }
       },
@@ -499,12 +471,8 @@
           "name": "pertanyaan_rat_temuanId_temuan_id_fk",
           "tableFrom": "pertanyaan_rat",
           "tableTo": "temuan",
-          "columnsFrom": [
-            "temuanId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["temuanId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -512,12 +480,8 @@
           "name": "pertanyaan_rat_anggotaId_anggota_id_fk",
           "tableFrom": "pertanyaan_rat",
           "tableTo": "anggota",
-          "columnsFrom": [
-            "anggotaId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["anggotaId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -599,12 +563,8 @@
           "name": "pinjaman_anggotaId_anggota_id_fk",
           "tableFrom": "pinjaman",
           "tableTo": "anggota",
-          "columnsFrom": [
-            "anggotaId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["anggotaId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -612,12 +572,8 @@
           "name": "pinjaman_disetujuiOleh_pengurus_id_fk",
           "tableFrom": "pinjaman",
           "tableTo": "pengurus",
-          "columnsFrom": [
-            "disetujuiOleh"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["disetujuiOleh"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -664,12 +620,8 @@
           "name": "simpanan_anggotaId_anggota_id_fk",
           "tableFrom": "simpanan",
           "tableTo": "anggota",
-          "columnsFrom": [
-            "anggotaId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["anggotaId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -755,9 +707,7 @@
       "indexes": {
         "idx_temuan_auditrun": {
           "name": "idx_temuan_auditrun",
-          "columns": [
-            "auditRunId"
-          ],
+          "columns": ["auditRunId"],
           "isUnique": false
         }
       },
@@ -766,12 +716,8 @@
           "name": "temuan_auditRunId_audit_run_id_fk",
           "tableFrom": "temuan",
           "tableTo": "audit_run",
-          "columnsFrom": [
-            "auditRunId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["auditRunId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -864,10 +810,7 @@
       "indexes": {
         "idx_transaksi_koperasi_tanggal": {
           "name": "idx_transaksi_koperasi_tanggal",
-          "columns": [
-            "koperasiId",
-            "tanggal"
-          ],
+          "columns": ["koperasiId", "tanggal"],
           "isUnique": false
         }
       },
@@ -876,12 +819,8 @@
           "name": "transaksi_koperasiId_koperasi_id_fk",
           "tableFrom": "transaksi",
           "tableTo": "koperasi",
-          "columnsFrom": [
-            "koperasiId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["koperasiId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -889,12 +828,8 @@
           "name": "transaksi_unitUsahaId_unit_usaha_id_fk",
           "tableFrom": "transaksi",
           "tableTo": "unit_usaha",
-          "columnsFrom": [
-            "unitUsahaId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["unitUsahaId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -902,12 +837,8 @@
           "name": "transaksi_anggotaId_anggota_id_fk",
           "tableFrom": "transaksi",
           "tableTo": "anggota",
-          "columnsFrom": [
-            "anggotaId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["anggotaId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -954,12 +885,8 @@
           "name": "unit_usaha_koperasiId_koperasi_id_fk",
           "tableFrom": "unit_usaha",
           "tableTo": "koperasi",
-          "columnsFrom": [
-            "koperasiId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["koperasiId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -1024,9 +951,7 @@
       "indexes": {
         "users_email_unique": {
           "name": "users_email_unique",
-          "columns": [
-            "email"
-          ],
+          "columns": ["email"],
           "isUnique": true
         }
       },
@@ -1035,12 +960,8 @@
           "name": "users_anggotaId_anggota_id_fk",
           "tableFrom": "users",
           "tableTo": "anggota",
-          "columnsFrom": [
-            "anggotaId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["anggotaId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -1048,12 +969,8 @@
           "name": "users_pengurusId_pengurus_id_fk",
           "tableFrom": "users",
           "tableTo": "pengurus",
-          "columnsFrom": [
-            "pengurusId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["pengurusId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -1097,10 +1014,7 @@
       "indexes": {
         "uq_vote_keputusan_anggota": {
           "name": "uq_vote_keputusan_anggota",
-          "columns": [
-            "keputusanId",
-            "anggotaId"
-          ],
+          "columns": ["keputusanId", "anggotaId"],
           "isUnique": true
         }
       },
@@ -1109,12 +1023,8 @@
           "name": "vote_keputusanId_keputusan_id_fk",
           "tableFrom": "vote",
           "tableTo": "keputusan",
-          "columnsFrom": [
-            "keputusanId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["keputusanId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -1122,12 +1032,8 @@
           "name": "vote_anggotaId_anggota_id_fk",
           "tableFrom": "vote",
           "tableTo": "anggota",
-          "columnsFrom": [
-            "anggotaId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["anggotaId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }

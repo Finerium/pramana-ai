@@ -41,8 +41,11 @@ export function parseEnvKeys(text) {
 export function findProcessEnvKeys(text) {
   const set = new Set();
   const s = String(text);
-  for (const m of s.matchAll(/process\.env\.([A-Za-z_][A-Za-z0-9_]*)/g)) set.add(m[1]);
-  for (const m of s.matchAll(/process\.env\[\s*['"]([A-Za-z_][A-Za-z0-9_]*)['"]\s*\]/g))
+  for (const m of s.matchAll(/process\.env\.([A-Za-z_][A-Za-z0-9_]*)/g))
+    set.add(m[1]);
+  for (const m of s.matchAll(
+    /process\.env\[\s*['"]([A-Za-z_][A-Za-z0-9_]*)['"]\s*\]/g,
+  ))
     set.add(m[1]);
   return [...set];
 }
@@ -59,7 +62,10 @@ export function collectSources(dirs) {
         if (!SKIP_DIRS.has(entry.name)) walk(`${dir}/${entry.name}`);
       } else if (entry.isFile() && SRC_EXT.test(entry.name)) {
         try {
-          out.push({ file: `${dir}/${entry.name}`, text: readFileSync(`${dir}/${entry.name}`, "utf8") });
+          out.push({
+            file: `${dir}/${entry.name}`,
+            text: readFileSync(`${dir}/${entry.name}`, "utf8"),
+          });
         } catch {
           /* unreadable: skip */
         }
@@ -104,14 +110,19 @@ function main() {
   const sources = collectSources(["app", "lib", "db", "scripts"]);
   const r = checkEnvExample(readFileSync(path, "utf8"), sources);
   if (r.ok) {
-    console.log("check-env: LULUS (.env.example cocok set 6.16; tidak ada env liar).");
+    console.log(
+      "check-env: LULUS (.env.example cocok set 6.16; tidak ada env liar).",
+    );
     process.exit(0);
   }
-  if (r.missing.length) console.error(`  kunci .env.example kurang: ${r.missing.join(", ")}`);
-  if (r.extra.length) console.error(`  kunci .env.example berlebih: ${r.extra.join(", ")}`);
+  if (r.missing.length)
+    console.error(`  kunci .env.example kurang: ${r.missing.join(", ")}`);
+  if (r.extra.length)
+    console.error(`  kunci .env.example berlebih: ${r.extra.join(", ")}`);
   for (const b of r.badUsages)
     console.error(`  env di luar set 6.16 + allowlist: ${b.file} -> ${b.key}`);
   process.exit(1);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href)
+  main();

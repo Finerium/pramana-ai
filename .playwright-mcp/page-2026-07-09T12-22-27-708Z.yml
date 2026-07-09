@@ -1,0 +1,198 @@
+- generic [active] [ref=f3e1]:
+    - generic [ref=f3e3]:
+        - navigation [ref=f3e4]:
+            - generic [ref=f3e5]:
+                - generic [ref=f3e6]:
+                    - generic [ref=f3e9]: Pramana
+                    - generic [ref=f3e10]: AI
+                - generic [ref=f3e11]:
+                    - button "Ganti tema tampilan, tema saat ini Sistem" [ref=f3e12] [cursor=pointer]:
+                        - generic [ref=f3e14]: Sistem
+                    - link "Masuk sebagai Anggota" [ref=f3e15] [cursor=pointer]:
+                        - /url: /login
+        - main [ref=f3e16]:
+            - generic [ref=f3e18]:
+                - generic [ref=f3e23]: PRAMANA AI
+                - heading "Pengawas koperasi desa, di genggaman setiap anggota" [level=1] [ref=f3e24]
+                - paragraph [ref=f3e25]: Empat pemeriksa AI membaca transaksi koperasi Anda. Satu adjudikator menimbang temuannya menjadi verdict hijau, kuning, atau merah, lengkap dengan pertanyaan siap pakai untuk Rapat Anggota Tahunan.
+                - generic [ref=f3e26]:
+                    - link "Masuk sebagai Anggota" [ref=f3e27] [cursor=pointer]:
+                        - /url: /login
+                    - link "Masuk sebagai Pemerintah" [ref=f3e28] [cursor=pointer]:
+                        - /url: /login?as=pemerintah
+                - link "Daftar sebagai Anggota Baru" [ref=f3e30] [cursor=pointer]:
+                    - /url: /daftar
+                - paragraph [ref=f3e31]: Akun uji untuk juri tersedia di halaman masuk.
+            - generic [ref=f3e32]:
+                - generic [ref=f3e33]:
+                    - generic [ref=f3e37]:
+                        - generic [ref=f3e40]: "09.41"
+                        - generic [ref=f3e48]: Selamat pagi, Ibu Sari
+                        - paragraph [ref=f3e50]: Pengawas menemukan 5 hal yang sebaiknya Anda tanyakan kepada pengurus bulan ini.
+                        - generic [ref=f3e51]:
+                            - generic [ref=f3e54]: MERAH · PERLU DIJELASKAN
+                            - paragraph [ref=f3e55]: Kas koperasi menurun dan ada satu pembelian besar yang perlu dijelaskan pengurus.
+                            - generic [ref=f3e56]: Koperasi Desa Merah Putih Sukamaju · Juni 2026
+                            - generic [ref=f3e57]: Lihat yang perlu Anda tahu
+                        - generic [ref=f3e58]:
+                            - generic [ref=f3e59]: TEMUAN · KONFLIK KEPENTINGAN
+                            - generic [ref=f3e60]: Pembelian Rp15.000.000 ke Toko Berkah
+                            - generic [ref=f3e61]: Alamat vendor tercatat sama dengan alamat bendahara.
+                            - generic [ref=f3e63]: Kenapa ini penting?
+                            - generic [ref=f3e64]: Tambahkan ke pertanyaan rapat
+                        - generic [ref=f3e66]:
+                            - generic [ref=f3e69]: Beranda
+                            - generic [ref=f3e72]: Uang Anda
+                            - generic [ref=f3e75]: Arus Dana
+                            - generic [ref=f3e80]: Suara Anda
+                    - generic [ref=f3e87]:
+                        - generic [ref=f3e88]:
+                            - generic [ref=f3e90]: Pramana · Dasbor Pemerintah
+                            - generic [ref=f3e91]: PERIODE JUNI 2026
+                        - generic [ref=f3e92]:
+                            - generic [ref=f3e93]:
+                                - generic [ref=f3e94]: "12"
+                                - generic [ref=f3e95]: KOPERASI TERPANTAU
+                            - generic [ref=f3e96]:
+                                - generic [ref=f3e98]: "6"
+                                - generic [ref=f3e100]: HIJAU
+                            - generic [ref=f3e101]:
+                                - generic [ref=f3e103]: "4"
+                                - generic [ref=f3e105]: KUNING
+                            - generic [ref=f3e106]:
+                                - generic [ref=f3e108]: "2"
+                                - generic [ref=f3e110]: MERAH
+                            - generic [ref=f3e111]:
+                                - generic [ref=f3e112]: "17"
+                                - generic [ref=f3e113]: TEMUAN TERBUKA
+                        - generic [ref=f3e115]: DISTRIBUSI VERDICT
+                        - generic [ref=f3e120]:
+                            - generic [ref=f3e121]:
+                                - generic [ref=f3e122]: KOPERASI
+                                - generic [ref=f3e123]: PROVINSI
+                                - generic [ref=f3e124]: VERDICT
+                                - generic [ref=f3e125]: TEMUAN
+                            - generic [ref=f3e126]:
+                                - generic [ref=f3e127]: Merah Putih Sukamaju
+                                - generic [ref=f3e128]: Jawa Barat
+                                - generic [ref=f3e131]: Merah
+                                - generic [ref=f3e132]: "6"
+                            - generic [ref=f3e133]:
+                                - generic [ref=f3e134]: Merah Putih Lembah Sari
+                                - generic [ref=f3e135]: Sumatera Barat
+                                - generic [ref=f3e138]: Merah
+                                - generic [ref=f3e139]: "4"
+                            - generic [ref=f3e140]:
+                                - generic [ref=f3e141]: Merah Putih Cempaka Wangi
+                                - generic [ref=f3e142]: Lampung
+                                - generic [ref=f3e145]: Kuning
+                                - generic [ref=f3e146]: "2"
+                            - generic [ref=f3e147]:
+                                - generic [ref=f3e148]: Merah Putih Wanasaba
+                                - generic [ref=f3e149]: Nusa Tenggara Barat
+                                - generic [ref=f3e152]: Kuning
+                                - generic [ref=f3e153]: "2"
+                            - generic [ref=f3e154]:
+                                - generic [ref=f3e155]: Merah Putih Mekarsari
+                                - generic [ref=f3e156]: Jawa Barat
+                                - generic [ref=f3e159]: Hijau
+                                - generic [ref=f3e160]: "0"
+                - generic [ref=f3e163]:
+                    - generic [ref=f3e164]:
+                        - text: APLIKASI ANGGOTA · MOBILE
+                        - paragraph [ref=f3e165]: Verdict dan temuan dalam bahasa awam, dipahami dalam waktu kurang dari satu menit.
+                    - generic [ref=f3e166]:
+                        - text: DASBOR PEMERINTAH · DESKTOP
+                        - paragraph [ref=f3e167]: Kesehatan seluruh koperasi binaan dalam satu layar, dari agregat sampai detail temuan.
+            - generic [ref=f3e169]:
+                - generic [ref=f3e171]: 01 · MASALAH
+                - heading "Dananya sudah mengalir. Pengawasannya belum." [level=2] [ref=f3e173]
+                - paragraph [ref=f3e174]: Program Koperasi Desa Merah Putih menyalurkan plafon hingga Rp3 miliar ke setiap koperasi desa. Badan pengawasnya sering kali hanya formalitas, dan anggota tidak punya alat untuk memeriksa sendiri.
+                - generic [ref=f3e175]:
+                    - generic [ref=f3e176]:
+                        - generic [ref=f3e178]: "83.383"
+                        - generic [ref=f3e179]: koperasi desa berdiri
+                        - generic [ref=f3e180]: Simkopdes via Katadata · 29 Juni 2026
+                    - generic [ref=f3e181]:
+                        - generic [ref=f3e182]: BARU SEKITAR
+                        - generic [ref=f3e183]: "50.383"
+                        - generic [ref=f3e184]: yang telah RAT
+                        - generic [ref=f3e185]: Simkopdes via Katadata · 29 Juni 2026
+                    - generic [ref=f3e186]:
+                        - generic [ref=f3e187]: RISIKO KEBOCORAN SEKITAR
+                        - generic [ref=f3e188]: Rp60 juta
+                        - generic [ref=f3e189]: per koperasi per tahun
+                        - generic [ref=f3e190]: Studi CELIOS · 2026
+            - generic [ref=f3e192]:
+                - paragraph [ref=f3e197]: Aplikasi koperasi selama ini dibangun untuk pengurus.
+                - paragraph [ref=f3e198]: Pramana dibangun untuk Anda, anggotanya.
+            - generic [ref=f3e200]:
+                - generic [ref=f3e202]: 02 · CARA KERJA
+                - heading "Pramana bertanya, tidak menuduh." [level=2] [ref=f3e204]
+                - paragraph [ref=f3e205]: Empat pemeriksa membaca data koperasi dari sisi yang berbeda, berjalan bersamaan. Satu adjudikator menimbang seluruh temuan, menulis ulang dalam bahasa awam, lalu menyusun pertanyaan yang siap Anda bawa ke rapat.
+                - generic [ref=f3e206]:
+                    - generic [ref=f3e207]:
+                        - generic [ref=f3e208]:
+                            - generic [ref=f3e210]: P1
+                            - generic [ref=f3e212]: Konflik Kepentingan
+                            - paragraph [ref=f3e213]: Mencocokkan vendor transaksi dengan alamat dan nama pengurus.
+                        - generic [ref=f3e214]:
+                            - generic [ref=f3e216]: P2
+                            - generic [ref=f3e218]: Anomali Transaksi
+                            - paragraph [ref=f3e219]: Menandai lonjakan persetujuan, pemecahan nilai, dan pembelian janggal.
+                        - generic [ref=f3e220]:
+                            - generic [ref=f3e222]: P3
+                            - generic [ref=f3e224]: Kesehatan Finansial
+                            - paragraph [ref=f3e225]: Membaca tren kas dan pinjaman macet dengan analogi rumah tangga.
+                        - generic [ref=f3e226]:
+                            - generic [ref=f3e228]: P4
+                            - generic [ref=f3e230]: Kepatuhan Proses
+                            - paragraph [ref=f3e231]: Memeriksa kelengkapan dokumen, plafon, wewenang, dan status RAT.
+                    - generic [ref=f3e240]:
+                        - generic [ref=f3e243]: ADJUDIKATOR
+                        - paragraph [ref=f3e244]: Menghapus duplikasi, menimbang bobot temuan, menulis ulang dalam bahasa awam, lalu mengusulkan satu verdict beserta daftar pertanyaan untuk rapat.
+                    - generic [ref=f3e246]:
+                        - generic [ref=f3e249]: Hijau · Sehat
+                        - generic [ref=f3e252]: Kuning · Perlu perhatian
+                        - generic [ref=f3e255]: Merah · Perlu dijelaskan
+                    - paragraph [ref=f3e256]: Setiap verdict kuning atau merah membawa pertanyaan siap pakai untuk Rapat Anggota Tahunan.
+            - generic [ref=f3e258]:
+                - generic [ref=f3e260]: 03 · FITUR INTI
+                - heading "Empat layar, satu alur." [level=2] [ref=f3e262]
+                - generic [ref=f3e263]:
+                    - generic [ref=f3e264]:
+                        - heading "Koperasi Anda Sehat?" [level=3] [ref=f3e266]
+                        - paragraph [ref=f3e267]: Satu warna, satu kalimat ringkasan. Anda tahu kondisi koperasi dalam waktu kurang dari satu menit.
+                    - generic [ref=f3e268]:
+                        - heading "Yang Perlu Anda Tahu" [level=3] [ref=f3e270]
+                        - paragraph [ref=f3e271]: Temuan dalam bahasa awam beserta bukti, tanggapan pengurus, dan pertanyaan siap pakai untuk rapat.
+                    - generic [ref=f3e272]:
+                        - heading "Ke Mana Uang Koperasi Pergi" [level=3] [ref=f3e277]
+                        - paragraph [ref=f3e278]: Arus dana bulanan sebagai cerita visual sederhana. Aliran yang sedang diperiksa Pengawas diberi tanda.
+                    - generic [ref=f3e279]:
+                        - heading "Suara Anda" [level=3] [ref=f3e283]
+                        - paragraph [ref=f3e284]: Pertanyaan Anda digabungkan dengan anggota lain, lalu dibawa bersama ke Rapat Anggota Tahunan.
+        - contentinfo [ref=f3e285]:
+            - generic [ref=f3e286]:
+                - generic [ref=f3e287]:
+                    - generic [ref=f3e288]:
+                        - generic [ref=f3e289]:
+                            - generic [ref=f3e292]: Pramana
+                            - generic [ref=f3e293]: AI
+                        - paragraph [ref=f3e294]: Pengawas koperasi desa, di genggaman setiap anggota.
+                        - paragraph [ref=f3e295]: Akun uji untuk juri tersedia di halaman masuk.
+                    - generic [ref=f3e296]:
+                        - text: TIM
+                        - paragraph [ref=f3e297]: Tim Daulat
+                        - paragraph [ref=f3e298]: Politeknik Negeri Bandung
+                    - generic [ref=f3e299]:
+                        - text: AJANG
+                        - paragraph [ref=f3e300]: Hackathon Digital Cooperatives Expo 2026
+                        - paragraph [ref=f3e301]:
+                            - link "Repositori proyek" [ref=f3e302] [cursor=pointer]:
+                                - /url: "#"
+                - generic [ref=f3e304]: PRAMANA
+                - generic [ref=f3e305]:
+                    - generic [ref=f3e306]: © 2026 Tim Daulat
+                    - generic [ref=f3e307]: Purwarupa untuk penjurian. Seluruh data bersifat sintetis, tanpa data pribadi nyata.
+    - alert [ref=f3e308]
