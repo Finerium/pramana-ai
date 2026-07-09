@@ -1,0 +1,185 @@
+/*
+  Pramana AI, member app design tokens (PORT VERBATIM dari bundle mobile
+  handoff/tokens.css). Palet "Nila" + huruf Geist.
+
+  Custom property VALUES di :root / .dark / @theme inline adalah verbatim bundle
+  (dijaga oleh check:tokens, AC-UI-01). Yang DITAMBAHKAN (bukan pergeseran nilai,
+  konsisten dengan surface landing):
+  1. Blok @media (prefers-color-scheme: dark) :root:not(.light): agar pilihan
+     tema "Sistem" mengikuti OS. Nilainya identik blok .dark.
+  2. Keyframes berprefiks m- dan reset dasar dilingkup .m-app: mem-porting
+     <style> prototipe tanpa membocorkan ke surface lain.
+  Font: :root --font-sans literal dari bundle tetap ada (kontrak token); Geist
+  self-host di-rewire per-layout lewat variabel next/font pada pembungkus .m-app.
+*/
+
+:root {
+  /* Netral */
+  --bg:        oklch(0.968 0.006 75);
+  --surface:   oklch(0.995 0.002 75);
+  --ink:       oklch(0.255 0.02 275);
+  --muted:     oklch(0.50 0.022 270);
+  --border:    oklch(0.905 0.008 75);
+
+  /* Aksen (biru nila) */
+  --accent:    oklch(0.45 0.085 265);
+  --accent-on: oklch(1 0 0);
+
+  /* Verdict semantik, isi penuh + teks di atasnya */
+  --hijau:     oklch(0.53 0.115 152);
+  --hijau-on:  oklch(1 0 0);
+  --kuning:    oklch(0.79 0.135 82);
+  --kuning-on: var(--ink);
+  --merah:     oklch(0.53 0.165 27);
+  --merah-on:  oklch(1 0 0);
+
+  /* Verdict lembut (chip, latar sorotan) */
+  --hijau-tint:      oklch(0.93 0.04 152);
+  --hijau-tint-ink:  oklch(0.38 0.10 152);
+  --kuning-tint:     oklch(0.94 0.05 90);
+  --kuning-tint-ink: oklch(0.44 0.10 75);
+  --merah-tint:      oklch(0.93 0.035 25);
+  --merah-tint-ink:  oklch(0.42 0.13 27);
+
+  /* Huruf */
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+}
+
+.dark {
+  --bg:        oklch(0.215 0.015 275);
+  --surface:   oklch(0.262 0.016 275);
+  --ink:       oklch(0.94 0.006 80);
+  --muted:     oklch(0.67 0.015 270);
+  --border:    oklch(0.335 0.015 272);
+
+  --accent:    oklch(0.73 0.085 265);
+  --accent-on: var(--bg);
+
+  --hijau:     oklch(0.68 0.115 152);
+  --hijau-on:  var(--bg);
+  --kuning:    oklch(0.80 0.13 82);
+  --kuning-on: var(--bg);
+  --merah:     oklch(0.64 0.15 30);
+  --merah-on:  var(--bg);
+
+  --hijau-tint:      oklch(0.31 0.045 152);
+  --hijau-tint-ink:  oklch(0.86 0.09 150);
+  --kuning-tint:     oklch(0.31 0.04 85);
+  --kuning-tint-ink: oklch(0.88 0.10 90);
+  --merah-tint:      oklch(0.31 0.05 28);
+  --merah-tint-ink:  oklch(0.87 0.07 25);
+}
+
+/* Tambahan: tema "Sistem" (tanpa kelas .light/.dark eksplisit) ikut OS. Nilai
+   identik blok .dark, jadi tidak ada pergeseran token. */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --bg:        oklch(0.215 0.015 275);
+    --surface:   oklch(0.262 0.016 275);
+    --ink:       oklch(0.94 0.006 80);
+    --muted:     oklch(0.67 0.015 270);
+    --border:    oklch(0.335 0.015 272);
+
+    --accent:    oklch(0.73 0.085 265);
+    --accent-on: var(--bg);
+
+    --hijau:     oklch(0.68 0.115 152);
+    --hijau-on:  var(--bg);
+    --kuning:    oklch(0.80 0.13 82);
+    --kuning-on: var(--bg);
+    --merah:     oklch(0.64 0.15 30);
+    --merah-on:  var(--bg);
+
+    --hijau-tint:      oklch(0.31 0.045 152);
+    --hijau-tint-ink:  oklch(0.86 0.09 150);
+    --kuning-tint:     oklch(0.31 0.04 85);
+    --kuning-tint-ink: oklch(0.88 0.10 90);
+    --merah-tint:      oklch(0.31 0.05 28);
+    --merah-tint-ink:  oklch(0.87 0.07 25);
+  }
+}
+
+/* Tailwind v4 mapping (verbatim bundle). */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-on: var(--accent-on);
+  --color-hijau: var(--hijau);
+  --color-hijau-on: var(--hijau-on);
+  --color-hijau-tint: var(--hijau-tint);
+  --color-hijau-tint-ink: var(--hijau-tint-ink);
+  --color-kuning: var(--kuning);
+  --color-kuning-on: var(--kuning-on);
+  --color-kuning-tint: var(--kuning-tint);
+  --color-kuning-tint-ink: var(--kuning-tint-ink);
+  --color-merah: var(--merah);
+  --color-merah-on: var(--merah-on);
+  --color-merah-tint: var(--merah-tint);
+  --color-merah-tint-ink: var(--merah-tint-ink);
+  --font-sans: var(--font-sans);
+}
+
+/* Angka nominal: selalu tabular lining. */
+.tnum { font-variant-numeric: tabular-nums lining-nums; }
+
+/* ---- Tambahan port <style> prototipe, dilingkup .m-app ---- */
+.m-app {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+.m-app button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  text-align: inherit;
+  cursor: pointer;
+}
+.m-app input {
+  font: inherit;
+}
+.m-app ::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
+}
+.m-app a {
+  color: var(--accent);
+}
+.m-app a:hover {
+  opacity: 0.85;
+}
+.m-app :focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+.m-scroll-none {
+  scrollbar-width: none;
+}
+.m-scroll-none::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes m-pulse { 0%,100%{opacity:1} 50%{opacity:0.45} }
+@keyframes m-rise { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+@keyframes m-fadein { from{opacity:0} to{opacity:1} }
+@keyframes m-spin { to{transform:rotate(360deg)} }
+@keyframes m-growX { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+@keyframes m-growY { from{transform:scaleY(0)} to{transform:scaleY(1)} }
+
+@media (prefers-reduced-motion: reduce) {
+  .m-app *,
+  .m-app *::before,
+  .m-app *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
