@@ -18,10 +18,13 @@ export type GovKoperasiProfil = {
 
 export type GovTrenPoint = { periode: string; warna: VerdictColor };
 
+/** Temuan detail = AgentFinding beku + tanggapan pengurus (di luar 6.1). */
+export type GovTemuan = AgentFinding & { tanggapanPengurus?: string | null };
+
 export type GovKoperasiDetail = {
   profil: GovKoperasiProfil;
   auditRun: AuditRun | null;
-  temuan: AgentFinding[];
+  temuan: GovTemuan[];
   tren: GovTrenPoint[];
 };
 

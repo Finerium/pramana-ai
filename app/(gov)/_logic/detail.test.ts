@@ -48,7 +48,7 @@ describe("trenCells memetakan periode ke bulan Indonesia", () => {
     ]);
     expect(cells.map((c) => c.bulan)).toEqual(["Jan", "Mei", "Jun"]);
     expect(cells.map((c) => c.bulanPenuh)).toEqual(["Januari", "Mei", "Juni"]);
-    expect(cells[2].bentuk.label).toBe("Merah");
+    expect(cells[2]?.bentuk.label).toBe("Merah");
   });
 });
 

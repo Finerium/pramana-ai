@@ -2,9 +2,9 @@
  * Derivasi murni layar Detail Koperasi (/pemerintah/koperasi/[id]). Sumber
  * logika: prototype bundle dashboard. Data berasal dari GET /api/gov/koperasi/:id.
  */
-import type { AgentFinding, EvidenceRef, Severity } from "@/lib/contracts";
+import type { EvidenceRef, Severity } from "@/lib/contracts";
 import { BENTUK, severityToBentuk, type Bentuk } from "./verdict";
-import type { GovKoperasiProfil, GovTrenPoint } from "./types";
+import type { GovKoperasiProfil, GovTemuan, GovTrenPoint } from "./types";
 
 const SEV_RANK: Record<Severity, number> = { merah: 3, kuning: 2, info: 1 };
 
@@ -28,8 +28,9 @@ export function sortTemuanBySeverity<T extends { severity: Severity; id: string 
  * dari API bila fidelity mikro-label AN-2/AN-3 diperlukan.
  */
 export function buktiLabel(bukti: EvidenceRef[]): string {
-  if (bukti.length === 0) return "0 bukti";
-  const jenis = bukti[0].jenis;
+  const first = bukti[0];
+  if (!first) return "0 bukti";
+  const jenis = first.jenis;
   const ids = new Set(bukti.filter((b) => b.jenis === jenis).map((b) => b.id));
   return `${ids.size} ${jenis}`;
 }
@@ -62,12 +63,12 @@ export function formatProfilLokasi(p: GovKoperasiProfil): string {
 }
 
 export type TemuanRow = {
-  finding: AgentFinding;
+  finding: GovTemuan;
   bentuk: Bentuk;
   bukti: string;
 };
 
-export function temuanRows(temuan: AgentFinding[]): TemuanRow[] {
+export function temuanRows(temuan: GovTemuan[]): TemuanRow[] {
   return sortTemuanBySeverity(temuan).map((f) => ({
     finding: f,
     bentuk: BENTUK[severityToBentuk(f.severity)],

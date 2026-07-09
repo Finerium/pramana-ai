@@ -2,10 +2,11 @@
  * String surface dasbor pemerintah (unit e). Teks diekstrak verbatim dari
  * prototype produksi dashboard. Register 6.8: sapaan "Anda", tanpa em dash,
  * tanpa emoji. Dasbor pemerintah boleh istilah teknis dengan tooltip (6.8).
- * Kunci state 6.15 (audit.jalan, audit.gagal, banner.live) diambil dari COPY
- * agar satu sumber; label agen dari AGENT_LABELS.pemerintah.
+ * Kunci state 6.15 (audit.jalan, audit.gagal, banner.live, login.err) DITULIS
+ * verbatim di sini (mirror COPY 6.15). Tidak mengimpor COPY dari ./index karena
+ * index.ts me-`export *` gov.ts (dependensi melingkar). Nilai wajib sama persis
+ * dengan lib/copy COPY 6.15; label agen dari AGENT_LABELS.pemerintah.
  */
-import { COPY } from "./index";
 
 export const GOV_COPY = {
   // Shell / header
@@ -63,6 +64,7 @@ export const GOV_COPY = {
   // Detail
   "dt.breadcrumb.root": "Semua Koperasi",
   "dt.verdict.periode": "Verdict Juni 2026",
+  "dt.verdict.terakhir": "Pemeriksaan terakhir",
   "dt.kosong.chip": "Belum Diperiksa",
   "dt.kosong.teks":
     "Pengawas belum pernah memeriksa koperasi ini. Jalankan pemeriksaan pertama untuk mendapatkan verdict.",
@@ -70,10 +72,12 @@ export const GOV_COPY = {
   "dt.jalankan.pertama": "Jalankan Pemeriksaan",
   "dt.jalankan.berjalan": "Sedang Memeriksa",
   "dt.sumber.tersimpan": "Hasil pemeriksaan tersimpan",
-  "dt.sumber.tersimpan.arsip": "Arsip Pengawas, 30 Juni 2026",
-  "dt.sumber.berjalan": COPY["audit.jalan"],
-  "dt.sumber.langsung": COPY["banner.live"],
-  "dt.sumber.gagal": COPY["audit.gagal"],
+  "dt.sumber.arsipPrefix": "Arsip Pengawas",
+  "dt.sumber.berjalan":
+    "Pengawas sedang memeriksa. Ini memerlukan waktu kurang dari dua menit.",
+  "dt.sumber.langsung": "Hasil pemeriksaan langsung, baru saja dijalankan.",
+  "dt.sumber.gagal":
+    "Pemeriksaan langsung gagal. Menampilkan hasil tersimpan terakhir.",
   "dt.tren.judul": "Tren Verdict 6 Bulan",
   "dt.tren.sub": "Januari sampai Juni 2026",
   "dt.tren.kosong": "Belum ada riwayat pemeriksaan.",
@@ -100,7 +104,7 @@ export const GOV_COPY = {
   "login.email.placeholder": "nama@instansi.go.id",
   "login.sandi.label": "Kata Sandi",
   "login.sandi.placeholder": "Masukkan kata sandi Anda",
-  "login.err": COPY["login.err"],
+  "login.err": "Email atau kata sandi belum tepat. Silakan coba lagi.",
   "login.btn": "Masuk",
   "login.btn.memuat": "Memeriksa...",
   "login.hint.label": "AKUN UJI JURI",
