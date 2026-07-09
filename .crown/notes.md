@@ -24,6 +24,15 @@ Phase 0 progress per 2026-07-09:
 - F-09 FINAL (Phase 1 wave 2): /login satu rute milik modul d (desain mobile default + switch varian bersih); modul e dan h masing-masing mengirim komponen varian login (components/gov/login-variant.tsx, components/subjek/login-variant.tsx) dengan props beku {onSubmit, busy, error}; wiring varian + query ?as= dilakukan orchestrator pada Phase 2. Ketiga desain login bundle dishipping, nol downgrade, path kontrak /login utuh.
 - N-01 Interpretasi (kontradiksi internal blueprint ringan, untuk Report): 6.7 membekukan tren sukamaju Apr+Mei = kuning dengan "0-1 temuan info generik", padahal aturan 6.1 menyaratkan temuan kuning untuk warna kuning. Bacaan paling defensible: 6.7 adalah data display seed historis (beku), aturan 6.1 berlaku untuk verdict TERHITUNG pipeline audit (run Juni + seluruh run live). Diadopsi dari usulan worker modul a; wajib muncul di Report bagian deviasi.
 
+## TODO Phase 2 (integrasi, orchestrator; dari concerns worker wave 2)
+- P2-01 Wire varian login F-09: halaman /login (d) pasang components/gov/login-variant (?as=pemerintah) + components/subjek/login-variant (?as=bendahara); pastikan token dashboard/subjek + font ter-scope di halaman itu.
+- P2-02 h components/subjek/api.ts: fallback seed HANYA saat endpoint absen; 401/403 WAJIB redirect /login (jangan menutupi auth dengan data fallback); cocokkan mapRecent dengan bentuk respons nyata c (termasuk field anggota L-08).
+- P2-03 Identitas member: profil statis Sari + rincian simpanan fallback (kontrak MemberSummary tidak memuatnya). Keputusan saat integrasi: perluasan aditif kecil di summary (preseden L-08) ATAU dibiarkan bundle-faithful; verifikasi dengan alur juri.anggota, catat di Report.
+- P2-04 Font build offline-proof: root layout memuat Geist via next/font/google (butuh jaringan saat build). Pertimbangkan pnpm add geist (self-host) saat integrasi; Vercel dan lokal ber-jaringan, risiko rendah.
+- P2-05 check-register scope: template member sudah dipusatkan ke MEMBER_COPY (fix d), tapi scanner belum menyapu components/**; perluas defaultFiles + isMemberSurface di scripts/check-register.mjs (file f, edit integrator).
+- P2-06 Smoke Gate 2: login 3 role + render verdict/overview/konsol.
+- P2-07 Verifikasi guard halaman: /pembukuan dan /pemerintah dengan sesi salah/kosong harus berujung /login (page-level UX; API sudah 401/403 by matrix c).
+
 ## Latitude decisions (dicatat sambil jalan, konsolidasi ke docs/keputusan-teknis.md)
 - L-01 Repo publik: commit design-handoff/ (oracle fixture AC-UI-01/02) + .crown/ (evidence+ai-usage, dirujuk DISCLOSURE); ignore .claude/ (R2), *.zip (redundan), prompt-orchestrator & env-prep (operator-internal), .crown/compact & worktrees (junk).
 - L-02 Deny enforcement: PreToolUse hook match berbasis segmen path (berlaku juga di worktree), + Bash regex untuk redirect/rm/sed -i ke path terlindungi.
