@@ -1,0 +1,100 @@
+/*
+  Pramana AI — Konsol Simulasi Pembukuan (Subjek) design tokens.
+  PORT VERBATIM nilai OKLCH + radius dari bundle subjek (handoff/tokens.css).
+  Palet "Merah Putih": satu merah percaya diri di netral putih. TANPA warna
+  verdict (hijau/kuning/merah) di surface ini; status hanya sync/pending +
+  danger validasi.
+
+  Deviasi terdokumentasi (bukan pergeseran nilai desain), lihat
+  .crown/design-deviations.md D-10 dan D-11:
+  1. Blok Tailwind `@theme inline` bundle sengaja TIDAK diport: @theme v4
+     bersifat global lintas route dan akan menimpa `font-mono`/utility shadcn
+     di app/globals.css. Komponen memakai var(--token) langsung (setia
+     prototipe yang juga inline var()). Custom property tetap verbatim.
+  2. --font-sans/--font-mono nilai token VERBATIM; keluarga 'Spline Sans' /
+     'Spline Sans Mono' dimuat self-host via next/font/google di layout subjek
+     (kelas variable memicu @font-face). Tanpa request runtime ke Google
+     (kontrak porting). Indireksi var() dihindari: var() tak terdefinisi di
+     :root membuat --font-* invalid-at-computed-value (jatuh ke serif).
+
+  ATURAN KERAS: dilarang hard-code hex/rgb/oklch di komponen; konsumsi token.
+*/
+
+:root {
+  color-scheme: light;
+
+  --color-bg:              oklch(0.985 0.002 60);
+  --color-surface:         oklch(1 0 0);
+  --color-surface-sunken:  oklch(0.976 0.003 65);
+  --color-surface-raised:  oklch(0.965 0.004 65);
+
+  --color-ink:             oklch(0.24 0.006 45);
+  --color-ink-strong:      oklch(0.16 0.006 45);
+  --color-muted:           oklch(0.45 0.008 50);
+  --color-faint:           oklch(0.62 0.008 50);
+
+  --color-border:          oklch(0.9 0.004 60);
+  --color-border-strong:   oklch(0.82 0.006 55);
+
+  --color-primary:         oklch(0.52 0.208 27);
+  --color-primary-hover:   oklch(0.46 0.2 27);
+  --color-on-primary:      oklch(0.99 0.008 40);
+  --color-primary-soft:    oklch(0.955 0.032 27);
+  --color-on-primary-soft: oklch(0.45 0.19 27);
+
+  --color-ring:            oklch(0.55 0.2 27);
+
+  --color-sync:            oklch(0.58 0.13 158);
+  --color-sync-soft:       oklch(0.95 0.04 158);
+  --color-on-sync-soft:    oklch(0.4 0.1 160);
+  --color-pending:         oklch(0.72 0.12 78);
+  --color-pending-soft:    oklch(0.95 0.06 82);
+  --color-on-pending-soft: oklch(0.47 0.1 70);
+
+  --color-danger:          oklch(0.5 0.2 27);
+  --color-danger-soft:     oklch(0.965 0.025 27);
+  --color-on-danger-soft:  oklch(0.45 0.19 27);
+
+  --radius-input: 10px;
+  --radius-card:  16px;
+  --radius-pill:  999px;
+
+  --font-sans: 'Spline Sans', system-ui, sans-serif;
+  --font-mono: 'Spline Sans Mono', ui-monospace, monospace;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --color-bg:              oklch(0.185 0.004 45);
+  --color-surface:         oklch(0.225 0.005 45);
+  --color-surface-sunken:  oklch(0.2 0.004 45);
+  --color-surface-raised:  oklch(0.265 0.006 45);
+
+  --color-ink:             oklch(0.96 0.003 60);
+  --color-ink-strong:      oklch(0.99 0.002 60);
+  --color-muted:           oklch(0.73 0.006 55);
+  --color-faint:           oklch(0.56 0.006 55);
+
+  --color-border:          oklch(0.32 0.006 45);
+  --color-border-strong:   oklch(0.42 0.008 45);
+
+  --color-primary:         oklch(0.57 0.205 27);
+  --color-primary-hover:   oklch(0.63 0.19 27);
+  --color-on-primary:      oklch(0.99 0.008 40);
+  --color-primary-soft:    oklch(0.32 0.08 27);
+  --color-on-primary-soft: oklch(0.85 0.14 27);
+
+  --color-ring:            oklch(0.65 0.19 27);
+
+  --color-sync:            oklch(0.68 0.13 158);
+  --color-sync-soft:       oklch(0.33 0.06 158);
+  --color-on-sync-soft:    oklch(0.83 0.12 158);
+  --color-pending:         oklch(0.78 0.12 78);
+  --color-pending-soft:    oklch(0.34 0.06 78);
+  --color-on-pending-soft: oklch(0.85 0.11 80);
+
+  --color-danger:          oklch(0.7 0.17 27);
+  --color-danger-soft:     oklch(0.32 0.08 27);
+  --color-on-danger-soft:  oklch(0.85 0.14 27);
+}
