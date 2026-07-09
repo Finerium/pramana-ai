@@ -1,6 +1,12 @@
 {
   "project": "pramana-ai",
-  "gates": {},
-  "spendNote": "Phase 0: foundation+inventory done (commit 33ffa09); hooks written+unit-tested, awaiting session restart for activation; resume at probe\u2192scaffold.",
-  "lastPhase": 0
+  "gates": {
+    "0": {
+      "passed": true,
+      "commit": "fec34d3",
+      "at": "2026-07-09T11:07:21.222Z"
+    }
+  },
+  "spendNote": "Gate 0 passed (relaunch session): probe+scaffold+deploy+arch review approx 1.1M tokens incl reviewer 2 rounds (242k). Entering Phase 1 build.",
+  "lastPhase": 1
 }
