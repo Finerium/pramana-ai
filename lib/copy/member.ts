@@ -78,6 +78,8 @@ export const MEMBER_COPY = {
   "temuan.kembali": "Beranda",
   "temuan.judul": "Yang Perlu Anda Tahu",
   "temuan.bukti": "BUKTI",
+  "temuan.grounding":
+    "Bukti di atas adalah catatan nyata di pembukuan koperasi. Pramana hanya menampilkan hal yang benar-benar tercatat dan membuang temuan yang tidak dapat dibuktikan.",
   "temuan.pertanyaan": "PERTANYAAN UNTUK RAPAT",
   "temuan.tanggapan": "TANGGAPAN PENGURUS, 24 JUNI 2026",
 

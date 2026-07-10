@@ -435,6 +435,29 @@ describe("perilaku endpoint", () => {
     expect(d.keputusan[0]?.hasil).toBeNull();
   });
 
+  it("member/voice: JAMINAN anonim - identitas penanya/pemilih individual tak bocor (M3-C2)", async () => {
+    // Seed: penanya + pemilih adalah ang-sari & ang-g01..; agregat hanya boleh
+    // membawa HITUNGAN, bukan identitas siapa yang bertanya atau memilih. Ini
+    // menegakkan perlindungan anonimitas terhadap intimidasi pengurus.
+    const res = await memberVoice(await mkReq(SESS.anggota));
+    const d = (await asEnv(res)).data as {
+      pertanyaanAgregat: { jumlahAnggota: number }[];
+      keputusan: { hasil: { setuju: number; tidak: number } | null }[];
+    };
+    const blob = JSON.stringify(d);
+    // Tak ada id anggota individual (penanya/pemilih lain) bocor di payload.
+    expect(blob).not.toMatch(/ang-g\d+/);
+    expect(blob).not.toContain("ang-sari");
+    // Hasil vote = hitungan saja {setuju,tidak}, tanpa daftar pemilih.
+    for (const k of d.keputusan) {
+      if (k.hasil)
+        expect(Object.keys(k.hasil).sort()).toEqual(["setuju", "tidak"]);
+    }
+    // Agregat pertanyaan = hitungan, bukan daftar penanya.
+    for (const p of d.pertanyaanAgregat)
+      expect(typeof p.jumlahAnggota).toBe("number");
+  });
+
   it("member/summary: uang anggota juri", async () => {
     const res = await memberSummary(await mkReq(SESS.anggota));
     const d = (await asEnv(res)).data as {

@@ -36,6 +36,7 @@ import {
   IkonChevronBawah,
   IkonDokumen,
   IkonLingkaranCentang,
+  IkonPerisai,
 } from "@/components/member/icons";
 
 export function Temuan() {
@@ -278,6 +279,28 @@ function TemuanCard({
             </span>
           </div>
         ))}
+        {/* Bukti grounding (anti-halusinasi): temuan wajib menunjuk catatan nyata. */}
+        <div
+          style={{
+            display: "flex",
+            gap: 8,
+            alignItems: "flex-start",
+            marginTop: 6,
+            paddingTop: 10,
+            borderTop: "1px solid var(--border)",
+          }}
+        >
+          <IkonPerisai
+            size={13}
+            style={{ stroke: "var(--accent)", marginTop: 2 }}
+            strokeWidth={1.9}
+          />
+          <span
+            style={{ fontSize: 11.5, lineHeight: 1.5, color: "var(--muted)" }}
+          >
+            {MEMBER_COPY["temuan.grounding"]}
+          </span>
+        </div>
       </div>
 
       <button

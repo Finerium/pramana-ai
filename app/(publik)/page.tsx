@@ -1033,7 +1033,14 @@ function PreviewProduk() {
                 boxShadow: "var(--bayang-kartu), inset 0 0 0 1px var(--garis)",
               }}
             >
-              <ScreenSlot>
+              <ScreenSlot
+                image={{
+                  src: "/preview/app-anggota.png",
+                  alt: "Aplikasi anggota Pramana di layar ponsel",
+                  width: 390,
+                  height: 844,
+                }}
+              >
                 <PhoneUI />
               </ScreenSlot>
             </div>
@@ -1075,7 +1082,14 @@ function PreviewProduk() {
                   padding: "14px 16px 16px",
                 }}
               >
-                <ScreenSlot>
+                <ScreenSlot
+                  image={{
+                    src: "/preview/dasbor-pemerintah.png",
+                    alt: "Dasbor pengawasan pemerintah Pramana",
+                    width: 1280,
+                    height: 820,
+                  }}
+                >
                   <DasborUI />
                 </ScreenSlot>
               </div>
