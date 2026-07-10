@@ -23,10 +23,14 @@
       "id": "SUITE",
       "pass": true,
       "note": "typecheck/lint/register/tokens bersih; test 375/375 (37 file); seed:verify deterministik 737 baris"
+    },
+    {
+      "id": "M3-3d",
+      "pass": true,
+      "note": "2 panel terakhir LENGKAP (commit 25c8d67): Sebaran Provinsi kartogram 34-tile (agregasi nyata per provinsi, cross-filter) + Aktivitas AI Agent feed (audit_run nyata, MiniMax-M2.7, waktu relatif, tanpa fabrikasi). Dasbor 12 panel penuh. Diverifikasi visual live. test 386/386"
     }
   ],
   "caveat": [
-    "2 panel bundle DITUNDA untuk ditambah jujur: kartogram Sebaran Provinsi + feed Aktivitas AI Agent. Alasan agent: feed bundle memalsukan event via setInterval (langgar determinisme). Solusi: bangun keduanya dari data seed NYATA (audit_run terbaru + agregat provinsi). Follow-up M3-4.",
-    "DEPLOY M3-6: Turso prod WAJIB di-reseed dengan riwayat 6 bulan; tanpa itu dasbor prod tampil bug pra-riwayat (Jan 12/0/0). API benar; hanya butuh DB target terseed."
+    "DEPLOY M3-6: Turso prod WAJIB di-reseed dengan riwayat 6 bulan; tanpa itu dasbor prod tampil bug pra-riwayat (Jan 12/0/0 vs 9/3/0). API benar; hanya butuh DB target terseed."
   ]
 }
