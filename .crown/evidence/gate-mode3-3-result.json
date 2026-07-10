@@ -1,0 +1,32 @@
+{
+  "gate": "mode3-3",
+  "title": "Port dasbor pemerintah BARU (overview kaya) + fondasi data 6 bulan",
+  "at": "2026-07-10T09:44:06Z",
+  "pass": true,
+  "results": [
+    {
+      "id": "M3-3a",
+      "pass": true,
+      "note": "Data: seed 6 bulan nasional (72 audit_run, 63 temuan) trajektori deterministik; GovOverview additive (periode/periodeTersedia/tren/perluPerhatian/agenFeed/kpiDelta); API per-periode bounded SQL. Juni invariant 12/6/4/2/17 TAK berubah"
+    },
+    {
+      "id": "M3-3b",
+      "pass": true,
+      "note": "UI: OverviewClient rewrite penuh ke bundle (10 panel: header+dropdown periode, KONDISI NASIONAL, PERLU PERHATIAN, KPI delta+sparkline, Tren 6 bulan, AI Agent, tabel cross-filter+sort+cari, settings slide-over). Badge MiniMax-M2.7 (bukan GLM). Keyframes-only CSS (token fidelity)"
+    },
+    {
+      "id": "M3-3c",
+      "pass": true,
+      "note": "Verifikasi LIVE (Playwright, file:dev.db): dropdown periode ubah angka NYATA Jan 9/3/0 t6 -> Apr 6/6/0 t12 -> Jun 6/4/2 t17; fidelity visual cocok bundle terang; badge MiniMax-M2.7 terkonfirmasi"
+    },
+    {
+      "id": "SUITE",
+      "pass": true,
+      "note": "typecheck/lint/register/tokens bersih; test 375/375 (37 file); seed:verify deterministik 737 baris"
+    }
+  ],
+  "caveat": [
+    "2 panel bundle DITUNDA untuk ditambah jujur: kartogram Sebaran Provinsi + feed Aktivitas AI Agent. Alasan agent: feed bundle memalsukan event via setInterval (langgar determinisme). Solusi: bangun keduanya dari data seed NYATA (audit_run terbaru + agregat provinsi). Follow-up M3-4.",
+    "DEPLOY M3-6: Turso prod WAJIB di-reseed dengan riwayat 6 bulan; tanpa itu dasbor prod tampil bug pra-riwayat (Jan 12/0/0). API benar; hanya butuh DB target terseed."
+  ]
+}

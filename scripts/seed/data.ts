@@ -889,6 +889,114 @@ export function buildSeedData(): SeedData {
     });
   }
 
+  // -------------------------------------------------------------------------
+  // Riwayat audit Jan-Mei 2026 (fondasi data M3-3). APPEND: run/temuan Juni
+  // existing tak disentuh. Trajektori verdict deterministik per koperasi;
+  // indeks 5 (Juni) == verdict Juni existing agar tidak bentrok. Temuan nyata
+  // dari template generik (register-clean, sama seperti run Juni) supaya
+  // dropdown periode benar-benar mengubah angka. Tanpa RNG (urutan stabil).
+  // -------------------------------------------------------------------------
+  const TREN_BULANAN: Record<
+    string,
+    readonly ("hijau" | "kuning" | "merah")[]
+  > = {
+    "kop-sukamaju": ["hijau", "hijau", "hijau", "kuning", "kuning", "merah"],
+    "kop-lembahsari": [
+      "kuning",
+      "kuning",
+      "kuning",
+      "kuning",
+      "merah",
+      "merah",
+    ],
+    "kop-cempakawangi": [
+      "kuning",
+      "kuning",
+      "kuning",
+      "kuning",
+      "kuning",
+      "kuning",
+    ],
+    "kop-wanasaba": ["hijau", "hijau", "kuning", "kuning", "kuning", "kuning"],
+    "kop-batulicin": ["hijau", "hijau", "hijau", "kuning", "kuning", "kuning"],
+    "kop-airmolek": [
+      "kuning",
+      "kuning",
+      "kuning",
+      "kuning",
+      "kuning",
+      "kuning",
+    ],
+    "kop-mekarsari": ["hijau", "hijau", "hijau", "hijau", "hijau", "hijau"],
+    "kop-tirtayasa": ["hijau", "hijau", "hijau", "hijau", "hijau", "hijau"],
+    "kop-argomulyo": ["hijau", "hijau", "hijau", "hijau", "hijau", "hijau"],
+    "kop-sidodadi": ["hijau", "hijau", "hijau", "hijau", "hijau", "hijau"],
+    "kop-karangasem": ["hijau", "hijau", "hijau", "hijau", "hijau", "hijau"],
+    "kop-mattirowalie": ["hijau", "hijau", "hijau", "hijau", "hijau", "hijau"],
+  };
+  // Temuan generik per verdict riwayat: hijau 0; kuning = anomali_transaksi +
+  // kesehatan_finansial; merah = satu tiap agen.
+  type GenTemuan =
+    | typeof GENERIK_MERAH
+    | (typeof GENERIK_KUNING)[number]
+    | typeof GENERIK_INFO;
+  const temuanRiwayat = (warna: "hijau" | "kuning" | "merah"): GenTemuan[] => {
+    if (warna === "hijau") return [];
+    if (warna === "kuning") return [GENERIK_KUNING[0]!, GENERIK_KUNING[1]!];
+    return [
+      GENERIK_MERAH,
+      GENERIK_KUNING[0]!,
+      GENERIK_KUNING[1]!,
+      GENERIK_KUNING[2]!,
+    ];
+  };
+  for (const kop of koperasiRows) {
+    const tren = TREN_BULANAN[kop.id]!;
+    // Sukamaju sudah punya run Jan-Mei (loop MONTHS); hanya append temuannya.
+    // 11 koperasi lain hanya punya run Juni, jadi append run riwayat + temuan.
+    for (let idx = 0; idx < 5; idx++) {
+      const periode = MONTHS[idx]!.p;
+      const warna = tren[idx]!;
+      const runId =
+        kop.id === "kop-sukamaju"
+          ? `ar-sukamaju-${periode}`
+          : `ar-${kop.id}-${periode}`;
+      if (kop.id !== "kop-sukamaju") {
+        auditRunRows.push({
+          id: runId,
+          koperasiId: kop.id,
+          periode,
+          source: "seed",
+          verdictWarna: warna,
+          ringkasan: RINGKASAN_LIVE[warna === "merah" ? "kuning" : warna],
+          durasiMs: 1500,
+          rawJson: rawSeed,
+          dibuatPada: `${periode}-28T09:00:00.000Z`,
+        });
+      }
+      temuanRiwayat(warna).forEach((t, i) => {
+        const severity =
+          t === GENERIK_MERAH
+            ? "merah"
+            : t === GENERIK_INFO
+              ? "info"
+              : "kuning";
+        temuanRows.push({
+          id: `tmn-${kop.id}-${periode}-${i + 1}`,
+          auditRunId: runId,
+          agent: t.agent,
+          severity,
+          judul: t.judul,
+          penjelasanAwam: t.penjelasanAwam,
+          kenapaPenting: t.kenapaPenting,
+          pertanyaanRat: t.pertanyaanRat,
+          buktiJson: JSON.stringify(t.bukti),
+          tanggapanPengurus: null,
+        });
+      });
+    }
+  }
+
   const pertanyaanRatRows: Row<typeof pertanyaanRat>[] = [];
   const agregat: [string, number][] = [
     ["tmn-an1", SEED_AGREGAT.an1!],

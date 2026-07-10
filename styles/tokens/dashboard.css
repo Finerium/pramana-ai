@@ -191,6 +191,14 @@
 @keyframes prm-spin { to { transform: rotate(360deg); } }
 @keyframes prm-slide { 0% { transform: translateX(-120%); } 100% { transform: translateX(300%); } }
 
+/* Animasi komponen Overview kaya (M3-3). PORT dari blok style bundle. */
+@keyframes prm-pop { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes prm-draw { to { stroke-dashoffset: 0; } }
+@keyframes prm-denyut { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+@keyframes prm-slidein { from { transform: translateX(60px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes prm-zoomin { from { opacity: 0; transform: scale(0.96) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+@keyframes prm-pagein { from { opacity: 0; } to { opacity: 1; } }
+
 @media (prefers-reduced-motion: reduce) {
   .gov *, .gov *::before, .gov *::after {
     animation-duration: .01ms !important;

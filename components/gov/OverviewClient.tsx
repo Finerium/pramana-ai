@@ -1,202 +1,958 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import type { GovOverview } from "@/lib/contracts";
+import type { GovOverview, VerdictColor } from "@/lib/contracts";
 import { GOV_COPY } from "@/lib/copy/gov";
+import { AGENT_LABELS } from "@/lib/copy";
 import { BENTUK } from "@/app/(gov)/_logic/verdict";
 import {
   DEFAULT_DIR,
+  deltaKpi,
+  deltaRingkasTeks,
   deriveDistribusi,
   filterKoperasi,
-  kpiSubPersen,
+  heroKalimat,
   nextSort,
+  periodeLabelDari,
+  bulanDari,
+  segmenLabel,
   segmenLebar,
   sortKoperasi,
+  sparklineFromSeri,
   tersebarCount,
+  trenChart,
+  worstWarna,
+  type DeltaChip,
   type SortDir,
   type SortKey,
 } from "@/app/(gov)/_logic/overview";
-import { GovHeader } from "./GovHeader";
+import { terapkanTema } from "./theme";
+import { ThemeToggle } from "./ThemeToggle";
 import { VerdictShape } from "./VerdictShape";
 
 type Status = "memuat" | "default" | "kosong" | "gagal";
+type TemaDefault = "terang" | "gelap" | "sistem";
 
-const PANEL: React.CSSProperties = { marginTop: 20, borderRadius: 24 };
+const PANEL_MT: React.CSSProperties = { marginTop: 20 };
+const MUTED = "var(--muted-foreground)";
 
-function Judul() {
+const stripKop = (nama: string) =>
+  nama.replace("Koperasi Desa Merah Putih ", "");
+const toPts = (pts: Array<{ x: number; y: number }>) =>
+  pts.map((p) => `${p.x},${p.y}`).join(" ");
+
+// --- Ikon bentuk (caret dropdown, segitiga delta) --------------------------
+
+function Caret({ color = MUTED, rot = 0 }: { color?: string; rot?: number }) {
   return (
-    <div
+    <span
+      aria-hidden="true"
+      style={{
+        width: 7,
+        height: 7,
+        background: color,
+        clipPath: "polygon(50% 100%, 0% 0%, 100% 0%)",
+        opacity: 0.6,
+        transform: `rotate(${rot}deg)`,
+        display: "inline-block",
+      }}
+    />
+  );
+}
+
+// --- Header (logo, dropdown periode, tema, menu akun) -----------------------
+
+function Header({
+  periodeLabel,
+  periodeItems,
+  bukaPeriode,
+  onTogglePeriode,
+  onPilihPeriode,
+  bukaProfil,
+  onToggleProfil,
+  onPengaturan,
+  onKeluar,
+}: {
+  periodeLabel: string;
+  periodeItems: Array<{
+    periode: string;
+    label: string;
+    warna: VerdictColor;
+    aktif: boolean;
+  }>;
+  bukaPeriode: boolean;
+  onTogglePeriode: () => void;
+  onPilihPeriode: (p: string) => void;
+  bukaProfil: boolean;
+  onToggleProfil: () => void;
+  onPengaturan: () => void;
+  onKeluar: () => void;
+}) {
+  return (
+    <header
       style={{
         display: "flex",
-        alignItems: "flex-end",
-        gap: 16,
-        margin: "36px 0 24px",
+        alignItems: "center",
+        gap: 14,
+        position: "relative",
+        zIndex: 70,
       }}
     >
-      <div>
-        <h1
-          className="gov-disp"
-          style={{
-            fontWeight: 800,
-            fontSize: 27,
-            lineHeight: 1.15,
-            letterSpacing: "-0.01em",
-            margin: 0,
-          }}
-        >
-          {GOV_COPY["ov.judul"]}
-        </h1>
+      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
         <div
+          aria-hidden="true"
+          className="gov-raised-sm"
           style={{
-            fontWeight: 500,
-            fontSize: 12.5,
-            lineHeight: 1.5,
-            color: "var(--muted-foreground)",
-            marginTop: 8,
+            width: 42,
+            height: 42,
+            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flex: "none",
           }}
         >
-          {GOV_COPY["ov.diperbarui"]}
+          <div
+            className="gov-well-sm"
+            style={{ width: 16, height: 16, borderRadius: "50%" }}
+          />
+        </div>
+        <div>
+          <div
+            className="gov-disp"
+            style={{
+              fontWeight: 800,
+              fontSize: 19,
+              lineHeight: 1,
+              letterSpacing: "-0.01em",
+            }}
+          >
+            {GOV_COPY["brand.nama"]}
+          </div>
+          <div
+            style={{
+              fontWeight: 600,
+              fontSize: 9.5,
+              lineHeight: 1,
+              letterSpacing: "0.15em",
+              color: MUTED,
+              marginTop: 5,
+            }}
+          >
+            {GOV_COPY["brand.sub"]}
+          </div>
         </div>
       </div>
+      <div style={{ flex: 1 }} />
+
+      {/* Dropdown periode */}
+      <PeriodeDropdown
+        label={periodeLabel}
+        items={periodeItems}
+        open={bukaPeriode}
+        onToggle={onTogglePeriode}
+        onPilih={onPilihPeriode}
+      />
+
+      <ThemeToggle />
+
+      {/* Menu akun */}
+      <div style={{ position: "relative" }}>
+        <button
+          type="button"
+          onClick={onToggleProfil}
+          aria-expanded={bukaProfil}
+          aria-label="Menu akun"
+          className="gov-raised-sm"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "6px 16px 6px 6px",
+            borderRadius: 999,
+          }}
+        >
+          <span
+            className="gov-disp gov-well-sm"
+            style={{
+              width: 32,
+              height: 32,
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontWeight: 700,
+              fontSize: 11,
+              lineHeight: 1,
+              color: MUTED,
+            }}
+          >
+            {GOV_COPY["shell.user.inisial"]}
+          </span>
+          <span>
+            <span
+              style={{
+                display: "block",
+                fontWeight: 700,
+                fontSize: 12,
+                lineHeight: 1.1,
+              }}
+            >
+              {GOV_COPY["shell.user.nama"]}
+            </span>
+            <span
+              style={{
+                display: "block",
+                fontWeight: 500,
+                fontSize: 10,
+                lineHeight: 1.1,
+                color: MUTED,
+                marginTop: 3,
+              }}
+            >
+              Kementerian Koperasi RI
+            </span>
+          </span>
+          <Caret color={MUTED} />
+        </button>
+        {bukaProfil ? (
+          <div
+            role="menu"
+            className="gov-raised-sm"
+            style={{
+              position: "absolute",
+              top: "calc(100% + 10px)",
+              right: 0,
+              width: 250,
+              padding: 8,
+              borderRadius: 18,
+              background: "var(--background)",
+              boxShadow: "var(--shadow-raised-lg)",
+              animation: "prm-pop .35s var(--ease-mewah) both",
+              zIndex: 80,
+            }}
+          >
+            <div style={{ padding: "12px 14px 10px" }}>
+              <div style={{ fontWeight: 700, fontSize: 13, lineHeight: 1.2 }}>
+                {GOV_COPY["shell.user.nama"]}
+              </div>
+              <div
+                style={{
+                  fontWeight: 500,
+                  fontSize: 11,
+                  lineHeight: 1.5,
+                  color: MUTED,
+                  marginTop: 3,
+                }}
+              >
+                {GOV_COPY["shell.user.email"]}
+              </div>
+            </div>
+            <div
+              style={{
+                height: 1,
+                background: "var(--border-hairline)",
+                margin: "4px 8px",
+              }}
+            />
+            <button
+              type="button"
+              role="menuitem"
+              onClick={onPengaturan}
+              className="gov-row"
+              style={{
+                display: "block",
+                width: "100%",
+                boxSizing: "border-box",
+                padding: "11px 14px",
+                borderRadius: 12,
+                fontWeight: 600,
+                fontSize: 12.5,
+                lineHeight: 1,
+              }}
+            >
+              Pengaturan
+            </button>
+            <button
+              type="button"
+              role="menuitem"
+              onClick={onKeluar}
+              className="gov-row"
+              style={{
+                display: "block",
+                width: "100%",
+                boxSizing: "border-box",
+                padding: "11px 14px",
+                borderRadius: 12,
+                fontWeight: 600,
+                fontSize: 12.5,
+                lineHeight: 1,
+                color: "var(--verdict-merah)",
+              }}
+            >
+              Keluar
+            </button>
+          </div>
+        ) : null}
+      </div>
+    </header>
+  );
+}
+
+function PeriodeDropdown({
+  label,
+  items,
+  open,
+  onToggle,
+  onPilih,
+}: {
+  label: string;
+  items: Array<{
+    periode: string;
+    label: string;
+    warna: VerdictColor;
+    aktif: boolean;
+  }>;
+  open: boolean;
+  onToggle: () => void;
+  onPilih: (p: string) => void;
+}) {
+  return (
+    <div style={{ position: "relative" }}>
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        aria-label="Ganti periode"
+        className="gov-well-sm"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 9,
+          padding: "11px 18px",
+          borderRadius: 999,
+          fontWeight: 600,
+          fontSize: 12,
+          lineHeight: 1,
+          color: "var(--foreground)",
+        }}
+      >
+        <span style={{ color: MUTED }}>Periode</span> {label}
+        <Caret color="currentColor" />
+      </button>
+      {open ? (
+        <div
+          role="menu"
+          className="gov-raised-sm"
+          style={{
+            position: "absolute",
+            top: "calc(100% + 10px)",
+            right: 0,
+            width: 200,
+            padding: 8,
+            borderRadius: 18,
+            background: "var(--background)",
+            boxShadow: "var(--shadow-raised-lg)",
+            animation: "prm-pop .35s var(--ease-mewah) both",
+            zIndex: 80,
+          }}
+        >
+          {items.map((it) => (
+            <button
+              key={it.periode}
+              type="button"
+              role="menuitem"
+              onClick={() => onPilih(it.periode)}
+              className={it.aktif ? "gov-well-sm" : "gov-row"}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                width: "100%",
+                boxSizing: "border-box",
+                padding: "10px 14px",
+                borderRadius: 12,
+                fontWeight: 600,
+                fontSize: 12.5,
+                lineHeight: 1,
+                background: it.aktif ? undefined : "transparent",
+                color: it.aktif ? "var(--foreground)" : MUTED,
+              }}
+            >
+              {it.label}
+              <span style={{ flex: 1 }} />
+              <VerdictShape bentuk={BENTUK[it.warna]} size={9} />
+            </button>
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }
 
-function KpiCard({
-  label,
-  nilai,
-  sub,
-  bentukKey,
+// --- Panel: Kondisi Nasional (hero) ----------------------------------------
+
+function HeroKondisi({
+  data,
+  filterVerdict,
+  onFilter,
 }: {
-  label: string;
-  nilai: string;
-  sub: string;
-  bentukKey?: "hijau" | "kuning" | "merah";
+  data: GovOverview;
+  filterVerdict: VerdictColor | null;
+  onFilter: (w: VerdictColor) => void;
 }) {
+  const kpi = data.kpi;
+  const b = bulanDari(data.periode);
+  const activeIdx = data.periodeTersedia.indexOf(data.periode);
+  const bulanPrev =
+    activeIdx > 0
+      ? bulanDari(data.periodeTersedia[activeIdx - 1] ?? "").nama
+      : null;
+  const segmen = deriveDistribusi(kpi).filter((s) => s.count > 0);
   return (
     <div
       className="gov-panel"
-      style={{ padding: "18px 20px 16px", borderRadius: 20 }}
+      style={{ display: "flex", gap: 26, padding: "24px 28px" }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-        {bentukKey ? (
-          <VerdictShape bentuk={BENTUK[bentukKey]} size={9} />
-        ) : null}
+      <div
+        style={{
+          flex: 1,
+          minWidth: 0,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <div
           className="gov-disp"
           style={{
             fontWeight: 700,
             fontSize: 10,
-            lineHeight: 1.2,
-            letterSpacing: "0.12em",
-            color: "var(--muted-foreground)",
+            lineHeight: 1,
+            letterSpacing: "0.13em",
+            color: MUTED,
           }}
         >
-          {label}
+          KONDISI NASIONAL · {b.nama.toUpperCase()} {b.tahun}
+        </div>
+        <div
+          className="gov-disp"
+          style={{
+            fontWeight: 800,
+            fontSize: 21,
+            lineHeight: 1.3,
+            letterSpacing: "-0.01em",
+            marginTop: 10,
+          }}
+        >
+          {heroKalimat(kpi)}
+        </div>
+        <div style={{ flex: 1 }} />
+        <div
+          role="img"
+          aria-label={`Distribusi verdict: ${kpi.hijau} hijau, ${kpi.kuning} kuning, ${kpi.merah} merah dari ${kpi.jumlahKoperasi} koperasi`}
+          className="gov-well"
+          style={{
+            display: "flex",
+            height: 30,
+            borderRadius: 999,
+            marginTop: 16,
+            padding: 5,
+            gap: 4,
+          }}
+        >
+          {segmen.map((s) => {
+            const aktif = filterVerdict === s.warna;
+            return (
+              <button
+                key={s.warna}
+                type="button"
+                onClick={() => onFilter(s.warna)}
+                aria-pressed={aktif}
+                title={`Saring tabel: ${BENTUK[s.warna].label}`}
+                style={{
+                  width: `${segmenLebar(s.count, kpi.jumlahKoperasi)}%`,
+                  borderRadius: 999,
+                  background: BENTUK[s.warna].colorVar,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  boxShadow: aktif ? "0 0 0 3px var(--ring)" : "none",
+                  outlineOffset: 3,
+                }}
+              >
+                <span
+                  style={{
+                    fontWeight: 700,
+                    fontSize: 11,
+                    lineHeight: 1,
+                    color: "var(--verdict-on)",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {segmenLabel(s.warna, s.count, kpi.jumlahKoperasi)}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        <div
+          style={{
+            fontWeight: 500,
+            fontSize: 11.5,
+            lineHeight: 1.5,
+            color: MUTED,
+            marginTop: 12,
+          }}
+        >
+          {deltaRingkasTeks(data.kpiDelta, bulanPrev)} · Klik segmen untuk
+          menyaring tabel.
         </div>
       </div>
       <div
+        style={{
+          width: 200,
+          flex: "none",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-end",
+          justifyContent: "center",
+          textAlign: "right",
+        }}
+      >
+        <div
+          className="gov-disp"
+          style={{
+            fontWeight: 700,
+            fontSize: 10,
+            lineHeight: 1,
+            letterSpacing: "0.13em",
+            color: MUTED,
+          }}
+        >
+          {GOV_COPY["ov.kpi.temuan"]}
+        </div>
+        <div
+          className="gov-num"
+          style={{ fontWeight: 800, fontSize: 58, lineHeight: 1, marginTop: 8 }}
+        >
+          {kpi.temuanTerbuka}
+        </div>
+        <div
+          style={{
+            fontWeight: 500,
+            fontSize: 11.5,
+            lineHeight: 1.5,
+            color: MUTED,
+            marginTop: 6,
+          }}
+        >
+          tersebar di {tersebarCount(data.koperasi)} koperasi
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// --- Panel: Perlu Perhatian ------------------------------------------------
+
+function PerluPerhatian({
+  data,
+  onBuka,
+}: {
+  data: GovOverview;
+  onBuka: (id: string) => void;
+}) {
+  const items = data.perluPerhatian.slice(0, 4);
+  return (
+    <div
+      className="gov-panel"
+      style={{ padding: "20px 22px", display: "flex", flexDirection: "column" }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+        <div
+          className="gov-disp"
+          style={{
+            fontWeight: 700,
+            fontSize: 10,
+            lineHeight: 1,
+            letterSpacing: "0.13em",
+            color: MUTED,
+          }}
+        >
+          PERLU PERHATIAN
+        </div>
+        <span
+          style={{
+            fontWeight: 700,
+            fontSize: 10.5,
+            lineHeight: 1,
+            color: "var(--verdict-merah)",
+            padding: "4px 9px",
+            borderRadius: 999,
+            background: "var(--verdict-merah-surface)",
+          }}
+        >
+          {data.perluPerhatian.length}
+        </span>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", marginTop: 6 }}>
+        {items.map((p) => (
+          <div
+            key={p.id}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 11,
+              padding: "11px 2px",
+              borderTop: "1px solid var(--border-hairline)",
+            }}
+          >
+            <VerdictShape bentuk={BENTUK[p.verdictWarna]} size={10} />
+            <span style={{ flex: 1, minWidth: 0 }}>
+              <span
+                style={{
+                  display: "block",
+                  fontWeight: 700,
+                  fontSize: 12,
+                  lineHeight: 1.3,
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {stripKop(p.nama)}
+              </span>
+              <span
+                style={{
+                  display: "block",
+                  fontWeight: 500,
+                  fontSize: 10.5,
+                  lineHeight: 1.4,
+                  color: MUTED,
+                  marginTop: 2,
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {p.alasan}
+              </span>
+            </span>
+            <button
+              type="button"
+              onClick={() => onBuka(p.id)}
+              className="gov-control"
+              style={{
+                padding: "8px 13px",
+                borderRadius: 999,
+                fontWeight: 700,
+                fontSize: 10.5,
+                lineHeight: 1,
+              }}
+            >
+              Buka
+            </button>
+            <button
+              type="button"
+              onClick={() => onBuka(p.id)}
+              aria-label={`Periksa ${stripKop(p.nama)}`}
+              className="gov-primary"
+              style={{
+                width: 76,
+                padding: "8px 0",
+                borderRadius: 999,
+                fontWeight: 700,
+                fontSize: 10.5,
+                lineHeight: 1,
+                textAlign: "center",
+              }}
+            >
+              Periksa
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// --- Baris KPI --------------------------------------------------------------
+
+function DeltaBadge({ delta }: { delta: DeltaChip }) {
+  return (
+    <div
+      title="Dibanding bulan sebelumnya"
+      className="gov-well-sm"
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 5,
+        padding: "4px 9px",
+        borderRadius: 999,
+        marginBottom: 3,
+      }}
+    >
+      <span
+        aria-hidden="true"
+        style={{
+          width: 7,
+          height: 6,
+          background: delta.warnaVar,
+          clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)",
+          transform: `rotate(${delta.turun ? 180 : 0}deg)`,
+          opacity: delta.nol ? 0 : 1,
+        }}
+      />
+      <span
         className="gov-num"
         style={{
           fontWeight: 700,
-          fontSize: 34,
-          lineHeight: 1.1,
-          marginTop: 10,
+          fontSize: 10,
+          lineHeight: 1,
+          color: delta.warnaVar,
         }}
       >
-        {nilai}
-      </div>
-      <div
-        style={{
-          fontWeight: 500,
-          fontSize: 11.5,
-          lineHeight: 1.4,
-          color: "var(--muted-foreground)",
-          marginTop: 6,
-        }}
-      >
-        {sub}
-      </div>
+        {delta.teks}
+      </span>
     </div>
   );
 }
 
-function KpiStrip({
-  status,
-  data,
+function Sparkline({
+  seri,
+  warnaVar,
+  width = 92,
+  height = 26,
 }: {
-  status: Status;
-  data: GovOverview | null;
+  seri: number[];
+  warnaVar: string;
+  width?: number;
+  height?: number;
 }) {
-  const kpi = data?.kpi;
-  const total = kpi?.jumlahKoperasi ?? 0;
-  const v = (n: number | undefined) =>
-    status === "gagal" ? "-" : String(status === "kosong" ? 0 : (n ?? 0));
-  const sub = (real: string) =>
-    status === "gagal"
-      ? GOV_COPY["ov.kpi.sub.gagal"]
-      : status === "kosong"
-        ? GOV_COPY["ov.kpi.sub.menunggu"]
-        : real;
+  const pts = sparklineFromSeri(
+    seri.length > 1 ? seri : [seri[0] ?? 0, seri[0] ?? 0],
+    {
+      width,
+      height,
+    },
+  );
+  const last = pts[pts.length - 1];
+  return (
+    <svg
+      aria-hidden="true"
+      width="100%"
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      preserveAspectRatio="none"
+      style={{ display: "block", marginTop: 10 }}
+    >
+      <polyline
+        points={toPts(pts)}
+        fill="none"
+        stroke={warnaVar}
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        pathLength={1}
+        style={{
+          strokeDasharray: 1,
+          strokeDashoffset: 1,
+          animation: "prm-draw 1.1s var(--ease-mewah) .3s forwards",
+        }}
+      />
+      {last ? <circle cx={last.x} cy={last.y} r={2.6} fill={warnaVar} /> : null}
+    </svg>
+  );
+}
+
+function KpiRow({
+  data,
+  filterVerdict,
+  onFilter,
+}: {
+  data: GovOverview;
+  filterVerdict: VerdictColor | null;
+  onFilter: (w: VerdictColor) => void;
+}) {
+  const kpi = data.kpi;
+  const d = data.kpiDelta;
+  const activeIdx = data.periodeTersedia.indexOf(data.periode);
+  const showDelta = activeIdx > 0;
+  const seri = (k: "hijau" | "kuning" | "merah" | "temuan") =>
+    data.tren.slice(0, activeIdx + 1).map((t) => t[k]);
+  const seriTotal = data.tren
+    .slice(0, activeIdx + 1)
+    .map((t) => t.hijau + t.kuning + t.merah);
+
+  type Card = {
+    label: string;
+    nilai: number;
+    bentuk: VerdictColor | null;
+    seri: number[];
+    sparkVar: string;
+    delta: DeltaChip | null;
+    filter: VerdictColor | null;
+  };
+  const cards: Card[] = [
+    {
+      label: GOV_COPY["ov.kpi.koperasi"],
+      nilai: kpi.jumlahKoperasi,
+      bentuk: null,
+      seri: seriTotal,
+      sparkVar: MUTED,
+      delta: null,
+      filter: null,
+    },
+    {
+      label: GOV_COPY["ov.kpi.hijau"],
+      nilai: kpi.hijau,
+      bentuk: "hijau",
+      seri: seri("hijau"),
+      sparkVar: "var(--verdict-hijau)",
+      delta: showDelta ? deltaKpi(d.hijau, false) : null,
+      filter: "hijau",
+    },
+    {
+      label: GOV_COPY["ov.kpi.kuning"],
+      nilai: kpi.kuning,
+      bentuk: "kuning",
+      seri: seri("kuning"),
+      sparkVar: "var(--verdict-kuning)",
+      delta: showDelta ? deltaKpi(d.kuning, true) : null,
+      filter: "kuning",
+    },
+    {
+      label: GOV_COPY["ov.kpi.merah"],
+      nilai: kpi.merah,
+      bentuk: "merah",
+      seri: seri("merah"),
+      sparkVar: "var(--verdict-merah)",
+      delta: showDelta ? deltaKpi(d.merah, true) : null,
+      filter: "merah",
+    },
+    {
+      label: GOV_COPY["ov.kpi.temuan"],
+      nilai: kpi.temuanTerbuka,
+      bentuk: null,
+      seri: seri("temuan"),
+      sparkVar: "var(--primary)",
+      delta: showDelta ? deltaKpi(d.temuanTerbuka, true) : null,
+      filter: null,
+    },
+  ];
+
   return (
     <div
-      style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 20 }}
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(5,1fr)",
+        gap: 20,
+        ...PANEL_MT,
+      }}
     >
-      <KpiCard
-        label={GOV_COPY["ov.kpi.koperasi"]}
-        nilai={v(kpi?.jumlahKoperasi)}
-        sub={sub(GOV_COPY["ov.kpi.sub.periode"])}
-      />
-      <KpiCard
-        label={GOV_COPY["ov.kpi.hijau"]}
-        nilai={v(kpi?.hijau)}
-        sub={sub(kpiSubPersen(kpi?.hijau ?? 0, total))}
-        bentukKey="hijau"
-      />
-      <KpiCard
-        label={GOV_COPY["ov.kpi.kuning"]}
-        nilai={v(kpi?.kuning)}
-        sub={sub(kpiSubPersen(kpi?.kuning ?? 0, total))}
-        bentukKey="kuning"
-      />
-      <KpiCard
-        label={GOV_COPY["ov.kpi.merah"]}
-        nilai={v(kpi?.merah)}
-        sub={sub(kpiSubPersen(kpi?.merah ?? 0, total))}
-        bentukKey="merah"
-      />
-      <KpiCard
-        label={GOV_COPY["ov.kpi.temuan"]}
-        nilai={v(kpi?.temuanTerbuka)}
-        sub={sub(`tersebar di ${tersebarCount(data?.koperasi ?? [])} koperasi`)}
-      />
+      {cards.map((c) => {
+        const aktif = c.filter !== null && filterVerdict === c.filter;
+        const inner = (
+          <>
+            <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+              {c.bentuk ? (
+                <VerdictShape bentuk={BENTUK[c.bentuk]} size={9} />
+              ) : null}
+              <div
+                className="gov-disp"
+                style={{
+                  fontWeight: 700,
+                  fontSize: 9.5,
+                  lineHeight: 1.2,
+                  letterSpacing: "0.12em",
+                  color: MUTED,
+                }}
+              >
+                {c.label}
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-end",
+                gap: 10,
+                marginTop: 10,
+              }}
+            >
+              <div
+                className="gov-num"
+                style={{ fontWeight: 700, fontSize: 32, lineHeight: 1 }}
+              >
+                {c.nilai}
+              </div>
+              {c.delta ? <DeltaBadge delta={c.delta} /> : null}
+            </div>
+            <Sparkline seri={c.seri} warnaVar={c.sparkVar} />
+          </>
+        );
+        const base: React.CSSProperties = {
+          padding: "16px 18px 14px",
+          borderRadius: 20,
+          textAlign: "left",
+          outline: aktif ? "2px solid var(--ring)" : undefined,
+          outlineOffset: aktif ? 2 : undefined,
+        };
+        return c.filter ? (
+          <button
+            key={c.label}
+            type="button"
+            onClick={() => onFilter(c.filter as VerdictColor)}
+            aria-pressed={aktif}
+            className="gov-panel"
+            style={base}
+          >
+            {inner}
+          </button>
+        ) : (
+          <div key={c.label} className="gov-panel" style={base}>
+            {inner}
+          </div>
+        );
+      })}
     </div>
   );
 }
 
-function Distribusi({ data }: { data: GovOverview }) {
-  const kpi = data.kpi;
-  const segmen = deriveDistribusi(kpi);
-  const legend: Array<{
-    k: "hijau" | "kuning" | "merah";
-    n: number;
-    title: string;
-  }> = [
-    { k: "hijau", n: kpi.hijau, title: GOV_COPY["ov.distribusi.title.hijau"] },
-    {
-      k: "kuning",
-      n: kpi.kuning,
-      title: GOV_COPY["ov.distribusi.title.kuning"],
-    },
-    { k: "merah", n: kpi.merah, title: GOV_COPY["ov.distribusi.title.merah"] },
-  ];
+// --- Panel: Tren Nasional 6 Bulan ------------------------------------------
+
+function LegendItem({ warna }: { warna: VerdictColor }) {
   return (
-    <div className="gov-panel" style={{ ...PANEL, padding: "20px 24px 22px" }}>
+    <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+      <VerdictShape bentuk={BENTUK[warna]} size={9} />
+      <span
+        style={{ fontWeight: 600, fontSize: 11, lineHeight: 1, color: MUTED }}
+      >
+        {BENTUK[warna].label}
+      </span>
+    </span>
+  );
+}
+
+function TrenPanel({
+  data,
+  onPilihPeriode,
+}: {
+  data: GovOverview;
+  onPilihPeriode: (p: string) => void;
+}) {
+  const [tip, setTip] = useState<number | null>(null);
+  const activeIdx = data.periodeTersedia.indexOf(data.periode);
+  const g = trenChart(data.tren, activeIdx);
+  const warnaKunci: VerdictColor[] = ["hijau", "kuning", "merah"];
+  const tipPoint = tip !== null ? data.tren[tip] : null;
+  const tipX = tip !== null ? ((g.kolomX[tip] ?? 0) / g.w) * 100 : 0;
+  return (
+    <div className="gov-panel" style={{ padding: "20px 24px 18px" }}>
       <div
         style={{
           display: "flex",
           alignItems: "center",
-          gap: 14,
+          gap: 12,
           flexWrap: "wrap",
         }}
       >
@@ -204,75 +960,171 @@ function Distribusi({ data }: { data: GovOverview }) {
           className="gov-disp"
           style={{ fontWeight: 700, fontSize: 13.5, lineHeight: 1 }}
         >
-          {GOV_COPY["ov.distribusi.judul"]}
+          Tren Nasional 6 Bulan
         </div>
         <div
-          style={{
-            fontWeight: 500,
-            fontSize: 11.5,
-            lineHeight: 1,
-            color: "var(--muted-foreground)",
-          }}
+          style={{ fontWeight: 500, fontSize: 11, lineHeight: 1, color: MUTED }}
         >
-          {kpi.jumlahKoperasi} koperasi, {GOV_COPY["ov.distribusi.sub.periode"]}
+          garis = verdict · balok = temuan
         </div>
         <div style={{ flex: 1 }} />
-        {legend.map((l) => (
-          <div
-            key={l.k}
-            style={{ display: "flex", alignItems: "center", gap: 7 }}
-            title={l.title}
-          >
-            <VerdictShape bentuk={BENTUK[l.k]} size={9} />
-            <span
-              style={{
-                fontWeight: 600,
-                fontSize: 11.5,
-                lineHeight: 1,
-                color: "var(--muted-foreground)",
-              }}
-            >
-              {BENTUK[l.k].label} · {l.n}
-            </span>
-          </div>
-        ))}
+        <LegendItem warna="hijau" />
+        <LegendItem warna="kuning" />
+        <LegendItem warna="merah" />
       </div>
       <div
-        role="img"
-        aria-label={`Distribusi verdict: ${kpi.hijau} hijau, ${kpi.kuning} kuning, ${kpi.merah} merah dari ${kpi.jumlahKoperasi} koperasi`}
         className="gov-well"
         style={{
-          display: "flex",
-          height: 32,
-          borderRadius: 999,
-          marginTop: 16,
-          padding: 5,
-          gap: 4,
+          position: "relative",
+          marginTop: 14,
+          borderRadius: 18,
+          padding: "14px 10px 6px",
         }}
       >
-        {segmen.map((s) => (
+        <svg
+          width="100%"
+          height={210}
+          viewBox={`0 0 ${g.w} ${g.h}`}
+          preserveAspectRatio="none"
+          style={{ display: "block" }}
+        >
+          {[52, 103, 154].map((y) => (
+            <line
+              key={y}
+              x1={16}
+              y1={y}
+              x2={584}
+              y2={y}
+              stroke="var(--border-hairline)"
+              strokeWidth={1}
+              style={{ opacity: 0.4 }}
+            />
+          ))}
+          {g.markerX !== null ? (
+            <rect
+              x={g.markerX}
+              y={14}
+              width={52}
+              height={182}
+              rx={10}
+              fill="var(--muted-foreground)"
+              opacity={0.09}
+            />
+          ) : null}
+          {g.bar.map((b) => (
+            <rect
+              key={b.key}
+              x={b.x}
+              y={b.y}
+              width={b.w}
+              height={b.h}
+              rx={8}
+              fill="var(--muted-foreground)"
+              opacity={0.22}
+            />
+          ))}
+          {warnaKunci.map((k, gi) => (
+            <polyline
+              key={k}
+              points={g.garis[k]}
+              fill="none"
+              stroke={BENTUK[k].colorVar}
+              strokeWidth={3}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              pathLength={1}
+              style={{
+                strokeDasharray: 1,
+                strokeDashoffset: 1,
+                animation: `prm-draw 1.3s var(--ease-mewah) ${0.15 + gi * 0.15}s forwards`,
+              }}
+            />
+          ))}
+          {g.titik.map((t) => (
+            <circle
+              key={t.key}
+              cx={t.x}
+              cy={t.y}
+              r={3.4}
+              fill={BENTUK[t.warna].colorVar}
+              stroke="var(--surface)"
+              strokeWidth={1.5}
+            />
+          ))}
+        </svg>
+        <div
+          style={{
+            position: "absolute",
+            inset: "14px 10px 6px",
+            display: "flex",
+          }}
+        >
+          {data.tren.map((t, i) => (
+            <div
+              key={t.periode}
+              onMouseEnter={() => setTip(i)}
+              onMouseLeave={() => setTip(null)}
+              onClick={() => onPilihPeriode(t.periode)}
+              title={`Lihat ${bulanDari(t.periode).nama}`}
+              style={{ flex: 1, cursor: "pointer" }}
+            />
+          ))}
+        </div>
+        {tipPoint ? (
           <div
-            key={s.warna}
+            className="gov-raised-sm"
             style={{
-              width: `${segmenLebar(s.count, kpi.jumlahKoperasi)}%`,
-              borderRadius: 999,
-              background: BENTUK[s.warna].colorVar,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              position: "absolute",
+              top: 10,
+              left: `${tipX}%`,
+              transform: "translateX(-50%)",
+              pointerEvents: "none",
+              padding: "10px 14px",
+              borderRadius: 14,
+              background: "var(--surface-fill)",
+              boxShadow: "var(--shadow-raised-lg)",
+              whiteSpace: "nowrap",
+              zIndex: 5,
             }}
           >
-            <span
+            <div
+              className="gov-disp"
+              style={{ fontWeight: 700, fontSize: 11, lineHeight: 1 }}
+            >
+              {periodeLabelDari(tipPoint.periode)}
+            </div>
+            <div
+              className="gov-num"
               style={{
-                fontWeight: 700,
+                fontWeight: 500,
                 fontSize: 11,
-                lineHeight: 1,
-                color: "var(--verdict-on)",
-                whiteSpace: "nowrap",
+                lineHeight: 1.6,
+                color: MUTED,
+                marginTop: 5,
               }}
             >
-              {s.count} {s.warna} · {s.persen}%
-            </span>
+              Hijau {tipPoint.hijau} · Kuning {tipPoint.kuning} · Merah{" "}
+              {tipPoint.merah}
+              <br />
+              Temuan terbuka {tipPoint.temuan}
+            </div>
+          </div>
+        ) : null}
+      </div>
+      <div style={{ display: "flex", marginTop: 8, padding: "0 10px" }}>
+        {data.tren.map((t, i) => (
+          <div
+            key={t.periode}
+            style={{
+              flex: 1,
+              textAlign: "center",
+              fontWeight: 600,
+              fontSize: 10.5,
+              lineHeight: 1,
+              color: i === activeIdx ? "var(--foreground)" : MUTED,
+            }}
+          >
+            {bulanDari(t.periode).singkat}
           </div>
         ))}
       </div>
@@ -280,20 +1132,227 @@ function Distribusi({ data }: { data: GovOverview }) {
   );
 }
 
-function Tabel({ data }: { data: GovOverview }) {
-  const router = useRouter();
+// --- Panel: AI Agent Pemeriksa ---------------------------------------------
+
+function AgentPanel({ data }: { data: GovOverview }) {
+  const feed = data.agenFeed;
+  return (
+    <div
+      className="gov-panel"
+      style={{
+        padding: "20px 22px 18px",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div
+          className="gov-disp"
+          style={{ fontWeight: 700, fontSize: 13.5, lineHeight: 1 }}
+        >
+          AI Agent Pemeriksa
+        </div>
+        <div style={{ flex: 1 }} />
+        <span
+          aria-hidden="true"
+          style={{
+            width: 8,
+            height: 8,
+            borderRadius: "50%",
+            background: "var(--verdict-hijau)",
+            animation: "prm-denyut 2.4s ease-in-out infinite",
+          }}
+        />
+        <span
+          style={{
+            fontWeight: 600,
+            fontSize: 10.5,
+            lineHeight: 1,
+            color: MUTED,
+          }}
+        >
+          {feed.agen.length} agen aktif
+        </span>
+      </div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 12,
+          marginTop: 14,
+          flex: 1,
+        }}
+      >
+        {feed.agen.map((a) => (
+          <div
+            key={a.agent}
+            className="gov-well-sm"
+            style={{ padding: "13px 15px", borderRadius: 16 }}
+          >
+            <div style={{ fontWeight: 700, fontSize: 11.5, lineHeight: 1.3 }}>
+              {AGENT_LABELS.pemerintah[a.agent]}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                marginTop: 4,
+              }}
+            >
+              <span
+                className="gov-raised-sm"
+                style={{
+                  fontFamily: "ui-monospace, Menlo, monospace",
+                  fontWeight: 600,
+                  fontSize: 9,
+                  lineHeight: 1,
+                  letterSpacing: "0.06em",
+                  color: MUTED,
+                  padding: "3px 7px",
+                  borderRadius: 999,
+                  background: "var(--surface)",
+                }}
+              >
+                {feed.model}
+              </span>
+              <span
+                style={{
+                  fontWeight: 600,
+                  fontSize: 9.5,
+                  lineHeight: 1,
+                  color: "var(--verdict-hijau)",
+                }}
+              >
+                Aktif
+              </span>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-end",
+                gap: 8,
+                marginTop: 11,
+              }}
+            >
+              <span
+                className="gov-num"
+                style={{ fontWeight: 700, fontSize: 24, lineHeight: 1 }}
+              >
+                {a.temuan}
+              </span>
+              <span
+                style={{
+                  fontWeight: 500,
+                  fontSize: 10,
+                  lineHeight: 1.3,
+                  color: MUTED,
+                  marginBottom: 2,
+                }}
+              >
+                temuan
+              </span>
+              <span style={{ flex: 1 }} />
+              <Sparkline
+                seri={[a.temuan, a.temuan]}
+                warnaVar={MUTED}
+                width={52}
+                height={20}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div
+        className="gov-well-sm"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          marginTop: 12,
+          padding: "12px 15px",
+          borderRadius: 16,
+        }}
+      >
+        <span
+          aria-hidden="true"
+          style={{
+            width: 10,
+            height: 10,
+            background: "var(--primary)",
+            borderRadius: 2,
+            flex: "none",
+          }}
+        />
+        <span style={{ fontWeight: 700, fontSize: 11.5, lineHeight: 1.3 }}>
+          Adjudikator
+        </span>
+        <span
+          className="gov-raised-sm"
+          style={{
+            fontFamily: "ui-monospace, Menlo, monospace",
+            fontWeight: 600,
+            fontSize: 9,
+            lineHeight: 1,
+            letterSpacing: "0.06em",
+            color: MUTED,
+            padding: "3px 7px",
+            borderRadius: 999,
+            background: "var(--surface)",
+          }}
+        >
+          {feed.adjudikatorModel}
+        </span>
+        <span
+          style={{
+            flex: 1,
+            fontWeight: 500,
+            fontSize: 10.5,
+            lineHeight: 1.4,
+            color: MUTED,
+          }}
+        >
+          menyatukan temuan menjadi verdict
+        </span>
+        <span
+          style={{
+            fontWeight: 600,
+            fontSize: 9.5,
+            lineHeight: 1,
+            color: "var(--verdict-hijau)",
+          }}
+        >
+          Aktif
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// --- Panel: Tabel koperasi (cross-filter + sort + search) ------------------
+
+function Tabel({
+  data,
+  filterVerdict,
+  onClearFilter,
+  onBuka,
+}: {
+  data: GovOverview;
+  filterVerdict: VerdictColor | null;
+  onClearFilter: () => void;
+  onBuka: (id: string) => void;
+}) {
   const [sort, setSort] = useState<{ key: SortKey; dir: SortDir }>({
     key: "verdictWarna",
     dir: DEFAULT_DIR.verdictWarna,
   });
   const [cari, setCari] = useState("");
-  const total = data.koperasi.length;
-  const rows = sortKoperasi(
-    filterKoperasi(data.koperasi, cari),
-    sort.key,
-    sort.dir,
-  );
   const kpi = data.kpi;
+  const total = data.koperasi.length;
+  const dasar = filterVerdict
+    ? data.koperasi.filter((r) => r.verdictWarna === filterVerdict)
+    : data.koperasi;
+  const rows = sortKoperasi(filterKoperasi(dasar, cari), sort.key, sort.dir);
 
   const headers: Array<{ key: SortKey; label: string; end?: boolean }> = [
     { key: "nama", label: GOV_COPY["ov.header.koperasi"] },
@@ -302,16 +1361,17 @@ function Tabel({ data }: { data: GovOverview }) {
     { key: "temuanCount", label: GOV_COPY["ov.header.temuan"], end: true },
   ];
   const grid = "2fr 1.1fr 0.9fr 0.6fr";
-  const buka = (id: string) => router.push(`/pemerintah/koperasi/${id}`);
+  const menyaring = cari.trim() !== "" || filterVerdict !== null;
 
   return (
-    <div className="gov-panel" style={{ ...PANEL, padding: "8px 0 6px" }}>
+    <div className="gov-panel" style={{ ...PANEL_MT, padding: "8px 0 6px" }}>
       <div
         style={{
           display: "flex",
           alignItems: "center",
           gap: 14,
-          padding: "14px 24px 16px",
+          padding: "14px 24px 12px",
+          flexWrap: "wrap",
         }}
       >
         <div>
@@ -326,15 +1386,47 @@ function Tabel({ data }: { data: GovOverview }) {
               fontWeight: 500,
               fontSize: 11.5,
               lineHeight: 1.4,
-              color: "var(--muted-foreground)",
+              color: MUTED,
               marginTop: 4,
             }}
           >
-            {cari.trim()
+            {menyaring
               ? `Menampilkan ${rows.length} dari ${total} koperasi`
-              : `${total} koperasi, ${GOV_COPY["ov.tabel.jumlah.semua"]}`}
+              : `${total} koperasi, periode ${periodeLabelDari(data.periode)}`}
           </div>
         </div>
+        {filterVerdict ? (
+          <button
+            type="button"
+            onClick={onClearFilter}
+            title="Hapus saringan"
+            className="gov-well-sm"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "8px 14px",
+              borderRadius: 999,
+              fontWeight: 700,
+              fontSize: 11,
+              lineHeight: 1,
+              color: "var(--foreground)",
+            }}
+          >
+            Verdict: {BENTUK[filterVerdict].label}
+            <span
+              aria-hidden="true"
+              style={{
+                fontWeight: 700,
+                fontSize: 10,
+                lineHeight: 1,
+                color: MUTED,
+              }}
+            >
+              X
+            </span>
+          </button>
+        ) : null}
         <div style={{ flex: 1 }} />
         <input
           value={cari}
@@ -380,7 +1472,7 @@ function Tabel({ data }: { data: GovOverview }) {
                 borderRadius: 999,
                 justifySelf: h.end ? "end" : "start",
                 background: aktif ? undefined : "transparent",
-                color: aktif ? "var(--foreground)" : "var(--muted-foreground)",
+                color: aktif ? "var(--foreground)" : MUTED,
                 fontWeight: 700,
                 fontSize: 10.5,
                 lineHeight: 1,
@@ -411,11 +1503,11 @@ function Tabel({ data }: { data: GovOverview }) {
             key={r.id}
             role="link"
             tabIndex={0}
-            onClick={() => buka(r.id)}
+            onClick={() => onBuka(r.id)}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
-                buka(r.id);
+                onBuka(r.id);
               }
             }}
             aria-label={`Buka detail ${r.nama}`}
@@ -437,7 +1529,7 @@ function Tabel({ data }: { data: GovOverview }) {
                 fontWeight: 500,
                 fontSize: 12.5,
                 lineHeight: 1.3,
-                color: "var(--muted-foreground)",
+                color: MUTED,
               }}
             >
               {r.provinsi}
@@ -489,7 +1581,7 @@ function Tabel({ data }: { data: GovOverview }) {
             fontWeight: 500,
             fontSize: 13,
             lineHeight: 1.5,
-            color: "var(--muted-foreground)",
+            color: MUTED,
             textAlign: "center",
           }}
         >
@@ -509,7 +1601,7 @@ function Tabel({ data }: { data: GovOverview }) {
             fontWeight: 500,
             fontSize: 11.5,
             lineHeight: 1,
-            color: "var(--muted-foreground)",
+            color: MUTED,
           }}
         >
           {kpi.merah} merah · {kpi.kuning} kuning · {kpi.hijau} hijau
@@ -520,7 +1612,7 @@ function Tabel({ data }: { data: GovOverview }) {
             fontWeight: 500,
             fontSize: 11.5,
             lineHeight: 1,
-            color: "var(--muted-foreground)",
+            color: MUTED,
           }}
         >
           {GOV_COPY["ov.footer.hint"]}
@@ -529,6 +1621,445 @@ function Tabel({ data }: { data: GovOverview }) {
     </div>
   );
 }
+
+// --- Slide-over: Pengaturan -------------------------------------------------
+
+function Toggle({
+  on,
+  onToggle,
+  label,
+}: {
+  on: boolean;
+  onToggle: () => void;
+  label: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-pressed={on}
+      className="gov-well-sm"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 12,
+        padding: "13px 16px",
+        borderRadius: 16,
+      }}
+    >
+      <span
+        style={{ flex: 1, fontWeight: 600, fontSize: 12.5, lineHeight: 1.4 }}
+      >
+        {label}
+      </span>
+      <span
+        aria-hidden="true"
+        className="gov-well-sm"
+        style={{
+          width: 40,
+          height: 22,
+          borderRadius: 999,
+          background: on ? "var(--primary)" : "var(--well)",
+          position: "relative",
+          transition: "background .3s var(--ease-mewah)",
+        }}
+      >
+        <span
+          className="gov-raised-sm"
+          style={{
+            position: "absolute",
+            top: 3,
+            left: on ? 21 : 3,
+            width: 16,
+            height: 16,
+            borderRadius: "50%",
+            background: "var(--surface)",
+            transition: "left .3s var(--ease-mewah)",
+          }}
+        />
+      </span>
+      <span
+        style={{
+          fontWeight: 700,
+          fontSize: 10.5,
+          lineHeight: 1,
+          color: MUTED,
+          width: 30,
+          textAlign: "right",
+        }}
+      >
+        {on ? "Aktif" : "Mati"}
+      </span>
+    </button>
+  );
+}
+
+function SettingsSlideOver({
+  data,
+  temaDef,
+  onTema,
+  onPilihPeriode,
+  notifMerah,
+  notifSelesai,
+  onToggleMerah,
+  onToggleSelesai,
+  bukaSandi,
+  onBukaSandi,
+  onSimpanSandi,
+  onClose,
+}: {
+  data: GovOverview | null;
+  temaDef: TemaDefault;
+  onTema: (t: TemaDefault) => void;
+  onPilihPeriode: (p: string) => void;
+  notifMerah: boolean;
+  notifSelesai: boolean;
+  onToggleMerah: () => void;
+  onToggleSelesai: () => void;
+  bukaSandi: boolean;
+  onBukaSandi: () => void;
+  onSimpanSandi: () => void;
+  onClose: () => void;
+}) {
+  const label = (t: TemaDefault) =>
+    t === "terang" ? "Terang" : t === "gelap" ? "Gelap" : "Sistem";
+  const seg = (aktif: boolean): React.CSSProperties => ({
+    flex: 1,
+    padding: "9px 0",
+    borderRadius: 999,
+    textAlign: "center",
+    fontWeight: 700,
+    fontSize: 11.5,
+    lineHeight: 1,
+    background: aktif ? "var(--surface-fill)" : "transparent",
+    boxShadow: aktif ? "var(--shadow-raised-sm)" : "none",
+    color: aktif ? "var(--foreground)" : MUTED,
+  });
+  const HEAD: React.CSSProperties = {
+    fontWeight: 700,
+    fontSize: 10,
+    lineHeight: 1,
+    letterSpacing: "0.13em",
+    color: MUTED,
+    margin: "26px 0 12px",
+  };
+  return (
+    <>
+      <div
+        onClick={onClose}
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 90,
+          background: "var(--scrim)",
+          animation: "prm-pagein .3s ease both",
+        }}
+      />
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Pengaturan"
+        style={{
+          position: "fixed",
+          top: 0,
+          right: 0,
+          bottom: 0,
+          width: 400,
+          zIndex: 100,
+          background: "var(--background)",
+          boxShadow: "var(--shadow-raised-lg)",
+          padding: 30,
+          overflowY: "auto",
+          animation: "prm-slidein .45s var(--ease-mewah) both",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div
+            className="gov-disp"
+            style={{ fontWeight: 800, fontSize: 17, lineHeight: 1 }}
+          >
+            Pengaturan
+          </div>
+          <div style={{ flex: 1 }} />
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Tutup pengaturan"
+            className="gov-well-sm"
+            style={{
+              width: 36,
+              height: 36,
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontWeight: 700,
+              fontSize: 13,
+              lineHeight: 1,
+              color: MUTED,
+            }}
+          >
+            X
+          </button>
+        </div>
+
+        <div className="gov-disp" style={HEAD}>
+          TEMA DEFAULT
+        </div>
+        <div
+          role="group"
+          aria-label="Tema default"
+          className="gov-well-sm"
+          style={{
+            display: "flex",
+            gap: 4,
+            padding: 5,
+            borderRadius: 999,
+          }}
+        >
+          {(["terang", "gelap", "sistem"] as TemaDefault[]).map((t) => (
+            <button
+              key={t}
+              type="button"
+              onClick={() => onTema(t)}
+              aria-pressed={temaDef === t}
+              style={seg(temaDef === t)}
+            >
+              {label(t)}
+            </button>
+          ))}
+        </div>
+
+        <div className="gov-disp" style={HEAD}>
+          PERIODE DEFAULT
+        </div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+          {(data?.periodeTersedia ?? []).map((p) => {
+            const aktif = data?.periode === p;
+            return (
+              <button
+                key={p}
+                type="button"
+                onClick={() => onPilihPeriode(p)}
+                aria-pressed={aktif}
+                style={{
+                  padding: "9px 14px",
+                  borderRadius: 999,
+                  fontWeight: 700,
+                  fontSize: 11.5,
+                  lineHeight: 1,
+                  background: aktif ? "var(--surface-fill)" : "transparent",
+                  boxShadow: aktif ? "var(--shadow-raised-sm)" : "none",
+                  color: aktif ? "var(--foreground)" : MUTED,
+                }}
+              >
+                {bulanDari(p).singkat}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="gov-disp" style={HEAD}>
+          PREFERENSI NOTIFIKASI
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <Toggle
+            on={notifMerah}
+            onToggle={onToggleMerah}
+            label="Koperasi merah baru"
+          />
+          <Toggle
+            on={notifSelesai}
+            onToggle={onToggleSelesai}
+            label="Pemeriksaan selesai"
+          />
+        </div>
+
+        <div className="gov-disp" style={HEAD}>
+          AKUN
+        </div>
+        <div
+          className="gov-raised-sm"
+          style={{ padding: "16px 18px", borderRadius: 16 }}
+        >
+          <div style={{ fontWeight: 700, fontSize: 13, lineHeight: 1.3 }}>
+            {GOV_COPY["shell.user.nama"]}
+          </div>
+          <div
+            style={{
+              fontWeight: 500,
+              fontSize: 11.5,
+              lineHeight: 1.6,
+              color: MUTED,
+              marginTop: 4,
+            }}
+          >
+            {GOV_COPY["shell.user.email"]}
+            <br />
+            Kementerian Koperasi RI
+          </div>
+          {bukaSandi ? (
+            <div
+              style={{
+                marginTop: 14,
+                display: "flex",
+                flexDirection: "column",
+                gap: 10,
+              }}
+            >
+              <input
+                type="password"
+                placeholder="Kata sandi baru"
+                aria-label="Kata sandi baru"
+                className="gov-well"
+                style={{
+                  width: "100%",
+                  boxSizing: "border-box",
+                  padding: "12px 16px",
+                  borderRadius: 999,
+                  fontWeight: 500,
+                  fontSize: 12.5,
+                  lineHeight: 1,
+                  color: "var(--foreground)",
+                }}
+              />
+              <button
+                type="button"
+                onClick={onSimpanSandi}
+                className="gov-primary"
+                style={{
+                  padding: "12px 18px",
+                  borderRadius: 999,
+                  fontWeight: 700,
+                  fontSize: 12,
+                  lineHeight: 1,
+                  textAlign: "center",
+                }}
+              >
+                Simpan Kata Sandi
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={onBukaSandi}
+              className="gov-control"
+              style={{
+                marginTop: 14,
+                padding: "11px 18px",
+                borderRadius: 999,
+                fontWeight: 700,
+                fontSize: 11.5,
+                lineHeight: 1,
+              }}
+            >
+              Ganti Kata Sandi
+            </button>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+
+// --- Dialog: Keluar ---------------------------------------------------------
+
+function ExitDialog({
+  onBatal,
+  onKeluar,
+}: {
+  onBatal: () => void;
+  onKeluar: () => void;
+}) {
+  return (
+    <>
+      <div
+        onClick={onBatal}
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 90,
+          background: "var(--scrim)",
+          animation: "prm-pagein .3s ease both",
+        }}
+      />
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Konfirmasi keluar"
+        style={{
+          position: "fixed",
+          left: "50%",
+          top: "42%",
+          transform: "translate(-50%,-50%)",
+          zIndex: 100,
+          width: 380,
+          padding: "30px 32px",
+          borderRadius: 24,
+          background: "var(--background)",
+          boxShadow: "var(--shadow-raised-lg)",
+          animation: "prm-zoomin .4s var(--ease-mewah) both",
+        }}
+      >
+        <div
+          className="gov-disp"
+          style={{ fontWeight: 800, fontSize: 17, lineHeight: 1.3 }}
+        >
+          Keluar dari dasbor?
+        </div>
+        <div
+          style={{
+            fontWeight: 500,
+            fontSize: 12.5,
+            lineHeight: 1.6,
+            color: MUTED,
+            marginTop: 8,
+          }}
+        >
+          Sesi Anda akan diakhiri dan Anda kembali ke halaman masuk.
+        </div>
+        <div style={{ display: "flex", gap: 12, marginTop: 22 }}>
+          <button
+            type="button"
+            onClick={onBatal}
+            className="gov-control"
+            style={{
+              flex: 1,
+              padding: "13px 0",
+              borderRadius: 999,
+              fontWeight: 700,
+              fontSize: 12.5,
+              lineHeight: 1,
+              textAlign: "center",
+            }}
+          >
+            Batal
+          </button>
+          <button
+            type="button"
+            onClick={onKeluar}
+            style={{
+              flex: 1,
+              padding: "13px 0",
+              borderRadius: 999,
+              fontWeight: 700,
+              fontSize: 12.5,
+              lineHeight: 1,
+              textAlign: "center",
+              background: "var(--verdict-merah)",
+              color: "var(--verdict-on)",
+              boxShadow: "var(--shadow-raised-sm)",
+            }}
+          >
+            Keluar
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}
+
+// --- Skeleton memuat --------------------------------------------------------
 
 function SkelBar({
   w,
@@ -557,37 +2088,42 @@ function SkelBar({
 
 function Memuat() {
   return (
-    <>
+    <div aria-busy="true">
+      <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 20 }}>
+        <div className="gov-panel" style={{ padding: 24 }}>
+          <SkelBar w="40%" h={12} />
+          <SkelBar w="70%" h={20} mt={16} />
+          <SkelBar w="100%" h={30} r={999} mt={20} />
+        </div>
+        <div className="gov-panel" style={{ padding: 24 }}>
+          <SkelBar w="60%" h={12} />
+          <SkelBar w="80%" h={12} mt={14} />
+          <SkelBar w="70%" h={12} mt={14} />
+        </div>
+      </div>
       <div
-        aria-busy="true"
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(5,1fr)",
           gap: 20,
+          ...PANEL_MT,
         }}
       >
         {[0, 1, 2, 3, 4].map((i) => (
           <div
             key={i}
             className="gov-panel"
-            style={{ padding: "18px 20px 16px", borderRadius: 20 }}
+            style={{ padding: "18px 20px", borderRadius: 20 }}
           >
             <SkelBar w="62%" h={9} />
             <SkelBar w="38%" h={26} r={12} mt={14} />
           </div>
         ))}
       </div>
-      <div className="gov-panel" style={{ ...PANEL, padding: "22px 24px" }}>
-        <div
-          className="gov-well"
-          style={{
-            height: 30,
-            borderRadius: 999,
-            animation: "prm-pulse 1.6s ease-in-out infinite",
-          }}
-        />
-      </div>
-      <div className="gov-panel" style={{ ...PANEL, padding: "10px 0 18px" }}>
+      <div
+        className="gov-panel"
+        style={{ ...PANEL_MT, padding: "10px 0 14px" }}
+      >
         {[0, 1, 2, 3, 4, 5].map((i) => (
           <div
             key={i}
@@ -632,24 +2168,81 @@ function Memuat() {
             fontWeight: 600,
             fontSize: 12.5,
             lineHeight: 1,
-            color: "var(--muted-foreground)",
+            color: MUTED,
           }}
         >
           {GOV_COPY["ov.memuat"]}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
+function Judul() {
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "flex-end",
+        gap: 16,
+        margin: "32px 0 22px",
+      }}
+    >
+      <div>
+        <h1
+          className="gov-disp"
+          style={{
+            fontWeight: 800,
+            fontSize: 27,
+            lineHeight: 1.15,
+            letterSpacing: "-0.01em",
+            margin: 0,
+          }}
+        >
+          {GOV_COPY["ov.judul"]}
+        </h1>
+        <div
+          style={{
+            fontWeight: 500,
+            fontSize: 12.5,
+            lineHeight: 1.5,
+            color: MUTED,
+            marginTop: 8,
+          }}
+        >
+          Pemantauan berkelanjutan oleh 4 AI Agent pemeriksa
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// --- Orkestrator ------------------------------------------------------------
+
 export function OverviewClient() {
+  const router = useRouter();
   const [status, setStatus] = useState<Status>("memuat");
   const [data, setData] = useState<GovOverview | null>(null);
+  const [periode, setPeriode] = useState<string | null>(null);
 
-  const muat = useCallback(async () => {
+  const [bukaPeriode, setBukaPeriode] = useState(false);
+  const [bukaProfil, setBukaProfil] = useState(false);
+  const [bukaSetelan, setBukaSetelan] = useState(false);
+  const [bukaKeluar, setBukaKeluar] = useState(false);
+  const [bukaSandi, setBukaSandi] = useState(false);
+
+  const [filterVerdict, setFilterVerdict] = useState<VerdictColor | null>(null);
+  const [temaDef, setTemaDef] = useState<TemaDefault>("terang");
+  const [notifMerah, setNotifMerah] = useState(true);
+  const [notifSelesai, setNotifSelesai] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+  const toastT = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const muat = useCallback(async (p: string | null) => {
     setStatus("memuat");
     try {
-      const res = await fetch("/api/gov/overview", { cache: "no-store" });
+      const url = p ? `/api/gov/overview?periode=${p}` : "/api/gov/overview";
+      const res = await fetch(url, { cache: "no-store" });
       const json = await res.json();
       if (!res.ok || !json?.ok) {
         setStatus("gagal");
@@ -664,10 +2257,76 @@ export function OverviewClient() {
   }, []);
 
   useEffect(() => {
-    // ponytail: fetch-on-mount; setState terjadi setelah await (bukan sinkron).
+    // ponytail: fetch-on-mount / on-periode; setState terjadi setelah await.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    void muat();
-  }, [muat]);
+    void muat(periode);
+  }, [periode, muat]);
+
+  useEffect(() => {
+    return () => {
+      if (toastT.current) clearTimeout(toastT.current);
+    };
+  }, []);
+
+  const toastKan = useCallback((teks: string) => {
+    if (toastT.current) clearTimeout(toastT.current);
+    setToast(teks);
+    toastT.current = setTimeout(() => setToast(null), 3400);
+  }, []);
+
+  const pilihPeriode = useCallback((p: string) => {
+    setBukaPeriode(false);
+    setFilterVerdict(null);
+    setPeriode(p);
+  }, []);
+
+  const buka = useCallback(
+    (id: string) => router.push(`/pemerintah/koperasi/${id}`),
+    [router],
+  );
+
+  const onFilter = useCallback(
+    (w: VerdictColor) => setFilterVerdict((cur) => (cur === w ? null : w)),
+    [],
+  );
+
+  const setTema = useCallback((t: TemaDefault) => {
+    setTemaDef(t);
+    if (t === "sistem") {
+      const dark =
+        typeof window !== "undefined" &&
+        window.matchMedia?.("(prefers-color-scheme: dark)").matches;
+      terapkanTema(dark ? "gelap" : "terang");
+    } else {
+      terapkanTema(t);
+    }
+  }, []);
+
+  const keluar = useCallback(async () => {
+    setBukaKeluar(false);
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } catch {
+      /* tetap arahkan ke login walau permintaan gagal */
+    }
+    router.push("/login");
+  }, [router]);
+
+  const periodeLabel = periode
+    ? periodeLabelDari(periode)
+    : data
+      ? periodeLabelDari(data.periode)
+      : "";
+  const periodeItems = data
+    ? data.periodeTersedia.map((p, i) => ({
+        periode: p,
+        label: periodeLabelDari(p),
+        warna: worstWarna(data.tren[i] ?? { merah: 0, kuning: 0 }),
+        aktif: p === data.periode,
+      }))
+    : [];
+
+  const adaDrop = bukaPeriode || bukaProfil;
 
   return (
     <div
@@ -678,71 +2337,109 @@ export function OverviewClient() {
         padding: "26px 48px 60px",
       }}
     >
-      <GovHeader />
+      <Header
+        periodeLabel={periodeLabel}
+        periodeItems={periodeItems}
+        bukaPeriode={bukaPeriode}
+        onTogglePeriode={() => {
+          setBukaPeriode((v) => !v);
+          setBukaProfil(false);
+        }}
+        onPilihPeriode={pilihPeriode}
+        bukaProfil={bukaProfil}
+        onToggleProfil={() => {
+          setBukaProfil((v) => !v);
+          setBukaPeriode(false);
+        }}
+        onPengaturan={() => {
+          setBukaProfil(false);
+          setBukaSetelan(true);
+        }}
+        onKeluar={() => {
+          setBukaProfil(false);
+          setBukaKeluar(true);
+        }}
+      />
+
+      {adaDrop ? (
+        <div
+          style={{ position: "fixed", inset: 0, zIndex: 60 }}
+          onClick={() => {
+            setBukaPeriode(false);
+            setBukaProfil(false);
+          }}
+        />
+      ) : null}
+
       <Judul />
 
       {status === "gagal" ? (
-        <div
-          role="alert"
-          className="gov-well-sm"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 12,
-            margin: "0 0 20px",
-            padding: "14px 20px",
-            borderRadius: 16,
-            background: "var(--verdict-merah-surface)",
-          }}
-        >
-          <VerdictShape bentuk={BENTUK.merah} size={12} />
-          <div
-            style={{
-              fontWeight: 600,
-              fontSize: 13,
-              lineHeight: 1.5,
-              color: "var(--verdict-merah)",
-            }}
-          >
-            {GOV_COPY["ov.gagal.banner"]}
-          </div>
-          <div style={{ flex: 1 }} />
-          <button
-            type="button"
-            onClick={() => void muat()}
-            className="gov-primary"
-            style={{
-              padding: "11px 22px",
-              borderRadius: 999,
-              fontWeight: 700,
-              fontSize: 12.5,
-              lineHeight: 1,
-            }}
-          >
-            {GOV_COPY["ov.gagal.cta"]}
-          </button>
-        </div>
-      ) : null}
-
-      {status === "memuat" ? (
-        <Memuat />
-      ) : (
-        <KpiStrip status={status} data={data} />
-      )}
-
-      {status === "default" && data ? (
         <>
-          <Distribusi data={data} />
-          <Tabel data={data} />
+          <div
+            role="alert"
+            className="gov-well-sm"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
+              margin: "0 0 20px",
+              padding: "14px 20px",
+              borderRadius: 16,
+              background: "var(--verdict-merah-surface)",
+            }}
+          >
+            <VerdictShape bentuk={BENTUK.merah} size={12} />
+            <div
+              style={{
+                fontWeight: 600,
+                fontSize: 13,
+                lineHeight: 1.5,
+                color: "var(--verdict-merah)",
+              }}
+            >
+              {GOV_COPY["ov.gagal.banner"]}
+            </div>
+            <div style={{ flex: 1 }} />
+            <button
+              type="button"
+              onClick={() => void muat(periode)}
+              className="gov-primary"
+              style={{
+                padding: "11px 22px",
+                borderRadius: 999,
+                fontWeight: 700,
+                fontSize: 12.5,
+                lineHeight: 1,
+              }}
+            >
+              {GOV_COPY["ov.gagal.cta"]}
+            </button>
+          </div>
+          <div
+            className="gov-panel"
+            style={{ padding: "44px 24px", textAlign: "center" }}
+          >
+            <div
+              style={{
+                fontWeight: 500,
+                fontSize: 13,
+                lineHeight: 1.5,
+                color: MUTED,
+              }}
+            >
+              {GOV_COPY["ov.gagal.panel"]}
+            </div>
+          </div>
         </>
       ) : null}
+
+      {status === "memuat" ? <Memuat /> : null}
 
       {status === "kosong" ? (
         <div
           className="gov-panel"
           style={{
-            ...PANEL,
-            padding: "64px 24px",
+            padding: "80px 24px",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -781,7 +2478,7 @@ export function OverviewClient() {
               fontWeight: 500,
               fontSize: 12.5,
               lineHeight: 1.6,
-              color: "var(--muted-foreground)",
+              color: MUTED,
               marginTop: 8,
               maxWidth: 420,
             }}
@@ -790,7 +2487,7 @@ export function OverviewClient() {
           </div>
           <button
             type="button"
-            onClick={() => void muat()}
+            onClick={() => void muat(periode)}
             className="gov-control"
             style={{
               marginTop: 22,
@@ -807,21 +2504,102 @@ export function OverviewClient() {
         </div>
       ) : null}
 
-      {status === "gagal" ? (
-        <div
-          className="gov-panel"
-          style={{ ...PANEL, padding: "44px 24px", textAlign: "center" }}
-        >
+      {status === "default" && data ? (
+        <>
+          <div
+            style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 20 }}
+          >
+            <HeroKondisi
+              data={data}
+              filterVerdict={filterVerdict}
+              onFilter={onFilter}
+            />
+            <PerluPerhatian data={data} onBuka={buka} />
+          </div>
+          <KpiRow
+            data={data}
+            filterVerdict={filterVerdict}
+            onFilter={onFilter}
+          />
           <div
             style={{
-              fontWeight: 500,
-              fontSize: 13,
-              lineHeight: 1.5,
-              color: "var(--muted-foreground)",
+              display: "grid",
+              gridTemplateColumns: "1.35fr 1fr",
+              gap: 20,
+              ...PANEL_MT,
             }}
           >
-            {GOV_COPY["ov.gagal.panel"]}
+            <TrenPanel data={data} onPilihPeriode={pilihPeriode} />
+            <AgentPanel data={data} />
           </div>
+          <Tabel
+            data={data}
+            filterVerdict={filterVerdict}
+            onClearFilter={() => setFilterVerdict(null)}
+            onBuka={buka}
+          />
+        </>
+      ) : null}
+
+      {bukaSetelan ? (
+        <SettingsSlideOver
+          data={data}
+          temaDef={temaDef}
+          onTema={setTema}
+          onPilihPeriode={pilihPeriode}
+          notifMerah={notifMerah}
+          notifSelesai={notifSelesai}
+          onToggleMerah={() => setNotifMerah((v) => !v)}
+          onToggleSelesai={() => setNotifSelesai((v) => !v)}
+          bukaSandi={bukaSandi}
+          onBukaSandi={() => setBukaSandi(true)}
+          onSimpanSandi={() => {
+            setBukaSandi(false);
+            toastKan("Kata sandi diperbarui.");
+          }}
+          onClose={() => {
+            setBukaSetelan(false);
+            setBukaSandi(false);
+          }}
+        />
+      ) : null}
+
+      {bukaKeluar ? (
+        <ExitDialog onBatal={() => setBukaKeluar(false)} onKeluar={keluar} />
+      ) : null}
+
+      {toast ? (
+        <div
+          role="status"
+          className="gov-raised-sm"
+          style={{
+            position: "fixed",
+            bottom: 26,
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 120,
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "13px 22px",
+            borderRadius: 999,
+            background: "var(--surface-fill)",
+            animation: "prm-pop .5s var(--ease-mewah) both",
+          }}
+        >
+          <div
+            aria-hidden="true"
+            style={{
+              width: 10,
+              height: 10,
+              borderRadius: "50%",
+              background: "var(--verdict-hijau)",
+              flex: "none",
+            }}
+          />
+          <span style={{ fontWeight: 600, fontSize: 12.5, lineHeight: 1.4 }}>
+            {toast}
+          </span>
         </div>
       ) : null}
     </div>

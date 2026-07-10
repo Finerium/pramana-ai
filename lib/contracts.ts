@@ -82,6 +82,37 @@ export type GovOverview = {
     verdictWarna: "hijau" | "kuning" | "merah";
     temuanCount: number;
   }>;
+  // -------------------------------------------------------------------------
+  // Ekstensi aditif M3-3 (fondasi data dasbor per periode). Kompatibel 6.3b:
+  // kpi + koperasi di atas TETAP untuk periode aktif; field baru menambah
+  // dimensi periode. Semua dihitung server-side dari audit_run + temuan.
+  // -------------------------------------------------------------------------
+  periode: string; // periode aktif "YYYY-MM"
+  periodeTersedia: string[]; // urut naik, untuk dropdown periode
+  tren: Array<{
+    periode: string;
+    hijau: number;
+    kuning: number;
+    merah: number;
+    temuan: number;
+  }>; // 6 bulan nasional (chart + sparkline; sparkline diturunkan UI)
+  perluPerhatian: Array<{
+    id: string;
+    nama: string;
+    verdictWarna: "hijau" | "kuning" | "merah";
+    alasan: string; // judul temuan teratas atau kalimat generik
+  }>; // koperasi merah/kuning periode aktif
+  agenFeed: {
+    model: string;
+    adjudikatorModel: string;
+    agen: Array<{ agent: AgentId; temuan: number }>;
+  }; // jumlah temuan per agen, periode aktif
+  kpiDelta: {
+    hijau: number;
+    kuning: number;
+    merah: number;
+    temuanTerbuka: number;
+  }; // selisih vs periode sebelumnya (0 bila periode paling awal)
 };
 
 export type FlowResp = {

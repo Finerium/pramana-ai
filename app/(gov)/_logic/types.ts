@@ -4,7 +4,12 @@
  * hanya menyebut {profil, auditRun, temuan[], tren}), jadi tipe ini adalah
  * kontrak UI-ke-backend; modul API menyesuaikan saat integrasi (Gate 2).
  */
-import type { AgentFinding, AuditRun, VerdictColor } from "@/lib/contracts";
+import type {
+  AgentFinding,
+  AuditRun,
+  GovOverview,
+  VerdictColor,
+} from "@/lib/contracts";
 
 export type GovKoperasiProfil = {
   id: string;
@@ -33,3 +38,18 @@ export type AuditStatus = "berjalan" | "selesai" | "gagal_langsung";
 
 export type AuditRunResp = { auditRunId: string; status: "berjalan" };
 export type AuditStatusResp = { status: AuditStatus; auditRun?: AuditRun };
+
+// ---------------------------------------------------------------------------
+// Overview per periode (M3-3). Tren nasional dipakai chart + sparkline; titik
+// run per (koperasi, periode) adalah input agregasi murni buildTren.
+// ---------------------------------------------------------------------------
+export type OverviewTrenPoint = GovOverview["tren"][number];
+export type OverviewTrenKey = "hijau" | "kuning" | "merah" | "temuan";
+
+/** Run terbaru per (koperasi, periode) sebagai input agregasi tren. */
+export type TrenRun = {
+  koperasiId: string;
+  periode: string;
+  verdictWarna: VerdictColor;
+  temuanCount: number;
+};
