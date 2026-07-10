@@ -149,6 +149,36 @@ export const GOV_COPY = {
   "login.hint.email": "juri.pemerintah@pramana.id",
   "login.hint.sandi": "PramanaJuri2026",
   "login.hint.aksi": "Isi otomatis",
+
+  // Login dua panel (split-screen; F-09 varian pemerintah)
+  "login.judul": "Masuk ke dasbor",
+  "login.sub":
+    "Gunakan akun analis Kemenkop Anda untuk melanjutkan pengawasan.",
+  "login.sandi.tampil": "Tampilkan",
+  "login.sandi.sembunyi": "Sembunyikan",
+  "login.sandi.tampilAria": "Tampilkan kata sandi",
+  "login.sandi.sembunyiAria": "Sembunyikan kata sandi",
+  "login.ingat": "Ingat saya",
+  "login.lupa": "Lupa kata sandi",
+  "login.lupa.toast":
+    "Instruksi atur ulang kata sandi telah dikirim ke email Anda.",
+  "login.lencana": "Pengawasan berkelanjutan",
+  "login.headline": "Setiap koperasi diperiksa, setiap temuan bisa dijelaskan.",
+  "login.paragraf":
+    "Empat AI Agent memeriksa transaksi ribuan koperasi desa secara berkelanjutan. Anda memutuskan tindak lanjutnya, dengan bukti yang bisa ditelusuri dan hak pengurus untuk menanggapi.",
+  "login.ringkasan.judul": "Ringkasan pengawasan · Juni 2026",
+  "login.ringkasan.koperasi": "koperasi terpantau",
+  "login.ringkasan.temuan": "temuan terbuka",
+  "login.ringkasan.dist":
+    "Distribusi verdict: 6 hijau, 4 kuning, 2 merah dari 12 koperasi",
+  "login.pilar.agen.judul": "4 AI Agent",
+  "login.pilar.agen.sub": "MiniMax-M2.7 memeriksa tiap transaksi",
+  "login.pilar.verdict.judul": "Verdict jelas",
+  "login.pilar.verdict.sub": "Setiap temuan disertai bukti",
+  "login.pilar.hak.judul": "Hak menanggapi",
+  "login.pilar.hak.sub": "Pengurus dapat membela diri",
+  "login.footer.akses":
+    "Belum punya akses? Hubungi admin Kemenkop instansi Anda.",
   "login.footer.baris1":
     "Pramana AI · Purwarupa Digital Cooperatives Expo 2026",
   "login.footer.baris2": "Akses hanya untuk analis pemerintah yang terdaftar.",

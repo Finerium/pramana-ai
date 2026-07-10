@@ -20,6 +20,37 @@
   segitiga, merah belah ketupat, info persegi; clip-path, bukan ikon font).
 */
 
+/*
+  PANEL MEREK (khusus login dua panel, SELALU gelap di kedua tema). Token --brand-*
+  BARU untuk redesign login split-screen (lihat D-20 di .crown/design-deviations.md);
+  BUKAN bagian bundle dashboard oracle (design-handoff/dashboard/pramana-tokens.css
+  tidak memuat --brand-*), melainkan dari handoff login baru yang diminta pengguna.
+  SENGAJA hanya di :root dan TIDAK di-override di .dark, sehingga panel kiri login
+  tetap gelap apa pun tema. Prefix --brand-* unik: tidak menabrak empat namespace token.
+*/
+:root {
+  --brand-bg: oklch(0.205 0.012 80);
+  --brand-surface: linear-gradient(
+    180deg,
+    oklch(0.285 0.014 80),
+    oklch(0.242 0.013 80) 34%
+  );
+  --brand-well: oklch(0.183 0.011 80);
+  --brand-ink: oklch(0.95 0.008 84);
+  --brand-muted: oklch(0.73 0.015 82);
+  --brand-edge-top: oklch(1 0 0 / 0.14);
+  --brand-edge-well: oklch(1 0 0 / 0.06);
+  --brand-shadow-raised: 0 18px 40px oklch(0 0 0 / 0.55);
+  --brand-shadow-raised-sm: 0 10px 22px oklch(0 0 0 / 0.45);
+  --brand-shadow-pressed: inset 0 3px 8px oklch(0 0 0 / 0.55);
+  --brand-accent: oklch(0.8 0.09 200);
+  --brand-on-accent: oklch(0.2 0.02 210);
+  --brand-verdict-hijau: oklch(0.74 0.11 152);
+  --brand-verdict-kuning: oklch(0.8 0.11 85);
+  --brand-verdict-merah: oklch(0.72 0.13 28);
+  --brand-verdict-on: oklch(0.2 0.012 80);
+}
+
 .gov {
   /* Permukaan */
   --background: oklch(0.93 0.009 84);
@@ -183,6 +214,43 @@
 .gov-well-sm { background: var(--well); box-shadow: var(--shadow-pressed-sm); border-bottom: 1px solid var(--edge-bottom-well); }
 .gov-primary { background: var(--primary); color: var(--primary-foreground); box-shadow: var(--shadow-raised-sm); }
 
+/*
+  Login dua panel (split-screen). Struktur di CSS supaya media query bisa menata
+  ulang jadi stack; warna tetap lewat token. Panel kiri (aside) SELALU gelap via
+  --brand-* :root. Di bawah 900px: stack, panel kiri jadi header ringkas, konten
+  berat (.gov-login-heavy) disembunyikan, form turun ke bawah.
+*/
+.gov-login { display: flex; min-height: 100vh; }
+.gov-login-aside {
+  position: relative;
+  flex: 0 0 57%;
+  max-width: 57%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 60px 64px 54px;
+  background: var(--brand-bg);
+  color: var(--brand-ink);
+}
+.gov-login-main {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 48px 40px;
+}
+@media (max-width: 900px) {
+  .gov-login { flex-direction: column; }
+  .gov-login-aside { flex-basis: auto; max-width: none; padding: 28px 22px; }
+  .gov-login-main { min-height: auto; padding: 40px 22px 64px; }
+  .gov-login-heavy { display: none; }
+}
+
 /* Hover baris tabel (prototype: style-hover background var(--row-hover)). */
 .gov-row { cursor: pointer; }
 .gov-row:hover { background: var(--row-hover); }
@@ -198,6 +266,7 @@
 @keyframes prm-slidein { from { transform: translateX(60px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 @keyframes prm-zoomin { from { opacity: 0; transform: scale(0.96) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 @keyframes prm-pagein { from { opacity: 0; } to { opacity: 1; } }
+@keyframes prm-napas { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
 @media (prefers-reduced-motion: reduce) {
   .gov *, .gov *::before, .gov *::after {

@@ -151,8 +151,23 @@ export const SUBJEK_COPY = {
     "Konsol ini mensimulasikan sistem pembukuan koperasi. Data yang Anda catat menjadi sumber yang diperiksa Pramana. Ini bukan bagian produk Pramana untuk pengurus.",
   login: {
     kicker: "Simulasi Pembukuan Koperasi",
-    judul: "Masuk sebagai bendahara",
-    sub: "Sumber data yang diawasi Pramana. Gunakan akun uji di bawah untuk mencoba.",
+    // Panel kiri editorial (framing, bukan form).
+    left: {
+      headline:
+        "Setiap catatan kas Anda menjadi sumber yang diperiksa Pramana.",
+      lead: "Konsol ini mensimulasikan sistem pembukuan koperasi. Anda mencatat transaksi dan pinjaman seperti buku kas biasa, dan datanya diawasi Pramana untuk anggota.",
+      langkah: [
+        "Catat transaksi dan pinjaman seperti buku kas biasa.",
+        "Setiap entri tersinkron otomatis ke Pramana.",
+        "Pramana memeriksa dan memberi tahu anggota bila ada yang perlu dijelaskan.",
+      ],
+      saldoLabel: "Saldo kas koperasi",
+      tersinkron: "Tersinkron ke Pramana",
+    },
+    tab: { masuk: "Masuk", daftar: "Daftar" },
+    // Judul + sub tab Masuk (konsol).
+    judul: "Masuk ke konsol",
+    sub: "Gunakan akun uji bendahara di bawah untuk mencoba.",
     lEmail: "Email",
     lSandi: "Kata sandi",
     phEmail: "nama@pramana.id",
@@ -161,7 +176,35 @@ export const SUBJEK_COPY = {
     kredSandi: "PramanaBendahara2026",
     isiOtomatis: "Isi otomatis",
     masuk: "Masuk",
-    foot: "Purwarupa untuk penjurian. Seluruh data bersifat sintetis.",
+    memuat: "Memproses...",
+    // Tab Daftar (mock klien, tanpa backend).
+    daftar: {
+      judul: "Daftar bendahara baru",
+      sub: "Akun akan aktif setelah diverifikasi pengurus koperasi.",
+      lNama: "Nama lengkap",
+      lKoperasi: "Nama koperasi",
+      lEmail: "Email",
+      lJabatan: "Jabatan di koperasi",
+      lSandi: "Kata sandi",
+      lKonfirmasi: "Konfirmasi kata sandi",
+      phNama: "Nama sesuai KTP",
+      phKoperasi: "Nama koperasi Anda",
+      phEmail: "nama@koperasi.id",
+      phSandi: "Minimal 8 karakter",
+      phKonfirmasi: "Ulangi kata sandi",
+      daftar: "Daftar",
+      sukses:
+        "Pendaftaran terkirim. Anda akan dihubungi setelah akun diverifikasi pengurus.",
+      validasi: {
+        nama: "Nama lengkap wajib diisi.",
+        koperasi: "Nama koperasi wajib diisi.",
+        email: "Format email belum tepat. Contoh: nama@pramana.id",
+        jabatan: "Jabatan wajib dipilih.",
+        sandi: "Kata sandi minimal 8 karakter.",
+        konfirmasi: "Konfirmasi kata sandi belum sama.",
+      },
+    },
+    foot: "Purwarupa untuk penjurian. Seluruh data bersifat sintetis. Konsol ini adalah sumber data yang diawasi Pramana, bukan bagian produk Pramana untuk pengurus.",
   },
   err: {
     jumlahKosong: "Jumlah wajib diisi.",
