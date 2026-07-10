@@ -6,6 +6,7 @@
  * keputusan (grid 30 titik, terkunci setelah memilih). Total anggota grid = 30
  * (jumlah anggota seed; tidak ada di VoiceResp).
  */
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { VoiceResp } from "@/lib/contracts";
 import { MEMBER_COPY } from "@/lib/copy/member";
@@ -46,9 +47,10 @@ const OPTS: { emptyStatuses: number[]; isEmpty: (v: VoiceResp) => boolean } = {
 
 export function Suara() {
   const router = useRouter();
-  const { muat } = useResource<VoiceResp>("/api/member/voice", OPTS);
+  const { muat, reload } = useResource<VoiceResp>("/api/member/voice", OPTS);
   const ratSet = useRatSet();
   const votes = useVotes();
+  const [resetting, setResetting] = useState(false);
   const v =
     muat.status === "isi"
       ? muat.data
@@ -62,6 +64,32 @@ export function Suara() {
       await postJson("/api/vote", { keputusanId: kid, pilihan });
     } catch {
       /* optimistik: pilihan tetap tampil dari sesi */
+    }
+  }
+
+  async function resetDemo() {
+    if (resetting) return;
+    setResetting(true);
+    try {
+      await postJson("/api/suara/reset", {});
+      // Server sudah memulihkan agregat ke baseline seed. Bersihkan juga toko
+      // sesi (pertanyaan + vote) lalu picu event "storage" agar store
+      // useSyncExternalStore membaca ulang: badge "milik Anda" dan kunci vote
+      // ikut kembali ke keadaan awal, bukan cuma angka server.
+      // ponytail: kunci digandakan dari components/member/data (di luar klaster,
+      // tak boleh disunting); dua string literal, bukan modul util baru.
+      try {
+        sessionStorage.removeItem("pramana-rat");
+        sessionStorage.removeItem("pramana-vote");
+        window.dispatchEvent(new StorageEvent("storage"));
+      } catch {
+        /* penyimpanan tidak tersedia */
+      }
+      reload();
+    } catch {
+      /* refetch berikutnya tetap menampilkan keadaan terkini */
+    } finally {
+      setResetting(false);
     }
   }
 
@@ -142,7 +170,59 @@ export function Suara() {
           onOpen={(id) => router.push(`/temuan?open=${id}`)}
         />
       )}
+
+      {muat.status !== "memuat" ? (
+        <ResetDemo busy={resetting} onReset={resetDemo} />
+      ) : null}
     </main>
+  );
+}
+
+/**
+ * Tombol utilitas demo: mengembalikan pertanyaan RAT dan suara ke baseline seed
+ * (POST /api/suara/reset) lalu Suara refetch. Gaya sekunder (bukan aksi utama).
+ */
+function ResetDemo({ busy, onReset }: { busy: boolean; onReset: () => void }) {
+  return (
+    <section
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 8,
+        marginTop: 6,
+        ...rise(0.2),
+      }}
+    >
+      <button
+        type="button"
+        onClick={onReset}
+        disabled={busy}
+        style={{
+          minHeight: 48,
+          borderRadius: 999,
+          border: "1px solid var(--border)",
+          background: "var(--surface)",
+          color: "var(--muted)",
+          fontSize: 14.5,
+          fontWeight: 650,
+          opacity: busy ? 0.6 : 1,
+        }}
+      >
+        {busy
+          ? MEMBER_COPY["suara.reset.busy"]
+          : MEMBER_COPY["suara.reset.tombol"]}
+      </button>
+      <span
+        style={{
+          fontSize: 12,
+          color: "var(--muted)",
+          lineHeight: 1.5,
+          textAlign: "center",
+        }}
+      >
+        {MEMBER_COPY["suara.reset.sub"]}
+      </span>
+    </section>
   );
 }
 

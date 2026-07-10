@@ -82,6 +82,8 @@ export const MEMBER_COPY = {
     "Bukti di atas adalah catatan nyata di pembukuan koperasi. Pramana hanya menampilkan hal yang benar-benar tercatat dan membuang temuan yang tidak dapat dibuktikan.",
   "temuan.pertanyaan": "PERTANYAAN UNTUK RAPAT",
   "temuan.tanggapan": "TANGGAPAN PENGURUS, 24 JUNI 2026",
+  "temuan.filter.semua": "Semua",
+  "temuan.filter.kosong": "Tidak ada temuan pada kategori ini.",
 
   // Uang Anda
   "uang.judul": "Uang Anda",
@@ -130,6 +132,9 @@ export const MEMBER_COPY = {
   "suara.vote.tidak": "Tidak Setuju",
   "suara.vote.sebelum": "Hasil sementara terlihat setelah Anda memilih.",
   "suara.vote.terkunci": "Pilihan tersimpan dan tidak dapat diubah.",
+  "suara.reset.tombol": "Reset demo suara",
+  "suara.reset.sub": "Kembalikan pertanyaan dan suara ke keadaan awal.",
+  "suara.reset.busy": "Mengembalikan...",
 
   // Profil
   "profil.judul": "Profil",

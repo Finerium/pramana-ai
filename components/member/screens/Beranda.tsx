@@ -192,7 +192,9 @@ export function Beranda() {
           agStep={agStep}
           agCounts={agCounts}
           onRun={run}
-          onOpenTemuan={() => router.push("/temuan")}
+          onOpenTemuan={(id) =>
+            router.push(id ? `/temuan?open=${id}` : "/temuan")
+          }
           onOpenUang={() => router.push("/uang")}
           onOpenSuara={() => router.push("/suara")}
           onOpenArus={() => router.push("/arus")}
@@ -224,7 +226,7 @@ function BerandaIsi({
   agStep: number;
   agCounts: number[];
   onRun: () => void;
-  onOpenTemuan: () => void;
+  onOpenTemuan: (temuanId?: string) => void;
   onOpenUang: () => void;
   onOpenSuara: () => void;
   onOpenArus: () => void;
@@ -237,6 +239,9 @@ function BerandaIsi({
     agCounts,
   );
   const showBanner = gagal || v.source === "cache";
+  // Notif menautkan langsung ke temuan paling perlu perhatian (findings sudah
+  // terurut server-side: merah, kuning, info). Kosong -> daftar temuan.
+  const topTemuanId = findingList[0]?.id;
 
   const simpanan = sum ? sum.uangAnda.totalSimpanan : 600000;
   const cic = sum?.uangAnda.cicilanBerikut ?? {
@@ -314,7 +319,7 @@ function BerandaIsi({
         </div>
         <button
           type="button"
-          onClick={onOpenTemuan}
+          onClick={() => onOpenTemuan()}
           style={{
             height: 56,
             borderRadius: 999,
@@ -332,7 +337,7 @@ function BerandaIsi({
       {dv.showNotif ? (
         <button
           type="button"
-          onClick={onOpenTemuan}
+          onClick={() => onOpenTemuan(topTemuanId)}
           style={{
             display: "flex",
             gap: 11,

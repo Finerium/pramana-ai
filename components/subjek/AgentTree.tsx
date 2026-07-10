@@ -27,8 +27,9 @@ const AGEN_URUT: AgentId[] = [
 ];
 
 /** Bentuk verdict (selaras peta gov): hijau lingkaran, kuning segitiga,
- *  merah belah ketupat. Warna dari token status subjek yang sudah ada. */
-const BENTUK: Record<
+ *  merah belah ketupat. Warna dari token status subjek yang sudah ada.
+ *  Diekspor agar panel Riwayat memakai bentuk+warna yang sama (satu sumber). */
+export const BENTUK: Record<
   VerdictColor,
   { clip?: string; radius: string; warna: string; soft: string; onSoft: string }
 > = {
@@ -190,6 +191,13 @@ const T: Record<string, CSSProperties> = {
     lineHeight: 1.5,
     maxWidth: "52ch",
   },
+  terkirim: {
+    fontSize: "12.5px",
+    fontWeight: 600,
+    lineHeight: 1.5,
+    maxWidth: "48ch",
+    marginTop: "4px",
+  },
   cacheChip: {
     fontSize: "11px",
     fontWeight: 600,
@@ -263,6 +271,13 @@ export function AgentTree({ state }: { state: AgentTreeState }) {
           : COPY["audit.gagal"];
 
   const verdict = data?.verdict ?? null;
+  // Sorotan gentar: hanya pada hasil live selesai (bukan cache), saat verdict
+  // merah/kuning. N = jumlah anggota koperasi nyata dari server (anggotaDinotif).
+  const dinotif = state.fase === "selesai" ? state.data.anggotaDinotif : 0;
+  const tampilkanTerkirim =
+    verdict !== null &&
+    (verdict.warna === "merah" || verdict.warna === "kuning") &&
+    dinotif > 0;
 
   return (
     <section className="subjek-tree" style={T.card} aria-label={c.aria}>
@@ -358,7 +373,7 @@ export function AgentTree({ state }: { state: AgentTreeState }) {
       <div style={T.tengah}>
         <div style={T.adjCard}>
           <div style={T.adjNama}>{c.adjudikator}</div>
-          <span style={T.badge}>{c.model}</span>
+          <span style={T.badge}>{c.adjudikatorBadge}</span>
           <span className={berjalan ? "pulse" : undefined} style={T.adjSub}>
             {berjalan ? c.menungguAgen : c.adjudikatorSub}
           </span>
@@ -408,6 +423,11 @@ export function AgentTree({ state }: { state: AgentTreeState }) {
             </span>
             {verdict.ringkasan && (
               <span style={T.verdictRingkasan}>{verdict.ringkasan}</span>
+            )}
+            {tampilkanTerkirim && (
+              <span style={T.terkirim}>
+                {c.terkirim.replace("{n}", String(dinotif))}
+              </span>
             )}
             {cache && <span style={T.cacheChip}>{c.hasilTersimpan}</span>}
           </div>

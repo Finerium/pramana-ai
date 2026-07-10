@@ -20,7 +20,9 @@ export async function POST(req: NextRequest) {
 
     const auditRunId = ulid();
     try {
-      after(() => runLiveAudit(auditRunId, koperasiId));
+      // fokus:true = snapshot jendela kecil supaya audit interaktif bendahara
+      // selalu selesai cepat (gov tetap snapshot penuh yang dalam).
+      after(() => runLiveAudit(auditRunId, koperasiId, { fokus: true }));
     } catch {
       // ponytail: after() di luar konteks request (mis. unit test) diabaikan;
       // eksekusi live audit diuji langsung lewat runLiveAudit.

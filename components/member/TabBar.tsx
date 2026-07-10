@@ -5,7 +5,8 @@
  * kata, target sentuh >= 44px, latar blur. Tab Beranda aktif juga di /temuan
  * (temuan dibuka dari beranda, U1). Dilebarkan maksimum sesuai kolom aplikasi.
  */
-import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { CSSProperties, ReactNode } from "react";
 import { MEMBER_COPY } from "@/lib/copy/member";
 
@@ -86,7 +87,6 @@ const TABS: Tab[] = [
 
 export function TabBar() {
   const pathname = usePathname();
-  const router = useRouter();
   return (
     <nav
       aria-label={MEMBER_COPY["tab.aria"]}
@@ -110,11 +110,14 @@ export function TabBar() {
     >
       {TABS.map((t) => {
         const on = t.aktif(pathname);
+        // Link + prefetch: RSC/JS segmen tujuan dihangatkan lebih awal dan URL
+        // berpindah optimistik, jadi highlight tab aktif (usePathname) berubah
+        // seketika saat diklik dan loading.tsx menutup jeda muat (nol freeze).
         return (
-          <button
+          <Link
             key={t.href}
-            type="button"
-            onClick={() => router.push(t.href)}
+            href={t.href}
+            prefetch
             aria-current={on ? "page" : undefined}
             style={{
               minHeight: 52,
@@ -123,12 +126,13 @@ export function TabBar() {
               alignItems: "center",
               justifyContent: "center",
               gap: 4,
+              textDecoration: "none",
               color: on ? "var(--accent)" : "var(--muted)",
             }}
           >
             {t.icon(on ? 2.1 : 1.7)}
             <span style={{ fontSize: 11, fontWeight: 650 }}>{t.label}</span>
-          </button>
+          </Link>
         );
       })}
     </nav>

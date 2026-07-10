@@ -9,7 +9,7 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { COPY, AGENT_LABELS } from "@/lib/copy";
-import { MEMBER_COPY } from "@/lib/copy/member";
+import { MEMBER_COPY, SEVERITY_CHIP } from "@/lib/copy/member";
 import type {
   MemberFinding,
   MemberFindingsResp,
@@ -39,6 +39,14 @@ import {
   IkonPerisai,
 } from "@/components/member/icons";
 
+type FilterKey = "semua" | "merah" | "kuning";
+
+const FILTER_TABS: { key: FilterKey; label: string }[] = [
+  { key: "semua", label: MEMBER_COPY["temuan.filter.semua"] },
+  { key: "merah", label: SEVERITY_CHIP.merah },
+  { key: "kuning", label: SEVERITY_CHIP.kuning },
+];
+
 export function Temuan() {
   const router = useRouter();
   const params = useSearchParams();
@@ -48,6 +56,7 @@ export function Temuan() {
   const [open, setOpen] = useState<Set<string>>(
     () => new Set(openParam ? [openParam] : []),
   );
+  const [filter, setFilter] = useState<FilterKey>("semua");
 
   const data =
     muat.status === "isi"
@@ -55,7 +64,17 @@ export function Temuan() {
       : muat.status === "gagal"
         ? muat.data
         : null;
+  // Server sudah mengurutkan temuan paling perlu perhatian di atas (merah,
+  // kuning, info; lihat RANK di app/api/member/findings). Filter mempertahankan
+  // urutan itu. Hitung per tab dari data nyata (bukan literal).
   const list: MemberFinding[] = data?.temuan ?? [];
+  const counts: Record<FilterKey, number> = {
+    semua: list.length,
+    merah: list.filter((f) => f.severity === "merah").length,
+    kuning: list.filter((f) => f.severity === "kuning").length,
+  };
+  const shown =
+    filter === "semua" ? list : list.filter((f) => f.severity === filter);
 
   // Semai status "sudah ditambahkan" yang persisten di server (kontrak 6.3:
   // sudahDitambahkan) ke toko sesi agar tampil saat load.
@@ -157,21 +176,107 @@ export function Temuan() {
           judul={COPY["kosong.temuan"]}
         />
       ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-          {list.map((f, i) => (
-            <TemuanCard
-              key={f.id}
-              f={f}
-              index={i}
-              open={open.has(f.id)}
-              added={ratSet.has(f.id)}
-              onToggle={() => toggle(f.id)}
-              onAdd={() => tambah(f.id)}
-            />
-          ))}
-        </div>
+        <>
+          <FilterTabs active={filter} counts={counts} onPick={setFilter} />
+          {shown.length === 0 ? (
+            <div
+              style={cardStyle({
+                padding: 24,
+                textAlign: "center",
+              })}
+            >
+              <span
+                style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.5 }}
+              >
+                {MEMBER_COPY["temuan.filter.kosong"]}
+              </span>
+            </div>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              {shown.map((f, i) => (
+                <TemuanCard
+                  key={f.id}
+                  f={f}
+                  index={i}
+                  open={open.has(f.id)}
+                  added={ratSet.has(f.id)}
+                  onToggle={() => toggle(f.id)}
+                  onAdd={() => tambah(f.id)}
+                />
+              ))}
+            </div>
+          )}
+        </>
       )}
     </main>
+  );
+}
+
+function FilterTabs({
+  active,
+  counts,
+  onPick,
+}: {
+  active: FilterKey;
+  counts: Record<FilterKey, number>;
+  onPick: (k: FilterKey) => void;
+}) {
+  return (
+    <div
+      role="group"
+      aria-label={MEMBER_COPY["temuan.judul"]}
+      style={{
+        display: "flex",
+        gap: 8,
+        overflowX: "auto",
+        scrollbarWidth: "none",
+        paddingBottom: 2,
+      }}
+    >
+      {FILTER_TABS.map((t) => {
+        const on = t.key === active;
+        return (
+          <button
+            key={t.key}
+            type="button"
+            aria-pressed={on}
+            onClick={() => onPick(t.key)}
+            style={{
+              flex: "none",
+              minHeight: 40,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 7,
+              padding: "8px 14px",
+              borderRadius: 999,
+              border: on ? "1px solid transparent" : "1px solid var(--border)",
+              background: on ? "var(--accent)" : "var(--surface)",
+              color: on ? "var(--accent-on)" : "var(--muted)",
+              fontSize: 13.5,
+              fontWeight: 650,
+              whiteSpace: "nowrap",
+            }}
+          >
+            <span>{t.label}</span>
+            <span
+              className="tnum"
+              style={{
+                fontSize: 12,
+                fontWeight: 700,
+                padding: "1px 7px",
+                borderRadius: 999,
+                background: on
+                  ? "color-mix(in srgb, var(--accent-on) 22%, transparent)"
+                  : "var(--bg)",
+                color: on ? "var(--accent-on)" : "var(--muted)",
+              }}
+            >
+              {counts[t.key]}
+            </span>
+          </button>
+        );
+      })}
+    </div>
   );
 }
 

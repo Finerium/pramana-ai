@@ -195,6 +195,25 @@ describe("runAudit kegagalan agen + guard retry (6.4/6.5)", () => {
     ).toBe(true);
   });
 
+  it("cepat: lewati adjudikator, verdict tetap dihitung server dari temuan", async () => {
+    const merah = bersih("merah", "Pembelian besar perlu dijelaskan");
+    let adjudikatorDipanggil = false;
+    const d = deps(({ system }) => {
+      if (system.includes("Adjudikator")) adjudikatorDipanggil = true;
+      if (system.includes("Konflik Kepentingan")) return { temuan: [merah] };
+      return { temuan: [] };
+    });
+    const { verdict, metadata } = await runAudit(snapshot, {
+      ...d,
+      cepat: true,
+    });
+    expect(adjudikatorDipanggil).toBe(false);
+    // hitungWarna: satu temuan merah -> verdict merah, server yang memutus.
+    expect(verdict.warna).toBe("merah");
+    expect(verdict.temuan).toHaveLength(1);
+    expect(metadata.warnaAdjudikator).toBeNull();
+  });
+
   it("pass 2: retry adjudikator transport gagal -> temuan melanggar didrop", async () => {
     const merahVonis = {
       ...bersih("merah", "Temuan bermasalah"),

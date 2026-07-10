@@ -1,5 +1,6 @@
 "use client";
 import {
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -7,18 +8,21 @@ import {
   type ChangeEvent,
 } from "react";
 import { useRouter } from "next/navigation";
-import { COPY } from "@/lib/copy";
+import { COPY, VERDICT_LABELS } from "@/lib/copy";
 import { SUBJEK_COPY, JENIS_LABEL } from "@/lib/copy/subjek";
 import { ThemeToggle } from "./theme";
-import { AgentTree, type AgentTreeState } from "./AgentTree";
+import { AgentTree, BENTUK, type AgentTreeState } from "./AgentTree";
 import {
   fetchRecent,
   fetchAuditStatus,
+  fetchRiwayat,
   postAudit,
   postTransaksi,
   postPinjaman,
   postRat,
+  postReset,
   logout,
+  type SubjekRiwayatItem,
 } from "./api";
 import {
   emptyTransaksi,
@@ -29,6 +33,7 @@ import {
   formatRp,
   formatTanggal,
   isRawAmountValid,
+  waktuRelatif,
   presetKonflik,
   presetPecah,
   presetKas,
@@ -43,6 +48,7 @@ import {
   type TransaksiEntry,
   type PinjamanEntry,
   type AnggotaOption,
+  type RecentData,
 } from "./logic";
 
 const SANS = "var(--font-sans)";
@@ -692,6 +698,52 @@ const S: Record<string, CSSProperties> = {
     marginTop: "22px",
     maxWidth: "82ch",
   },
+  rwRow: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: "14px",
+    padding: "12px 0",
+    borderBottom: "1px solid var(--color-border)",
+  },
+  rwLeft: {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    minWidth: 0,
+  },
+  rwShape: {
+    width: "13px",
+    height: "13px",
+    flex: "none",
+    display: "inline-block",
+  },
+  rwLabel: {
+    fontSize: "13.5px",
+    fontWeight: 600,
+    color: "var(--color-ink-strong)",
+  },
+  rwRight: {
+    display: "flex",
+    alignItems: "center",
+    gap: "16px",
+    flex: "none",
+  },
+  rwTemuan: {
+    fontFamily: MONO,
+    fontSize: "12.5px",
+    fontWeight: 600,
+    color: "var(--color-ink)",
+    fontVariantNumeric: "tabular-nums",
+    whiteSpace: "nowrap",
+  },
+  rwWaktu: {
+    fontSize: "12px",
+    color: "var(--color-muted)",
+    whiteSpace: "nowrap",
+    minWidth: "84px",
+    textAlign: "right",
+  },
 };
 
 const btnPrimary = (loading: boolean): CSSProperties => ({
@@ -795,6 +847,10 @@ export function PembukuanConsole() {
   const [pinList, setPinList] = useState<PinjamanEntry[]>(SEED_PINJAMAN);
   const [listView, setListView] = useState<"terisi" | "kosong">("terisi");
 
+  // Riwayat pemeriksaan live (panel di bawah tree) + status tombol Reset demo.
+  const [riwayat, setRiwayat] = useState<SubjekRiwayatItem[]>([]);
+  const [resetLoading, setResetLoading] = useState(false);
+
   // ---- Audit tree state -----------------------------------------------------
   const [audit, setAudit] = useState<AgentTreeState | { fase: "idle" }>({
     fase: "idle",
@@ -834,6 +890,8 @@ export function PembukuanConsole() {
       if (st.status === "selesai") {
         hentikanPolling();
         setAudit({ fase: "selesai", data: st });
+        // Run baru tersimpan: segarkan panel Riwayat (angka dari DB, bukan lokal).
+        void fetchRiwayat().then(setRiwayat);
       } else if (st.status === "gagal_langsung") {
         hentikanPolling();
         setAudit({ fase: "gagal", data: st });
@@ -857,21 +915,28 @@ export function PembukuanConsole() {
     [],
   );
 
-  // Hidrasi dari /api/subjek/recent; fallback seed sudah menjadi state awal.
+  // Terapkan snapshot /api/subjek/recent ke state konsol (mount + setelah reset).
+  const applyRecent = useCallback((r: RecentData) => {
+    setSaldo(r.saldoKas);
+    setTrxList(r.transaksi.slice(0, 10));
+    setPinList(r.pinjaman.slice(0, 5));
+    setAnggota(r.anggota);
+    setRat({ status: r.ratStatus, tanggal: r.ratTanggal ?? "" });
+  }, []);
+
+  // Hidrasi dari /api/subjek/recent + riwayat; fallback seed sudah state awal.
   useEffect(() => {
     let active = true;
     fetchRecent().then((r) => {
-      if (!active) return;
-      setSaldo(r.saldoKas);
-      setTrxList(r.transaksi.slice(0, 10));
-      setPinList(r.pinjaman.slice(0, 5));
-      setAnggota(r.anggota);
-      setRat({ status: r.ratStatus, tanggal: r.ratTanggal ?? "" });
+      if (active) applyRecent(r);
+    });
+    fetchRiwayat().then((rw) => {
+      if (active) setRiwayat(rw);
     });
     return () => {
       active = false;
     };
-  }, []);
+  }, [applyRecent]);
 
   const anggotaLabel = (v: string) =>
     anggota.find((o) => o.value === v)?.label ?? "";
@@ -1087,6 +1152,39 @@ export function PembukuanConsole() {
     router.push("/login");
   };
 
+  // Reset demo: server mengembalikan koperasi ke baseline seed; konsol lalu
+  // refetch recent + riwayat sehingga saldo dan entri persis balik seed.
+  const doReset = async () => {
+    if (resetLoading) return;
+    setResetLoading(true);
+    // Batalkan audit berjalan/terjadwal, kembalikan tree ke idle (poll basi
+    // diabaikan lewat auditSeq).
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+      debounceRef.current = null;
+    }
+    hentikanPolling();
+    auditSeqRef.current++;
+    setAudit({ fase: "idle" });
+    try {
+      await postReset();
+      applyRecent(await fetchRecent());
+      setRiwayat(await fetchRiwayat());
+      setSaldoPulse(true);
+      setTimeout(() => setSaldoPulse(false), 800);
+      // Konsol bersih seperti baseline: nolkan status sukses/gagal form.
+      setTrxSuccess(false);
+      setPinSuccess(false);
+      setRatSuccess(false);
+      setTrxFail(null);
+      setPinFail(null);
+      setRatFail(null);
+      setListView("terisi");
+    } finally {
+      setResetLoading(false);
+    }
+  };
+
   const showVendor = trx.jenis === "pembelian";
   const trxEchoOn = isRawAmountValid(trx.jumlah);
   const pinPokokEchoOn = isRawAmountValid(pin.pokok);
@@ -1146,6 +1244,14 @@ export function PembukuanConsole() {
               <span style={S.syncDot} />
               {COPY["subjek.sync"]}
             </span>
+            <button
+              type="button"
+              style={S.ghostBtn}
+              onClick={doReset}
+              disabled={resetLoading}
+            >
+              {resetLoading ? c.header.resetMemuat : c.header.reset}
+            </button>
             <ThemeToggle />
             <button type="button" style={S.ghostBtn} onClick={doLogout}>
               {c.header.keluar}
@@ -1624,6 +1730,50 @@ export function PembukuanConsole() {
 
         {/* PEMERIKSAAN PRAMANA: tree agen tampil begitu audit terpicu */}
         {audit.fase !== "idle" && <AgentTree state={audit} />}
+
+        {/* RIWAYAT PEMERIKSAAN: audit_run live terbaru; verdict bentuk+label,
+            N temuan dan waktu dari DB (bukan angka lokal). */}
+        {riwayat.length > 0 && (
+          <section style={S.daftarCard} aria-label={c.riwayat.judul}>
+            <div style={S.cardHead}>
+              <div style={S.cardTitle}>{c.riwayat.judul}</div>
+              <div style={S.cardDesc}>{c.riwayat.deskripsi}</div>
+            </div>
+            <div>
+              {riwayat.map((r) => {
+                const b = BENTUK[r.verdictWarna];
+                return (
+                  <div key={r.id} style={S.rwRow}>
+                    <div style={S.rwLeft}>
+                      <span
+                        aria-hidden="true"
+                        style={{
+                          ...S.rwShape,
+                          background: b.warna,
+                          clipPath: b.clip,
+                          borderRadius: b.radius,
+                        }}
+                      />
+                      <span style={S.rwLabel}>
+                        {VERDICT_LABELS[r.verdictWarna]}
+                      </span>
+                    </div>
+                    <div style={S.rwRight}>
+                      <span style={S.rwTemuan}>
+                        {r.temuanCount > 0
+                          ? `${r.temuanCount} ${c.riwayat.temuanSatuan}`
+                          : c.riwayat.tanpaTemuan}
+                      </span>
+                      <span style={S.rwWaktu}>
+                        {waktuRelatif(r.dibuatPada)}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
 
         {/* DAFTAR ENTRI TERAKHIR */}
         <section style={S.daftarCard}>

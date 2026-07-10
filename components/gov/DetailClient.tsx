@@ -1,7 +1,8 @@
 "use client";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { GovKoperasiDetail } from "@/app/(gov)/_logic/types";
+import type { AgentId, VerdictColor } from "@/lib/contracts";
 import { AGENT_LABELS } from "@/lib/copy";
 import { GOV_COPY } from "@/lib/copy/gov";
 import { BENTUK } from "@/app/(gov)/_logic/verdict";
@@ -59,10 +60,436 @@ function Spinner({
   );
 }
 
+type RiwayatItem = {
+  id: string;
+  periode: string;
+  source: "seed" | "live" | "cache";
+  verdictWarna: VerdictColor;
+  dibuatPada: string;
+  nTemuan: number;
+};
+
+/** Parse field aditif `riwayat` dari respons detail; angka apa adanya dari DB. */
+function parseRiwayat(raw: unknown): RiwayatItem[] {
+  if (!Array.isArray(raw)) return [];
+  return raw.map((r) => {
+    const o = (r ?? {}) as Record<string, unknown>;
+    return {
+      id: String(o.id ?? ""),
+      periode: String(o.periode ?? ""),
+      source: (o.source ?? "seed") as RiwayatItem["source"],
+      verdictWarna: (o.verdictWarna ?? "hijau") as VerdictColor,
+      dibuatPada: String(o.dibuatPada ?? ""),
+      nTemuan: Number(o.nTemuan ?? 0),
+    };
+  });
+}
+
+const AGEN_URUT: AgentId[] = [
+  "konflik_kepentingan",
+  "anomali_transaksi",
+  "kesehatan_finansial",
+  "kepatuhan_proses",
+];
+
+const BULAN = [
+  "Januari",
+  "Februari",
+  "Maret",
+  "April",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Agustus",
+  "September",
+  "Oktober",
+  "November",
+  "Desember",
+];
+
+/** "2026-06" -> "Juni 2026"; fallback ke string asli bila format tak dikenal. */
+function periodeLabel(periode: string): string {
+  const m = /^(\d{4})-(\d{2})$/.exec(periode);
+  if (!m) return periode;
+  const bulan = BULAN[Number(m[2]) - 1];
+  return bulan ? `${bulan} ${m[1]}` : periode;
+}
+
+const MONO = "ui-monospace, SFMono-Regular, monospace";
+
+// Konektor tree memakai HANYA token gov (--border-hairline). Pulse dekoratif;
+// dihormati prefers-reduced-motion. Pola direplikasi dari konsol subjek, token gov.
+const TREE_CSS = `
+@keyframes govTreePulse { 0%,100% { opacity:1; } 50% { opacity:.4; } }
+.gov-tree .pulse { animation: govTreePulse 1.2s ease-in-out infinite; }
+.gov-tree .kon { width:2px; height:16px; background:var(--border-hairline); margin:0 auto; }
+.gov-tree .rail { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0 14px; height:16px; }
+.gov-tree .rail > span { position:relative; display:block; }
+.gov-tree .rail > span::before { content:""; position:absolute; height:2px; background:var(--border-hairline); left:-7px; right:-7px; }
+.gov-tree .rail > span::after { content:""; position:absolute; top:0; bottom:0; left:calc(50% - 1px); width:2px; background:var(--border-hairline); }
+.gov-tree .rail.sebar > span::before { top:0; }
+.gov-tree .rail.kumpul > span::before { bottom:0; }
+.gov-tree .rail > span:first-child::before { left:50%; }
+.gov-tree .rail > span:last-child::before { right:50%; }
+@media (prefers-reduced-motion: reduce) { .gov-tree .pulse { animation:none; } }
+`;
+
+function TreeDot({ jalan }: { jalan: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={jalan ? "pulse" : undefined}
+      style={{
+        width: 7,
+        height: 7,
+        borderRadius: "50%",
+        background: jalan ? "var(--primary)" : "var(--verdict-hijau)",
+        display: "inline-block",
+        flex: "none",
+      }}
+    />
+  );
+}
+
+function TreeBadge() {
+  return (
+    <span
+      className="gov-well-sm"
+      style={{
+        alignSelf: "flex-start",
+        fontFamily: MONO,
+        fontSize: 10,
+        fontWeight: 600,
+        color: "var(--muted-foreground)",
+        borderRadius: 5,
+        padding: "2px 7px",
+        letterSpacing: "0.03em",
+        whiteSpace: "nowrap",
+      }}
+    >
+      {GOV_COPY["dt.tree.model"]}
+    </span>
+  );
+}
+
+/**
+ * Diagram pemeriksaan langsung untuk pemerintah: akar Pramana -> empat agen
+ * MiniMax paralel -> adjudikator -> verdict. Fase berjalan = agen berdenyut;
+ * fase selesai/gagal = jumlah temuan NYATA per agen (dari data.temuan) + verdict
+ * bentuk+label. Warna hanya token gov (verdict-* / primary / border-hairline).
+ */
+function GovAuditTree({
+  fase,
+  perAgen,
+  verdict,
+  cache,
+}: {
+  fase: "berjalan" | "selesai" | "gagal";
+  perAgen: Record<AgentId, number> | null;
+  verdict: { warna: VerdictColor; ringkasan: string } | null;
+  cache: boolean;
+}) {
+  const berjalan = fase === "berjalan";
+  const status =
+    fase === "berjalan"
+      ? GOV_COPY["dt.tree.status.berjalan"]
+      : fase === "gagal"
+        ? GOV_COPY["dt.tree.status.gagal"]
+        : GOV_COPY["dt.tree.status.selesai"];
+  const b = verdict ? BENTUK[verdict.warna] : null;
+
+  return (
+    <section
+      className="gov-tree gov-panel"
+      aria-label={GOV_COPY["dt.tree.aria"]}
+      style={{ padding: "22px 26px", marginTop: 20 }}
+    >
+      <style>{TREE_CSS}</style>
+      <div>
+        <div
+          className="gov-disp"
+          style={{ fontWeight: 700, fontSize: 15, lineHeight: 1.2 }}
+        >
+          {GOV_COPY["dt.tree.judul"]}
+        </div>
+        <div
+          style={{
+            fontSize: 12.5,
+            lineHeight: 1.5,
+            color: "var(--muted-foreground)",
+            marginTop: 5,
+          }}
+        >
+          {GOV_COPY["dt.tree.deskripsi"]}
+        </div>
+      </div>
+
+      <div
+        role="status"
+        aria-live="polite"
+        className="gov-well-sm"
+        style={{
+          fontSize: 12.5,
+          lineHeight: 1.5,
+          color: "var(--muted-foreground)",
+          borderRadius: 10,
+          padding: "10px 13px",
+          margin: "16px 0 18px",
+        }}
+      >
+        {status}
+      </div>
+
+      {/* Akar */}
+      <div style={{ textAlign: "center" }}>
+        <div
+          className="gov-well-sm"
+          style={{
+            display: "inline-flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 2,
+            borderRadius: 12,
+            padding: "10px 22px",
+          }}
+        >
+          <span
+            className="gov-disp"
+            style={{ fontWeight: 800, fontSize: 14, letterSpacing: "0.01em" }}
+          >
+            {GOV_COPY["dt.tree.root"]}
+          </span>
+          <span style={{ fontSize: 11, color: "var(--muted-foreground)" }}>
+            {GOV_COPY["dt.tree.rootSub"]}
+          </span>
+        </div>
+      </div>
+      <div className="kon" aria-hidden="true" />
+      <div className="rail sebar" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+        <span />
+      </div>
+
+      {/* Empat agen forensik paralel */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4,minmax(0,1fr))",
+          gap: 14,
+        }}
+      >
+        {AGEN_URUT.map((agent) => {
+          const n = perAgen ? perAgen[agent] : undefined;
+          return (
+            <div
+              key={agent}
+              className="gov-well-sm"
+              style={{
+                borderRadius: 12,
+                padding: "12px 13px",
+                display: "flex",
+                flexDirection: "column",
+                gap: 7,
+                minWidth: 0,
+              }}
+            >
+              <div
+                style={{ fontWeight: 600, fontSize: 12.5, lineHeight: 1.35 }}
+              >
+                {AGENT_LABELS.pemerintah[agent]}
+              </div>
+              <TreeBadge />
+              {berjalan || n === undefined ? (
+                <span
+                  className={berjalan ? "pulse" : undefined}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 7,
+                    fontSize: 12,
+                    color: "var(--muted-foreground)",
+                  }}
+                >
+                  <TreeDot jalan={berjalan} />
+                  {berjalan
+                    ? GOV_COPY["dt.tree.memeriksa"]
+                    : GOV_COPY["dt.tree.tanpaHasil"]}
+                </span>
+              ) : n > 0 ? (
+                <span
+                  className="gov-num"
+                  style={{
+                    fontFamily: MONO,
+                    fontSize: 12.5,
+                    fontWeight: 600,
+                    color: "var(--foreground)",
+                  }}
+                >
+                  {n} {GOV_COPY["dt.tree.temuanSatuan"]}
+                </span>
+              ) : (
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 7,
+                    fontSize: 12,
+                    color: "var(--muted-foreground)",
+                  }}
+                >
+                  <TreeDot jalan={false} />
+                  {GOV_COPY["dt.tree.tanpaTemuan"]}
+                </span>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="rail kumpul" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+        <span />
+      </div>
+      <div className="kon" aria-hidden="true" />
+
+      {/* Adjudikator */}
+      <div style={{ textAlign: "center" }}>
+        <div
+          className="gov-well-sm"
+          style={{
+            display: "inline-flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 6,
+            borderRadius: 12,
+            padding: "12px 20px",
+            maxWidth: 420,
+          }}
+        >
+          <div style={{ fontWeight: 600, fontSize: 13 }}>
+            {GOV_COPY["dt.tree.adjudikator"]}
+          </div>
+          <TreeBadge />
+          <span
+            className={berjalan ? "pulse" : undefined}
+            style={{
+              fontSize: 12,
+              lineHeight: 1.45,
+              color: "var(--muted-foreground)",
+            }}
+          >
+            {berjalan
+              ? GOV_COPY["dt.tree.menungguAgen"]
+              : GOV_COPY["dt.tree.adjudikatorSub"]}
+          </span>
+        </div>
+      </div>
+      <div className="kon" aria-hidden="true" />
+
+      {/* Verdict: bentuk + label, tidak pernah warna saja */}
+      <div style={{ textAlign: "center" }}>
+        {verdict && b ? (
+          <div
+            className="gov-well-sm"
+            style={{
+              display: "inline-flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 7,
+              borderRadius: 12,
+              padding: "14px 24px",
+              maxWidth: 480,
+              background: b.surfaceVar,
+            }}
+          >
+            <span
+              style={{
+                fontFamily: MONO,
+                fontSize: 10,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "var(--muted-foreground)",
+              }}
+            >
+              {GOV_COPY["dt.tree.kesimpulan"]}
+            </span>
+            <span
+              style={{ display: "inline-flex", alignItems: "center", gap: 9 }}
+            >
+              <VerdictShape bentuk={b} size={14} />
+              <span
+                className="gov-disp"
+                style={{ fontWeight: 800, fontSize: 15, color: b.colorVar }}
+              >
+                {b.label}
+              </span>
+            </span>
+            {verdict.ringkasan ? (
+              <span
+                style={{ fontSize: 12.5, lineHeight: 1.5, maxWidth: "52ch" }}
+              >
+                {verdict.ringkasan}
+              </span>
+            ) : null}
+            {cache ? (
+              <span
+                style={{
+                  fontSize: 11,
+                  fontWeight: 600,
+                  color: "var(--verdict-kuning)",
+                  background: "var(--verdict-kuning-surface)",
+                  borderRadius: 999,
+                  padding: "3px 10px",
+                }}
+              >
+                {GOV_COPY["dt.tree.hasilTersimpan"]}
+              </span>
+            ) : null}
+          </div>
+        ) : (
+          <div
+            className="gov-well-sm"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              borderRadius: 12,
+              padding: "11px 20px",
+              fontSize: 12.5,
+              color: "var(--muted-foreground)",
+            }}
+          >
+            {berjalan ? <TreeDot jalan /> : null}
+            {berjalan
+              ? GOV_COPY["dt.tree.menungguKesimpulan"]
+              : GOV_COPY["dt.tree.tanpaHasil"]}
+          </div>
+        )}
+      </div>
+
+      <div
+        style={{
+          fontSize: 11.5,
+          lineHeight: 1.55,
+          color: "var(--muted-foreground)",
+          marginTop: 18,
+        }}
+      >
+        {GOV_COPY["dt.tree.antiHalusinasi"]}
+      </div>
+    </section>
+  );
+}
+
 export function DetailClient({ id }: { id: string }) {
   const [status, setStatus] = useState<Status>("memuat");
   const [peri, setPeri] = useState<Peri>("tersimpan");
   const [data, setData] = useState<GovKoperasiDetail | null>(null);
+  const [riwayat, setRiwayat] = useState<RiwayatItem[]>([]);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
   const deadline = useRef(0);
 
@@ -84,6 +511,7 @@ export function DetailClient({ id }: { id: string }) {
       }
       const d = normalizeDetail(json.data);
       setData(d);
+      setRiwayat(parseRiwayat((json.data as Record<string, unknown>)?.riwayat));
       setStatus(d.auditRun ? "default" : "kosong");
     } catch {
       setStatus("gagal");
@@ -159,6 +587,36 @@ export function DetailClient({ id }: { id: string }) {
   const kosong = status === "kosong";
   const tampilKonten = status === "default" || status === "kosong";
   const nama = data?.profil.nama ?? "";
+
+  // Jumlah temuan NYATA per agen (dari data.temuan yang sama dengan tabel
+  // Temuan) untuk simpul agen di tree, bukan angka karangan.
+  const perAgen = useMemo(() => {
+    const m: Record<AgentId, number> = {
+      konflik_kepentingan: 0,
+      anomali_transaksi: 0,
+      kesehatan_finansial: 0,
+      kepatuhan_proses: 0,
+    };
+    for (const t of data?.temuan ?? []) m[t.agent] += 1;
+    return m;
+  }, [data]);
+
+  // Tree live tampil sejak pemerintah memicu pemeriksaan (peri != tersimpan).
+  const treeFase: "berjalan" | "selesai" | "gagal" | null =
+    peri === "berjalan"
+      ? "berjalan"
+      : peri === "langsung"
+        ? "selesai"
+        : peri === "gagal_langsung"
+          ? "gagal"
+          : null;
+  const treeVerdict =
+    treeFase && treeFase !== "berjalan" && data?.auditRun
+      ? {
+          warna: data.auditRun.verdict.warna,
+          ringkasan: data.auditRun.verdict.ringkasan,
+        }
+      : null;
 
   return (
     <div
@@ -632,6 +1090,15 @@ export function DetailClient({ id }: { id: string }) {
             ) : null}
           </div>
 
+          {treeFase ? (
+            <GovAuditTree
+              fase={treeFase}
+              perAgen={treeFase === "berjalan" ? null : perAgen}
+              verdict={treeVerdict}
+              cache={treeFase === "gagal"}
+            />
+          ) : null}
+
           <div className={PANEL} style={{ padding: "20px 24px 22px" }}>
             <div style={{ display: "flex", alignItems: "baseline", gap: 14 }}>
               <div
@@ -926,6 +1393,131 @@ export function DetailClient({ id }: { id: string }) {
                 </div>
               </div>
             ) : null}
+          </div>
+
+          <div
+            className={PANEL}
+            style={{ padding: "8px 0 6px", marginTop: 20 }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                gap: 14,
+                padding: "14px 24px 12px",
+              }}
+            >
+              <div
+                className="gov-disp"
+                style={{ fontWeight: 700, fontSize: 15, lineHeight: 1.2 }}
+              >
+                {GOV_COPY["dt.riwayat.judul"]}
+              </div>
+              <div
+                style={{
+                  fontWeight: 500,
+                  fontSize: 11.5,
+                  lineHeight: 1.4,
+                  color: "var(--muted-foreground)",
+                }}
+              >
+                {GOV_COPY["dt.riwayat.sub"]}
+              </div>
+            </div>
+            {riwayat.length > 0 ? (
+              <>
+                <div
+                  className="gov-disp"
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1.3fr 1fr 0.8fr 1.3fr",
+                    gap: 18,
+                    padding: "4px 24px 10px",
+                    fontWeight: 700,
+                    fontSize: 10.5,
+                    lineHeight: 1,
+                    letterSpacing: "0.11em",
+                    color: "var(--muted-foreground)",
+                  }}
+                >
+                  <div>{GOV_COPY["dt.riwayat.header.periode"]}</div>
+                  <div>{GOV_COPY["dt.riwayat.header.verdict"]}</div>
+                  <div>{GOV_COPY["dt.riwayat.header.temuan"]}</div>
+                  <div>{GOV_COPY["dt.riwayat.header.waktu"]}</div>
+                </div>
+                {riwayat.map((r) => {
+                  const b = BENTUK[r.verdictWarna];
+                  return (
+                    <div
+                      key={r.id}
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "1.3fr 1fr 0.8fr 1.3fr",
+                        gap: 18,
+                        alignItems: "center",
+                        borderTop: "1px solid var(--border-hairline)",
+                        padding: "13px 24px",
+                      }}
+                    >
+                      <div style={{ fontWeight: 600, fontSize: 13 }}>
+                        {periodeLabel(r.periode)}
+                      </div>
+                      <div>
+                        <span
+                          className="gov-well-sm"
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: 7,
+                            padding: "7px 13px",
+                            borderRadius: 999,
+                          }}
+                        >
+                          <VerdictShape bentuk={b} size={10} />
+                          <span
+                            style={{
+                              fontWeight: 700,
+                              fontSize: 11.5,
+                              lineHeight: 1,
+                              color: b.colorVar,
+                            }}
+                          >
+                            {b.label}
+                          </span>
+                        </span>
+                      </div>
+                      <div
+                        className="gov-num"
+                        style={{ fontWeight: 600, fontSize: 12.5 }}
+                      >
+                        {r.nTemuan} {GOV_COPY["dt.riwayat.temuanSatuan"]}
+                      </div>
+                      <div
+                        style={{
+                          fontWeight: 500,
+                          fontSize: 12.5,
+                          color: "var(--muted-foreground)",
+                        }}
+                      >
+                        {tanggalPanjang(r.dibuatPada)}
+                      </div>
+                    </div>
+                  );
+                })}
+              </>
+            ) : (
+              <div
+                style={{
+                  padding: "26px 24px 30px",
+                  fontWeight: 500,
+                  fontSize: 12.5,
+                  lineHeight: 1.6,
+                  color: "var(--muted-foreground)",
+                }}
+              >
+                {GOV_COPY["dt.riwayat.kosong"]}
+              </div>
+            )}
           </div>
         </>
       ) : null}

@@ -13,6 +13,8 @@ export const SUBJEK_COPY = {
     simTag: "Mode simulasi",
     tema: "Ganti tema",
     keluar: "Keluar",
+    reset: "Reset demo",
+    resetMemuat: "Mereset...",
   },
   trx: {
     judul: "Catat Transaksi",
@@ -113,14 +115,15 @@ export const SUBJEK_COPY = {
   tree: {
     judul: "Pemeriksaan Pramana",
     deskripsi:
-      "Transaksi yang Anda catat langsung diperiksa empat agen AI secara paralel, lalu adjudikator menyatukan temuan menjadi satu kesimpulan.",
+      "Transaksi yang Anda catat langsung diperiksa empat agen AI secara paralel, lalu Pramana menyimpulkannya menjadi satu verdict menurut aturan.",
     aria: "Diagram pemeriksaan Pramana",
     root: "Pramana",
     rootSub: "Pengawas koperasi",
     model: "MiniMax-M2.7",
     memeriksa: "Memeriksa...",
-    adjudikator: "Adjudikator",
-    adjudikatorSub: "Menyatukan temuan menjadi satu kesimpulan.",
+    adjudikator: "Kesimpulan Pramana",
+    adjudikatorBadge: "Aturan server",
+    adjudikatorSub: "Menyatukan temuan menjadi verdict menurut aturan Pramana.",
     menungguAgen: "Menunggu hasil empat pemeriksa...",
     kesimpulan: "Kesimpulan",
     menungguKesimpulan: "Menunggu kesimpulan...",
@@ -129,10 +132,20 @@ export const SUBJEK_COPY = {
     tanpaHasil: "Belum ada hasil",
     dasar: "Berdasarkan ",
     hasilTersimpan: "Hasil tersimpan",
+    terkirim:
+      "Hasil pemeriksaan ini dikirim ke {n} anggota koperasi dan dapat mereka bawa ke Rapat Anggota Tahunan.",
     waktuHabis:
       "Pemeriksaan memerlukan waktu lebih lama dari biasanya. Hasilnya tersimpan begitu selesai dan tampil pada pemeriksaan berikutnya.",
     antiHalusinasi:
       "Setiap temuan menunjuk transaksi nyata; yang tidak dapat dibuktikan otomatis dibuang.",
+  },
+  riwayat: {
+    judul: "Riwayat Pemeriksaan",
+    deskripsi:
+      "Pemeriksaan langsung yang sudah dijalankan pada koperasi ini, terbaru di atas.",
+    temuanSatuan: "temuan",
+    tanpaTemuan: "Tanpa temuan",
+    kosong: "Belum ada pemeriksaan langsung pada sesi ini.",
   },
   footNote:
     "Konsol ini mensimulasikan sistem pembukuan koperasi. Data yang Anda catat menjadi sumber yang diperiksa Pramana. Ini bukan bagian produk Pramana untuk pengurus.",

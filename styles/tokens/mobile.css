@@ -269,3 +269,29 @@
     overflow-x: hidden;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Layar berpusat di dalam bingkai (login + daftar anggota). Konten harus
+   terpusat vertikal saat lebih pendek dari badan ponsel, tetapi TUMBUH (bukan
+   dipotong di atas) saat lebih tinggi lalu digulir oleh .m-shell. Karena itu
+   memakai min-height (lantai yang tumbuh), bukan height tetap:
+     mobile  -> 100dvh  (layar penuh, full-bleed)
+     bingkai -> 100%    (tinggi badan ponsel; .m-shell yang menggulir)
+--------------------------------------------------------------------------- */
+.m-fill {
+  min-height: 100dvh;
+}
+
+@media (min-width: 900px) {
+  .m-frame .m-fill {
+    min-height: 100%;
+  }
+  /* Daftar: root <main>-nya ada di komponen klaster member (tak boleh diedit)
+     dan memakai inline min-height:100dvh. Di dalam frame itu melebihi badan
+     ponsel (gulir hantu, kartu sukses turun dari pusat). Override berlingkup ke
+     shell daftar; !important perlu untuk menang atas inline style. Login tidak
+     perlu ini karena main-nya sudah ber-.m-fill. */
+  .m-frame .m-shell--daftar > main {
+    min-height: 100% !important;
+  }
+}

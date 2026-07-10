@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { asc, desc, eq } from "drizzle-orm";
+import { asc, desc, eq, sql } from "drizzle-orm";
 import { getDb } from "../../../../db/client";
 import {
   anggota,
@@ -27,11 +27,21 @@ export async function GET(req: NextRequest) {
     const kop = kopRows[0];
     if (!kop) throw new ApiError("NOT_FOUND", "Koperasi tidak ditemukan.");
 
+    // Terbaru selalu di atas: entri bendahara (id ULID, bukan awalan seed
+    // "trx-") mendahului seed. Dalam grup bendahara urut id desc (ULID =
+    // time-ordered, terbaru dulu); seed urut tanggal desc. Grup memisah lebih
+    // dulu, jadi kolom CASE campuran hanya dibanding sesama tipe.
     const trx = await db
       .select()
       .from(transaksi)
       .where(eq(transaksi.koperasiId, koperasiId))
-      .orderBy(desc(transaksi.tanggal), desc(transaksi.id))
+      .orderBy(
+        sql`(${transaksi.id} like 'trx-%')`,
+        sql`case when ${transaksi.id} like 'trx-%' then ${transaksi.tanggal} else ${transaksi.id} end desc`,
+        // Tiebreak stabil: seed dengan tanggal sama tetap deterministik (id desc,
+        // seperti perilaku semula); tak berpengaruh pada grup ULID (id unik).
+        desc(transaksi.id),
+      )
       .limit(10);
 
     const pinj = await db

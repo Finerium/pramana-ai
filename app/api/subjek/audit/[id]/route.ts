@@ -7,13 +7,31 @@
  * Anti IDOR: run milik koperasi lain dibalas FORBIDDEN.
  */
 import type { NextRequest } from "next/server";
-import { asc, eq } from "drizzle-orm";
+import { asc, eq, sql } from "drizzle-orm";
 import { getDb, type Db } from "../../../../../db/client";
-import { auditRun, temuan } from "../../../../../db/schema";
+import { anggota, auditRun, temuan } from "../../../../../db/schema";
 import { ApiError, ok, runRoute } from "../../../../../lib/api";
 import { koperasiForPengurus, requireRole } from "../../../../../lib/auth";
 import { latestRun } from "../../../../../lib/audit/persist";
-import type { AgentId } from "../../../../../lib/contracts";
+import type { AgentId, VerdictColor } from "../../../../../lib/contracts";
+
+/**
+ * "Dikirim ke N anggota": jumlah anggota koperasi (COUNT nyata) yang menerima
+ * hasil bila verdict perlu penjelasan/perhatian (merah/kuning); 0 untuk hijau.
+ * Sorotan gentar konsol bendahara: hasil tak bisa disembunyikan dari anggota.
+ */
+async function hitungDinotif(
+  db: Db,
+  koperasiId: string,
+  warna: VerdictColor | null,
+): Promise<number> {
+  if (warna !== "merah" && warna !== "kuning") return 0;
+  const rows = await db
+    .select({ n: sql<number>`count(*)` })
+    .from(anggota)
+    .where(eq(anggota.koperasiId, koperasiId));
+  return rows[0]?.n ?? 0;
+}
 
 const AGEN_ORDER: AgentId[] = [
   "konflik_kepentingan",
@@ -86,7 +104,12 @@ export async function GET(
       .limit(1);
     const row = rows[0];
     if (!row)
-      return ok({ status: "berjalan", verdict: null, temuanPerAgen: [] });
+      return ok({
+        status: "berjalan",
+        verdict: null,
+        temuanPerAgen: [],
+        anggotaDinotif: 0,
+      });
 
     // Anti IDOR: run harus milik koperasi pengurus sesi.
     if (row.koperasiId !== koperasiId)
@@ -118,6 +141,11 @@ export async function GET(
               jumlah: 0,
               contohBukti: null,
             })),
+        anggotaDinotif: await hitungDinotif(
+          db,
+          koperasiId,
+          last?.verdictWarna ?? null,
+        ),
       });
     }
 
@@ -125,6 +153,7 @@ export async function GET(
       status: "selesai",
       verdict: { warna: row.verdictWarna, ringkasan: row.ringkasan },
       temuanPerAgen: await temuanPerAgen(db, row.id),
+      anggotaDinotif: await hitungDinotif(db, koperasiId, row.verdictWarna),
     });
   });
 }

@@ -6,7 +6,7 @@
  * bulan (agregasi SQL), enam periode terakhir. Agregasi via SQL, bukan load-all
  * (AC-PERF-03).
  */
-import { and, asc, eq, gt, like, sql } from "drizzle-orm";
+import { and, asc, desc, eq, gt, like, notLike, or, sql } from "drizzle-orm";
 import type { Db } from "../../db/client";
 import {
   anggota,
@@ -20,8 +20,11 @@ import type { KoperasiSnapshot } from "./snapshot";
 /** Plafon pinjaman per anggota pada seed (6.6). */
 export const PLAFON_PER_ANGGOTA = 10_000_000;
 
-/** Batas baris transaksi pada snapshot (6.9). */
+/** Batas baris transaksi pada snapshot penuh (6.9). */
 const MAKS_TRANSAKSI = 500;
+
+/** Batas transaksi terbaru pada snapshot FOKUS (audit interaktif cepat). */
+const FOKUS_MAKS_TRANSAKSI = 12;
 
 export interface BuiltSnapshot {
   snapshot: KoperasiSnapshot;
@@ -32,6 +35,7 @@ export interface BuiltSnapshot {
 export async function buildSnapshot(
   db: Db,
   koperasiId: string,
+  opts?: { fokus?: boolean },
 ): Promise<BuiltSnapshot> {
   const kopRows = await db
     .select()
@@ -68,18 +72,22 @@ export async function buildSnapshot(
     saldo = saldo - (netByPeriode.get(p) ?? 0);
   }
 
-  // Transaksi periode berjalan (maks 500, urut tanggal).
-  const trxRows = await db
-    .select()
-    .from(transaksi)
-    .where(
-      and(
-        eq(transaksi.koperasiId, koperasiId),
-        like(transaksi.tanggal, `${latestPeriode}%`),
-      ),
-    )
-    .orderBy(asc(transaksi.tanggal))
-    .limit(MAKS_TRANSAKSI);
+  // Transaksi: FOKUS (audit interaktif bendahara, jendela kecil = selesai
+  // cepat) atau PENUH (periode berjalan maks 500, urut tanggal; audit gov yang
+  // dalam). saldoKasPerBulan/pinjaman/pengurus/statusRat tetap PENUH keduanya.
+  const trxRows = opts?.fokus
+    ? await fokusTransaksi(db, koperasiId)
+    : await db
+        .select()
+        .from(transaksi)
+        .where(
+          and(
+            eq(transaksi.koperasiId, koperasiId),
+            like(transaksi.tanggal, `${latestPeriode}%`),
+          ),
+        )
+        .orderBy(asc(transaksi.tanggal))
+        .limit(MAKS_TRANSAKSI);
 
   // Pinjaman aktif (sisa positif) milik anggota koperasi; nama pengurus penyetuju.
   const pinjRows = await db
@@ -138,4 +146,49 @@ export async function buildSnapshot(
     statusRat: kop.ratStatus,
   };
   return { snapshot, periode: latestPeriode };
+}
+
+/**
+ * Transaksi jendela FOKUS untuk audit interaktif bendahara: cukup untuk agen
+ * Konflik + Anomali tanpa membebani model dengan ratusan baris, sehingga audit
+ * SELALU selesai cepat. Gabungan (dedup by id, urut tanggal naik):
+ *  1. ~40 transaksi TERBARU  -> konteks pola terkini + transaksi baru dicatat
+ *     bila tanggalnya kini.
+ *  2. transaksi yang PASTI dicatat lewat UI: semua id seed berawalan "trx-",
+ *     transaksi live ber-ULID (bukan "trx-"), jadi ini menjamin input pengurus
+ *     ikut diperiksa APA PUN tanggalnya (mis. dibackdate 14 Juni di luar 40).
+ *  3. trx-an1 (fixture konflik demo 6.7) agar AN-1 SELALU terdeteksi walau 14
+ *     Juni jatuh di luar 40 terbaru.
+ * ponytail: "trx-an1" satu-satunya id fixture yang di-pin; upgrade ke daftar
+ * bila demo menambah anomali seed wajib untuk jalur interaktif.
+ */
+async function fokusTransaksi(db: Db, koperasiId: string) {
+  const terbaru = await db
+    .select()
+    .from(transaksi)
+    .where(eq(transaksi.koperasiId, koperasiId))
+    .orderBy(desc(transaksi.tanggal), desc(transaksi.id))
+    .limit(FOKUS_MAKS_TRANSAKSI);
+  const wajib = await db
+    .select()
+    .from(transaksi)
+    .where(
+      and(
+        eq(transaksi.koperasiId, koperasiId),
+        or(notLike(transaksi.id, "trx-%"), eq(transaksi.id, "trx-an1")),
+      ),
+    )
+    .orderBy(desc(transaksi.tanggal), desc(transaksi.id))
+    .limit(FOKUS_MAKS_TRANSAKSI);
+  const perId = new Map<string, (typeof terbaru)[number]>();
+  for (const r of [...terbaru, ...wajib]) perId.set(r.id, r);
+  return [...perId.values()].sort((a, b) =>
+    a.tanggal !== b.tanggal
+      ? a.tanggal < b.tanggal
+        ? -1
+        : 1
+      : a.id < b.id
+        ? -1
+        : 1,
+  );
 }

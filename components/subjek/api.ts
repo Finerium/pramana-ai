@@ -240,6 +240,17 @@ export type SubjekAuditStatus = {
   status: "berjalan" | "selesai" | "gagal_langsung";
   verdict: { warna: VerdictColor; ringkasan: string } | null;
   temuanPerAgen: SubjekAuditAgen[];
+  // Jumlah anggota koperasi yang menerima hasil ini bila verdict merah/kuning
+  // (perlu penjelasan/perhatian); 0 bila hijau. Dihitung server-side dari DB.
+  anggotaDinotif: number;
+};
+
+/** Satu baris riwayat pemeriksaan live (GET /api/subjek/riwayat). */
+export type SubjekRiwayatItem = {
+  id: string;
+  dibuatPada: string;
+  verdictWarna: VerdictColor;
+  temuanCount: number;
 };
 
 export async function postAudit(): Promise<{ auditRunId: string } | null> {
@@ -260,11 +271,61 @@ export async function fetchAuditStatus(
     const res = await fetch(`/api/subjek/audit/${id}`, { cache: "no-store" });
     if (tolakAuth(res.status)) return null;
     const j = (await res.json()) as { ok?: boolean; data?: SubjekAuditStatus };
-    if (res.ok && j && j.ok && j.data) return j.data;
+    if (res.ok && j && j.ok && j.data)
+      return {
+        ...j.data,
+        anggotaDinotif:
+          typeof j.data.anggotaDinotif === "number" ? j.data.anggotaDinotif : 0,
+      };
   } catch {
     /* jaringan absen: polling berikutnya mencoba lagi */
   }
   return null;
+}
+
+/**
+ * Riwayat pemeriksaan live koperasi (bounded, terbaru dulu). Gagal/absen =
+ * array kosong; panel riwayat cukup menyembunyikan diri, bukan mengarang.
+ */
+export async function fetchRiwayat(): Promise<SubjekRiwayatItem[]> {
+  try {
+    const res = await fetch("/api/subjek/riwayat", { cache: "no-store" });
+    if (tolakAuth(res.status)) return [];
+    const j = (await res.json()) as {
+      ok?: boolean;
+      data?: { riwayat?: unknown };
+    };
+    const list = j?.data?.riwayat;
+    if (res.ok && j && j.ok && Array.isArray(list))
+      return list.map((x) => {
+        const r = x as Dict;
+        return {
+          id: asStr(r.id),
+          dibuatPada: asStr(r.dibuatPada),
+          verdictWarna: (r.verdictWarna === "merah" ||
+          r.verdictWarna === "kuning"
+            ? r.verdictWarna
+            : "hijau") as VerdictColor,
+          temuanCount: asNum(r.temuanCount),
+        };
+      });
+  } catch {
+    /* seed/kosong: panel riwayat menyembunyikan diri */
+  }
+  return [];
+}
+
+/**
+ * Reset demo: hapus entri + pemeriksaan live yang ditambah bendahara dan
+ * kembalikan saldo ke baseline seed. True bila endpoint mengonfirmasi sukses.
+ */
+export async function postReset(): Promise<boolean> {
+  try {
+    const data = await postJson("/api/subjek/reset", {});
+    return data !== null;
+  } catch {
+    return false;
+  }
 }
 
 export async function logout(): Promise<void> {

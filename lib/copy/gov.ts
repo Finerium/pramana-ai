@@ -99,6 +99,44 @@ export const GOV_COPY = {
   "dt.gagal.cta": "Coba Lagi",
   "dt.gagal.panel": "Data koperasi tidak dapat dimuat.",
 
+  // Riwayat pemeriksaan (daftar audit_run koperasi, terbaru di atas)
+  "dt.riwayat.judul": "Riwayat Pemeriksaan",
+  "dt.riwayat.sub":
+    "Arsip pemeriksaan Pengawas untuk koperasi ini, terbaru di atas",
+  "dt.riwayat.kosong": "Belum ada riwayat pemeriksaan untuk koperasi ini.",
+  "dt.riwayat.temuanSatuan": "temuan",
+  "dt.riwayat.header.periode": "PERIODE",
+  "dt.riwayat.header.verdict": "VERDICT",
+  "dt.riwayat.header.temuan": "TEMUAN",
+  "dt.riwayat.header.waktu": "DIJALANKAN",
+
+  // Diagram pemeriksaan langsung (pemerintah menonton agen berjalan)
+  "dt.tree.judul": "Pemeriksaan Pramana",
+  "dt.tree.deskripsi":
+    "Pramana menjalankan empat agen pemeriksa secara paralel, lalu adjudikator menyatukan temuan menjadi satu verdict.",
+  "dt.tree.aria": "Diagram pemeriksaan Pramana",
+  "dt.tree.status.berjalan":
+    "Empat agen sedang memeriksa transaksi koperasi. Ini memerlukan waktu kurang dari dua menit.",
+  "dt.tree.status.selesai":
+    "Pemeriksaan selesai. Verdict terbaru tampil di bawah.",
+  "dt.tree.status.gagal":
+    "Pemeriksaan langsung gagal. Verdict tersimpan terakhir tampil di bawah.",
+  "dt.tree.root": "Pramana",
+  "dt.tree.rootSub": "Pengawas koperasi",
+  "dt.tree.model": "MiniMax-M2.7",
+  "dt.tree.memeriksa": "Memeriksa...",
+  "dt.tree.adjudikator": "Adjudikator",
+  "dt.tree.adjudikatorSub": "Menyatukan temuan menjadi satu verdict.",
+  "dt.tree.menungguAgen": "Menunggu hasil empat pemeriksa...",
+  "dt.tree.kesimpulan": "Verdict",
+  "dt.tree.menungguKesimpulan": "Menunggu verdict...",
+  "dt.tree.temuanSatuan": "temuan",
+  "dt.tree.tanpaTemuan": "Tidak ada temuan",
+  "dt.tree.tanpaHasil": "Belum ada hasil",
+  "dt.tree.hasilTersimpan": "Hasil tersimpan",
+  "dt.tree.antiHalusinasi":
+    "Setiap temuan menunjuk transaksi nyata. Yang tidak dapat dibuktikan otomatis dibuang.",
+
   // Login (varian visual pemerintah; rute /login milik unit d)
   "login.email.label": "Email",
   "login.email.placeholder": "nama@instansi.go.id",

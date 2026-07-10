@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   formatRp,
   formatTanggal,
+  waktuRelatif,
   deriveArah,
   hitungSaldoBaru,
   isRawAmountValid,
@@ -32,6 +33,20 @@ describe("formatTanggal", () => {
     expect(formatTanggal("2026-06-14")).toBe("14 Jun 2026");
     expect(formatTanggal("2026-07-20")).toBe("20 Jul 2026");
     expect(formatTanggal("")).toBe("");
+  });
+});
+
+describe("waktuRelatif", () => {
+  const now = Date.parse("2026-07-10T12:00:00.000Z");
+  it("buckets seconds/minutes/hours/days deterministically", () => {
+    expect(waktuRelatif("2026-07-10T11:59:30.000Z", now)).toBe("baru saja");
+    expect(waktuRelatif("2026-07-10T11:45:00.000Z", now)).toBe("15 menit lalu");
+    expect(waktuRelatif("2026-07-10T09:00:00.000Z", now)).toBe("3 jam lalu");
+    expect(waktuRelatif("2026-07-09T12:00:00.000Z", now)).toBe("kemarin");
+    expect(waktuRelatif("2026-07-07T12:00:00.000Z", now)).toBe("3 hari lalu");
+  });
+  it("empty string for unparseable input", () => {
+    expect(waktuRelatif("", now)).toBe("");
   });
 });
 

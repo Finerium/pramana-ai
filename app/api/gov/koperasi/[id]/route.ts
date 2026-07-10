@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { and, asc, eq, sql } from "drizzle-orm";
+import { and, asc, desc, eq, sql } from "drizzle-orm";
 import { getDb } from "../../../../../db/client";
 import {
   anggota,
@@ -101,6 +101,25 @@ export async function GET(
       .from(anggota)
       .where(eq(anggota.koperasiId, id));
 
+    // Riwayat pemeriksaan: daftar audit_run non-marker koperasi ini, terbaru di
+    // atas, dengan jumlah temuan NYATA (COUNT via left join, bukan literal).
+    // Bounded (limit 24 = 4 tahun periode bulanan) supaya query tetap berbatas.
+    const riwayat = await db
+      .select({
+        id: auditRun.id,
+        periode: auditRun.periode,
+        source: auditRun.source,
+        verdictWarna: auditRun.verdictWarna,
+        dibuatPada: auditRun.dibuatPada,
+        nTemuan: sql<number>`count(${temuan.id})`,
+      })
+      .from(auditRun)
+      .leftJoin(temuan, eq(temuan.auditRunId, auditRun.id))
+      .where(and(eq(auditRun.koperasiId, id), bukanMarker))
+      .groupBy(auditRun.id)
+      .orderBy(desc(auditRun.periode), desc(auditRun.dibuatPada))
+      .limit(24);
+
     return ok({
       profil: {
         ...kop,
@@ -110,6 +129,7 @@ export async function GET(
       auditRun: run ? compact(run) : null,
       temuan: temuanOut,
       tren,
+      riwayat,
     });
   });
 }

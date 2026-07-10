@@ -78,6 +78,29 @@ export function formatRp(n: number): string {
   return "Rp " + (n < 0 ? "-" : "") + grouped;
 }
 
+/**
+ * Waktu relatif Bahasa Indonesia untuk riwayat pemeriksaan ("baru saja",
+ * "5 menit lalu", "kemarin"). `now` disuntik agar deterministik dan teruji.
+ * ponytail: token waktu inline seperti BULAN di atas; pindah ke copy hanya bila
+ * register hook memintanya.
+ */
+export function waktuRelatif(iso: string, now: number = Date.now()): string {
+  const t = Date.parse(iso);
+  if (Number.isNaN(t)) return "";
+  const detik = Math.max(0, Math.floor((now - t) / 1000));
+  if (detik < 60) return "baru saja";
+  const menit = Math.floor(detik / 60);
+  if (menit < 60) return `${menit} menit lalu`;
+  const jam = Math.floor(menit / 60);
+  if (jam < 24) return `${jam} jam lalu`;
+  const hari = Math.floor(jam / 24);
+  if (hari === 1) return "kemarin";
+  if (hari < 30) return `${hari} hari lalu`;
+  const bulan = Math.floor(hari / 30);
+  if (bulan < 12) return `${bulan} bulan lalu`;
+  return `${Math.floor(hari / 365)} tahun lalu`;
+}
+
 /** "2026-06-14" -> "14 Jun 2026"; kosong -> "". */
 export function formatTanggal(iso: string): string {
   if (!iso) return "";

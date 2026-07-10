@@ -23,11 +23,16 @@ test("AC-LLM-05 fallback cache: gagal_langsung + banner + verdict seed merah", a
   await login(page, "pemerintah");
   await page.goto("/pemerintah/koperasi/kop-sukamaju");
 
-  await page.getByRole("button", { name: "Jalankan Pemeriksaan Ulang" }).click();
+  await page
+    .getByRole("button", { name: "Jalankan Pemeriksaan Ulang" })
+    .click();
 
   // Banner gagal (status akhir gagal_langsung).
   await expect(page.getByText(BANNER_GAGAL)).toBeVisible({ timeout: 45_000 });
   // Verdict yang tampil = run seed terakhir (merah, ringkasan fixture).
-  await expect(page.getByText(RINGKASAN_MERAH)).toBeVisible();
+  // Ringkasan seed muncul di dua wilayah pada gagal_langsung: panel verdict
+  // utama dan simpul kesimpulan diagram pemeriksaan (fitur M4). Keduanya sah;
+  // .first() menegaskan verdict seed merah tampil tanpa memilih salah satu.
+  await expect(page.getByText(RINGKASAN_MERAH).first()).toBeVisible();
   await shot(page, "gov", "03-fallback-gagal");
 });

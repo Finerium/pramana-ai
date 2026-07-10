@@ -450,7 +450,7 @@ function HeroKondisi({
         </div>
         <div style={{ flex: 1 }} />
         <div
-          role="img"
+          role="group"
           aria-label={`Distribusi verdict: ${kpi.hijau} hijau, ${kpi.kuning} kuning, ${kpi.merah} merah dari ${kpi.jumlahKoperasi} koperasi`}
           className="gov-well"
           style={{
@@ -1436,9 +1436,7 @@ function SebaranProvinsi({
                 title={`${p.n}, belum masuk pemantauan`}
                 style={{ ...pos, background: "var(--well)" }}
               >
-                <span
-                  style={{ ...ABBREV, color: "var(--disabled-foreground)" }}
-                >
+                <span style={{ ...ABBREV, color: "var(--muted-foreground)" }}>
                   {p.a}
                 </span>
               </div>

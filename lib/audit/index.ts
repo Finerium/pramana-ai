@@ -64,6 +64,14 @@ export interface RunAuditDeps {
   /** Generator id temuan (ULID default); dapat dideterministikkan di test. */
   generateId?: () => string;
   now?: () => number;
+  /**
+   * Mode cepat (audit interaktif bendahara): LEWATI panggilan model adjudikator.
+   * Temuan forensik tervalidasi langsung final; warna tetap dihitung server
+   * (hitungWarna, yang memang selalu menang atas usulan model). Menghapus satu
+   * ronde panggilan model sekuensial + retry-nya sehingga pohon pemeriksaan
+   * bendahara selesai jauh lebih cepat. Jalur pemerintah tetap penuh (cepat off).
+   */
+  cepat?: boolean;
 }
 
 export interface TemuanDrop {
@@ -238,69 +246,78 @@ export async function runAudit(
     throw new LLMUnavailable("seluruh agen forensik gagal");
   }
 
-  // 2. Adjudikator: menerima temuan tervalidasi + ringkasan snapshot.
-  //    Kegagalan transport menyebar sebagai LLMUnavailable (jaring = cache).
-  const userAdj = JSON.stringify({
-    temuan: tervalidasi,
-    ringkasanSnapshot: buildRingkasanSnapshot(snapshot),
-  });
-  const adj = await deps.chat({
-    system: ADJUDIKATOR,
-    user: userAdj,
-    schema: AdjudikatorOutput,
-  });
-
-  // 3. Guard pass 2 pada hasil tulis ulang adjudikator + ringkasan.
-  let warnaUsul: VerdictColor = adj.warna;
-  let ringkasan = adj.ringkasan;
-  const pass2 = partisiGuard(adj.temuan, idx);
-  const ringkasanBermasalah = !periksaRingkasan(ringkasan).ok;
+  // 2. Adjudikator. Pada mode cepat DILEWATI: temuan forensik tervalidasi (sudah
+  //    lolos guard pass 1) langsung final; warna dihitung server; ringkasan pakai
+  //    fallback copy. Selain itu (jalur penuh): panggil adjudikator + guard pass 2.
+  let warnaUsul: VerdictColor | null = null;
+  let ringkasan = "";
   let temuanFinal: AgentFindingTanpaId[];
 
-  if (pass2.gagal.length > 0 || ringkasanBermasalah) {
-    // Retry korektif satu kali ke adjudikator.
-    let adj2: z.infer<typeof AdjudikatorOutput> | null = null;
-    try {
-      const bagian: string[] = [userAdj, "Koreksi wajib."];
-      if (pass2.gagal.length > 0)
-        bagian.push(`Temuan yang melanggar:\n${daftarKoreksi(pass2.gagal)}`);
-      if (ringkasanBermasalah)
-        bagian.push("Ringkasan melanggar register; tulis ulang yang bersih.");
-      bagian.push(ATURAN_KOREKSI);
-      adj2 = await deps.chat({
-        system: ADJUDIKATOR,
-        user: bagian.join("\n"),
-        schema: AdjudikatorOutput,
-      });
-    } catch {
-      adj2 = null;
-    }
+  if (deps.cepat) {
+    temuanFinal = tervalidasi;
+  } else {
+    // Kegagalan transport menyebar sebagai LLMUnavailable (jaring = cache).
+    const userAdj = JSON.stringify({
+      temuan: tervalidasi,
+      ringkasanSnapshot: buildRingkasanSnapshot(snapshot),
+    });
+    const adj = await deps.chat({
+      system: ADJUDIKATOR,
+      user: userAdj,
+      schema: AdjudikatorOutput,
+    });
 
-    if (adj2) {
-      warnaUsul = adj2.warna;
-      ringkasan = adj2.ringkasan;
-      const ulang = partisiGuard(adj2.temuan, idx);
-      for (const g of ulang.gagal)
-        metadata.temuanDrop.push({
-          tahap: "adjudikator",
-          agent: g.temuan.agent,
-          judul: g.temuan.judul,
-          alasan: g.alasan,
+    // 3. Guard pass 2 pada hasil tulis ulang adjudikator + ringkasan.
+    warnaUsul = adj.warna;
+    ringkasan = adj.ringkasan;
+    const pass2 = partisiGuard(adj.temuan, idx);
+    const ringkasanBermasalah = !periksaRingkasan(ringkasan).ok;
+
+    if (pass2.gagal.length > 0 || ringkasanBermasalah) {
+      // Retry korektif satu kali ke adjudikator.
+      let adj2: z.infer<typeof AdjudikatorOutput> | null = null;
+      try {
+        const bagian: string[] = [userAdj, "Koreksi wajib."];
+        if (pass2.gagal.length > 0)
+          bagian.push(`Temuan yang melanggar:\n${daftarKoreksi(pass2.gagal)}`);
+        if (ringkasanBermasalah)
+          bagian.push("Ringkasan melanggar register; tulis ulang yang bersih.");
+        bagian.push(ATURAN_KOREKSI);
+        adj2 = await deps.chat({
+          system: ADJUDIKATOR,
+          user: bagian.join("\n"),
+          schema: AdjudikatorOutput,
         });
-      temuanFinal = ulang.lolos;
+      } catch {
+        adj2 = null;
+      }
+
+      if (adj2) {
+        warnaUsul = adj2.warna;
+        ringkasan = adj2.ringkasan;
+        const ulang = partisiGuard(adj2.temuan, idx);
+        for (const g of ulang.gagal)
+          metadata.temuanDrop.push({
+            tahap: "adjudikator",
+            agent: g.temuan.agent,
+            judul: g.temuan.judul,
+            alasan: g.alasan,
+          });
+        temuanFinal = ulang.lolos;
+      } else {
+        // Retry transport gagal: pakai temuan lolos pass pertama, catat drop.
+        for (const g of pass2.gagal)
+          metadata.temuanDrop.push({
+            tahap: "adjudikator",
+            agent: g.temuan.agent,
+            judul: g.temuan.judul,
+            alasan: g.alasan,
+          });
+        temuanFinal = pass2.lolos;
+      }
     } else {
-      // Retry transport gagal: pakai temuan lolos pass pertama, catat drop.
-      for (const g of pass2.gagal)
-        metadata.temuanDrop.push({
-          tahap: "adjudikator",
-          agent: g.temuan.agent,
-          judul: g.temuan.judul,
-          alasan: g.alasan,
-        });
       temuanFinal = pass2.lolos;
     }
-  } else {
-    temuanFinal = pass2.lolos;
   }
 
   // 4. Hitung warna 6.1 pada himpunan FINAL (server menang atas usulan).

@@ -6,10 +6,12 @@
  * WAJIB mengecualikan marker via bukanMarker.
  */
 import { and, desc, eq, sql } from "drizzle-orm";
+import { ulid } from "ulid";
 import { getDb, type Db } from "../../db/client";
-import { auditRun, temuan } from "../../db/schema";
+import { anggota, auditRun, notifikasi, temuan } from "../../db/schema";
 import { hasLlmKey } from "../env";
 import { recordLlmSuccess } from "../api";
+import { COPY } from "../copy";
 import { chatJSON } from "../llm";
 import { buildSnapshot } from "./buildSnapshot";
 import { runAudit, type AuditChat, type RunAuditResult } from "./index";
@@ -82,6 +84,32 @@ export async function persistLiveRun(
       tanggapanPengurus: null,
     }));
     if (rows.length !== 0) await tx.insert(temuan).values(rows);
+
+    // Tutup loop ke anggota: verdict merah/kuning = ada yang perlu Anda
+    // tanyakan, kirim notifikasi ke SEMUA anggota koperasi (badge belum-dibaca
+    // di member/summary naik otomatis). Hijau = koperasi sehat, TANPA notif.
+    // {n} = jumlah temuan NYATA run ini (bukan literal).
+    const warna = result.verdict.warna;
+    if (warna === "merah" || warna === "kuning") {
+      const anggotaRows = await tx
+        .select({ id: anggota.id })
+        .from(anggota)
+        .where(eq(anggota.koperasiId, koperasiId));
+      const teks = COPY["notif.template"].replace(
+        "{n}",
+        String(result.verdict.temuan.length),
+      );
+      if (anggotaRows.length !== 0)
+        await tx.insert(notifikasi).values(
+          anggotaRows.map((a) => ({
+            id: ulid(),
+            anggotaId: a.id,
+            teks,
+            dibacaPada: null,
+            dibuatPada: now,
+          })),
+        );
+    }
   });
 }
 
@@ -117,7 +145,7 @@ export async function persistFailureMarker(
 export async function runLiveAudit(
   auditRunId: string,
   koperasiId: string,
-  deps?: { chat?: AuditChat; hasKey?: () => boolean },
+  deps?: { chat?: AuditChat; hasKey?: () => boolean; fokus?: boolean },
 ): Promise<void> {
   const { db } = getDb();
   const hasKey = deps?.hasKey ?? hasLlmKey;
@@ -130,8 +158,13 @@ export async function runLiveAudit(
     ((a) =>
       chatJSON({ ...a, timeoutMs: a.timeoutMs ?? AUDIT_CALL_TIMEOUT_MS }));
   try {
-    const { snapshot, periode } = await buildSnapshot(db, koperasiId);
-    const result = await runAudit(snapshot, { chat });
+    // fokus:true (trigger bendahara) = snapshot kecil DAN lewati adjudikator
+    // (mode cepat) supaya pohon pemeriksaan interaktif selesai jauh lebih cepat;
+    // default false (gov) = snapshot penuh + adjudikator = audit dalam.
+    const { snapshot, periode } = await buildSnapshot(db, koperasiId, {
+      fokus: deps?.fokus,
+    });
+    const result = await runAudit(snapshot, { chat, cepat: deps?.fokus });
     recordLlmSuccess();
     await persistLiveRun(db, { auditRunId, koperasiId, periode, result });
   } catch {
