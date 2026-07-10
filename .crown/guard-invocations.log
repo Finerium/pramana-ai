@@ -3406,3 +3406,26 @@
 {"at":"2026-07-09T23:43:30.704Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/Report.md"}
 {"at":"2026-07-09T23:43:40.120Z","tool":"Bash","path":"node scripts/check-register.mjs --file Report.md 2>&1 | tail -1 && CROWN_GATE_WR"}
 {"at":"2026-07-09T23:43:53.511Z","tool":"Bash","path":"SHA_PRE=$(git rev-parse --short HEAD); git add -A && git commit -q -m \"checkpoin"}
+{"at":"2026-07-09T23:44:14.234Z","tool":"Bash","path":"CURR=$(git rev-parse --short HEAD); CROWN_GATE_WRITE=1 node -e \"\nconst fs=requir"}
+{"at":"2026-07-09T23:44:25.977Z","tool":"Bash","path":"git worktree list | wc -l; lsof -ti:3000 2>/dev/null | xargs kill 2>/dev/null; l"}
+{"at":"2026-07-09T23:44:34.740Z","tool":"Bash","path":"git worktree list | cat; echo \"---prune---\"; git worktree prune; git worktree li"}
+{"at":"2026-07-09T23:44:39.164Z","tool":"Bash","path":"git worktree remove --force /Users/ghaisan/Documents/Pramana-AI/.claude/worktree"}
+{"at":"2026-07-09T23:44:49.401Z","tool":"Bash","path":"git worktree remove --force /Users/ghaisan/Documents/Pramana-AI/.claude/worktree"}
+{"at":"2026-07-10T00:10:12.590Z","tool":"Bash","path":"echo \"=== health live ===\"; curl -sS -o /dev/null -w \"pramana-ai-puce: HTTP %{ht"}
+{"at":"2026-07-10T06:29:15.834Z","tool":"Read","path":"/Users/ghaisan/Downloads/prompt-orchestrator-pramana-ai-mode3-simkopdes.md"}
+{"at":"2026-07-10T06:30:28.747Z","tool":"Write","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/llm-diag.js"}
+{"at":"2026-07-10T06:30:45.160Z","tool":"Bash","path":"node --env-file=.env /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI"}
+{"at":"2026-07-10T06:31:42.032Z","tool":"Bash","path":"echo \"=== isi bundle dashboard BARU ===\"; unzip -l \"/Users/ghaisan/Downloads/Pra"}
+{"at":"2026-07-10T06:32:34.076Z","tool":"Bash","path":"cd /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-429"}
+{"at":"2026-07-10T06:33:03.676Z","tool":"Bash","path":"cd /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-429"}
+{"at":"2026-07-10T06:33:51.307Z","tool":"Bash","path":"python3 -c \"\nimport zipfile, re\ntry:\n    import openpyxl\n    wb = openpyxl.load_"}
+{"at":"2026-07-10T06:52:25.778Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/phase"}
+{"at":"2026-07-10T06:52:58.668Z","tool":"Bash","path":"python3 - <<'PY' > /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/1"}
+{"at":"2026-07-10T06:53:22.610Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/simkopdes-dump.txt"}
+{"at":"2026-07-10T06:53:48.339Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/simkopdes-dump.txt"}
+{"at":"2026-07-10T06:54:57.199Z","tool":"Bash","path":"echo \"=== tabel Drizzle sekarang ===\"; grep -oE \"export const [a-zA-Z]+ = sqlite"}
+{"at":"2026-07-10T06:58:12.023Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/docs/pemetaan-simkopdes.md"}
+{"at":"2026-07-10T06:58:43.780Z","tool":"Bash","path":"tail -5 .crown/notes.md; echo \"=== keputusan Database anchor ===\"; grep -n \"Jalu"}
+{"at":"2026-07-10T06:59:07.929Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/docs/keputusan-teknis.md"}
+{"at":"2026-07-10T06:59:34.824Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/notes.md"}
+{"at":"2026-07-10T07:00:08.698Z","tool":"Bash","path":"node scripts/check-register.mjs --file docs/pemetaan-simkopdes.md 2>&1 | tail -1"}

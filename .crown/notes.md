@@ -45,3 +45,19 @@ Phase 0 progress per 2026-07-09:
 - L-07 Live audit serverless dalam skema beku 6.2 (tanpa kolom status): trigger POST gov/audit/run membalas 202 dengan auditRunId ULID yang DIJANJIKAN, kerja background via after() next/server (Fluid Compute), insert audit_run hanya saat selesai; kegagalan = baris MARKER source="live" rawJson.status="gagal_langsung" (warna+ringkasan disalin run tersimpan terakhir agar kolom jujur secara tipe); GET audit/:id/status menderivasi berjalan/selesai/gagal_langsung dari keberadaan+isi baris; SEMUA query verdict/tren/overview mengecualikan baris marker.
 - L-08 /api/subjek/recent diperluas ADITIF dengan field anggota:[{id,nama}] (F-08 menuntut opsi anggota nyata dari DB; 6.3 tidak menyediakan endpoint daftar anggota; perluasan aditif satu field pada respons yang sudah ada = bacaan paling defensible dibanding endpoint baru). Dicatat untuk Report bagian deviasi.
 - CATATAN WORKTREE (harness): worktree agent berada di .claude/worktrees/* sehingga tool Write/Edit worker terblokir deny-guard (segmen .claude); pola tulis andal = node-stdin (writeFileSync via heredoc node). Konsekuensi: hook PostToolUse (prettier+register) tidak berjalan pada tulisan worker; integrator menjalankan prettier + check-register menyeluruh di setiap barrier merge.
+
+## MODE 3 (brownfield iteration di atas v1.0.0) — RESUME STATE
+Otorisasi operator: gabung revisi user + crown SIMKOPDES jadi 1 pass 8 fase (R,1-7,Final), tag v2.0.0. Semua worker Opus 4.8 max.
+KEPUTUSAN TERKUNCI:
+- M3-D1 Label model: tampilkan MiniMax-M2.7 asli di UI (bukan GLM bundle); selisih label GLM->MiniMax = deviasi tercatat. Penamaan "AI Agent" (gov) ikut bundle.
+- M3-D2 Pemicu audit bendahara: auto saat mencatat + debounce/antre (live MiniMax nyata, bukan mock).
+- M3-D3 Cakupan penuh, tag v2.0.0.
+- M3-D4 Frame: member app dibungkus frame iPhone di desktop + preview landing pakai screenshot UI asli.
+- M3-D5 README pitch komprehensif + diagram C4/ER/sequence/deployment (SVG->PNG) di Fase 7; inti pitch: kurangi celah korupsi, bangun kepercayaan transparansi dulu sebelum kopdes advance; jelaskan cara agen dijaga tidak halusinasi.
+TEMUAN RECON:
+- M3-F1 MiniMax HIDUP (M2.7 200, ada M3 baru); 429 kemarin transient. Live audit BISA real; AC-LLM-04 bukan human-gated.
+- M3-F2 chatJSON (lib/llm.ts) langsung JSON.parse -> gagal karena M2.7 bungkus output dengan <think>...</think> + fence ```json. Fix: strip think/fence sebelum parse (+matikan thinking bila didukung). Ini akar live audit jatuh ke cache.
+- M3-F3 Bundle dashboard baru (Downloads/Pramana AI Dashboard Design-2.zip) melabeli GLM-4.7/GLM-5.2 (konflik kontrak MiniMax) -> resolusi M3-D1. Fitur baru: KPI delta+sparkline, tren nasional, kartogram, antrian Perlu Perhatian, dropdown periode, cross-filter, slide-over Pengaturan, feed AI Agent.
+- M3-F4 SIMKOPDES: 27 tabel, format id KOP-/16char/NIK masked/kode_wilayah; enum Approved-Requested/RAT Verified-Reported-Drafted-Rejected+tahap 6..9/bank BRI-BNI-Mandiri-BSI/gerai resmi/PENGURUS-PENGAWAS. Mapping: docs/pemetaan-simkopdes.md.
+BLAST RADIUS ALIGNMENT (batas bersih): tabel SIMKOPDES (koperasi/anggota/pengurus/transaksi/pinjaman/simpanan) -> id ber-format ref; tabel audit-native (audit_run/temuan/pertanyaan_rat/keputusan/vote/notifikasi) tetap id sendiri (selektor #tmn-an1 & deep-link ?open=tmn-an1 STABIL). File berubah: db/schema, scripts/seed/data, scripts/fixtures/temuan-seed (bukti id), lib/contracts (enum baru bila perlu), + test/e2e yang assert id sumber. AC re-verify: SEED-01/02, DB-01, LLM-02/03, REG, DEMO-01/02/03, E2E-01..06, UI-01/02/03, SUBJ.
+KONTRAK BEKU YANG DIIZINKAN BEREVOLUSI (tercatat, contract+test+evidence lockstep): label model UI, "AI Agent" gov, format id/enum SIMKOPDES + field tambahan, endpoint gov per-periode+antrian, konsol tree real-time + grounding, CTA bendahara landing, frame device.

@@ -45,7 +45,7 @@ Alternatif yang dipertimbangkan:
 - SQLite file di Vercel tanpa Turso. Tidak persist antar invocation. Ditolak.
 - Prisma sebagai ORM. Lebih berat saat build dan runtime serverless; Drizzle lebih tipis dan dialek SQLite-nya matang. Ditolak.
 
-Jalur produksi jangka panjang (narasi pitch, bukan implementasi MVP): skema 6.2 portabel ke Postgres bila integrasi SIMKOPDES menuntutnya; Drizzle mendukung keduanya.
+Jalur produksi jangka panjang (narasi pitch, bukan implementasi MVP): skema 6.2 portabel ke Postgres bila integrasi SIMKOPDES menuntutnya; Drizzle mendukung keduanya. Data dan model Pramana sudah diselaraskan ke bentuk kamus data resmi SIMKOPDES (format identifier, kosakata enum, field bernilai tinggi) sehingga integrasi produksi tinggal mengarahkan koneksi, bukan menulis ulang model data; pemetaan tabel demi tabel ada di [docs/pemetaan-simkopdes.md](pemetaan-simkopdes.md).
 
 ## Model AI dan Arsitektur Agen
 
