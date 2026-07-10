@@ -9,8 +9,10 @@
  * surface). Pemetaan bentuk live bersifat best-effort sampai integrasi.
  */
 import type {
+  AgentId,
   SubjekTransaksiInput,
   SubjekPinjamanInput,
+  VerdictColor,
 } from "@/lib/contracts";
 import {
   SEED_RECENT,
@@ -223,6 +225,46 @@ export async function postRat(form: RatForm): Promise<{ ratStatus: string }> {
       : { status: form.status };
   const data = await postJson("/api/subjek/rat", body);
   return { ratStatus: asStr(data?.ratStatus, form.status) };
+}
+
+// ---- Audit Pramana (diagram tree konsol) ------------------------------------
+// TANPA fallback simulasi: hasil pemeriksaan WAJIB nyata dari audit tersimpan.
+// Gagal jaringan/ditolak = null; UI menampilkan keadaan gagal yang jujur.
+
+export type SubjekAuditAgen = {
+  agent: AgentId;
+  jumlah: number;
+  contohBukti: string | null;
+};
+export type SubjekAuditStatus = {
+  status: "berjalan" | "selesai" | "gagal_langsung";
+  verdict: { warna: VerdictColor; ringkasan: string } | null;
+  temuanPerAgen: SubjekAuditAgen[];
+};
+
+export async function postAudit(): Promise<{ auditRunId: string } | null> {
+  try {
+    const data = await postJson("/api/subjek/audit", {});
+    if (data && typeof data.auditRunId === "string")
+      return { auditRunId: data.auditRunId };
+  } catch {
+    /* endpoint menolak: tanpa audit palsu */
+  }
+  return null;
+}
+
+export async function fetchAuditStatus(
+  id: string,
+): Promise<SubjekAuditStatus | null> {
+  try {
+    const res = await fetch(`/api/subjek/audit/${id}`, { cache: "no-store" });
+    if (tolakAuth(res.status)) return null;
+    const j = (await res.json()) as { ok?: boolean; data?: SubjekAuditStatus };
+    if (res.ok && j && j.ok && j.data) return j.data;
+  } catch {
+    /* jaringan absen: polling berikutnya mencoba lagi */
+  }
+  return null;
 }
 
 export async function logout(): Promise<void> {

@@ -1,6 +1,7 @@
 "use client";
 import {
   useEffect,
+  useRef,
   useState,
   type CSSProperties,
   type ChangeEvent,
@@ -9,8 +10,11 @@ import { useRouter } from "next/navigation";
 import { COPY } from "@/lib/copy";
 import { SUBJEK_COPY, JENIS_LABEL } from "@/lib/copy/subjek";
 import { ThemeToggle } from "./theme";
+import { AgentTree, type AgentTreeState } from "./AgentTree";
 import {
   fetchRecent,
+  fetchAuditStatus,
+  postAudit,
   postTransaksi,
   postPinjaman,
   postRat,
@@ -748,6 +752,13 @@ const SUBJEK_CSS = `
 
 const PIHAK_FALLBACK = "Koperasi";
 
+// Audit tree (6.4): debounce 1500ms setelah transaksi tercatat (reset bila ada
+// transaksi lagi), lalu POST /api/subjek/audit dan polling tiap 2000ms dengan
+// batas 120000ms. Hasil node WAJIB dari audit tersimpan nyata, tanpa simulasi.
+const AUDIT_DEBOUNCE_MS = 1500;
+const AUDIT_POLL_MS = 2000;
+const AUDIT_BATAS_MS = 120_000;
+
 export function PembukuanConsole() {
   const router = useRouter();
 
@@ -780,6 +791,68 @@ export function PembukuanConsole() {
   const [trxList, setTrxList] = useState<TransaksiEntry[]>(SEED_TRANSAKSI);
   const [pinList, setPinList] = useState<PinjamanEntry[]>(SEED_PINJAMAN);
   const [listView, setListView] = useState<"terisi" | "kosong">("terisi");
+
+  // ---- Audit tree state -----------------------------------------------------
+  const [audit, setAudit] = useState<AgentTreeState | { fase: "idle" }>({
+    fase: "idle",
+  });
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  // Token run: transaksi baru menggantikan audit lama; poll basi diabaikan.
+  const auditSeqRef = useRef(0);
+
+  const hentikanPolling = () => {
+    if (pollRef.current) {
+      clearInterval(pollRef.current);
+      pollRef.current = null;
+    }
+  };
+
+  const mulaiAudit = async () => {
+    hentikanPolling();
+    const seq = ++auditSeqRef.current;
+    setAudit({ fase: "berjalan" });
+    const mulai = await postAudit();
+    if (seq !== auditSeqRef.current) return;
+    if (!mulai) {
+      setAudit({ fase: "gagal", data: null });
+      return;
+    }
+    const batas = Date.now() + AUDIT_BATAS_MS;
+    pollRef.current = setInterval(async () => {
+      if (seq !== auditSeqRef.current) return;
+      if (Date.now() > batas) {
+        hentikanPolling();
+        setAudit({ fase: "habis" });
+        return;
+      }
+      const st = await fetchAuditStatus(mulai.auditRunId);
+      if (seq !== auditSeqRef.current || !st) return;
+      if (st.status === "selesai") {
+        hentikanPolling();
+        setAudit({ fase: "selesai", data: st });
+      } else if (st.status === "gagal_langsung") {
+        hentikanPolling();
+        setAudit({ fase: "gagal", data: st });
+      }
+    }, AUDIT_POLL_MS);
+  };
+
+  const jadwalkanAudit = () => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      debounceRef.current = null;
+      void mulaiAudit();
+    }, AUDIT_DEBOUNCE_MS);
+  };
+
+  useEffect(
+    () => () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      if (pollRef.current) clearInterval(pollRef.current);
+    },
+    [],
+  );
 
   // Hidrasi dari /api/subjek/recent; fallback seed sudah menjadi state awal.
   useEffect(() => {
@@ -882,6 +955,8 @@ export function PembukuanConsole() {
     setTrx(emptyTransaksi());
     setTrxNote("");
     setListView("terisi");
+    // Transaksi tercatat: jadwalkan audit Pramana (debounce, reset per entri).
+    jadwalkanAudit();
     setTimeout(
       () =>
         setTrxList((prev) =>
@@ -1543,6 +1618,9 @@ export function PembukuanConsole() {
             </section>
           </div>
         </div>
+
+        {/* PEMERIKSAAN PRAMANA: tree agen tampil begitu audit terpicu */}
+        {audit.fase !== "idle" && <AgentTree state={audit} />}
 
         {/* DAFTAR ENTRI TERAKHIR */}
         <section style={S.daftarCard}>

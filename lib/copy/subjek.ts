@@ -110,6 +110,30 @@ export const SUBJEK_COPY = {
     kosongPinDesc:
       "Pinjaman yang Anda setujui akan muncul di sini beserta status dokumennya.",
   },
+  tree: {
+    judul: "Pemeriksaan Pramana",
+    deskripsi:
+      "Transaksi yang Anda catat langsung diperiksa empat agen AI secara paralel, lalu adjudikator menyatukan temuan menjadi satu kesimpulan.",
+    aria: "Diagram pemeriksaan Pramana",
+    root: "Pramana",
+    rootSub: "Pengawas koperasi",
+    model: "MiniMax-M2.7",
+    memeriksa: "Memeriksa...",
+    adjudikator: "Adjudikator",
+    adjudikatorSub: "Menyatukan temuan menjadi satu kesimpulan.",
+    menungguAgen: "Menunggu hasil empat pemeriksa...",
+    kesimpulan: "Kesimpulan",
+    menungguKesimpulan: "Menunggu kesimpulan...",
+    temuanSatuan: "temuan",
+    tanpaTemuan: "Tidak ada temuan",
+    tanpaHasil: "Belum ada hasil",
+    dasar: "Berdasarkan ",
+    hasilTersimpan: "Hasil tersimpan",
+    waktuHabis:
+      "Pemeriksaan memerlukan waktu lebih lama dari biasanya. Hasilnya tersimpan begitu selesai dan tampil pada pemeriksaan berikutnya.",
+    antiHalusinasi:
+      "Setiap temuan menunjuk transaksi nyata; yang tidak dapat dibuktikan otomatis dibuang.",
+  },
   footNote:
     "Konsol ini mensimulasikan sistem pembukuan koperasi. Data yang Anda catat menjadi sumber yang diperiksa Pramana. Ini bukan bagian produk Pramana untuk pengurus.",
   login: {
