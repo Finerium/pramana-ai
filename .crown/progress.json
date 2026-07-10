@@ -80,8 +80,13 @@
       "passed": true,
       "commit": "9a99def",
       "at": "2026-07-10T12:39:06Z"
+    },
+    "mode3-6": {
+      "passed": true,
+      "commit": "e5c13a3",
+      "at": "2026-07-10T12:59:23Z"
     }
   },
-  "spendNote": "MODE 3 SELESAI (kode). M3-1..M3-7 lulus + committed + diverifikasi (test 394, e2e 19, live audit NYATA, demo:hash byte-identik). README pitch 501 baris + 5 diagram. Tag v2.0.0. DEPLOY prod + reseed Turso = langkah operator (cred-gated), disurface.",
-  "lastPhase": "mode3-final"
+  "spendNote": "MODE 3 SELESAI PENUH + LIVE. v2.0.0 deploy prod (pramana-ai-puce.vercel.app) + Turso reseed riwayat 6 bulan, UAT hijau (dasbor 12 panel, verdict merah, MiniMax-M2.7). GitHub tag v2.0.0 + README pitch 501 baris. test 394/e2e 19/live audit nyata.",
+  "lastPhase": "mode3-6-deployed"
 }

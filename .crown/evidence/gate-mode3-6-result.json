@@ -1,0 +1,23 @@
+{
+  "gate": "mode3-6",
+  "title": "Deploy prod v2.0.0 + self-UAT",
+  "at": "2026-07-10T12:59:23Z",
+  "pass": true,
+  "results": [
+    {
+      "id": "RESEED",
+      "pass": true,
+      "note": "Turso prod di-reseed dengan seed Mode 3 (riwayat 6 bulan, 72 audit_run) via script sekali-pakai (kredensial .env, izin operator eksplisit). Diverifikasi live: dropdown periode prod Jan 9/3/0 -> Apr 6/6/0 -> Jun 6/4/2"
+    },
+    {
+      "id": "DEPLOY",
+      "pass": true,
+      "note": "vercel --prod (finerium) READY, alias pramana-ai-puce.vercel.app. version bump 1.0.0->2.0.0; health {ok:true, db:up, demoMode:true, version:2.0.0}. llm:down benign (key ADA, belum ada probe sukses; live audit berfungsi)"
+    },
+    {
+      "id": "UAT",
+      "pass": true,
+      "note": "Live prod: dasbor 12 panel render penuh (KONDISI NASIONAL, PERLU PERHATIAN, KPI delta+sparkline, Tren, AI Agent MiniMax-M2.7); member verdict merah + 6 temuan; badge MiniMax-M2.7. Turso reseed terbukti (angka periode nyata)"
+    }
+  ]
+}

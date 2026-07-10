@@ -4055,3 +4055,25 @@
 {"at":"2026-07-10T12:37:19.088Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/Report.md"}
 {"at":"2026-07-10T12:38:25.886Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/Report.md"}
 {"at":"2026-07-10T12:39:06.602Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\npnpm check-register 2>&1 | tail -1\nCROWN_"}
+{"at":"2026-07-10T12:39:30.429Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nCROWN_GATE_WRITE=1 node --input-type=modu"}
+{"at":"2026-07-10T12:40:23.032Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== remote + branch ===\"; git remot"}
+{"at":"2026-07-10T12:40:51.650Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== push main ===\"; git push origin"}
+{"at":"2026-07-10T12:41:56.214Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== deploy/seed-turso process in do"}
+{"at":"2026-07-10T12:48:20.237Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/_seed-turso.ts"}
+{"at":"2026-07-10T12:48:32.724Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; npx tsx scripts/_seed-turso.ts 2>&1 | ta"}
+{"at":"2026-07-10T12:48:46.637Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; npx tsx scripts/_seed-turso.ts 2>&1 | gr"}
+{"at":"2026-07-10T12:49:08.157Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/seed/index.ts"}
+{"at":"2026-07-10T12:49:27.304Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; grep -nE \"seed\\(|getDb|createDb|resolveD"}
+{"at":"2026-07-10T12:49:45.276Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/_seed-turso.ts"}
+{"at":"2026-07-10T12:49:59.320Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/_seed-turso.ts"}
+{"at":"2026-07-10T12:50:11.751Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; npx tsx scripts/_seed-turso.ts 2>&1 | gr"}
+{"at":"2026-07-10T12:51:07.758Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; rm -f scripts/_seed-turso.ts seed-timing"}
+{"at":"2026-07-10T12:51:22.382Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; vercel --prod 2>&1 | tail -25"}
+{"at":"2026-07-10T12:54:13.561Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; echo \"=== health route ===\"; cat app/api"}
+{"at":"2026-07-10T12:54:31.727Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/health/route.ts"}
+{"at":"2026-07-10T12:55:19.101Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/package.json"}
+{"at":"2026-07-10T12:55:33.626Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/package.json"}
+{"at":"2026-07-10T12:55:53.483Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\ngit add package.json && git commit -q -m "}
+{"at":"2026-07-10T12:56:11.165Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; vercel --prod 2>&1 | grep -iE \"Productio"}
+{"at":"2026-07-10T12:58:40.897Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/prod-dashboard.png"}
+{"at":"2026-07-10T12:59:23.091Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nrm -f prod-dashboard.png\nCROWN_GATE_WRITE"}
