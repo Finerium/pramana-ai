@@ -3517,3 +3517,31 @@
 {"at":"2026-07-10T07:49:07.488Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 TS=\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\" node --input-type=module "}
 {"at":"2026-07-10T07:49:29.705Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 TS=\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\" node --input-type=module "}
 {"at":"2026-07-10T07:49:49.685Z","tool":"Bash","path":"git add -A && git status --short | head -30"}
+{"at":"2026-07-10T07:50:12.263Z","tool":"Bash","path":"git commit -q -F - <<'MSG'\ncheckpoint(mode3-1): live audit REAL - M2.7 think-str"}
+{"at":"2026-07-10T07:50:21.205Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 node --input-type=module -e '\nimport { readFileSync, writeFil"}
+{"at":"2026-07-10T07:52:53.718Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/db/schema.ts"}
+{"at":"2026-07-10T07:53:57.312Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/seed/data.ts"}
+{"at":"2026-07-10T07:55:19.064Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/lib/simkopdes.test.ts"}
+{"at":"2026-07-10T07:59:45.894Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/lib/simkopdes.ts"}
+{"at":"2026-07-10T08:00:44.233Z","tool":"Bash","path":"pnpm exec vitest run lib/simkopdes.test.ts --coverage=false 2>&1 | grep -E \"Test"}
+{"at":"2026-07-10T08:01:56.397Z","tool":"Bash","path":"find app -path '*subjek*' -o -path '*pembukuan*' | head; echo \"--- subjek page f"}
+{"at":"2026-07-10T08:05:49.669Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/(subjek)/pembukuan/page.tsx"}
+{"at":"2026-07-10T08:06:17.781Z","tool":"Bash","path":"find components/subjek -type f 2>/dev/null; echo \"--- console head ---\"; sed -n "}
+{"at":"2026-07-10T08:06:44.899Z","tool":"Bash","path":"find \"app/(gov)\" -type f | head -20; echo \"--- detail page ---\"; find \"app/(gov)"}
+{"at":"2026-07-10T08:06:51.718Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/(gov)/pemerintah/koperasi/[id]/page.tsx"}
+{"at":"2026-07-10T08:06:58.801Z","tool":"Bash","path":"sed -n '1,90p' components/gov/DetailClient.tsx 2>/dev/null | grep -nE \"nama|desa"}
+{"at":"2026-07-10T08:07:08.064Z","tool":"Bash","path":"grep -nE \"provinsi|kabupaten|\\.desa|\\.nama|profil|Profil|<h1|<h2|meta\\.|data\\.ko"}
+{"at":"2026-07-10T08:07:18.580Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/DetailClient.tsx"}
+{"at":"2026-07-10T08:07:42.669Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/gov/koperasi/[id]/route.ts"}
+{"at":"2026-07-10T08:08:05.303Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/DetailClient.tsx"}
+{"at":"2026-07-10T08:08:13.128Z","tool":"Bash","path":"grep -nE \"profil|id:|nama:|desa:|kabupaten:|provinsi:|GovKoperasiDetail\" \"app/(g"}
+{"at":"2026-07-10T08:08:26.560Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/DetailClient.tsx"}
+{"at":"2026-07-10T08:08:40.031Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/DetailClient.tsx"}
+{"at":"2026-07-10T08:09:07.737Z","tool":"Bash","path":"npx tsx -e '\nimport { koperasiRef, anggotaRef, pengurusRef, maskNik, maskTelepon"}
+{"at":"2026-07-10T08:10:06.268Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/docs/pemetaan-simkopdes.md"}
+{"at":"2026-07-10T08:10:36.051Z","tool":"Bash","path":"grep -n \"—\" /Users/ghaisan/Documents/Pramana-AI/docs/pemetaan-simkopdes.md"}
+{"at":"2026-07-10T08:11:40.262Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/docs/pemetaan-simkopdes.md"}
+{"at":"2026-07-10T08:11:51.461Z","tool":"Bash","path":"pnpm typecheck 2>&1 | tail -4 && echo \"=== LINT ===\" && pnpm lint 2>&1 | tail -3"}
+{"at":"2026-07-10T08:12:11.366Z","tool":"Bash","path":"pnpm test 2>&1 | grep -E \"Test Files|Tests[[:space:]]|failed\" | head -4"}
+{"at":"2026-07-10T08:13:05.370Z","tool":"Bash","path":"CROWN_GATE_WRITE=1 TS=\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\" node --input-type=module "}
+{"at":"2026-07-10T08:13:21.226Z","tool":"Bash","path":"git add -A && git commit -q -F - <<'MSG'\ncheckpoint(mode3-2): alignment SIMKOPDE"}

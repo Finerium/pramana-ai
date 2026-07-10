@@ -50,8 +50,13 @@
       "passed": true,
       "commit": "29f906e",
       "at": "2026-07-10T07:49:29Z"
+    },
+    "mode3-2": {
+      "passed": true,
+      "commit": "PENDING",
+      "at": "2026-07-10T08:13:05Z"
     }
   },
   "spendNote": "MODE 3 iterasi. Fase M3-1 lulus: live audit REAL (M2.7 think-strip + grounding guard + timeout 110s); AN-1 terdeteksi live 78.9s. Lanjut M3-2 alignment SIMKOPDES.",
-  "lastPhase": "mode3-1"
+  "lastPhase": "mode3-2"
 }

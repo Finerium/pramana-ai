@@ -13,6 +13,7 @@ import {
 } from "@/app/(gov)/_logic/detail";
 import { GovHeader } from "./GovHeader";
 import { VerdictShape } from "./VerdictShape";
+import { koperasiRef, kodeWilayah } from "@/lib/simkopdes";
 
 type Status = "memuat" | "default" | "kosong" | "gagal";
 type Peri = "tersimpan" | "berjalan" | "langsung" | "gagal_langsung";
@@ -305,6 +306,23 @@ export function DetailClient({ id }: { id: string }) {
                 }}
               >
                 {formatProfilLokasi(data.profil)}
+              </div>
+              <div
+                style={{
+                  fontFamily: "ui-monospace, SFMono-Regular, monospace",
+                  fontSize: 11,
+                  letterSpacing: "0.02em",
+                  color: "var(--muted-foreground)",
+                  marginTop: 6,
+                }}
+                title="Identifier format SIMKOPDES (koperasi_ref, kode_wilayah)"
+              >
+                {koperasiRef(data.profil.id)} ·{" "}
+                {kodeWilayah(
+                  data.profil.provinsi,
+                  data.profil.kabupaten,
+                  data.profil.desa,
+                )}
               </div>
               <div
                 style={{

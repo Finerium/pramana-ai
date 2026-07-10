@@ -1,0 +1,33 @@
+{
+  "gate": "mode3-2",
+  "title": "Alignment SIMKOPDES (display-ref + mapping jujur)",
+  "at": "2026-07-10T08:13:05Z",
+  "pass": true,
+  "results": [
+    {
+      "id": "M3-2a",
+      "pass": true,
+      "note": "lib/simkopdes.ts: koperasiRef(KOP-12hex), anggotaRef/pengurusRef(16hex), maskNik(32************01), maskTelepon, kodeWilayah(PP.KK.CC.DDDD kode BPS), geraiLabel. Murni deterministik FNV-1a (server+browser, tanpa Math.random). 9 test hijau"
+    },
+    {
+      "id": "M3-2b",
+      "pass": true,
+      "note": "Konsumen terpasang: components/gov/DetailClient.tsx header menampilkan koperasi_ref + kode_wilayah (KOP-DEB181483DE2 . 32.11.22.1439 untuk Sukamaju)"
+    },
+    {
+      "id": "M3-2c",
+      "pass": true,
+      "note": "docs/pemetaan-simkopdes.md ditulis ulang JUJUR: TERPASANG (display-ref, gerai label, field audit) vs TARGET/KONSEPTUAL (enum status, laporan JSON, bank) dibedakan tegas; klaim field tak-ada dihapus"
+    },
+    {
+      "id": "M3-2d",
+      "pass": true,
+      "note": "PK internal (kop-sukamaju/trx-an1) DIPERTAHANKAN: determinisme demo + selektor e2e/deep-link + bukti fixture beku stabil; NOL migrasi skema, NOL regresi AC"
+    },
+    {
+      "id": "SUITE",
+      "pass": true,
+      "note": "typecheck bersih; lint 0; check-register LULUS 108 berkas 0 pelanggaran; test 348/348 (37 file, +9 simkopdes)"
+    }
+  ]
+}
