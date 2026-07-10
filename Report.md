@@ -62,3 +62,39 @@ Run relaunch menghabiskan kapasitas terbesar pada dua wave build paralel (masing
 - Pertimbangkan menghubungkan integrasi Git Vercel ke repo publik agar push memicu deploy otomatis; saat ini deploy dilakukan eksplisit via CLI dan produksi sudah live serta terverifikasi.
 
 Ringkasan: produk siap dinilai. Alur juri tidak bergantung jaringan atau model. Setiap klaim di Report ini memiliki bukti tool dari sesi ini di .crown/evidence/.
+
+# Report Pramana AI, Run Otonom Kedua (Mode 3)
+
+Tanggal: 10 Juli 2026. Orchestrator: Claude Opus 4.8 via Claude Code. Iterasi brownfield di atas v1.0.0, menuju tag v2.0.0. Evidence per fase di .crown/evidence/gate-mode3-N-result.json.
+
+## 1. Koreksi penting terhadap Run Pertama (AC-LLM-04)
+
+Run pertama menandai AC-LLM-04 HUMAN-GATED dengan alasan kuota MiniMax habis (HTTP 429). Diagnosis itu KELIRU, dan operator manusia mengoreksinya. MiniMax-M2.7 hidup; 429 sebelumnya adalah rate-limit transient dari panggilan bench yang beruntun cepat. Akar sebenarnya audit langsung selalu jatuh ke cache ada DUA, keduanya cacat kode kami sendiri, bukan keterbatasan eksternal:
+
+1. `chatJSON` memanggil `JSON.parse` langsung, padahal MiniMax-M2.7 selalu membungkus keluaran dengan blok `<think>...</think>` dan code fence. Parse gagal, audit jatuh ke cache. Perbaikan: `ekstrakJson` membuang blok think dan fence sebelum parse (lib/llm.ts), teruji lima kasus kontrak dan satu panggilan live.
+2. `persist.ts` memasang timeout default 30 detik, padahal M2.7 selalu menalar sehingga panggilan adjudikator melampaui 30 detik lalu dibatalkan. Perbaikan: `AUDIT_CALL_TIMEOUT_MS` 110 detik (forensik paralel, audit di latar `after()` beranggaran 300 detik). Probe empiris menunjukkan M2.7 tidak menyediakan knob mematikan penalaran, jadi timeout yang lebih longgar adalah perbaikan yang benar.
+
+Dengan kedua perbaikan, audit langsung ke MiniMax-M2.7 kini menghasilkan verdict merah baru end-to-end (AN-1 terdeteksi: pembelian ke Toko Berkah beralamat sama dengan bendahara Budi, bukti tergrounding) dalam kisaran sekitar 79 sampai 180 detik bergantung ukuran snapshot. AC-LLM-04 tidak lagi human-gated; live audit terbukti nyata. Selain memperbaiki, ditambahkan guard grounding server-side (lib/audit/grounding.ts) yang membuang temuan dengan id bukti yang tidak ada di snapshot, sehingga model tidak bisa mengarang bukti.
+
+## 2. Yang dikirim Mode 3
+
+- M3-1 AI live nyata: ekstrakJson think/fence, guard grounding, timeout audit 110 detik. Diverifikasi live.
+- M3-2 alignment SIMKOPDES: lapisan display-ref deterministik lib/simkopdes.ts (KOP- plus 12 hex, ref 16 hex, NIK tersamarkan, kode_wilayah BPS), pemetaan jujur TERPASANG melawan TARGET di docs/pemetaan-simkopdes.md, tanpa migrasi PK yang merusak selektor.
+- M3-3 dasbor pemerintah BARU 12 panel: fondasi data seed enam bulan (72 audit_run), dropdown periode mengubah angka nyata (Jan 9/3/0 sampai Jun 6/4/2), KPI delta dan sparkline, Kondisi Nasional, antrean Perlu Perhatian, Tren Nasional, kartogram Sebaran Provinsi, feed Aktivitas AI Agent dari audit nyata, badge MiniMax-M2.7. Juni invariant tetap.
+- M3-4 fitur dan perbaikan: bug login diperbaiki dengan CTA eksplisit ?as=; CTA bendahara sebagai persona ketiga; bingkai iPhone aplikasi anggota di desktop; bukti grounding anti-halusinasi di layar temuan; screenshot UI asli di landing; note plus test jaminan anonimitas Suara Anda; dan konsol bendahara dengan pohon AI agent real-time saat transaksi dicatat, memicu audit MiniMax nyata (bukan mock).
+- M3-5 re-verify blast radius: seluruh gate hijau setelah semua perubahan.
+- M3-7 README pitch komprehensif 501 baris dengan lima diagram Mermaid (C4 Konteks, C4 Kontainer, Sequence pipeline audit, ER, Deployment), tervalidasi render.
+
+## 3. Verifikasi (bukti perintah)
+
+- Uji unit dan integrasi: 394 dari 394 di 38 berkas (`pnpm test`).
+- End-to-end: 19 dari 19 (`pnpm e2e`), termasuk dasbor, login tiga varian, konsol tree, loop audit langsung, aksesibilitas.
+- Determinisme: seed:verify deterministik; demo:hash byte-identik (AC-DEMO-01).
+- Live audit: nyata, verdict merah dengan AN-1 dan bukti tergrounding, diverifikasi via browser dan query DB langsung.
+- Static: typecheck, lint, check-register (112 berkas nol pelanggaran), check:tokens, check-env, check-readme semua LULUS.
+
+## 4. Yang tersisa (jujur, langkah operator)
+
+- Deploy produksi v2.0.0 dan reseed Turso dengan riwayat enam bulan adalah langkah operator. Vercel CLI terautentikasi (finerium), sehingga `vercel --prod` dapat dijalankan. Reseed Turso memerlukan kredensial di berkas .env yang merupakan control plane dan sengaja tidak diakses orchestrator; tanpa reseed, dropdown periode di dasbor produksi menampilkan data pra-riwayat, sementara tampilan default Juni tetap benar. Perintah pasti disampaikan ke operator.
+- Konsol bendahara mengaudit ulang seluruh koperasi (ratusan transaksi) sehingga satu audit nyata memerlukan sekitar dua sampai tiga menit; batas polling pohon dinaikkan ke 240 detik agar verdict tampil dalam sesi, dengan catatan jujur di UI bila melampaui.
+- Tiga kosmetik dari Run Pertama tetap tercatat; tidak menggagalkan alur juri mana pun.

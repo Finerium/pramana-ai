@@ -68,10 +68,20 @@
     },
     "mode3-5": {
       "passed": true,
-      "commit": "PENDING",
+      "commit": "1d2c6cd",
       "at": "2026-07-10T12:08:54Z"
+    },
+    "mode3-7": {
+      "passed": true,
+      "commit": "91e1ea1",
+      "at": "2026-07-10T12:39:06Z"
+    },
+    "mode3-final": {
+      "passed": true,
+      "commit": "PENDING",
+      "at": "2026-07-10T12:39:06Z"
     }
   },
-  "spendNote": "MODE 3 iterasi. Fase M3-1 lulus: live audit REAL (M2.7 think-strip + grounding guard + timeout 110s); AN-1 terdeteksi live 78.9s. Lanjut M3-2 alignment SIMKOPDES.",
-  "lastPhase": "mode3-5"
+  "spendNote": "MODE 3 SELESAI (kode). M3-1..M3-7 lulus + committed + diverifikasi (test 394, e2e 19, live audit NYATA, demo:hash byte-identik). README pitch 501 baris + 5 diagram. Tag v2.0.0. DEPLOY prod + reseed Turso = langkah operator (cred-gated), disurface.",
+  "lastPhase": "mode3-final"
 }

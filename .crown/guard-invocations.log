@@ -3997,3 +3997,61 @@
 {"at":"2026-07-10T12:07:01.825Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; pnpm seed 2>&1 | tail -1; echo \"starting"}
 {"at":"2026-07-10T12:07:54.143Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; sleep 7; grep -iE \"ready|local:\" /privat"}
 {"at":"2026-07-10T12:08:54.256Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nCROWN_GATE_WRITE=1 TS=\"$(date -u +%Y-%m-%"}
+{"at":"2026-07-10T12:09:57.790Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nCROWN_GATE_WRITE=1 node --input-type=modu"}
+{"at":"2026-07-10T12:12:51.602Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== lib/facts.ts (national numbers "}
+{"at":"2026-07-10T12:13:26.611Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== check-readme required sections "}
+{"at":"2026-07-10T12:13:45.586Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/check-readme.mjs"}
+{"at":"2026-07-10T12:16:38.176Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/m3-7-readme-blueprint.md"}
+{"at":"2026-07-10T12:16:38.965Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/m3-7-diagram-blueprint.md"}
+{"at":"2026-07-10T12:16:45.287Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/README.md"}
+{"at":"2026-07-10T12:16:45.287Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/facts.ts"}
+{"at":"2026-07-10T12:16:46.516Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/Report.md"}
+{"at":"2026-07-10T12:16:56.997Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/index.ts"}
+{"at":"2026-07-10T12:16:58.070Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/registerGuard.ts"}
+{"at":"2026-07-10T12:16:58.070Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/grounding.ts"}
+{"at":"2026-07-10T12:16:58.071Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/verdict.ts"}
+{"at":"2026-07-10T12:17:09.512Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/llm.ts"}
+{"at":"2026-07-10T12:17:09.805Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/db/schema.ts"}
+{"at":"2026-07-10T12:17:09.805Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/package.json"}
+{"at":"2026-07-10T12:17:17.379Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/docs/keputusan-teknis.md"}
+{"at":"2026-07-10T12:17:18.258Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/docs/pemetaan-simkopdes.md"}
+{"at":"2026-07-10T12:17:18.259Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/check-readme.mjs"}
+{"at":"2026-07-10T12:17:26.048Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== vercel auth ===\"; timeout 20 ve"}
+{"at":"2026-07-10T12:17:56.230Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== vercel whoami ===\"; vercel whoa"}
+{"at":"2026-07-10T12:18:08.526Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/check-register.mjs"}
+{"at":"2026-07-10T12:18:08.851Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/simkopdes.ts"}
+{"at":"2026-07-10T12:18:10.415Z","tool":"Bash","path":"ls -la /Users/ghaisan/Documents/Pramana-AI/lib/prompts/ /Users/ghaisan/Documents"}
+{"at":"2026-07-10T12:18:17.575Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/prompts/konflik-kepentingan.ts"}
+{"at":"2026-07-10T12:18:17.937Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/prompts/anomali-transaksi.ts"}
+{"at":"2026-07-10T12:18:19.004Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/prompts/kesehatan-finansial.ts"}
+{"at":"2026-07-10T12:18:19.605Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/prompts/kepatuhan-proses.ts"}
+{"at":"2026-07-10T12:18:19.779Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/prompts/adjudikator.ts"}
+{"at":"2026-07-10T12:18:26.883Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== test files count ===\"; find . -"}
+{"at":"2026-07-10T12:18:40.103Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== unit/integration test files (ex"}
+{"at":"2026-07-10T12:18:41.067Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; find lib -maxdepth 1 -name \"auth*\"; echo"}
+{"at":"2026-07-10T12:18:50.822Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/auth.ts"}
+{"at":"2026-07-10T12:18:58.081Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/gov/audit/run/route.ts"}
+{"at":"2026-07-10T12:18:59.439Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; grep -rn \"limit(500)\\|limit(50)\\|LIMIT 5"}
+{"at":"2026-07-10T12:19:02.583Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; CROWN_GATE_WRITE=1 cat .crown/evidence/d"}
+{"at":"2026-07-10T12:19:11.381Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/persist.ts"}
+{"at":"2026-07-10T12:20:02.994Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; vercel whoami; echo \"exit: $?\""}
+{"at":"2026-07-10T12:20:58.965Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; pkill -f \"next dev\" 2>/dev/null; pkill -"}
+{"at":"2026-07-10T12:23:47.392Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== approx test case count (it/test"}
+{"at":"2026-07-10T12:27:51.442Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/README.md"}
+{"at":"2026-07-10T12:28:02.970Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; grep -nE \"\\bkamu\\b\" -i README.md"}
+{"at":"2026-07-10T12:28:10.364Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/README.md"}
+{"at":"2026-07-10T12:28:15.509Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== check-readme ===\"; pnpm check-r"}
+{"at":"2026-07-10T12:29:09.504Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/README.md"}
+{"at":"2026-07-10T12:29:15.623Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/README.md"}
+{"at":"2026-07-10T12:29:22.399Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== check-readme ===\"; node scripts"}
+{"at":"2026-07-10T12:29:42.187Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== all local links referenced ===\""}
+{"at":"2026-07-10T12:31:17.085Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== check-readme ===\"; pnpm check-r"}
+{"at":"2026-07-10T12:31:45.263Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/README.md"}
+{"at":"2026-07-10T12:32:11.792Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/README.md"}
+{"at":"2026-07-10T12:32:34.047Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/README.md"}
+{"at":"2026-07-10T12:33:38.571Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nSP=\"/private/tmp/claude-501/-Users-ghaisa"}
+{"at":"2026-07-10T12:35:28.698Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nSP=\"/private/tmp/claude-501/-Users-ghaisa"}
+{"at":"2026-07-10T12:37:00.462Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; echo \"=== Report.md headers ===\"; grep -"}
+{"at":"2026-07-10T12:37:19.088Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/Report.md"}
+{"at":"2026-07-10T12:38:25.886Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/Report.md"}
+{"at":"2026-07-10T12:39:06.602Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\npnpm check-register 2>&1 | tail -1\nCROWN_"}
