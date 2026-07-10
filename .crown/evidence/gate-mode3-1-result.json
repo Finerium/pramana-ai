@@ -1,0 +1,33 @@
+{
+  "gate": "mode3-1",
+  "title": "AI live real (think-strip + grounding + timeout)",
+  "at": "2026-07-10T07:49:07Z",
+  "pass": true,
+  "results": [
+    {
+      "id": "M3-1a",
+      "pass": true,
+      "note": "chatJSON ekstrakJson strip think + code-fence; 16/16 kontrak llm hijau + LIVE M2.7 nilai=42 (mode3-1-live-audit.txt)"
+    },
+    {
+      "id": "M3-1b",
+      "pass": true,
+      "note": "grounding guard: bukti transaksi/pinjaman wajib id ada di snapshot; rasio/jadwal dibebaskan. 5 unit + pipeline drop test (trx-hantu didrop) hijau"
+    },
+    {
+      "id": "M3-1c",
+      "pass": true,
+      "note": "runAudit LIVE 78.9s: warna merah, 3 temuan schema-valid, AN-1 konflik_kepentingan terdeteksi, agenGagal[] drop0, semua bukti tergrounding"
+    },
+    {
+      "id": "M3-1d",
+      "pass": true,
+      "note": "AUDIT_CALL_TIMEOUT_MS=110s di persist.ts (akar #2); knob thinking-off M2.7 tak didukung (probe 4 varian think=true). Live selesai 78.9s < 120s budget"
+    },
+    {
+      "id": "SUITE",
+      "pass": true,
+      "note": "pnpm typecheck bersih; pnpm lint 0 warning; pnpm test 339/339 (36 file)"
+    }
+  ]
+}

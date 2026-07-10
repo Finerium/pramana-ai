@@ -14,6 +14,15 @@ import { chatJSON } from "../llm";
 import { buildSnapshot } from "./buildSnapshot";
 import { runAudit, type AuditChat, type RunAuditResult } from "./index";
 
+/**
+ * Timeout per panggilan model untuk audit LIVE. MiniMax-M2.7 SELALU menalar
+ * (`<think>`) dan tak punya knob mematikannya (terverifikasi), sehingga satu
+ * panggilan forensik/adjudikator dapat melampaui default 30s lib/llm. Dinaikkan
+ * ke 110s: forensik berjalan paralel, audit jalan di after() latar (anggaran
+ * fungsi Vercel 300s), dan cache tetap jaring bila tetap terlampaui.
+ */
+const AUDIT_CALL_TIMEOUT_MS = 110_000;
+
 /** Predikat: baris audit_run BUKAN marker gagal_langsung. */
 export const bukanMarker = sql`json_extract(${auditRun.rawJson}, '$.status') is not 'gagal_langsung'`;
 
@@ -116,7 +125,10 @@ export async function runLiveAudit(
     await persistFailureMarker(db, { auditRunId, koperasiId, periode: "" });
     return;
   }
-  const chat: AuditChat = deps?.chat ?? ((a) => chatJSON(a));
+  const chat: AuditChat =
+    deps?.chat ??
+    ((a) =>
+      chatJSON({ ...a, timeoutMs: a.timeoutMs ?? AUDIT_CALL_TIMEOUT_MS }));
   try {
     const { snapshot, periode } = await buildSnapshot(db, koperasiId);
     const result = await runAudit(snapshot, { chat });

@@ -148,3 +148,47 @@ describe("chatJSON (AC-LLM-01, AC-PERF-04)", () => {
     ).rejects.toBeInstanceOf(LLMUnavailable);
   });
 });
+
+// MiniMax-M2.7 membungkus keluaran dengan blok <think>...</think> dan/atau code
+// fence ```json. chatJSON harus mengekstrak JSON bersih sebelum validasi (M3-1).
+describe("chatJSON ekstraksi keluaran MiniMax M2.x (think + fence)", () => {
+  it("mengurai JSON di balik blok <think>...</think>", async () => {
+    const fetch = vi.fn(async () =>
+      res('<think>Saya memikirkan jawabannya.</think>\n\n{"nilai": 7}'),
+    );
+    const out = await chatJSON({ system: "s", user: "u", schema, fetch });
+    expect(out.nilai).toBe(7);
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
+
+  it("mengurai JSON di dalam code fence ```json", async () => {
+    const fetch = vi.fn(async () => res('```json\n{"nilai": 7}\n```'));
+    const out = await chatJSON({ system: "s", user: "u", schema, fetch });
+    expect(out.nilai).toBe(7);
+  });
+
+  it("mengurai kombinasi think + fence + teks pembungkus", async () => {
+    const fetch = vi.fn(async () =>
+      res(
+        '<think>reasoning</think>\nBerikut hasilnya:\n```json\n{"nilai": 7}\n```\nsemoga membantu',
+      ),
+    );
+    const out = await chatJSON({ system: "s", user: "u", schema, fetch });
+    expect(out.nilai).toBe(7);
+  });
+
+  it("mengurai objek JSON seimbang dari teks pembungkus tanpa fence", async () => {
+    const fetch = vi.fn(async () =>
+      res('Jawaban saya adalah {"nilai": 7} sekian.'),
+    );
+    const out = await chatJSON({ system: "s", user: "u", schema, fetch });
+    expect(out.nilai).toBe(7);
+  });
+
+  it("tidak salah memotong pada kurung di dalam string JSON", async () => {
+    const s2 = z.object({ teks: z.string() });
+    const fetch = vi.fn(async () => res('{"teks": "a } b { c"}'));
+    const out = await chatJSON({ system: "s", user: "u", schema: s2, fetch });
+    expect(out.teks).toBe("a } b { c");
+  });
+});

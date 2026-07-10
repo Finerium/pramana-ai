@@ -28,6 +28,11 @@ import {
   buildRingkasanSnapshot,
   type KoperasiSnapshot,
 } from "./snapshot";
+import {
+  buildGroundingIndex,
+  periksaGrounding,
+  type GroundingIndex,
+} from "./grounding";
 import { hitungWarna } from "./verdict";
 
 // --- Skema I/O model ---------------------------------------------------------
@@ -89,13 +94,21 @@ interface PartisiGuard {
   gagal: Array<{ temuan: AgentFindingTanpaId; alasan: string[] }>;
 }
 
-function partisiGuard(temuan: AgentFindingTanpaId[]): PartisiGuard {
+function partisiGuard(
+  temuan: AgentFindingTanpaId[],
+  idx: GroundingIndex,
+): PartisiGuard {
   const lolos: AgentFindingTanpaId[] = [];
   const gagal: PartisiGuard["gagal"] = [];
   for (const t of temuan) {
-    const g = periksaTemuan(t);
-    if (g.ok) lolos.push(t);
-    else gagal.push({ temuan: t, alasan: g.alasan });
+    const reg = periksaTemuan(t);
+    const gnd = periksaGrounding(t, idx);
+    const alasan = [
+      ...(reg.ok ? [] : reg.alasan),
+      ...(gnd.ok ? [] : gnd.alasan),
+    ];
+    if (alasan.length === 0) lolos.push(t);
+    else gagal.push({ temuan: t, alasan });
   }
   return { lolos, gagal };
 }
@@ -109,7 +122,9 @@ function daftarKoreksi(gagal: PartisiGuard["gagal"]): string {
 const ATURAN_KOREKSI =
   "Perbaiki tanpa mengubah fakta: gunakan bahasa yang bertanya bukan menuduh, " +
   'sapaan "Anda", tanpa em dash, tanpa emoji, dan pertanyaan_rat berupa kalimat ' +
-  'tanya yang diakhiri "?".';
+  'tanya yang diakhiri "?". HAPUS temuan yang buktinya tidak ada dalam data; ' +
+  "jangan mengarang id transaksi atau pinjaman, hanya gunakan id yang tercantum " +
+  "pada snapshot.";
 
 // --- Guard pass 1: temuan forensik per agen ---------------------------------
 
@@ -119,8 +134,9 @@ async function guardForensik(
   userForensik: string,
   deps: RunAuditDeps,
   metadata: AuditMetadata,
+  idx: GroundingIndex,
 ): Promise<AgentFindingTanpaId[]> {
-  const awal = partisiGuard(temuan);
+  const awal = partisiGuard(temuan, idx);
   if (awal.gagal.length === 0) return awal.lolos;
 
   // Retry korektif satu kali untuk agen ini.
@@ -152,7 +168,7 @@ async function guardForensik(
     return awal.lolos;
   }
 
-  const ulang = partisiGuard(ulangTemuan);
+  const ulang = partisiGuard(ulangTemuan, idx);
   for (const g of ulang.gagal)
     metadata.temuanDrop.push({
       tahap: "forensik",
@@ -179,6 +195,9 @@ export async function runAudit(
     temuanDrop: [],
     ringkasanDiganti: false,
   };
+
+  // Index grounding: himpunan id bukti sah dari snapshot (anti-halusinasi).
+  const idx = buildGroundingIndex(snapshot);
 
   // 1. Empat forensik paralel (allSettled).
   const userForensik = buildForensicPayload(snapshot);
@@ -209,6 +228,7 @@ export async function runAudit(
       userForensik,
       deps,
       metadata,
+      idx,
     );
     tervalidasi.push(...lolos);
   }
@@ -233,7 +253,7 @@ export async function runAudit(
   // 3. Guard pass 2 pada hasil tulis ulang adjudikator + ringkasan.
   let warnaUsul: VerdictColor = adj.warna;
   let ringkasan = adj.ringkasan;
-  const pass2 = partisiGuard(adj.temuan);
+  const pass2 = partisiGuard(adj.temuan, idx);
   const ringkasanBermasalah = !periksaRingkasan(ringkasan).ok;
   let temuanFinal: AgentFindingTanpaId[];
 
@@ -259,7 +279,7 @@ export async function runAudit(
     if (adj2) {
       warnaUsul = adj2.warna;
       ringkasan = adj2.ringkasan;
-      const ulang = partisiGuard(adj2.temuan);
+      const ulang = partisiGuard(adj2.temuan, idx);
       for (const g of ulang.gagal)
         metadata.temuanDrop.push({
           tahap: "adjudikator",

@@ -54,6 +54,7 @@ KEPUTUSAN TERKUNCI:
 - M3-D3 Cakupan penuh, tag v2.0.0.
 - M3-D4 Frame: member app dibungkus frame iPhone di desktop + preview landing pakai screenshot UI asli.
 - M3-D5 README pitch komprehensif + diagram C4/ER/sequence/deployment (SVG->PNG) di Fase 7; inti pitch: kurangi celah korupsi, bangun kepercayaan transparansi dulu sebelum kopdes advance; jelaskan cara agen dijaga tidak halusinasi.
+- M3-D6 (nota user 2026-07-10) README WAJIB muat rasional pemilihan stack: kenapa satu codebase TypeScript/Next.js (bukan backend Python terpisah -> tak ada training ML, hanya panggilan LLM API, satu bahasa = satu deploy Vercel + konteks tim lebih ringan); kenapa "mobile" = web responsif ber-frame device (bukan Flutter/React Native -> juri buka URL tanpa app-store, satu sumber kebenaran UI, PWA-ready); arsitektur frontend (App Router 4 surface, RSC, token per-surface, shadcn); dan alur end-to-end (catat transaksi -> debounce -> 4 agen forensik paralel -> adjudikator -> verdict server-side -> Suara Anda). Ringkas, "pitching".
 TEMUAN RECON:
 - M3-F1 MiniMax HIDUP (M2.7 200, ada M3 baru); 429 kemarin transient. Live audit BISA real; AC-LLM-04 bukan human-gated.
 - M3-F2 chatJSON (lib/llm.ts) langsung JSON.parse -> gagal karena M2.7 bungkus output dengan <think>...</think> + fence ```json. Fix: strip think/fence sebelum parse (+matikan thinking bila didukung). Ini akar live audit jatuh ke cache.

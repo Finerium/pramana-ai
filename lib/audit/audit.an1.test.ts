@@ -31,7 +31,19 @@ const snapshot: KoperasiSnapshot = {
       alamat: "Jl. Melati No. 12, Sukamaju",
     },
   ],
-  transaksi: [],
+  // trx-an1 hadir agar bukti AN-1 tergrounding (lihat grounding.ts).
+  transaksi: [
+    {
+      id: "trx-an1",
+      tanggal: "2026-06-14",
+      jenis: "pembelian",
+      arah: "keluar",
+      jumlah: 15_000_000,
+      deskripsi: "Pembelian ke Toko Berkah",
+      vendorNama: "Toko Berkah",
+      vendorAlamat: "Jl. Melati No. 12, Sukamaju",
+    },
+  ],
   pinjaman: [],
   plafonPerAnggota: 10_000_000,
   statusRat: "belum",

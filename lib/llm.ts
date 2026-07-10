@@ -101,13 +101,46 @@ async function panggilSekali(
   return content;
 }
 
+/**
+ * Ekstrak JSON bersih dari keluaran mentah model. MiniMax-M2.x membungkus
+ * jawaban dengan blok penalaran `<think>...</think>` dan/atau code fence
+ * ```json; tanpa dibersihkan, JSON.parse gagal dan audit langsung jatuh ke
+ * cache. Buang think + fence, lalu bila masih ada teks pembungkus ambil objek
+ * JSON seimbang pertama (sadar-string, tak salah potong pada kurung di dalam
+ * string). Idempoten untuk keluaran yang sudah bersih.
+ */
+export function ekstrakJson(raw: string): string {
+  let s = raw.replace(/<think>[\s\S]*?<\/think>/gi, "");
+  s = s.replace(/<think>[\s\S]*$/i, ""); // blok think tak tertutup di ekor
+  const fence = s.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  if (fence?.[1]) s = fence[1];
+  s = s.trim();
+  if (s.startsWith("{")) return s;
+  const start = s.indexOf("{");
+  if (start === -1) return s;
+  let depth = 0;
+  let inStr = false;
+  let esc = false;
+  for (let i = start; i < s.length; i++) {
+    const c = s[i];
+    if (inStr) {
+      if (esc) esc = false;
+      else if (c === "\\") esc = true;
+      else if (c === '"') inStr = false;
+    } else if (c === '"') inStr = true;
+    else if (c === "{") depth++;
+    else if (c === "}" && --depth === 0) return s.slice(start, i + 1);
+  }
+  return s.slice(start).trim();
+}
+
 function parseValidasi<S extends z.ZodType>(
   raw: string,
   schema: S,
 ): { ok: true; value: z.infer<S> } | { ok: false } {
   let json: unknown;
   try {
-    json = JSON.parse(raw);
+    json = JSON.parse(ekstrakJson(raw));
   } catch {
     return { ok: false };
   }

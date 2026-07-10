@@ -1,0 +1,22 @@
+Bukti live MiniMax-M2.7 (Fase M3-1) @ 2026-07-10T07:49:07Z
+model=MiniMax-M2.7  base=https://api.minimax.io/v1  key=ADA
+
+[1] chatJSON live (parse think + code-fence): OK 4063ms -> nilai=42
+    Membuktikan fix ekstrakJson: M2.7 SELALU membungkus <think>...</think> + fence json.
+    parseValidasi kini strip lalu JSON.parse. Pra-fix: LLMUnavailable (akar jatuh-ke-cache #1).
+
+[2] runAudit live (4 forensik paralel + adjudikator + grounding): OK 78930ms
+    warna     : merah
+    ringkasan : Transaksi besar Rp15 juta ke vendor beralamat sama dengan alamat pribadi
+                bendahara; saldo kas turun 37% dalam tiga bulan tanpa pemasukan baru tercatat.
+    temuan    : 3 (semua schema-valid)
+      - [konflik_kepentingan/merah] vendor beralamat sama dengan alamat bendahara | bukti=transaksi:trx-an1
+      - [kesehatan_finansial/kuning] saldo kas turun 37 persen dalam tiga bulan   | bukti=jadwal:saldoKasPerBulan
+      - [anomali_transaksi/info]     pembelian alat tulis kecil perlu dijelaskan  | bukti=transaksi:trx-rutin
+    agenGagal : []   drop: 0   warnaAdjudikator: null (adjudikator setuju server)
+    HASIL     : verdict schema-valid + SEMUA bukti transaksi TERGROUNDING + AN-1 TERDETEKSI live
+
+Akar jatuh-ke-cache #2 (timeout): persist.ts memakai default 30s; M2.7 selalu menalar sehingga
+adjudikator lampaui 30s -> LLMUnavailable -> marker. Fix AUDIT_CALL_TIMEOUT_MS=110s (forensik paralel;
+after() latar; anggaran Vercel 300s). Knob mematikan thinking TIDAK didukung M2.7 (reasoning_effort,
+enable_thinking:false, thinking:disabled -> semua 200 tapi think=true) - terverifikasi empiris.

@@ -11,7 +11,17 @@ const snapshot: KoperasiSnapshot = {
     saldoKasPerBulan: [{ periode: "2026-06", saldo: 1 }],
   },
   pengurus: [],
-  transaksi: [],
+  // trx-x hadir agar bukti temuan `bersih` tergrounding (lihat grounding.ts).
+  transaksi: [
+    {
+      id: "trx-x",
+      tanggal: "2026-06-14",
+      jenis: "pembelian",
+      arah: "keluar",
+      jumlah: 15_000_000,
+      deskripsi: "Pembelian",
+    },
+  ],
   pinjaman: [],
   plafonPerAnggota: 10_000_000,
   statusRat: "belum",
@@ -157,6 +167,32 @@ describe("runAudit kegagalan agen + guard retry (6.4/6.5)", () => {
     const { verdict, metadata } = await runAudit(snapshot, d);
     expect(metadata.temuanDrop.some((x) => x.tahap === "forensik")).toBe(true);
     expect(verdict.warna).toBe("hijau");
+  });
+
+  it("grounding: temuan dengan bukti id yang dikarang model didrop", async () => {
+    // Model mengembalikan temuan bersih register TAPI menunjuk transaksi hantu.
+    const hantu = {
+      ...bersih("merah", "Bukti dikarang"),
+      bukti: [{ jenis: "transaksi", id: "trx-hantu", label: "tak ada" }],
+    };
+    const d = deps(({ system, user }) => {
+      if (system.includes("Adjudikator"))
+        return echoAdjudikator(
+          user,
+          "hijau",
+          "Tidak ada hal yang perlu dikhawatirkan.",
+        );
+      if (system.includes("Konflik Kepentingan")) return { temuan: [hantu] };
+      return { temuan: [] };
+    });
+    const { verdict, metadata } = await runAudit(snapshot, d);
+    // Temuan tak tergrounding tak pernah sampai ke verdict.
+    expect(verdict.temuan).toHaveLength(0);
+    expect(
+      metadata.temuanDrop.some((x) =>
+        x.alasan.some((a) => a.includes("trx-hantu")),
+      ),
+    ).toBe(true);
   });
 
   it("pass 2: retry adjudikator transport gagal -> temuan melanggar didrop", async () => {

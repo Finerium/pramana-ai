@@ -40,7 +40,17 @@ const snapshot: KoperasiSnapshot = {
     saldoKasPerBulan: [{ periode: "2026-06", saldo: 1 }],
   },
   pengurus: [],
-  transaksi: [],
+  // trx-x hadir agar bukti temuan `bersih` tergrounding (lihat grounding.ts).
+  transaksi: [
+    {
+      id: "trx-x",
+      tanggal: "2026-06-14",
+      jenis: "pembelian",
+      arah: "keluar",
+      jumlah: 15_000_000,
+      deskripsi: "Pembelian",
+    },
+  ],
   pinjaman: [],
   plafonPerAnggota: 10_000_000,
   statusRat: "belum",
