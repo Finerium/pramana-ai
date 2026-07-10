@@ -51,6 +51,10 @@ export const GOV_COPY = {
   "ov.header.sortTitle": "Urutkan",
   "ov.kosongFilter": "Tidak ada koperasi yang cocok dengan pencarian Anda.",
   "ov.footer.hint": "Klik baris untuk membuka detail koperasi",
+  // Indikator pemeriksaan LIVE yang sedang berjalan (poll /pemeriksaan-berjalan)
+  "ov.berjalan.prefix": "Pramana sedang memeriksa pencatatan terbaru pada",
+  "ov.berjalan.dan": "dan",
+  "ov.berjalan.lainnya": "lainnya",
   "ov.kosong.judul": "Belum ada koperasi dalam pengawasan.",
   "ov.kosong.sub":
     "Data akan tampil setelah sinkronisasi pertama dari sistem keanggotaan selesai dijalankan.",
@@ -83,6 +87,7 @@ export const GOV_COPY = {
   "dt.tren.kosong": "Belum ada riwayat pemeriksaan.",
   "dt.temuan.judul": "Temuan Pemeriksaan",
   "dt.temuan.sub.tail": "periode Juni 2026, diurutkan dari tingkat tertinggi",
+  "dt.temuan.diperiksa": "Diperiksa",
   "dt.temuan.header.temuan": "TEMUAN",
   "dt.temuan.header.agen": "AGEN PEMERIKSA",
   "dt.temuan.header.tingkat": "TINGKAT",

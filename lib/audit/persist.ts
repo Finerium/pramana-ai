@@ -25,8 +25,8 @@ import { runAudit, type AuditChat, type RunAuditResult } from "./index";
  */
 const AUDIT_CALL_TIMEOUT_MS = 110_000;
 
-/** Predikat: baris audit_run BUKAN marker gagal_langsung. */
-export const bukanMarker = sql`json_extract(${auditRun.rawJson}, '$.status') is not 'gagal_langsung'`;
+/** Predikat: baris audit_run BUKAN marker (gagal_langsung maupun berjalan). */
+export const bukanMarker = sql`json_extract(${auditRun.rawJson}, '$.status') is not 'gagal_langsung' and json_extract(${auditRun.rawJson}, '$.status') is not 'berjalan'`;
 
 export type AuditRunRow = typeof auditRun.$inferSelect;
 
@@ -149,29 +149,41 @@ export async function runLiveAudit(
 ): Promise<void> {
   const { db } = getDb();
   const hasKey = deps?.hasKey ?? hasLlmKey;
-  if (!hasKey()) {
-    await persistFailureMarker(db, { auditRunId, koperasiId, periode: "" });
-    return;
-  }
-  const chat: AuditChat =
-    deps?.chat ??
-    ((a) =>
-      chatJSON({ ...a, timeoutMs: a.timeoutMs ?? AUDIT_CALL_TIMEOUT_MS }));
   try {
-    // fokus:true (trigger bendahara) = snapshot kecil DAN lewati adjudikator
-    // (mode cepat) supaya pohon pemeriksaan interaktif selesai jauh lebih cepat;
-    // default false (gov) = snapshot penuh + adjudikator = audit dalam.
-    const { snapshot, periode } = await buildSnapshot(db, koperasiId, {
-      fokus: deps?.fokus,
-    });
-    const result = await runAudit(snapshot, { chat, cepat: deps?.fokus });
-    recordLlmSuccess();
-    await persistLiveRun(db, { auditRunId, koperasiId, periode, result });
-  } catch {
-    await persistFailureMarker(db, {
-      auditRunId,
-      koperasiId,
-      periode: "",
-    }).catch(() => {});
+    if (!hasKey()) {
+      await persistFailureMarker(db, { auditRunId, koperasiId, periode: "" });
+      return;
+    }
+    const chat: AuditChat =
+      deps?.chat ??
+      ((a) =>
+        chatJSON({ ...a, timeoutMs: a.timeoutMs ?? AUDIT_CALL_TIMEOUT_MS }));
+    try {
+      // fokus:true (trigger bendahara) = snapshot kecil DAN lewati adjudikator
+      // (mode cepat) supaya pohon pemeriksaan interaktif selesai jauh lebih cepat;
+      // default false (gov) = snapshot penuh + adjudikator = audit dalam.
+      const { snapshot, periode } = await buildSnapshot(db, koperasiId, {
+        fokus: deps?.fokus,
+      });
+      const result = await runAudit(snapshot, { chat, cepat: deps?.fokus });
+      recordLlmSuccess();
+      await persistLiveRun(db, { auditRunId, koperasiId, periode, result });
+    } catch {
+      await persistFailureMarker(db, {
+        auditRunId,
+        koperasiId,
+        periode: "",
+      }).catch(() => {});
+    }
+  } finally {
+    // Hapus marker "sedang diperiksa" apa pun hasilnya (sukses/gagal/tanpa key).
+    // Indikator dashboard pemerintah berhenti begitu audit selesai.
+    try {
+      await db
+        .delete(auditRun)
+        .where(eq(auditRun.id, "berjalan-" + auditRunId));
+    } catch {
+      // ponytail: cleanup best-effort; gov route punya batas 5 menit anti-phantom.
+    }
   }
 }

@@ -7,6 +7,8 @@
  */
 import { after, type NextRequest } from "next/server";
 import { ulid } from "ulid";
+import { getDb } from "../../../../db/client";
+import { auditRun } from "../../../../db/schema";
 import { ApiError, ok, runRoute } from "../../../../lib/api";
 import { koperasiForPengurus, requireRole } from "../../../../lib/auth";
 import { runLiveAudit } from "../../../../lib/audit/persist";
@@ -19,6 +21,29 @@ export async function POST(req: NextRequest) {
       throw new ApiError("FORBIDDEN", "Akun pengurus tidak terkait koperasi.");
 
     const auditRunId = ulid();
+
+    // Marker "sedang diperiksa Pramana": disisipkan SINKRON sebelum audit latar
+    // supaya dashboard pemerintah langsung menandai koperasi ini. runLiveAudit
+    // menghapusnya saat audit selesai; bukanMarker mengecualikannya dari semua
+    // hasil. Gagal insert TIDAK menggagalkan trigger (indikator best-effort).
+    try {
+      const now = new Date().toISOString();
+      const { db } = getDb();
+      await db.insert(auditRun).values({
+        id: "berjalan-" + auditRunId,
+        koperasiId,
+        periode: "",
+        source: "live",
+        verdictWarna: "kuning",
+        ringkasan: "",
+        durasiMs: 0,
+        rawJson: JSON.stringify({ status: "berjalan", auditRunId, mulai: now }),
+        dibuatPada: now,
+      });
+    } catch {
+      // ponytail: marker best-effort; kegagalan insert tak boleh memblok audit.
+    }
+
     try {
       // fokus:true = snapshot jendela kecil supaya audit interaktif bendahara
       // selalu selesai cepat (gov tetap snapshot penuh yang dalam).

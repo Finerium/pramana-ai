@@ -181,6 +181,7 @@ export const MEMBER_COPY = {
   "suara.legend.tidak": "{n} Tidak Setuju",
   "suara.legend.belum": "{n} belum memilih",
   "temuan.hitung": "Pemeriksaan Juni 2026, {n} temuan",
+  "temuan.diperiksa": "Diperiksa {waktu}",
 
   // Tab bar
   "tab.aria": "Navigasi utama",

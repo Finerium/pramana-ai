@@ -21,6 +21,9 @@ const JARGON_CS_SRC = "\\b(?:NPL|CAR)\\b";
 
 // The registerGuard denylist config legitimately contains forbidden vocabulary; never flag it.
 const SKIP_FILES = ["lib/registerGuard.ts"];
+// Test files hold deliberate register violations as negative-test fixtures (em dash, "kamu",
+// non-Latin) that the guard exists to reject; the product-copy gate must never flag them.
+const RE_TEST_FILE = /\.test\.tsx?$/;
 
 export function isMemberSurface(path) {
   const p = String(path).replace(/\\/g, "/");
@@ -33,7 +36,7 @@ export function isMemberSurface(path) {
 
 export function shouldSkip(path) {
   const p = String(path).replace(/\\/g, "/");
-  return SKIP_FILES.some((s) => p.endsWith(s));
+  return RE_TEST_FILE.test(p) || SKIP_FILES.some((s) => p.endsWith(s));
 }
 
 export function scanText(path, text) {

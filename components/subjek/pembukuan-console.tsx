@@ -9,6 +9,8 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import { COPY, VERDICT_LABELS } from "@/lib/copy";
+import type { Severity } from "@/lib/contracts";
+import { tanggalWIB, tanggalJamWIB } from "@/lib/waktu";
 import { SUBJEK_COPY, JENIS_LABEL } from "@/lib/copy/subjek";
 import { ThemeToggle } from "./theme";
 import { AgentTree, BENTUK, type AgentTreeState } from "./AgentTree";
@@ -21,8 +23,10 @@ import {
   postPinjaman,
   postRat,
   postReset,
+  fetchRiwayatDetail,
   logout,
   type SubjekRiwayatItem,
+  type SubjekRiwayatDetail,
 } from "./api";
 import {
   emptyTransaksi,
@@ -31,7 +35,6 @@ import {
   validatePinjaman,
   deriveArah,
   formatRp,
-  formatTanggal,
   isRawAmountValid,
   waktuRelatif,
   presetKonflik,
@@ -698,13 +701,22 @@ const S: Record<string, CSSProperties> = {
     marginTop: "22px",
     maxWidth: "82ch",
   },
-  rwRow: {
+  rwItem: {
+    borderBottom: "1px solid var(--color-border)",
+  },
+  rwRowBtn: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     gap: "14px",
+    width: "100%",
     padding: "12px 0",
-    borderBottom: "1px solid var(--color-border)",
+    background: "transparent",
+    border: "none",
+    cursor: "pointer",
+    fontFamily: SANS,
+    color: "var(--color-ink)",
+    textAlign: "left",
   },
   rwLeft: {
     display: "flex",
@@ -726,7 +738,7 @@ const S: Record<string, CSSProperties> = {
   rwRight: {
     display: "flex",
     alignItems: "center",
-    gap: "16px",
+    gap: "14px",
     flex: "none",
   },
   rwTemuan: {
@@ -737,6 +749,12 @@ const S: Record<string, CSSProperties> = {
     fontVariantNumeric: "tabular-nums",
     whiteSpace: "nowrap",
   },
+  rwWaktuAbs: {
+    fontSize: "12px",
+    color: "var(--color-faint)",
+    whiteSpace: "nowrap",
+    fontVariantNumeric: "tabular-nums",
+  },
   rwWaktu: {
     fontSize: "12px",
     color: "var(--color-muted)",
@@ -744,6 +762,127 @@ const S: Record<string, CSSProperties> = {
     minWidth: "84px",
     textAlign: "right",
   },
+  rwChev: {
+    fontSize: "11px",
+    color: "var(--color-muted)",
+    display: "inline-block",
+    transition: "transform .18s ease",
+    flex: "none",
+  },
+  rwPanel: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px",
+    padding: "2px 0 16px",
+  },
+  rwMemuat: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "8px",
+    fontSize: "12.5px",
+    color: "var(--color-muted)",
+    padding: "4px 0",
+  },
+  rwSpinner: {
+    width: "14px",
+    height: "14px",
+    borderRadius: "50%",
+    border: "2px solid var(--color-border-strong)",
+    borderTopColor: "var(--color-ink)",
+    display: "inline-block",
+    flex: "none",
+  },
+  rwKosongDetail: {
+    fontSize: "12.5px",
+    color: "var(--color-muted)",
+    lineHeight: 1.5,
+    padding: "4px 0",
+  },
+  rwCard: {
+    background: "var(--color-surface-sunken)",
+    border: "1px solid var(--color-border)",
+    borderRadius: "12px",
+    padding: "14px 15px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "9px",
+  },
+  rwSevRow: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "8px",
+  },
+  rwSevShape: {
+    width: "12px",
+    height: "12px",
+    flex: "none",
+    display: "inline-block",
+  },
+  rwSevLabel: {
+    fontSize: "12px",
+    fontWeight: 600,
+    color: "var(--color-ink-strong)",
+  },
+  rwJudul: {
+    fontSize: "13.5px",
+    fontWeight: 600,
+    color: "var(--color-ink-strong)",
+    lineHeight: 1.4,
+  },
+  rwPenjelasan: {
+    fontSize: "12.5px",
+    color: "var(--color-muted)",
+    lineHeight: 1.55,
+  },
+  rwBuktiWrap: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "5px",
+    marginTop: "1px",
+  },
+  rwBuktiHead: {
+    fontSize: "10.5px",
+    fontWeight: 600,
+    textTransform: "uppercase",
+    letterSpacing: "0.06em",
+    color: "var(--color-faint)",
+  },
+  rwBuktiItem: {
+    display: "flex",
+    gap: "8px",
+    alignItems: "flex-start",
+    fontSize: "12px",
+    color: "var(--color-ink)",
+    lineHeight: 1.45,
+  },
+  rwBuktiDot: {
+    flex: "none",
+    marginTop: "6px",
+    width: "5px",
+    height: "5px",
+    borderRadius: "50%",
+    background: "var(--color-border-strong)",
+  },
+};
+
+// Penanda severity temuan (info|kuning|merah): bentuk + warna token. kuning/merah
+// pakai BENTUK verdict (bentuk identik dengan tree konsol); info = catatan ringan,
+// lingkaran netral pakai token faint (bukan warna verdict).
+const SEV_MARK: Record<
+  Severity,
+  { clip?: string; radius: string; warna: string }
+> = {
+  merah: {
+    clip: BENTUK.merah.clip,
+    radius: BENTUK.merah.radius,
+    warna: BENTUK.merah.warna,
+  },
+  kuning: {
+    clip: BENTUK.kuning.clip,
+    radius: BENTUK.kuning.radius,
+    warna: BENTUK.kuning.warna,
+  },
+  info: { radius: "50%", warna: "var(--color-faint)" },
 };
 
 const btnPrimary = (loading: boolean): CSSProperties => ({
@@ -850,6 +989,36 @@ export function PembukuanConsole() {
   // Riwayat pemeriksaan live (panel di bawah tree) + status tombol Reset demo.
   const [riwayat, setRiwayat] = useState<SubjekRiwayatItem[]>([]);
   const [resetLoading, setResetLoading] = useState(false);
+  // Accordion riwayat: id baris yang terbuka + cache detail per run (fetch sekali,
+  // "memuat"/"gagal"/objek). Toggle collapse/expand tidak memicu fetch ulang.
+  const [riwayatTerbuka, setRiwayatTerbuka] = useState<Set<string>>(new Set());
+  const [riwayatDetail, setRiwayatDetail] = useState<
+    Record<string, "memuat" | "gagal" | SubjekRiwayatDetail>
+  >({});
+
+  const muatDetail = useCallback((id: string) => {
+    setRiwayatDetail((prev) => {
+      const ada = prev[id];
+      // Sudah termuat/objek atau sedang memuat: jangan fetch lagi. "gagal" boleh
+      // dicoba ulang saat baris dibuka kembali.
+      if (ada === "memuat" || (ada && ada !== "gagal")) return prev;
+      void fetchRiwayatDetail(id).then((d) =>
+        setRiwayatDetail((cur) => ({ ...cur, [id]: d ?? "gagal" })),
+      );
+      return { ...prev, [id]: "memuat" };
+    });
+  }, []);
+
+  const toggleRiwayat = (id: string) => {
+    const membuka = !riwayatTerbuka.has(id);
+    setRiwayatTerbuka((prev) => {
+      const n = new Set(prev);
+      if (membuka) n.add(id);
+      else n.delete(id);
+      return n;
+    });
+    if (membuka) muatDetail(id);
+  };
 
   // ---- Audit tree state -----------------------------------------------------
   const [audit, setAudit] = useState<AgentTreeState | { fase: "idle" }>({
@@ -1170,6 +1339,9 @@ export function PembukuanConsole() {
       await postReset();
       applyRecent(await fetchRecent());
       setRiwayat(await fetchRiwayat());
+      // Baseline bersih: tutup semua accordion dan buang cache detail lama.
+      setRiwayatTerbuka(new Set());
+      setRiwayatDetail({});
       setSaldoPulse(true);
       setTimeout(() => setSaldoPulse(false), 800);
       // Konsol bersih seperti baseline: nolkan status sukses/gagal form.
@@ -1742,32 +1914,126 @@ export function PembukuanConsole() {
             <div>
               {riwayat.map((r) => {
                 const b = BENTUK[r.verdictWarna];
+                const terbuka = riwayatTerbuka.has(r.id);
+                const d = riwayatDetail[r.id];
+                const panelId = `rw-panel-${r.id}`;
                 return (
-                  <div key={r.id} style={S.rwRow}>
-                    <div style={S.rwLeft}>
-                      <span
-                        aria-hidden="true"
-                        style={{
-                          ...S.rwShape,
-                          background: b.warna,
-                          clipPath: b.clip,
-                          borderRadius: b.radius,
-                        }}
-                      />
-                      <span style={S.rwLabel}>
-                        {VERDICT_LABELS[r.verdictWarna]}
-                      </span>
-                    </div>
-                    <div style={S.rwRight}>
-                      <span style={S.rwTemuan}>
-                        {r.temuanCount > 0
-                          ? `${r.temuanCount} ${c.riwayat.temuanSatuan}`
-                          : c.riwayat.tanpaTemuan}
-                      </span>
-                      <span style={S.rwWaktu}>
-                        {waktuRelatif(r.dibuatPada)}
-                      </span>
-                    </div>
+                  <div key={r.id} style={S.rwItem}>
+                    <button
+                      type="button"
+                      onClick={() => toggleRiwayat(r.id)}
+                      aria-expanded={terbuka}
+                      aria-controls={panelId}
+                      style={S.rwRowBtn}
+                    >
+                      <div style={S.rwLeft}>
+                        <span
+                          aria-hidden="true"
+                          style={{
+                            ...S.rwShape,
+                            background: b.warna,
+                            clipPath: b.clip,
+                            borderRadius: b.radius,
+                          }}
+                        />
+                        <span style={S.rwLabel}>
+                          {VERDICT_LABELS[r.verdictWarna]}
+                        </span>
+                      </div>
+                      <div style={S.rwRight}>
+                        <span style={S.rwTemuan}>
+                          {r.temuanCount > 0
+                            ? `${r.temuanCount} ${c.riwayat.temuanSatuan}`
+                            : c.riwayat.tanpaTemuan}
+                        </span>
+                        <span style={S.rwWaktuAbs}>
+                          {tanggalJamWIB(r.dibuatPada)}
+                        </span>
+                        <span style={S.rwWaktu}>
+                          {waktuRelatif(r.dibuatPada)}
+                        </span>
+                        <span
+                          aria-hidden="true"
+                          style={{
+                            ...S.rwChev,
+                            transform: terbuka
+                              ? "rotate(180deg)"
+                              : "rotate(0deg)",
+                          }}
+                        >
+                          {"▾"}
+                        </span>
+                      </div>
+                    </button>
+                    {terbuka && (
+                      <div id={panelId} style={S.rwPanel}>
+                        {!d || d === "memuat" ? (
+                          <div style={S.rwMemuat}>
+                            <span
+                              className="spin"
+                              style={S.rwSpinner}
+                              aria-hidden="true"
+                            />
+                            {c.riwayat.memuat}
+                          </div>
+                        ) : d === "gagal" ? (
+                          <div style={S.rwKosongDetail}>{c.riwayat.gagal}</div>
+                        ) : d.temuan.length === 0 ? (
+                          <div style={S.rwKosongDetail}>
+                            {c.riwayat.rinciKosong}
+                          </div>
+                        ) : (
+                          d.temuan.map((t) => {
+                            const m = SEV_MARK[t.severity];
+                            const sevLabel =
+                              t.severity === "info"
+                                ? c.riwayat.catatan
+                                : VERDICT_LABELS[t.severity];
+                            return (
+                              <div key={t.id} style={S.rwCard}>
+                                <div style={S.rwSevRow}>
+                                  <span
+                                    aria-hidden="true"
+                                    style={{
+                                      ...S.rwSevShape,
+                                      background: m.warna,
+                                      clipPath: m.clip,
+                                      borderRadius: m.radius,
+                                    }}
+                                  />
+                                  <span style={S.rwSevLabel}>{sevLabel}</span>
+                                </div>
+                                <div style={S.rwJudul}>{t.judul}</div>
+                                {t.penjelasanAwam && (
+                                  <div style={S.rwPenjelasan}>
+                                    {t.penjelasanAwam}
+                                  </div>
+                                )}
+                                {t.bukti.length > 0 && (
+                                  <div style={S.rwBuktiWrap}>
+                                    <span style={S.rwBuktiHead}>
+                                      {c.riwayat.buktiLabel}
+                                    </span>
+                                    {t.bukti.map((label, i) => (
+                                      <div
+                                        key={`${t.id}-${i}`}
+                                        style={S.rwBuktiItem}
+                                      >
+                                        <span
+                                          aria-hidden="true"
+                                          style={S.rwBuktiDot}
+                                        />
+                                        <span>{label}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })
+                        )}
+                      </div>
+                    )}
                   </div>
                 );
               })}
@@ -1816,7 +2082,7 @@ export function PembukuanConsole() {
                               {JENIS_LABEL[x.jenis] ?? x.jenis}
                             </span>
                             <span style={S.entryDate}>
-                              {formatTanggal(x.tanggal)}
+                              {tanggalWIB(x.tanggal)}
                             </span>
                           </div>
                           <div style={S.entryPihak}>{x.pihak}</div>
@@ -1859,7 +2125,7 @@ export function PembukuanConsole() {
                           <div style={S.entryTop}>
                             <span style={S.entryJenis}>{x.anggota}</span>
                             <span style={S.entryDate}>
-                              {c.daftar.tempo} {formatTanggal(x.jatuhTempo)}
+                              {c.daftar.tempo} {tanggalWIB(x.jatuhTempo)}
                             </span>
                           </div>
                           <div style={S.entryPihak}>

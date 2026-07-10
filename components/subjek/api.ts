@@ -10,6 +10,7 @@
  */
 import type {
   AgentId,
+  Severity,
   SubjekTransaksiInput,
   SubjekPinjamanInput,
   VerdictColor,
@@ -253,6 +254,17 @@ export type SubjekRiwayatItem = {
   temuanCount: number;
 };
 
+/** Satu temuan dalam detail satu run (GET /api/subjek/riwayat/[id]). */
+export type SubjekTemuan = {
+  id: string;
+  agent: AgentId;
+  severity: Severity;
+  judul: string;
+  penjelasanAwam: string;
+  bukti: string[]; // label bukti ringkas saja
+};
+export type SubjekRiwayatDetail = { id: string; temuan: SubjekTemuan[] };
+
 export async function postAudit(): Promise<{ auditRunId: string } | null> {
   try {
     const data = await postJson("/api/subjek/audit", {});
@@ -313,6 +325,48 @@ export async function fetchRiwayat(): Promise<SubjekRiwayatItem[]> {
     /* seed/kosong: panel riwayat menyembunyikan diri */
   }
   return [];
+}
+
+/**
+ * Detail satu run riwayat (temuan lengkap) untuk accordion panel Riwayat.
+ * null saat absen/ditolak/gagal; panel menampilkan keadaan gagal yang jujur,
+ * bukan mengarang temuan.
+ */
+export async function fetchRiwayatDetail(
+  id: string,
+): Promise<SubjekRiwayatDetail | null> {
+  try {
+    const res = await fetch(`/api/subjek/riwayat/${id}`, { cache: "no-store" });
+    if (tolakAuth(res.status)) return null;
+    const j = (await res.json()) as { ok?: boolean; data?: Dict };
+    if (res.ok && j && j.ok && j.data) {
+      const raw = j.data.temuan;
+      const temuan: SubjekTemuan[] = Array.isArray(raw)
+        ? raw.map((x, i) => {
+            const t = x as Dict;
+            const bukti = Array.isArray(t.bukti)
+              ? t.bukti
+                  .map((b) => asStr((b as Dict).label))
+                  .filter((l) => l.length > 0)
+              : [];
+            return {
+              id: asStr(t.id, "t" + i),
+              agent: asStr(t.agent) as AgentId,
+              severity: (t.severity === "merah" || t.severity === "kuning"
+                ? t.severity
+                : "info") as Severity,
+              judul: asStr(t.judul),
+              penjelasanAwam: asStr(t.penjelasan_awam),
+              bukti,
+            };
+          })
+        : [];
+      return { id: asStr(j.data.id, id), temuan };
+    }
+  } catch {
+    /* jaringan absen: panel menampilkan gagal muat */
+  }
+  return null;
 }
 
 /**

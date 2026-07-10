@@ -15,6 +15,7 @@ import {
 import { GovHeader } from "./GovHeader";
 import { VerdictShape } from "./VerdictShape";
 import { koperasiRef, kodeWilayah } from "@/lib/simkopdes";
+import { tanggalWIB, tanggalJamWIB } from "@/lib/waktu";
 
 type Status = "memuat" | "default" | "kosong" | "gagal";
 type Peri = "tersimpan" | "berjalan" | "langsung" | "gagal_langsung";
@@ -22,17 +23,6 @@ type Peri = "tersimpan" | "berjalan" | "langsung" | "gagal_langsung";
 const PANEL = "gov-panel";
 const POLL_MS = 2000;
 const TIMEOUT_MS = 120000;
-
-function tanggalPanjang(iso: string): string {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return iso;
-  return new Intl.DateTimeFormat("id-ID", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(d);
-}
 
 function Spinner({
   size = 14,
@@ -869,7 +859,7 @@ export function DetailClient({ id }: { id: string }) {
                         }}
                       >
                         {GOV_COPY["dt.verdict.terakhir"]}{" "}
-                        {tanggalPanjang(data.auditRun.dibuatPada)} ·{" "}
+                        {tanggalWIB(data.auditRun.dibuatPada)} ·{" "}
                         {data.temuan.length} temuan
                       </div>
                     </>
@@ -977,9 +967,7 @@ export function DetailClient({ id }: { id: string }) {
                   }}
                 >
                   {GOV_COPY["dt.sumber.arsipPrefix"]},{" "}
-                  {data.auditRun
-                    ? tanggalPanjang(data.auditRun.dibuatPada)
-                    : ""}
+                  {data.auditRun ? tanggalWIB(data.auditRun.dibuatPada) : ""}
                 </span>
               </div>
             ) : null}
@@ -1211,6 +1199,19 @@ export function DetailClient({ id }: { id: string }) {
                   }}
                 >
                   {data.temuan.length} temuan, {GOV_COPY["dt.temuan.sub.tail"]}
+                </div>
+              ) : null}
+              {status === "default" && data.auditRun ? (
+                <div
+                  style={{
+                    fontWeight: 500,
+                    fontSize: 11.5,
+                    lineHeight: 1.4,
+                    color: "var(--muted-foreground)",
+                  }}
+                >
+                  {GOV_COPY["dt.temuan.diperiksa"]}{" "}
+                  {tanggalJamWIB(data.auditRun.dibuatPada)}
                 </div>
               ) : null}
             </div>
@@ -1499,7 +1500,7 @@ export function DetailClient({ id }: { id: string }) {
                           color: "var(--muted-foreground)",
                         }}
                       >
-                        {tanggalPanjang(r.dibuatPada)}
+                        {tanggalWIB(r.dibuatPada)}
                       </div>
                     </div>
                   );

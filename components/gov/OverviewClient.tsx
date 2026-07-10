@@ -560,9 +560,11 @@ function HeroKondisi({
 function PerluPerhatian({
   data,
   onBuka,
+  onPrefetch,
 }: {
   data: GovOverview;
   onBuka: (id: string) => void;
+  onPrefetch: (id: string) => void;
 }) {
   const items = data.perluPerhatian.slice(0, 4);
   return (
@@ -601,6 +603,8 @@ function PerluPerhatian({
         {items.map((p) => (
           <div
             key={p.id}
+            onMouseEnter={() => onPrefetch(p.id)}
+            onFocus={() => onPrefetch(p.id)}
             style={{
               display: "flex",
               alignItems: "center",
@@ -1655,6 +1659,7 @@ function Tabel({
   onClearFilter,
   onClearProv,
   onBuka,
+  onPrefetch,
 }: {
   data: GovOverview;
   filterVerdict: VerdictColor | null;
@@ -1662,6 +1667,7 @@ function Tabel({
   onClearFilter: () => void;
   onClearProv: () => void;
   onBuka: (id: string) => void;
+  onPrefetch: (id: string) => void;
 }) {
   const [sort, setSort] = useState<{ key: SortKey; dir: SortDir }>({
     key: "verdictWarna",
@@ -1860,6 +1866,8 @@ function Tabel({
             role="link"
             tabIndex={0}
             onClick={() => onBuka(r.id)}
+            onMouseEnter={() => onPrefetch(r.id)}
+            onFocus={() => onPrefetch(r.id)}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
@@ -2573,6 +2581,58 @@ function Judul() {
   );
 }
 
+// --- Banner: pemeriksaan LIVE sedang berjalan ------------------------------
+
+type Berjalan = { koperasiId: string; nama: string };
+
+// Empat titik berdenyut = empat agen forensik. prm-denyut mati otomatis di
+// blok @media prefers-reduced-motion (.gov *) pada dashboard.css.
+function LiveBanner({ list }: { list: Berjalan[] }) {
+  const first = list[0];
+  if (!first) return null;
+  const extra = list.length - 1;
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      className="gov-well-sm"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 13,
+        margin: "0 0 20px",
+        padding: "13px 20px",
+        borderRadius: 16,
+      }}
+    >
+      <span
+        aria-hidden="true"
+        style={{ display: "inline-flex", gap: 4, flex: "none" }}
+      >
+        {[0, 1, 2, 3].map((i) => (
+          <span
+            key={i}
+            style={{
+              width: 7,
+              height: 7,
+              borderRadius: "50%",
+              background: "var(--primary)",
+              animation: "prm-denyut 1.4s ease-in-out infinite",
+              animationDelay: `${i * 0.18}s`,
+            }}
+          />
+        ))}
+      </span>
+      <span style={{ fontWeight: 600, fontSize: 12.5, lineHeight: 1.5 }}>
+        {GOV_COPY["ov.berjalan.prefix"]} {stripKop(first.nama)}
+        {extra > 0
+          ? ` ${GOV_COPY["ov.berjalan.dan"]} ${extra} ${GOV_COPY["ov.berjalan.lainnya"]}`
+          : ""}
+      </span>
+    </div>
+  );
+}
+
 // --- Orkestrator ------------------------------------------------------------
 
 export function OverviewClient() {
@@ -2594,6 +2654,8 @@ export function OverviewClient() {
   const [notifSelesai, setNotifSelesai] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const toastT = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [berjalan, setBerjalan] = useState<Berjalan[]>([]);
+  const berjalanIds = useRef<Set<string>>(new Set());
 
   const muat = useCallback(async (p: string | null) => {
     setStatus("memuat");
@@ -2625,6 +2687,42 @@ export function OverviewClient() {
     };
   }, []);
 
+  // Poll ringan indikator pemeriksaan LIVE. Saat sebuah koperasi lenyap dari
+  // list (audit selesai), muat ulang overview supaya verdict/temuan terbaru
+  // tampil. tick tidak setState sinkron (await lebih dulu) jadi aman di effect.
+  useEffect(() => {
+    let alive = true;
+    const tick = async () => {
+      try {
+        const res = await fetch("/api/gov/pemeriksaan-berjalan", {
+          cache: "no-store",
+        });
+        const json = await res.json();
+        if (!alive || !res.ok || !json?.ok) return;
+        const list = (json.data?.berjalan ?? []) as Berjalan[];
+        const idsBaru = new Set(list.map((x) => x.koperasiId));
+        let adaSelesai = false;
+        for (const prev of berjalanIds.current) {
+          if (!idsBaru.has(prev)) {
+            adaSelesai = true;
+            break;
+          }
+        }
+        berjalanIds.current = idsBaru;
+        setBerjalan(list);
+        if (adaSelesai) void muat(periode);
+      } catch {
+        /* diamkan; percobaan poll berikutnya coba lagi */
+      }
+    };
+    void tick();
+    const iv = setInterval(() => void tick(), 4000);
+    return () => {
+      alive = false;
+      clearInterval(iv);
+    };
+  }, [muat, periode]);
+
   const toastKan = useCallback((teks: string) => {
     if (toastT.current) clearTimeout(toastT.current);
     setToast(teks);
@@ -2640,6 +2738,11 @@ export function OverviewClient() {
 
   const buka = useCallback(
     (id: string) => router.push(`/pemerintah/koperasi/${id}`),
+    [router],
+  );
+
+  const prefetch = useCallback(
+    (id: string) => router.prefetch(`/pemerintah/koperasi/${id}`),
     [router],
   );
 
@@ -2736,6 +2839,8 @@ export function OverviewClient() {
       ) : null}
 
       <Judul />
+
+      {berjalan.length > 0 ? <LiveBanner list={berjalan} /> : null}
 
       {status === "gagal" ? (
         <>
@@ -2878,7 +2983,7 @@ export function OverviewClient() {
               filterVerdict={filterVerdict}
               onFilter={onFilter}
             />
-            <PerluPerhatian data={data} onBuka={buka} />
+            <PerluPerhatian data={data} onBuka={buka} onPrefetch={prefetch} />
           </div>
           <KpiRow
             data={data}
@@ -2903,6 +3008,7 @@ export function OverviewClient() {
             onClearFilter={() => setFilterVerdict(null)}
             onClearProv={() => setFilterProv(null)}
             onBuka={buka}
+            onPrefetch={prefetch}
           />
           <div
             style={{

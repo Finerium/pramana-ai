@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { COPY, AGENT_LABELS } from "@/lib/copy";
 import { MEMBER_COPY, SEVERITY_CHIP } from "@/lib/copy/member";
+import { tanggalJamWIB } from "@/lib/waktu";
 import type {
   MemberFinding,
   MemberFindingsResp,
@@ -155,6 +156,16 @@ export function Temuan() {
               ? " "
               : isi(MEMBER_COPY["temuan.hitung"], { n: list.length })}
           </p>
+          {data?.diperiksaPada ? (
+            <p
+              className="tnum"
+              style={{ margin: 0, fontSize: 11.5, color: "var(--muted)" }}
+            >
+              {isi(MEMBER_COPY["temuan.diperiksa"], {
+                waktu: tanggalJamWIB(data.diperiksaPada),
+              })}
+            </p>
+          ) : null}
         </div>
       </header>
 

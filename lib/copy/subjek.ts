@@ -142,10 +142,16 @@ export const SUBJEK_COPY = {
   riwayat: {
     judul: "Riwayat Pemeriksaan",
     deskripsi:
-      "Pemeriksaan langsung yang sudah dijalankan pada koperasi ini, terbaru di atas.",
+      "Pemeriksaan langsung yang sudah dijalankan pada koperasi ini, terbaru di atas. Ketuk satu baris untuk melihat temuannya.",
     temuanSatuan: "temuan",
     tanpaTemuan: "Tanpa temuan",
     kosong: "Belum ada pemeriksaan langsung pada sesi ini.",
+    // Accordion detail per baris.
+    memuat: "Memuat temuan...",
+    gagal: "Temuan gagal dimuat. Silakan buka lagi.",
+    rinciKosong: "Pemeriksaan ini tidak menghasilkan temuan.",
+    catatan: "Catatan",
+    buktiLabel: "Bukti",
   },
   footNote:
     "Konsol ini mensimulasikan sistem pembukuan koperasi. Data yang Anda catat menjadi sumber yang diperiksa Pramana. Ini bukan bagian produk Pramana untuk pengurus.",

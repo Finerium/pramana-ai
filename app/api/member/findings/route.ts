@@ -25,7 +25,13 @@ export async function GET(req: NextRequest) {
     const { db } = getDb();
 
     const run = await latestRun(db, koperasiId);
-    if (!run) return ok({ temuan: [], sudahDitambahkan: [] });
+    if (!run)
+      return ok({
+        temuan: [],
+        sudahDitambahkan: [],
+        diperiksaPada: null,
+        periode: null,
+      });
 
     const rows = await db
       .select()
@@ -36,16 +42,16 @@ export async function GET(req: NextRequest) {
     );
     const temuanList: (AgentFinding & { tanggapanPengurus: string | null })[] =
       rows.map((r) => ({
-      id: r.id,
-      agent: r.agent,
-      severity: r.severity,
-      judul: r.judul,
-      penjelasan_awam: r.penjelasanAwam,
-      kenapa_penting: r.kenapaPenting,
-      bukti: JSON.parse(r.buktiJson) as EvidenceRef[],
-      pertanyaan_rat: r.pertanyaanRat,
-      tanggapanPengurus: r.tanggapanPengurus,
-    }));
+        id: r.id,
+        agent: r.agent,
+        severity: r.severity,
+        judul: r.judul,
+        penjelasan_awam: r.penjelasanAwam,
+        kenapa_penting: r.kenapaPenting,
+        bukti: JSON.parse(r.buktiJson) as EvidenceRef[],
+        pertanyaan_rat: r.pertanyaanRat,
+        tanggapanPengurus: r.tanggapanPengurus,
+      }));
 
     const runTemuanIds = new Set(rows.map((r) => r.id));
     const added = await db
@@ -56,6 +62,11 @@ export async function GET(req: NextRequest) {
       .map((a) => a.temuanId)
       .filter((id) => runTemuanIds.has(id));
 
-    return ok({ temuan: temuanList, sudahDitambahkan });
+    return ok({
+      temuan: temuanList,
+      sudahDitambahkan,
+      diperiksaPada: run.dibuatPada,
+      periode: run.periode,
+    });
   });
 }

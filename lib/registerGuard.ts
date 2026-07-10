@@ -40,6 +40,12 @@ const RE_DASH = /[‒–—―]/;
 const RE_EMOJI = /\p{Extended_Pictographic}/u;
 // Sapaan "kamu" sebagai kata utuh (tidak menjaring "kamus").
 const RE_KAMU = /\bkamu\b/iu;
+// Aksara non-Latin (CJK, Kana, Hangul, fullwidth); keluaran wajib Bahasa Indonesia.
+const RE_NON_LATIN = /[　-〿぀-ヿ㐀-䶿一-鿿豈-﫿＀-￯가-힯]/u;
+
+// Istilah asing beraksara Latin untuk "koperasi" yang kadang dibocorkan model
+// (Spanyol/Italia/Inggris/Prancis); di keluaran Indonesia selalu "koperasi".
+const RE_ASING = /\b(?:coop[eé]rativ\w*)\b/iu;
 
 /** Larangan register 6.8 lintas semua field teks. */
 function periksaRegister(teks: string): string[] {
@@ -48,6 +54,14 @@ function periksaRegister(teks: string): string[] {
     alasan.push("mengandung em dash; gunakan tanda baca biasa");
   if (RE_EMOJI.test(teks)) alasan.push("mengandung emoji; hapus emoji");
   if (RE_KAMU.test(teks)) alasan.push("memakai sapaan 'kamu'; gunakan 'Anda'");
+  if (RE_NON_LATIN.test(teks))
+    alasan.push(
+      "mengandung aksara non-Latin; tulis hanya dalam Bahasa Indonesia",
+    );
+  if (RE_ASING.test(teks))
+    alasan.push(
+      "mengandung istilah asing; tulis 'koperasi' dalam Bahasa Indonesia",
+    );
   return alasan;
 }
 

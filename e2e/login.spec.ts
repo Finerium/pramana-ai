@@ -7,7 +7,9 @@ import { shot } from "./helpers/sesi";
 
 const LOGIN_ERR = "Email atau kata sandi belum tepat. Silakan coba lagi.";
 
-test("AC-E2E-05 password salah -> pesan awam tanpa detail bocor", async ({ page }) => {
+test("AC-E2E-05 password salah -> pesan awam tanpa detail bocor", async ({
+  page,
+}) => {
   await page.goto("/login");
   await page.getByRole("textbox").first().fill("juri.anggota@pramana.id");
   await page.locator('input[type="password"]').fill("passwordSalah");
@@ -15,7 +17,9 @@ test("AC-E2E-05 password salah -> pesan awam tanpa detail bocor", async ({ page 
 
   await expect(page.getByText(LOGIN_ERR)).toBeVisible();
   // Tidak membocorkan detail internal.
-  await expect(page.getByText(/UNAUTHORIZED|INTERNAL|stack|Error:/)).toHaveCount(0);
+  await expect(
+    page.getByText(/UNAUTHORIZED|INTERNAL|stack|Error:/),
+  ).toHaveCount(0);
   await shot(page, "login", "01-error-anggota");
 });
 
@@ -28,6 +32,10 @@ test("AC-E2E-05 varian ?as=pemerintah render", async ({ page }) => {
 
 test("AC-E2E-05 varian ?as=bendahara render", async ({ page }) => {
   await page.goto("/login?as=bendahara");
-  await expect(page.getByText("Akun uji bendahara")).toBeVisible();
+  // exact: cocokkan label kotak akun saja, bukan kontainer induk yang teksnya
+  // memuat frasa sama sebagai substring (hindari strict-mode 2 elemen).
+  await expect(
+    page.getByText("Akun uji bendahara", { exact: true }),
+  ).toBeVisible();
   await shot(page, "login", "03-varian-bendahara");
 });

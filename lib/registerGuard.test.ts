@@ -116,6 +116,20 @@ describe("registerGuard.periksaTemuan (6.5, AC-REG-01/02)", () => {
     expect(r.ok).toBe(false);
   });
 
+  it("menolak aksara non-Latin (Mandarin) di penjelasan_awam", () => {
+    const r = periksaTemuan(
+      ubah({ penjelasan_awam: "Pembelian ke 合作社 yang perlu dijelaskan." }),
+    );
+    expect(r.ok).toBe(false);
+  });
+
+  it("menolak istilah asing 'cooperativa' untuk koperasi", () => {
+    const r = periksaTemuan(
+      ubah({ penjelasan_awam: "Saldo kas cooperativa turun tajam bulan ini." }),
+    );
+    expect(r.ok).toBe(false);
+  });
+
   it("tidak salah menolak kata 'kamus' yang memuat 'kamu'", () => {
     const r = periksaTemuan(
       ubah({

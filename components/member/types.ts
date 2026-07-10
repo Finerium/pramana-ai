@@ -10,4 +10,8 @@ export type MemberFinding = AgentFinding & { tanggapanPengurus?: string };
 export type MemberFindingsResp = {
   temuan: MemberFinding[];
   sudahDitambahkan: string[];
+  /** ISO waktu audit dibuat; null bila belum ada pemeriksaan. */
+  diperiksaPada: string | null;
+  /** Periode pemeriksaan, mis. "2026-06"; null bila belum ada. */
+  periode: string | null;
 };
