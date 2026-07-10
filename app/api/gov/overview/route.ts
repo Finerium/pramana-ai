@@ -11,7 +11,7 @@ import type {
   GovOverview,
   VerdictColor,
 } from "../../../../lib/contracts";
-import { buildTren } from "../../../(gov)/_logic/overview";
+import { buildTren, urutkanAktivitas } from "../../../(gov)/_logic/overview";
 import type { TrenRun } from "../../../(gov)/_logic/types";
 
 // M3-D1 (keputusan terkunci): satu model MiniMax-M2.7 dipakai 4 forensik DAN
@@ -185,6 +185,20 @@ export async function GET(req: NextRequest) {
       })),
     };
 
+    // Feed aktivitas AI Agent: run periode aktif (activeRunByKop, sudah non-marker
+    // + terbaru per koperasi) dipetakan ke item feed, urut terbaru + dibatasi 7.
+    // Reuse query yang sudah bounded, tanpa load-all tambahan.
+    const namaById = new Map(kopRows.map((k) => [k.id, k.nama]));
+    const aktivitas = urutkanAktivitas(
+      [...activeRunByKop.values()].map((r) => ({
+        koperasiId: r.koperasiId,
+        nama: namaById.get(r.koperasiId) ?? r.koperasiId,
+        verdictWarna: r.verdictWarna,
+        temuanCount: countByRun.get(r.id) ?? 0,
+        dibuatPada: r.dibuatPada,
+      })),
+    );
+
     return ok<GovOverview>({
       kpi: {
         jumlahKoperasi: kopRows.length,
@@ -200,6 +214,7 @@ export async function GET(req: NextRequest) {
       perluPerhatian,
       agenFeed,
       kpiDelta,
+      aktivitas,
     });
   });
 }

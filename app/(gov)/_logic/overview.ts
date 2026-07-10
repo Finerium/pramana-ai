@@ -378,3 +378,80 @@ export function trenChart(
     activeIdx >= 0 && activeIdx < n ? round2(xAt(activeIdx) - 26) : null;
   return { w, h, garis, titik, bar, kolomX, markerX };
 }
+
+// ---------------------------------------------------------------------------
+// Panel Sebaran Provinsi + Aktivitas AI Agent (M3-D1). Semua murni: kartogram
+// mengagregasi array koperasi periode aktif; feed diurutkan dari baris audit_run
+// nyata yang diisi route. Tanpa data dikarang, tanpa I/O.
+// ---------------------------------------------------------------------------
+
+const WARNA_RANK: Record<VerdictColor, number> = {
+  hijau: 1,
+  kuning: 2,
+  merah: 3,
+};
+
+export type ProvinsiAgg = {
+  provinsi: string;
+  jumlahKoperasi: number;
+  verdictTerburuk: VerdictColor; // merah > kuning > hijau
+  temuanTotal: number;
+};
+
+/**
+ * Agregasi koperasi periode aktif per provinsi: jumlah koperasi, verdict
+ * terburuk, dan total temuan terbuka. Urut nama provinsi (id) supaya
+ * deterministik. Input = array koperasi GovOverview.
+ */
+export function sebaranProvinsi(koperasi: KoperasiRow[]): ProvinsiAgg[] {
+  const map = new Map<string, ProvinsiAgg>();
+  for (const k of koperasi) {
+    const cur = map.get(k.provinsi) ?? {
+      provinsi: k.provinsi,
+      jumlahKoperasi: 0,
+      verdictTerburuk: "hijau" as VerdictColor,
+      temuanTotal: 0,
+    };
+    cur.jumlahKoperasi += 1;
+    cur.temuanTotal += k.temuanCount;
+    if (WARNA_RANK[k.verdictWarna] > WARNA_RANK[cur.verdictTerburuk])
+      cur.verdictTerburuk = k.verdictWarna;
+    map.set(k.provinsi, cur);
+  }
+  return [...map.values()].sort((a, b) =>
+    a.provinsi.localeCompare(b.provinsi, "id"),
+  );
+}
+
+const MENIT = 60_000;
+const JAM = 3_600_000;
+const HARI = 86_400_000;
+
+/**
+ * Waktu relatif Bahasa Indonesia dari ISO `dibuatPada` terhadap `sekarang`
+ * (epoch ms). Murni supaya teruji; komponen klien meneruskan Date.now() saat
+ * render. Selisih negatif (masa depan) jatuh ke "baru saja".
+ */
+export function waktuRelatif(dibuatPada: string, sekarang: number): string {
+  const selisih = sekarang - new Date(dibuatPada).getTime();
+  if (selisih < MENIT) return "baru saja";
+  if (selisih < JAM) return `${Math.floor(selisih / MENIT)} menit lalu`;
+  if (selisih < HARI) return `${Math.floor(selisih / JAM)} jam lalu`;
+  return `${Math.floor(selisih / HARI)} hari lalu`;
+}
+
+export type AktivitasItem = GovOverview["aktivitas"][number];
+
+/**
+ * Urutkan feed aktivitas: dibuatPada desc, tiebreak koperasiId asc supaya
+ * deterministik walau seed memakai timestamp identik per periode. Batas 7 item.
+ */
+export function urutkanAktivitas(items: AktivitasItem[]): AktivitasItem[] {
+  return [...items]
+    .sort(
+      (a, b) =>
+        b.dibuatPada.localeCompare(a.dibuatPada) ||
+        a.koperasiId.localeCompare(b.koperasiId),
+    )
+    .slice(0, 7);
+}

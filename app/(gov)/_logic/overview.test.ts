@@ -20,8 +20,11 @@ import {
   segmenLabel,
   worstWarna,
   trenChart,
+  sebaranProvinsi,
+  waktuRelatif,
+  urutkanAktivitas,
 } from "./overview";
-import type { KoperasiRow } from "./overview";
+import type { KoperasiRow, AktivitasItem } from "./overview";
 import type { OverviewTrenPoint, TrenRun } from "./types";
 
 const trp = (
@@ -446,5 +449,95 @@ describe("trenChart geometri", () => {
     expect(g.bar).toHaveLength(3);
     const tertinggi = Math.max(...g.bar.map((b) => b.h));
     expect(g.bar[2]?.h).toBe(tertinggi);
+  });
+});
+
+describe("sebaranProvinsi", () => {
+  it("11 provinsi unik dari data seed, urut nama (id)", () => {
+    const agg = sebaranProvinsi(DATA);
+    expect(agg).toHaveLength(11);
+    expect(agg.map((a) => a.provinsi)).toEqual([
+      "Bali",
+      "Banten",
+      "Jawa Barat",
+      "Jawa Tengah",
+      "Jawa Timur",
+      "Kalimantan Selatan",
+      "Lampung",
+      "Nusa Tenggara Barat",
+      "Riau",
+      "Sulawesi Selatan",
+      "Sumatera Barat",
+    ]);
+  });
+  it("Jawa Barat menggabung dua koperasi: verdict terburuk merah, 6 temuan", () => {
+    const jabar = sebaranProvinsi(DATA).find(
+      (a) => a.provinsi === "Jawa Barat",
+    );
+    expect(jabar).toEqual({
+      provinsi: "Jawa Barat",
+      jumlahKoperasi: 2,
+      verdictTerburuk: "merah",
+      temuanTotal: 6,
+    });
+  });
+  it("provinsi hijau dengan temuan tetap hijau (Jawa Timur, 1 temuan)", () => {
+    const jatim = sebaranProvinsi(DATA).find(
+      (a) => a.provinsi === "Jawa Timur",
+    );
+    expect(jatim).toMatchObject({ verdictTerburuk: "hijau", temuanTotal: 1 });
+  });
+});
+
+describe("waktuRelatif", () => {
+  const now = Date.parse("2026-07-10T09:00:00.000Z");
+  const geser = (ms: number) => new Date(now - ms).toISOString();
+  it("kurang dari semenit: baru saja", () => {
+    expect(waktuRelatif(geser(30_000), now)).toBe("baru saja");
+  });
+  it("menit lalu", () => {
+    expect(waktuRelatif(geser(5 * 60_000), now)).toBe("5 menit lalu");
+  });
+  it("jam lalu", () => {
+    expect(waktuRelatif(geser(3 * 3_600_000), now)).toBe("3 jam lalu");
+  });
+  it("hari lalu: timestamp seed Juni terhadap 10 Juli = 12 hari lalu", () => {
+    expect(waktuRelatif("2026-06-28T09:00:00.000Z", now)).toBe("12 hari lalu");
+  });
+  it("masa depan jatuh ke baru saja", () => {
+    expect(waktuRelatif(geser(-1000), now)).toBe("baru saja");
+  });
+});
+
+describe("urutkanAktivitas", () => {
+  const item = (
+    koperasiId: string,
+    dibuatPada: string,
+    temuanCount = 0,
+  ): AktivitasItem => ({
+    koperasiId,
+    nama: koperasiId,
+    verdictWarna: "hijau",
+    temuanCount,
+    dibuatPada,
+  });
+  it("timestamp identik: tiebreak koperasiId asc (deterministik)", () => {
+    const t = "2026-06-28T09:00:00.000Z";
+    const out = urutkanAktivitas([item("c", t), item("a", t), item("b", t)]);
+    expect(out.map((x) => x.koperasiId)).toEqual(["a", "b", "c"]);
+  });
+  it("terbaru dulu lintas timestamp", () => {
+    const out = urutkanAktivitas([
+      item("x", "2026-05-28T09:00:00.000Z"),
+      item("y", "2026-06-28T09:00:00.000Z"),
+    ]);
+    expect(out.map((x) => x.koperasiId)).toEqual(["y", "x"]);
+  });
+  it("dibatasi 7 item", () => {
+    const t = "2026-06-28T09:00:00.000Z";
+    const banyak = Array.from({ length: 12 }, (_, i) =>
+      item(`k${String(i).padStart(2, "0")}`, t),
+    );
+    expect(urutkanAktivitas(banyak)).toHaveLength(7);
   });
 });

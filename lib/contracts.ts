@@ -113,6 +113,13 @@ export type GovOverview = {
     merah: number;
     temuanTerbuka: number;
   }; // selisih vs periode sebelumnya (0 bila periode paling awal)
+  aktivitas: Array<{
+    koperasiId: string;
+    nama: string;
+    verdictWarna: "hijau" | "kuning" | "merah";
+    temuanCount: number;
+    dibuatPada: string; // ISO datetime baris audit_run
+  }>; // feed AI Agent: audit_run periode aktif non-marker, terbaru dulu, maks 7
 };
 
 export type FlowResp = {

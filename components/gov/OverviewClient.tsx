@@ -15,12 +15,14 @@ import {
   nextSort,
   periodeLabelDari,
   bulanDari,
+  sebaranProvinsi,
   segmenLabel,
   segmenLebar,
   sortKoperasi,
   sparklineFromSeri,
   tersebarCount,
   trenChart,
+  waktuRelatif,
   worstWarna,
   type DeltaChip,
   type SortDir,
@@ -1329,17 +1331,338 @@ function AgentPanel({ data }: { data: GovOverview }) {
   );
 }
 
+// --- Panel: Sebaran Provinsi (kartogram tile, cross-filter tabel) ----------
+
+type ProvPos = { n: string; a: string; c: number; r: number };
+
+// Tata letak kartogram (port bundle dashboard, verbatim posisi grid + singkatan
+// provinsi). Ini presentasi, BUKAN data: angka + warna tiap tile berasal dari
+// agregasi koperasi nyata (sebaranProvinsi). "dari 34" = PROV.length.
+const PROV: ProvPos[] = [
+  { n: "Aceh", a: "ACEH", c: 1, r: 1 },
+  { n: "Sumatera Utara", a: "SUMUT", c: 1, r: 2 },
+  { n: "Riau", a: "RIAU", c: 2, r: 2 },
+  { n: "Kepulauan Riau", a: "KEPRI", c: 3, r: 2 },
+  { n: "Sumatera Barat", a: "SUMBAR", c: 1, r: 3 },
+  { n: "Jambi", a: "JAMBI", c: 2, r: 3 },
+  { n: "Bangka Belitung", a: "BABEL", c: 3, r: 3 },
+  { n: "Bengkulu", a: "BKL", c: 1, r: 4 },
+  { n: "Sumatera Selatan", a: "SUMSEL", c: 2, r: 4 },
+  { n: "Lampung", a: "LAMPG", c: 3, r: 4 },
+  { n: "Kalimantan Utara", a: "KLTARA", c: 6, r: 1 },
+  { n: "Kalimantan Barat", a: "KALBAR", c: 5, r: 2 },
+  { n: "Kalimantan Timur", a: "KALTIM", c: 6, r: 2 },
+  { n: "Kalimantan Tengah", a: "KALTNG", c: 5, r: 3 },
+  { n: "Kalimantan Selatan", a: "KALSEL", c: 6, r: 3 },
+  { n: "Sulawesi Utara", a: "SULUT", c: 10, r: 1 },
+  { n: "Gorontalo", a: "GORON", c: 10, r: 2 },
+  { n: "Sulawesi Tengah", a: "SULTNG", c: 9, r: 3 },
+  { n: "Sulawesi Barat", a: "SULBAR", c: 8, r: 3 },
+  { n: "Sulawesi Selatan", a: "SULSEL", c: 9, r: 4 },
+  { n: "Sulawesi Tenggara", a: "SULTRA", c: 10, r: 4 },
+  { n: "Maluku Utara", a: "MALUT", c: 11, r: 2 },
+  { n: "Maluku", a: "MALUKU", c: 11, r: 4 },
+  { n: "Papua Barat", a: "PAPBAR", c: 12, r: 3 },
+  { n: "Papua", a: "PAPUA", c: 13, r: 3 },
+  { n: "Banten", a: "BANTEN", c: 3, r: 5 },
+  { n: "DKI Jakarta", a: "JKT", c: 4, r: 5 },
+  { n: "Jawa Barat", a: "JABAR", c: 5, r: 5 },
+  { n: "Jawa Tengah", a: "JATENG", c: 6, r: 5 },
+  { n: "DI Yogyakarta", a: "DIY", c: 6, r: 6 },
+  { n: "Jawa Timur", a: "JATIM", c: 7, r: 5 },
+  { n: "Bali", a: "BALI", c: 8, r: 5 },
+  { n: "Nusa Tenggara Barat", a: "NTB", c: 9, r: 5 },
+  { n: "Nusa Tenggara Timur", a: "NTT", c: 10, r: 5 },
+];
+
+const ABBREV: React.CSSProperties = {
+  fontFamily: "var(--font-archivo), Archivo, sans-serif",
+  fontWeight: 700,
+  fontSize: 7.5,
+  lineHeight: 1,
+  letterSpacing: "0.04em",
+};
+
+function SebaranProvinsi({
+  koperasi,
+  filterProv,
+  onToggleProv,
+}: {
+  koperasi: GovOverview["koperasi"];
+  filterProv: string | null;
+  onToggleProv: (provinsi: string) => void;
+}) {
+  const agg = sebaranProvinsi(koperasi);
+  const byNama = new Map(agg.map((a) => [a.provinsi, a]));
+  return (
+    <div className="gov-panel" style={{ padding: "20px 24px 18px" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div
+          className="gov-disp"
+          style={{ fontWeight: 700, fontSize: 13.5, lineHeight: 1 }}
+        >
+          Sebaran Provinsi
+        </div>
+        <div
+          style={{ fontWeight: 500, fontSize: 11, lineHeight: 1, color: MUTED }}
+        >
+          {agg.length} provinsi aktif dari {PROV.length}
+        </div>
+      </div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(13, 1fr)",
+          gap: 6,
+          marginTop: 16,
+        }}
+      >
+        {PROV.map((p) => {
+          const d = byNama.get(p.n);
+          const pos: React.CSSProperties = {
+            gridColumn: String(p.c),
+            gridRow: String(p.r),
+            aspectRatio: "1",
+            borderRadius: 10,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 0,
+          };
+          if (!d) {
+            return (
+              <div
+                key={p.a}
+                title={`${p.n}, belum masuk pemantauan`}
+                style={{ ...pos, background: "var(--well)" }}
+              >
+                <span
+                  style={{ ...ABBREV, color: "var(--disabled-foreground)" }}
+                >
+                  {p.a}
+                </span>
+              </div>
+            );
+          }
+          const b = BENTUK[d.verdictTerburuk];
+          const dipilih = filterProv === p.n;
+          return (
+            <button
+              key={p.a}
+              type="button"
+              onClick={() => onToggleProv(p.n)}
+              aria-pressed={dipilih}
+              aria-label={`${p.n}, ${d.jumlahKoperasi} koperasi, ${d.temuanTotal} temuan terbuka, terburuk ${b.label}`}
+              className={dipilih ? undefined : "gov-raised-sm"}
+              style={{
+                ...pos,
+                flexDirection: "column",
+                gap: 3,
+                cursor: "pointer",
+                background: dipilih ? b.colorVar : undefined,
+                boxShadow: dipilih ? "var(--shadow-pressed-sm)" : undefined,
+              }}
+            >
+              <span
+                style={{
+                  ...ABBREV,
+                  color: dipilih ? "var(--verdict-on)" : "var(--foreground)",
+                }}
+              >
+                {p.a}
+              </span>
+              <span
+                style={{ display: "inline-flex", alignItems: "center", gap: 3 }}
+              >
+                <VerdictShape bentuk={b} size={7} />
+                <span
+                  className="gov-num"
+                  style={{
+                    fontWeight: 700,
+                    fontSize: 9,
+                    lineHeight: 1,
+                    color: dipilih ? "var(--verdict-on)" : "var(--foreground)",
+                  }}
+                >
+                  {d.temuanTotal}
+                </span>
+              </span>
+            </button>
+          );
+        })}
+      </div>
+      <div
+        style={{
+          fontWeight: 500,
+          fontSize: 10.5,
+          lineHeight: 1.5,
+          color: MUTED,
+          marginTop: 12,
+        }}
+      >
+        Angka = temuan terbuka. Klik provinsi untuk menyaring tabel. Provinsi
+        lain belum masuk pemantauan.
+      </div>
+    </div>
+  );
+}
+
+// --- Panel: Aktivitas AI Agent (feed audit_run nyata) ----------------------
+
+function AktivitasPanel({ data }: { data: GovOverview }) {
+  const items = data.aktivitas;
+  const model = data.agenFeed.adjudikatorModel;
+  // Waktu relatif bergantung jam klien; dihitung HANYA setelah mount (pola
+  // Beranda: hindari hydration + react-hooks/purity). Helper waktuRelatif tetap
+  // murni menerima `sekarang`. Tanpa setInterval: label dihitung sekali.
+  const [sekarang, setSekarang] = useState<number | null>(null);
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => setSekarang(Date.now()), []);
+  return (
+    <div
+      className="gov-panel"
+      style={{
+        padding: "20px 22px 16px",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+        <div
+          className="gov-disp"
+          style={{ fontWeight: 700, fontSize: 13.5, lineHeight: 1 }}
+        >
+          Aktivitas AI Agent
+        </div>
+        <div style={{ flex: 1 }} />
+        <span
+          aria-hidden="true"
+          style={{
+            width: 8,
+            height: 8,
+            borderRadius: "50%",
+            background: "var(--primary)",
+            animation: "prm-denyut 2.4s ease-in-out infinite",
+          }}
+        />
+        <span
+          style={{
+            fontWeight: 600,
+            fontSize: 10.5,
+            lineHeight: 1,
+            color: MUTED,
+          }}
+        >
+          Terbaru
+        </span>
+      </div>
+      {items.length === 0 ? (
+        <div
+          style={{
+            padding: "28px 2px",
+            fontWeight: 500,
+            fontSize: 12,
+            lineHeight: 1.5,
+            color: MUTED,
+            textAlign: "center",
+          }}
+        >
+          Belum ada pemeriksaan pada periode ini.
+        </div>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", marginTop: 6 }}>
+          {items.map((f) => {
+            const b = BENTUK[f.verdictWarna];
+            return (
+              <div
+                key={f.koperasiId}
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: 11,
+                  padding: "11px 2px",
+                  borderTop: "1px solid var(--border-hairline)",
+                }}
+              >
+                <span
+                  className="gov-well-sm"
+                  style={{
+                    width: 22,
+                    height: 22,
+                    borderRadius: "50%",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flex: "none",
+                    marginTop: 1,
+                  }}
+                >
+                  <VerdictShape bentuk={b} size={9} />
+                </span>
+                <span style={{ flex: 1, minWidth: 0 }}>
+                  <span
+                    style={{
+                      display: "block",
+                      fontWeight: 600,
+                      fontSize: 12,
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    Pramana memeriksa Koperasi {stripKop(f.nama)}
+                  </span>
+                  <span
+                    style={{
+                      display: "block",
+                      fontWeight: 500,
+                      fontSize: 10.5,
+                      lineHeight: 1.4,
+                      color: MUTED,
+                      marginTop: 2,
+                    }}
+                  >
+                    Verdict {b.label} · {f.temuanCount} temuan · Adjudikator{" "}
+                    {model}
+                  </span>
+                </span>
+                <span
+                  className="gov-num"
+                  style={{
+                    fontWeight: 500,
+                    fontSize: 10,
+                    lineHeight: 1,
+                    color: MUTED,
+                    whiteSpace: "nowrap",
+                    marginTop: 3,
+                  }}
+                >
+                  {sekarang === null
+                    ? ""
+                    : waktuRelatif(f.dibuatPada, sekarang)}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // --- Panel: Tabel koperasi (cross-filter + sort + search) ------------------
 
 function Tabel({
   data,
   filterVerdict,
+  filterProv,
   onClearFilter,
+  onClearProv,
   onBuka,
 }: {
   data: GovOverview;
   filterVerdict: VerdictColor | null;
+  filterProv: string | null;
   onClearFilter: () => void;
+  onClearProv: () => void;
   onBuka: (id: string) => void;
 }) {
   const [sort, setSort] = useState<{ key: SortKey; dir: SortDir }>({
@@ -1349,9 +1672,11 @@ function Tabel({
   const [cari, setCari] = useState("");
   const kpi = data.kpi;
   const total = data.koperasi.length;
-  const dasar = filterVerdict
-    ? data.koperasi.filter((r) => r.verdictWarna === filterVerdict)
-    : data.koperasi;
+  const dasar = data.koperasi.filter(
+    (r) =>
+      (!filterVerdict || r.verdictWarna === filterVerdict) &&
+      (!filterProv || r.provinsi === filterProv),
+  );
   const rows = sortKoperasi(filterKoperasi(dasar, cari), sort.key, sort.dir);
 
   const headers: Array<{ key: SortKey; label: string; end?: boolean }> = [
@@ -1361,7 +1686,8 @@ function Tabel({
     { key: "temuanCount", label: GOV_COPY["ov.header.temuan"], end: true },
   ];
   const grid = "2fr 1.1fr 0.9fr 0.6fr";
-  const menyaring = cari.trim() !== "" || filterVerdict !== null;
+  const menyaring =
+    cari.trim() !== "" || filterVerdict !== null || filterProv !== null;
 
   return (
     <div className="gov-panel" style={{ ...PANEL_MT, padding: "8px 0 6px" }}>
@@ -1414,6 +1740,38 @@ function Tabel({
             }}
           >
             Verdict: {BENTUK[filterVerdict].label}
+            <span
+              aria-hidden="true"
+              style={{
+                fontWeight: 700,
+                fontSize: 10,
+                lineHeight: 1,
+                color: MUTED,
+              }}
+            >
+              X
+            </span>
+          </button>
+        ) : null}
+        {filterProv ? (
+          <button
+            type="button"
+            onClick={onClearProv}
+            title="Hapus saringan provinsi"
+            className="gov-well-sm"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "8px 14px",
+              borderRadius: 999,
+              fontWeight: 700,
+              fontSize: 11,
+              lineHeight: 1,
+              color: "var(--foreground)",
+            }}
+          >
+            Provinsi: {filterProv}
             <span
               aria-hidden="true"
               style={{
@@ -2232,6 +2590,7 @@ export function OverviewClient() {
   const [bukaSandi, setBukaSandi] = useState(false);
 
   const [filterVerdict, setFilterVerdict] = useState<VerdictColor | null>(null);
+  const [filterProv, setFilterProv] = useState<string | null>(null);
   const [temaDef, setTemaDef] = useState<TemaDefault>("terang");
   const [notifMerah, setNotifMerah] = useState(true);
   const [notifSelesai, setNotifSelesai] = useState(false);
@@ -2277,6 +2636,7 @@ export function OverviewClient() {
   const pilihPeriode = useCallback((p: string) => {
     setBukaPeriode(false);
     setFilterVerdict(null);
+    setFilterProv(null);
     setPeriode(p);
   }, []);
 
@@ -2287,6 +2647,12 @@ export function OverviewClient() {
 
   const onFilter = useCallback(
     (w: VerdictColor) => setFilterVerdict((cur) => (cur === w ? null : w)),
+    [],
+  );
+
+  const onToggleProv = useCallback(
+    (provinsi: string) =>
+      setFilterProv((cur) => (cur === provinsi ? null : provinsi)),
     [],
   );
 
@@ -2535,9 +2901,26 @@ export function OverviewClient() {
           <Tabel
             data={data}
             filterVerdict={filterVerdict}
+            filterProv={filterProv}
             onClearFilter={() => setFilterVerdict(null)}
+            onClearProv={() => setFilterProv(null)}
             onBuka={buka}
           />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1.25fr 1fr",
+              gap: 20,
+              ...PANEL_MT,
+            }}
+          >
+            <SebaranProvinsi
+              koperasi={data.koperasi}
+              filterProv={filterProv}
+              onToggleProv={onToggleProv}
+            />
+            <AktivitasPanel data={data} />
+          </div>
         </>
       ) : null}
 
