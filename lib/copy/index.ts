@@ -34,6 +34,7 @@ export const COPY = {
   "landing.tagline": "Pengawas koperasi desa, di genggaman setiap anggota",
   "landing.cta.anggota": "Masuk sebagai Anggota",
   "landing.cta.pemerintah": "Masuk sebagai Pemerintah",
+  "landing.cta.bendahara": "Masuk sebagai Bendahara",
   "landing.cta.daftar": "Daftar sebagai Anggota Baru",
   "landing.juri": "Akun uji untuk juri tersedia di halaman masuk.",
   "subjek.header": "Simulasi Pembukuan Koperasi",

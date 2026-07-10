@@ -179,6 +179,15 @@ function SuaraIsi({
         }}
       >
         <SectionLabel>{MEMBER_COPY["suara.pertanyaan.label"]}</SectionLabel>
+        <span
+          style={{
+            fontSize: 12,
+            color: "var(--muted)",
+            lineHeight: 1.5,
+          }}
+        >
+          {MEMBER_COPY["suara.pertanyaan.anonim"]}
+        </span>
         {qs.length > 0 ? (
           qs.map((q, i) => (
             <div

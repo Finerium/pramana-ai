@@ -155,7 +155,7 @@ function Nav() {
         >
           <ThemeToggle />
           <Link
-            href="/login"
+            href="/login?as=anggota"
             prefetch={false}
             data-cq="navcta"
             className="l-cta-aksen"
@@ -257,7 +257,7 @@ function Hero() {
           }}
         >
           <Link
-            href="/login"
+            href="/login?as=anggota"
             prefetch={false}
             className="l-cta-aksen"
             style={{
@@ -295,6 +295,26 @@ function Hero() {
             }}
           >
             {COPY["landing.cta.pemerintah"]}
+          </Link>
+          <Link
+            href="/login?as=bendahara"
+            prefetch={false}
+            className="l-pil-garis"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "52px",
+              padding: "0 27px",
+              borderRadius: "999px",
+              whiteSpace: "nowrap",
+              fontWeight: 600,
+              fontSize: "15.5px",
+              lineHeight: 1,
+              textDecoration: "none",
+            }}
+          >
+            {COPY["landing.cta.bendahara"]}
           </Link>
         </div>
         <div style={{ marginTop: "20px" }}>

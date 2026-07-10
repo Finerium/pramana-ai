@@ -115,6 +115,8 @@ export const MEMBER_COPY = {
     "Menampilkan data tersimpan. Pembaruan sedang tidak tersedia.",
   "suara.kosong": "Belum ada pertanyaan atau keputusan yang dibuka.",
   "suara.pertanyaan.label": "PERTANYAAN UNTUK RAPAT ANGGOTA TAHUNAN",
+  "suara.pertanyaan.anonim":
+    "Pertanyaan digabung secara anonim. Pengurus melihat jumlah penanya, bukan nama Anda.",
   "suara.pertanyaan.milikAnda": "Termasuk pertanyaan Anda",
   "suara.pertanyaan.lihat": "Lihat temuan",
   "suara.pertanyaan.kosong":

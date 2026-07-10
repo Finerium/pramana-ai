@@ -33,22 +33,13 @@ export default function MemberLayout({
     <>
       {/* Terapkan tema sebelum paint (kunci pramana-tema lintas surface). */}
       <ThemeScript />
-      <div
-        className={`m-app ${geist.variable}`}
-        style={{ minHeight: "100dvh" }}
-      >
-        <div
-          style={{
-            maxWidth: 460,
-            margin: "0 auto",
-            minHeight: "100dvh",
-            position: "relative",
-          }}
-        >
-          {children}
+      {/* .m-frame: bingkai perangkat iPhone di desktop (mobile.css), full-bleed di ponsel. */}
+      <div className="m-frame">
+        <div className={`m-app ${geist.variable}`}>
+          <div className="m-shell">{children}</div>
+          <TabBar />
+          <RegisterSW />
         </div>
-        <TabBar />
-        <RegisterSW />
       </div>
     </>
   );

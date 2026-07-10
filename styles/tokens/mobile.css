@@ -132,6 +132,7 @@
   color: var(--ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
   /* Knob switch (iOS): putih di kedua tema. Bukan token surface bertema, jadi
      TIDAK diletakkan di :root verbatim; ditambahkan demi aturan keras #5 (nol
      hex di komponen). Nilai = #ffffff knob bundle (Pramana App.dc.html).
@@ -186,5 +187,85 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Bingkai perangkat iPhone (port design-handoff/mobile/ios-frame.jsx IOSDevice).
+   Aplikasi anggota adalah aplikasi MOBILE; di layar lebar (desktop) dibungkus
+   bingkai perangkat agar jelas ini aplikasi ponsel. Di mobile nyata: full-bleed,
+   nol bingkai. Kolom aplikasi = .m-shell (dulu inline max-width 460).
+--------------------------------------------------------------------------- */
+.m-shell {
+  max-width: 460px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  position: relative;
+}
+
+@media (min-width: 900px) {
+  .m-frame {
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    padding: 28px;
+    box-sizing: border-box;
+    background:
+      radial-gradient(
+        120% 120% at 50% 0%,
+        color-mix(in srgb, var(--bg) 82%, #000 18%),
+        var(--bg)
+      );
+  }
+  /* .m-app = badan ponsel: ukuran perangkat tetap, sudut membulat, bezel gelap
+     via ring box-shadow, transform = containing block untuk TabBar fixed. */
+  .m-frame .m-app {
+    width: 402px;
+    height: min(872px, calc(100dvh - 56px));
+    min-height: 0;
+    border-radius: 46px;
+    overflow: hidden;
+    position: relative;
+    transform: translateZ(0);
+    box-shadow:
+      0 0 0 11px #1b1b1f,
+      0 0 0 12px rgba(0, 0, 0, 0.55),
+      0 40px 90px rgba(0, 0, 0, 0.28);
+  }
+  /* dynamic island */
+  .m-frame .m-app::before {
+    content: "";
+    position: absolute;
+    top: 11px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 34px;
+    border-radius: 22px;
+    background: #000;
+    z-index: 55;
+    pointer-events: none;
+  }
+  /* home indicator */
+  .m-frame .m-app::after {
+    content: "";
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 134px;
+    height: 5px;
+    border-radius: 100px;
+    background: color-mix(in srgb, var(--ink) 45%, transparent);
+    z-index: 60;
+    pointer-events: none;
+  }
+  /* kolom aplikasi mengisi layar ponsel, gulir di dalam bingkai */
+  .m-frame .m-shell {
+    max-width: none;
+    min-height: 0;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 }
