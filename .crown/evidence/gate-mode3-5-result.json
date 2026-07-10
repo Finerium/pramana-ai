@@ -1,0 +1,33 @@
+{
+  "gate": "mode3-5",
+  "title": "Re-verify blast radius (full Mode 3)",
+  "at": "2026-07-10T12:08:54Z",
+  "pass": true,
+  "results": [
+    {
+      "id": "STATIC",
+      "pass": true,
+      "note": "typecheck bersih; lint 0; check-register LULUS 112 berkas; check:tokens PASS; check-env LULUS; check-readme LULUS"
+    },
+    {
+      "id": "TEST",
+      "pass": true,
+      "note": "pnpm test 394/394 (38 file) - termasuk overview.test, subjek/audit route test, anonimitas guarantee, grounding, semua kontrak"
+    },
+    {
+      "id": "SEED",
+      "pass": true,
+      "note": "seed 406 transaksi 72 audit_run; seed:verify deterministik 737 baris dalam budget"
+    },
+    {
+      "id": "E2E",
+      "pass": true,
+      "note": "pnpm e2e 19/19: member.journey, gov.journey (dasbor port selektor utuh), landing (CTA bendahara+screenshot asli), login (?as=pemerintah/bendahara), subjek.console (tree), cross.loop (audit live), a11y (frame+tree), pwa, vote, onboarding, fallback.cache, nollm"
+    },
+    {
+      "id": "DEMO",
+      "pass": true,
+      "note": "demo:hash byte-identik antar-run (AC-DEMO-01 lulus); determinisme utuh setelah semua perubahan Mode 3"
+    }
+  ]
+}

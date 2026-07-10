@@ -3726,3 +3726,274 @@
 {"at":"2026-07-10T09:42:55.447Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/gov-january.png"}
 {"at":"2026-07-10T09:44:06.931Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nCROWN_GATE_WRITE=1 TS=\"$(date -u +%Y-%m-%"}
 {"at":"2026-07-10T09:45:09.126Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\ngit add \"app/(gov)/_logic/overview.ts\" \"a"}
+{"at":"2026-07-10T09:46:31.956Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\ngit commit -q -F - <<'MSG'\ncheckpoint(mod"}
+{"at":"2026-07-10T09:46:47.406Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nCROWN_GATE_WRITE=1 node --input-type=modu"}
+{"at":"2026-07-10T09:48:02.534Z","tool":"Bash","path":"SP=\"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-42"}
+{"at":"2026-07-10T09:50:58.757Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/gov/overview/route.ts"}
+{"at":"2026-07-10T09:50:59.798Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/(gov)/_logic/overview.ts"}
+{"at":"2026-07-10T09:51:00.754Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/(gov)/_logic/overview.test.ts"}
+{"at":"2026-07-10T09:51:00.755Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/(gov)/_logic/types.ts"}
+{"at":"2026-07-10T09:51:18.361Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/contracts.ts"}
+{"at":"2026-07-10T09:51:18.361Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/persist.ts"}
+{"at":"2026-07-10T09:51:18.363Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/dashboard-baru/Dasbor - Overview.dc.html"}
+{"at":"2026-07-10T09:51:27.485Z","tool":"Bash","path":"cd /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-429"}
+{"at":"2026-07-10T09:51:34.091Z","tool":"Bash","path":"wc -l \"components/gov/OverviewClient.tsx\" && grep -n \"function \\|const .* = (\\|e"}
+{"at":"2026-07-10T09:51:45.238Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== subjek API routes ===\"; find ap"}
+{"at":"2026-07-10T09:52:27.587Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/dashboard-baru/Dasbor - Overview.dc.html"}
+{"at":"2026-07-10T09:52:28.662Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/dashboard-baru/Dasbor - Overview.dc.html"}
+{"at":"2026-07-10T09:52:38.049Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/subjek/transaksi/route.ts"}
+{"at":"2026-07-10T09:53:08.829Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T09:53:10.121Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T09:53:16.983Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T09:53:23.126Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T09:53:48.419Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/dashboard-baru/screenshots/overview-terang-default.png"}
+{"at":"2026-07-10T09:53:50.372Z","tool":"Bash","path":"ls scripts/seed/ && echo \"---GREP dibuatPada/timestamp in seed---\" && grep -rn \""}
+{"at":"2026-07-10T09:54:03.815Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/seed/data.ts"}
+{"at":"2026-07-10T09:54:03.826Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/seed/data.ts"}
+{"at":"2026-07-10T09:54:39.858Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/.crown/notes.md"}
+{"at":"2026-07-10T09:54:44.596Z","tool":"Bash","path":"echo \"===dashboard.css vars===\" && grep -oE \"\\-\\-[a-z-]+\" styles/tokens/dashboar"}
+{"at":"2026-07-10T09:54:44.597Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/VerdictShape.tsx"}
+{"at":"2026-07-10T09:54:44.598Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/(gov)/_logic/verdict.ts"}
+{"at":"2026-07-10T09:55:03.093Z","tool":"Bash","path":"echo \"===check:tokens + check-register scripts (package.json)===\" && grep -E '\"c"}
+{"at":"2026-07-10T09:55:19.376Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/check-tokens.mjs"}
+{"at":"2026-07-10T09:55:19.376Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/check-register.mjs"}
+{"at":"2026-07-10T09:56:17.124Z","tool":"Bash","path":"echo \"===gov-* classes in dashboard.css===\" && grep -nE \"\\.gov-[a-z-]+\" styles/t"}
+{"at":"2026-07-10T09:56:32.670Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== member Temuan: bukti/evidence d"}
+{"at":"2026-07-10T09:56:45.443Z","tool":"Bash","path":"cd /private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-429"}
+{"at":"2026-07-10T09:56:50.676Z","tool":"Read","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/dashboard-baru/Dasbor - Overview.dc.html"}
+{"at":"2026-07-10T09:58:44.755Z","tool":"Bash","path":"echo \"===GovOverview references===\" && grep -rn \"GovOverview\" --include=*.ts --i"}
+{"at":"2026-07-10T09:58:52.425Z","tool":"Bash","path":"echo \"===GovOverview references===\" && grep -rn \"GovOverview\" --include=*.ts --i"}
+{"at":"2026-07-10T09:58:59.839Z","tool":"Bash","path":"grep -rn \"GovOverview\" --include=\"*.ts\" --include=\"*.tsx\" app lib components db "}
+{"at":"2026-07-10T10:00:27.788Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/e2e/gov.journey.spec.ts"}
+{"at":"2026-07-10T10:01:13.029Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T10:01:48.390Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/lib/contracts.ts"}
+{"at":"2026-07-10T10:02:12.620Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/(gov)/_logic/overview.ts"}
+{"at":"2026-07-10T10:02:22.076Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/(gov)/_logic/overview.test.ts"}
+{"at":"2026-07-10T10:02:49.702Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/(gov)/_logic/overview.test.ts"}
+{"at":"2026-07-10T10:03:02.151Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/gov/overview/route.ts"}
+{"at":"2026-07-10T10:03:38.268Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/gov/overview/route.ts"}
+{"at":"2026-07-10T10:03:47.088Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/gov/overview/route.ts"}
+{"at":"2026-07-10T10:03:58.556Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T10:04:53.252Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T10:05:07.592Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T10:05:19.436Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T10:05:25.797Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T10:05:32.464Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T10:05:41.168Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T10:05:49.696Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T10:05:54.617Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T10:06:00.824Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T10:06:05.629Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T10:06:13.779Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T10:06:19.641Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T10:06:26.277Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T10:06:33.078Z","tool":"Bash","path":"pnpm typecheck 2>&1 | tail -20"}
+{"at":"2026-07-10T10:06:36.698Z","tool":"Bash","path":"pnpm check-register 2>&1 | tail -20"}
+{"at":"2026-07-10T10:06:37.088Z","tool":"Bash","path":"pnpm check:tokens 2>&1 | tail -8"}
+{"at":"2026-07-10T10:06:43.818Z","tool":"Bash","path":"pnpm check:tokens >/tmp/tok.json 2>/dev/null; echo \"check:tokens exit=$?\"; grep "}
+{"at":"2026-07-10T10:06:44.595Z","tool":"Bash","path":"pnpm lint 2>&1 | tail -25"}
+{"at":"2026-07-10T10:07:10.922Z","tool":"Bash","path":"grep -rn \"Date.now()\\|new Date()\\|useState(() =>\\|useEffect\" components/ app/ --"}
+{"at":"2026-07-10T10:07:18.328Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/member/screens/Beranda.tsx"}
+{"at":"2026-07-10T10:07:43.743Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T10:07:50.003Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/OverviewClient.tsx"}
+{"at":"2026-07-10T10:08:11.745Z","tool":"Bash","path":"pnpm lint 2>&1 | tail -15"}
+{"at":"2026-07-10T10:08:15.402Z","tool":"Bash","path":"pnpm typecheck 2>&1 | tail -6"}
+{"at":"2026-07-10T10:08:24.441Z","tool":"Bash","path":"pnpm test 2>&1 | tail -30"}
+{"at":"2026-07-10T10:08:53.743Z","tool":"Bash","path":"pnpm test 2>&1 | grep -iE \"Test Files|Tests |overview.test|failed|passed\" | head"}
+{"at":"2026-07-10T10:09:28.764Z","tool":"Bash","path":"pnpm seed 2>&1 | tail -8 && echo \"===VERIFY===\" && pnpm seed:verify 2>&1 | tail "}
+{"at":"2026-07-10T10:09:57.204Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/scripts/seed/verify.ts"}
+{"at":"2026-07-10T10:10:59.613Z","tool":"Bash","path":"grep -nE \"auditRun = sqliteTable|temuan = sqliteTable|koperasi = sqliteTable|ver"}
+{"at":"2026-07-10T10:11:29.768Z","tool":"Write","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/verify-aktivitas.ts"}
+{"at":"2026-07-10T10:11:49.035Z","tool":"Bash","path":"grep -n \"resolveDbUrl\\|file:\\|LOCAL\\|\\.db\\|DATABASE_URL\\|TURSO\" db/client.ts | h"}
+{"at":"2026-07-10T10:14:46.383Z","tool":"Bash","path":"grep -n \"resolveDbUrl\\|file:\\|\\.db\\|DATABASE_URL\\|TURSO\\|process.env\" db/client."}
+{"at":"2026-07-10T10:14:54.631Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/db/client.ts"}
+{"at":"2026-07-10T10:16:09.954Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/_verify_tmp.mjs"}
+{"at":"2026-07-10T10:21:40.202Z","tool":"Bash","path":"node _verify_tmp.mjs; rm -f _verify_tmp.mjs /private/tmp/claude-501/-Users-ghais"}
+{"at":"2026-07-10T10:21:59.172Z","tool":"Bash","path":"ls _verify_tmp.mjs 2>/dev/null || echo \"temp mjs removed\"; echo \"---changed file"}
+{"at":"2026-07-10T10:22:13.112Z","tool":"Bash","path":"echo \"=== GLM in changed files (expect none) ===\"; grep -rn \"GLM\" app/\"(gov)\"/_l"}
+{"at":"2026-07-10T10:26:57.680Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; pnpm typecheck 2>&1 | tail -3; echo \"==="}
+{"at":"2026-07-10T10:27:48.323Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/gov-bottom-panels.png"}
+{"at":"2026-07-10T10:28:23.191Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== test ===\"; pnpm test 2>&1 | gre"}
+{"at":"2026-07-10T10:29:21.311Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nrm -f gov-bottom-panels.png\ngit add \"app/"}
+{"at":"2026-07-10T10:30:01.241Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nCROWN_GATE_WRITE=1 node --input-type=modu"}
+{"at":"2026-07-10T10:31:26.245Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== landing.cta copy keys ===\"; gre"}
+{"at":"2026-07-10T10:31:38.218Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== copy structure ===\"; ls lib/cop"}
+{"at":"2026-07-10T10:31:48.011Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/copy/index.ts"}
+{"at":"2026-07-10T10:32:01.751Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/lib/copy/index.ts"}
+{"at":"2026-07-10T10:32:16.324Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/(publik)/page.tsx"}
+{"at":"2026-07-10T10:32:26.178Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/(publik)/page.tsx"}
+{"at":"2026-07-10T10:32:47.215Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/(publik)/page.tsx"}
+{"at":"2026-07-10T10:32:58.964Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/(publik)/page.tsx"}
+{"at":"2026-07-10T10:33:51.718Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/member/screens/Suara.tsx"}
+{"at":"2026-07-10T10:34:10.660Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; grep -nE \"suara\\.pertanyaan|suara\\.anoni"}
+{"at":"2026-07-10T10:34:21.799Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/copy/member.ts"}
+{"at":"2026-07-10T10:34:31.055Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/lib/copy/member.ts"}
+{"at":"2026-07-10T10:34:53.635Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/member/screens/Suara.tsx"}
+{"at":"2026-07-10T10:35:09.601Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; pnpm typecheck 2>&1 | tail -3; echo \"==="}
+{"at":"2026-07-10T10:35:49.764Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== design-handoff mobile: frame/de"}
+{"at":"2026-07-10T10:36:25.881Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; grep -rliE \"iphone|notch|dynamic-island|"}
+{"at":"2026-07-10T10:36:42.086Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/design-handoff/mobile/ios-frame.jsx"}
+{"at":"2026-07-10T10:37:57.906Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== TabBar positioning ===\"; grep -"}
+{"at":"2026-07-10T10:39:07.484Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/styles/tokens/mobile.css"}
+{"at":"2026-07-10T10:39:28.595Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/styles/tokens/mobile.css"}
+{"at":"2026-07-10T10:39:41.287Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; wc -l styles/tokens/mobile.css; echo \"=="}
+{"at":"2026-07-10T10:39:55.643Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/styles/tokens/mobile.css"}
+{"at":"2026-07-10T10:40:31.669Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/styles/tokens/mobile.css"}
+{"at":"2026-07-10T10:40:54.801Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/(member)/layout.tsx"}
+{"at":"2026-07-10T10:42:47.101Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/member-frame.png"}
+{"at":"2026-07-10T10:43:40.915Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/member-mobile.png"}
+{"at":"2026-07-10T10:46:41.335Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== typecheck ===\"; pnpm typecheck "}
+{"at":"2026-07-10T10:53:29.438Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nrm -f member-frame.png member-mobile.png\n"}
+{"at":"2026-07-10T10:54:43.657Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; rm -f member-frame.png member-mobile.png"}
+{"at":"2026-07-10T10:55:25.124Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\ngit add \"lib/copy/index.ts\" \"app/(publik)"}
+{"at":"2026-07-10T10:56:32.802Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== audit status/run endpoints ===\""}
+{"at":"2026-07-10T10:56:53.682Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/gov/audit/run/route.ts"}
+{"at":"2026-07-10T10:57:07.166Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/audit/[id]/status/route.ts"}
+{"at":"2026-07-10T10:58:54.382Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/member/screens/Temuan.tsx"}
+{"at":"2026-07-10T10:59:34.712Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== Temuan icon imports ===\"; grep "}
+{"at":"2026-07-10T11:01:09.444Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; grep -nE \"\\\"temuan\\.bukti\\\"|\\\"temuan\\.ke"}
+{"at":"2026-07-10T11:02:00.344Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/lib/copy/member.ts"}
+{"at":"2026-07-10T11:02:22.006Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/member/screens/Temuan.tsx"}
+{"at":"2026-07-10T11:02:44.361Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/member/screens/Temuan.tsx"}
+{"at":"2026-07-10T11:03:56.444Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; pnpm typecheck 2>&1 | tail -3"}
+{"at":"2026-07-10T11:04:19.196Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/landing/ScreenSlot.tsx"}
+{"at":"2026-07-10T11:04:48.655Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/(publik)/page.tsx"}
+{"at":"2026-07-10T11:07:29.010Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nmkdir -p public/preview\nfind . -name \"app"}
+{"at":"2026-07-10T11:07:49.798Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nmv app-anggota.png public/preview/app-ang"}
+{"at":"2026-07-10T11:08:15.598Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; grep -n \"ScreenSlot\\|DasborUI\\|PhoneUI\" "}
+{"at":"2026-07-10T11:08:28.656Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/(publik)/page.tsx"}
+{"at":"2026-07-10T11:08:41.227Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/(publik)/page.tsx"}
+{"at":"2026-07-10T11:09:30.785Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/landing-preview.png"}
+{"at":"2026-07-10T11:10:08.445Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nrm -f landing-preview.png\necho \"=== voice"}
+{"at":"2026-07-10T11:11:02.478Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== routes.test.ts voice coverage +"}
+{"at":"2026-07-10T11:11:23.444Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== request helper + voice test blo"}
+{"at":"2026-07-10T11:11:38.268Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/routes.test.ts"}
+{"at":"2026-07-10T11:12:24.124Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/routes.test.ts"}
+{"at":"2026-07-10T11:12:56.842Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== anonymity test ===\"; pnpm exec "}
+{"at":"2026-07-10T11:13:25.603Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; pnpm test 2>&1 | grep -E \"Test Files|Tes"}
+{"at":"2026-07-10T11:14:31.278Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\ngit add \"lib/copy/member.ts\" \"components/"}
+{"at":"2026-07-10T11:16:22.801Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/gov/audit/run/route.ts"}
+{"at":"2026-07-10T11:16:23.459Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/audit/[id]/status/route.ts"}
+{"at":"2026-07-10T11:16:23.969Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/persist.ts"}
+{"at":"2026-07-10T11:16:24.558Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/auth.ts"}
+{"at":"2026-07-10T11:16:32.113Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/subjek/pembukuan-console.tsx"}
+{"at":"2026-07-10T11:16:32.244Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/subjek/api.ts"}
+{"at":"2026-07-10T11:16:42.460Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/copy/subjek.ts"}
+{"at":"2026-07-10T11:16:43.518Z","tool":"Bash","path":"grep -n \"AGENT_LABELS\" -r /Users/ghaisan/Documents/Pramana-AI/lib /Users/ghaisan"}
+{"at":"2026-07-10T11:16:50.256Z","tool":"Bash","path":"grep -rn \"AGENT_LABELS\" /Users/ghaisan/Documents/Pramana-AI/lib /Users/ghaisan/D"}
+{"at":"2026-07-10T11:16:51.628Z","tool":"Bash","path":"grep -rn \"MiniMax-M2.7\\|MODEL_BADGE\\|minimax\" /Users/ghaisan/Documents/Pramana-A"}
+{"at":"2026-07-10T11:16:57.035Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/copy/index.ts"}
+{"at":"2026-07-10T11:17:05.703Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/db/schema.ts"}
+{"at":"2026-07-10T11:17:05.987Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/api.ts"}
+{"at":"2026-07-10T11:17:15.524Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/subjek/transaksi/route.ts"}
+{"at":"2026-07-10T11:17:17.911Z","tool":"Bash","path":"grep -rn \"Bukti\\b\\|bukti\" /Users/ghaisan/Documents/Pramana-AI/lib/contracts.ts |"}
+{"at":"2026-07-10T11:17:23.986Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/contracts.ts"}
+{"at":"2026-07-10T11:17:32.578Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/subjek/theme.tsx"}
+{"at":"2026-07-10T11:17:34.881Z","tool":"Bash","path":"grep -rln \"verdict\" /Users/ghaisan/Documents/Pramana-AI/components /Users/ghaisa"}
+{"at":"2026-07-10T11:17:40.699Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/styles/tokens/subjek.css"}
+{"at":"2026-07-10T11:17:41.261Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/gov/VerdictShape.tsx"}
+{"at":"2026-07-10T11:17:59.981Z","tool":"Bash","path":"cat /Users/ghaisan/Documents/Pramana-AI/app/\\(gov\\)/_logic/verdict.ts 2>/dev/nul"}
+{"at":"2026-07-10T11:18:01.154Z","tool":"Bash","path":"cat /Users/ghaisan/Documents/Pramana-AI/package.json | sed -n '1,80p'"}
+{"at":"2026-07-10T11:18:09.084Z","tool":"Bash","path":"find /Users/ghaisan/Documents/Pramana-AI/app -name \"*.test.ts\" -o -name \"*.test."}
+{"at":"2026-07-10T11:18:09.741Z","tool":"Bash","path":"sed -n 1,120p /Users/ghaisan/Documents/Pramana-AI/scripts/check-register.mjs"}
+{"at":"2026-07-10T11:18:20.549Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/routes.test.ts"}
+{"at":"2026-07-10T11:18:23.742Z","tool":"Bash","path":"wc -l blueprint-pramana-ai.md docs/keputusan-teknis.md docs/pemetaan-simkopdes.m"}
+{"at":"2026-07-10T11:18:24.412Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/index.ts"}
+{"at":"2026-07-10T11:18:25.259Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/grounding.ts"}
+{"at":"2026-07-10T11:18:25.260Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/llm.ts"}
+{"at":"2026-07-10T11:18:42.127Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/snapshot.ts"}
+{"at":"2026-07-10T11:18:42.127Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/persist.ts"}
+{"at":"2026-07-10T11:18:42.724Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/db/schema.ts"}
+{"at":"2026-07-10T11:18:43.407Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/contracts.ts"}
+{"at":"2026-07-10T11:18:44.247Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/docs/keputusan-teknis.md"}
+{"at":"2026-07-10T11:18:44.739Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/docs/pemetaan-simkopdes.md"}
+{"at":"2026-07-10T11:18:47.618Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/package.json"}
+{"at":"2026-07-10T11:18:48.003Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/llm.ts"}
+{"at":"2026-07-10T11:18:48.636Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/db/schema.ts"}
+{"at":"2026-07-10T11:18:50.795Z","tool":"Bash","path":"ls -la /Users/ghaisan/Documents/Pramana-AI/ && echo \"---LIB/AUDIT---\" && ls -la "}
+{"at":"2026-07-10T11:18:52.556Z","tool":"Bash","path":"grep -rn \"MiniMax\" /Users/ghaisan/Documents/Pramana-AI/lib /Users/ghaisan/Docume"}
+{"at":"2026-07-10T11:18:53.056Z","tool":"Bash","path":"sed -n 1,80p /Users/ghaisan/Documents/Pramana-AI/scripts/check-tokens.mjs"}
+{"at":"2026-07-10T11:18:55.107Z","tool":"Bash","path":"grep -n '^#\\{1,3\\} ' /Users/ghaisan/Documents/Pramana-AI/blueprint-pramana-ai.md"}
+{"at":"2026-07-10T11:19:02.926Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/index.ts"}
+{"at":"2026-07-10T11:19:03.828Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/grounding.ts"}
+{"at":"2026-07-10T11:19:03.829Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/verdict.ts"}
+{"at":"2026-07-10T11:19:04.764Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/registerGuard.ts"}
+{"at":"2026-07-10T11:19:05.115Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/buildSnapshot.ts"}
+{"at":"2026-07-10T11:19:11.781Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/components/subjek/logic.ts"}
+{"at":"2026-07-10T11:19:12.808Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/docs/keputusan-teknis.md"}
+{"at":"2026-07-10T11:19:13.373Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/docs/pemetaan-simkopdes.md"}
+{"at":"2026-07-10T11:19:13.902Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/Report.md"}
+{"at":"2026-07-10T11:19:14.443Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/README.md"}
+{"at":"2026-07-10T11:19:19.114Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/e2e/subjek.console.spec.ts"}
+{"at":"2026-07-10T11:19:19.228Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/blueprint-pramana-ai.md"}
+{"at":"2026-07-10T11:19:20.276Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/blueprint-pramana-ai.md"}
+{"at":"2026-07-10T11:19:20.276Z","tool":"Bash","path":"ls /Users/ghaisan/Documents/Pramana-AI/app/\\(subjek\\)/pembukuan/; cat /Users/gha"}
+{"at":"2026-07-10T11:19:21.171Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/blueprint-pramana-ai.md"}
+{"at":"2026-07-10T11:19:22.351Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/blueprint-pramana-ai.md"}
+{"at":"2026-07-10T11:19:23.114Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/blueprint-pramana-ai.md"}
+{"at":"2026-07-10T11:19:26.615Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/blueprint-pramana-ai.md"}
+{"at":"2026-07-10T11:19:28.827Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/index.ts"}
+{"at":"2026-07-10T11:19:29.270Z","tool":"Bash","path":"echo \"===PROMPTS DIR===\" && ls lib/prompts/ && echo \"===COPY DIR===\" && ls lib/c"}
+{"at":"2026-07-10T11:19:30.158Z","tool":"Bash","path":"grep -rn \"buktiJson\" /Users/ghaisan/Documents/Pramana-AI/app /Users/ghaisan/Docu"}
+{"at":"2026-07-10T11:19:49.433Z","tool":"Bash","path":"echo \"===PROMPTS DIR===\" && ls lib/prompts/ && echo \"===COPY DIR===\" && ls lib/c"}
+{"at":"2026-07-10T11:19:50.064Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/facts.ts"}
+{"at":"2026-07-10T11:20:05.083Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/prompts/konflik-kepentingan.ts"}
+{"at":"2026-07-10T11:20:05.561Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/prompts/bersama.ts"}
+{"at":"2026-07-10T11:20:06.506Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/auth.ts"}
+{"at":"2026-07-10T11:20:06.507Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/audit/persist.ts"}
+{"at":"2026-07-10T11:20:18.267Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/prompts/anomali-transaksi.ts"}
+{"at":"2026-07-10T11:20:18.826Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/prompts/kesehatan-finansial.ts"}
+{"at":"2026-07-10T11:20:19.391Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/prompts/kepatuhan-proses.ts"}
+{"at":"2026-07-10T11:20:20.414Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/lib/prompts/adjudikator.ts"}
+{"at":"2026-07-10T11:20:47.984Z","tool":"Bash","path":"grep -n \"AGEN_FORENSIK\" /Users/ghaisan/Documents/Pramana-AI/lib/prompts/*.ts | h"}
+{"at":"2026-07-10T11:21:02.511Z","tool":"Bash","path":"grep -rn \"auditRun\\|ar-2026\\|temuan\" /Users/ghaisan/Documents/Pramana-AI/scripts"}
+{"at":"2026-07-10T11:21:14.784Z","tool":"Bash","path":"ls /Users/ghaisan/Documents/Pramana-AI/scripts/seed/; grep -rn \"ar-\\|auditRun\" /"}
+{"at":"2026-07-10T11:21:22.984Z","tool":"Bash","path":"sed -n 790,860p /Users/ghaisan/Documents/Pramana-AI/scripts/seed/data.ts"}
+{"at":"2026-07-10T11:21:32.644Z","tool":"Bash","path":"grep -n \"kop-\" /Users/ghaisan/Documents/Pramana-AI/scripts/seed/data.ts | head -"}
+{"at":"2026-07-10T11:24:07.654Z","tool":"Bash","path":"grep -n \"vitest\\|\\.db\" /Users/ghaisan/Documents/Pramana-AI/.gitignore; echo ---;"}
+{"at":"2026-07-10T11:24:23.150Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/lib/copy/subjek.ts"}
+{"at":"2026-07-10T11:24:37.971Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/subjek/audit/route.ts"}
+{"at":"2026-07-10T11:24:47.474Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/subjek/audit/route.ts"}
+{"at":"2026-07-10T11:25:12.875Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/subjek/audit/[id]/route.ts"}
+{"at":"2026-07-10T11:25:24.778Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/subjek/api.ts"}
+{"at":"2026-07-10T11:25:27.088Z","tool":"Write","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/m3-7-diagram-blueprint.md"}
+{"at":"2026-07-10T11:25:38.791Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/subjek/api.ts"}
+{"at":"2026-07-10T11:26:02.857Z","tool":"Edit","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/m3-7-diagram-blueprint.md"}
+{"at":"2026-07-10T11:26:28.728Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/lib/copy/subjek.ts"}
+{"at":"2026-07-10T11:27:06.464Z","tool":"Bash","path":"echo \"=== git status --short ===\" && git status --short && echo \"=== git diff --"}
+{"at":"2026-07-10T11:27:29.303Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/components/subjek/AgentTree.tsx"}
+{"at":"2026-07-10T11:27:56.139Z","tool":"Bash","path":"echo \"=== new untracked route ===\" && ls -la app/api/subjek/audit/ 2>/dev/null &"}
+{"at":"2026-07-10T11:28:02.655Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/subjek/pembukuan-console.tsx"}
+{"at":"2026-07-10T11:28:05.073Z","tool":"Bash","path":"echo \"=== new untracked route (not mine) ===\" && ls -la app/api/subjek/audit/ 2>"}
+{"at":"2026-07-10T11:28:12.597Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/subjek/pembukuan-console.tsx"}
+{"at":"2026-07-10T11:28:30.819Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/subjek/pembukuan-console.tsx"}
+{"at":"2026-07-10T11:28:44.034Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/subjek/pembukuan-console.tsx"}
+{"at":"2026-07-10T11:29:20.242Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/subjek/pembukuan-console.tsx"}
+{"at":"2026-07-10T11:29:53.898Z","tool":"Bash","path":"grep -n \"sessionSecret\\|SESSION_SECRET\" /Users/ghaisan/Documents/Pramana-AI/lib/"}
+{"at":"2026-07-10T11:30:35.840Z","tool":"Bash","path":"sed -n 36,58p /Users/ghaisan/Documents/Pramana-AI/lib/env.ts"}
+{"at":"2026-07-10T11:35:52.617Z","tool":"Write","path":"/Users/ghaisan/Documents/Pramana-AI/app/api/subjek/audit/route.test.ts"}
+{"at":"2026-07-10T11:36:10.709Z","tool":"Bash","path":"pnpm typecheck 2>&1 | tail -20"}
+{"at":"2026-07-10T11:36:20.951Z","tool":"Bash","path":"pnpm lint 2>&1 | tail -20 && pnpm check-register 2>&1 | tail -5 && pnpm check:to"}
+{"at":"2026-07-10T11:36:35.682Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/subjek/AgentTree.tsx"}
+{"at":"2026-07-10T11:36:42.679Z","tool":"Bash","path":"pnpm lint 2>&1 | tail -5"}
+{"at":"2026-07-10T11:36:53.432Z","tool":"Bash","path":"pnpm test 2>&1 | tail -45"}
+{"at":"2026-07-10T11:37:21.170Z","tool":"Bash","path":"pnpm test 2>&1 | grep -E \"Test Files|Tests |FAIL|failed\" | head -10"}
+{"at":"2026-07-10T11:37:29.435Z","tool":"Write","path":"/private/tmp/claude-501/-Users-ghaisan-Documents-Pramana-AI/125a81a9-a44b-4294-9319-e12690dd9b05/scratchpad/m3-7-readme-blueprint.md"}
+{"at":"2026-07-10T11:37:54.468Z","tool":"Bash","path":"pnpm vitest run app/api/subjek/audit/route.test.ts --coverage.enabled=false 2>&1"}
+{"at":"2026-07-10T11:40:06.644Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== changed/new files ===\"; git sta"}
+{"at":"2026-07-10T11:40:22.479Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== typecheck ===\"; pnpm typecheck "}
+{"at":"2026-07-10T11:41:23.381Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\ngit add app/api/subjek/audit components/s"}
+{"at":"2026-07-10T11:44:01.456Z","tool":"Read","path":"/Users/ghaisan/Documents/Pramana-AI/tree-running.png"}
+{"at":"2026-07-10T11:49:07.771Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; npx tsx -e '\nimport { getDb } from \"./db"}
+{"at":"2026-07-10T11:50:21.077Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; npx tsx -e '\nimport { getDb } from \"./db"}
+{"at":"2026-07-10T11:53:00.295Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; grep -nE \"120|deadline|batas|DEADLINE|ha"}
+{"at":"2026-07-10T11:53:57.723Z","tool":"Edit","path":"/Users/ghaisan/Documents/Pramana-AI/components/subjek/pembukuan-console.tsx"}
+{"at":"2026-07-10T11:55:32.597Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\npnpm typecheck 2>&1 | tail -1\ngit add com"}
+{"at":"2026-07-10T11:57:38.026Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== lint ===\"; pnpm lint 2>&1 | tai"}
+{"at":"2026-07-10T12:01:48.236Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; npx tsx -e '\nimport { getDb } from \"./db"}
+{"at":"2026-07-10T12:02:45.866Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nrm -f tree-running.png\npkill -f \"next dev"}
+{"at":"2026-07-10T12:03:28.655Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\necho \"=== reseed clean ===\"; pnpm seed 2>"}
+{"at":"2026-07-10T12:04:54.223Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; pnpm e2e 2>&1 | tail -35"}
+{"at":"2026-07-10T12:07:01.825Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; pnpm seed 2>&1 | tail -1; echo \"starting"}
+{"at":"2026-07-10T12:07:54.143Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI; sleep 7; grep -iE \"ready|local:\" /privat"}
+{"at":"2026-07-10T12:08:54.256Z","tool":"Bash","path":"cd /Users/ghaisan/Documents/Pramana-AI\nCROWN_GATE_WRITE=1 TS=\"$(date -u +%Y-%m-%"}
