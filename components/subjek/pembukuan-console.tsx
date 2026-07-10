@@ -752,12 +752,15 @@ const SUBJEK_CSS = `
 
 const PIHAK_FALLBACK = "Koperasi";
 
-// Audit tree (6.4): debounce 1500ms setelah transaksi tercatat (reset bila ada
-// transaksi lagi), lalu POST /api/subjek/audit dan polling tiap 2000ms dengan
-// batas 120000ms. Hasil node WAJIB dari audit tersimpan nyata, tanpa simulasi.
+// Audit tree: debounce 1500ms setelah transaksi tercatat (reset bila ada
+// transaksi lagi), lalu POST /api/subjek/audit dan polling tiap 2000ms. Konsol
+// bendahara memicu audit LIVE ulang atas SELURUH koperasi (ratusan transaksi),
+// jadi lebih lama dari alur gov 6.4 (120s); batas dinaikkan ke 240s agar tree
+// menampilkan verdict nyata dalam sesi (audit latar after() beranggaran 300s).
+// Hasil node WAJIB dari audit tersimpan nyata, tanpa simulasi.
 const AUDIT_DEBOUNCE_MS = 1500;
 const AUDIT_POLL_MS = 2000;
-const AUDIT_BATAS_MS = 120_000;
+const AUDIT_BATAS_MS = 240_000;
 
 export function PembukuanConsole() {
   const router = useRouter();
