@@ -187,6 +187,7 @@ export function Beranda() {
           v={v}
           gagal={vstat === "gagal"}
           sum={sum}
+          sumMemuat={summary.muat.status === "memuat"}
           findingList={findingList}
           agRun={agRun}
           agStep={agStep}
@@ -208,6 +209,7 @@ function BerandaIsi({
   v,
   gagal,
   sum,
+  sumMemuat,
   findingList,
   agRun,
   agStep,
@@ -221,6 +223,7 @@ function BerandaIsi({
   v: VerdictResp;
   gagal: boolean;
   sum: MemberSummary | null;
+  sumMemuat: boolean;
   findingList: MemberFinding[];
   agRun: boolean;
   agStep: number;
@@ -243,15 +246,16 @@ function BerandaIsi({
   // terurut server-side: merah, kuning, info). Kosong -> daftar temuan.
   const topTemuanId = findingList[0]?.id;
 
-  const simpanan = sum ? sum.uangAnda.totalSimpanan : 600000;
-  const cic = sum?.uangAnda.cicilanBerikut ?? {
-    jumlah: 200000,
-    tanggal: "2026-07-05",
-  };
-  const cicilanLine = isi(MEMBER_COPY["beranda.simpanan.cicilan"], {
-    rp: fmtRp(cic.jumlah),
-    tgl: fmtTanggalPendek(cic.tanggal),
-  });
+  // Tanpa angka fabrikasi: nominal hanya tampil bila summary nyata termuat.
+  // sum null (memuat/gagal) -> teks status jujur; cicilanBerikut null (tanpa
+  // pinjaman) -> baris cicilan disembunyikan.
+  const cic = sum?.uangAnda.cicilanBerikut ?? null;
+  const cicilanLine = cic
+    ? isi(MEMBER_COPY["beranda.simpanan.cicilan"], {
+        rp: fmtRp(cic.jumlah),
+        tgl: fmtTanggalPendek(cic.tanggal),
+      })
+    : null;
   const agendaLine =
     dv.n > 0
       ? isi(MEMBER_COPY["beranda.rat.agenda"], { n: dv.n })
@@ -407,18 +411,36 @@ function BerandaIsi({
           <span style={{ fontSize: 12.5, color: "var(--muted)" }}>
             {MEMBER_COPY["beranda.simpanan.label"]}
           </span>
-          <span
-            className="tnum"
-            style={{ fontSize: 22, fontWeight: 650, letterSpacing: -0.4 }}
-          >
-            {fmtRp(simpanan)}
-          </span>
-          <span
-            className="tnum"
-            style={{ fontSize: 12.5, color: "var(--muted)" }}
-          >
-            {cicilanLine}
-          </span>
+          {sum ? (
+            <>
+              <span
+                className="tnum"
+                style={{ fontSize: 22, fontWeight: 650, letterSpacing: -0.4 }}
+              >
+                {fmtRp(sum.uangAnda.totalSimpanan)}
+              </span>
+              {cicilanLine ? (
+                <span
+                  className="tnum"
+                  style={{ fontSize: 12.5, color: "var(--muted)" }}
+                >
+                  {cicilanLine}
+                </span>
+              ) : null}
+            </>
+          ) : (
+            <span
+              style={{
+                fontSize: 13.5,
+                color: "var(--muted)",
+                lineHeight: 1.45,
+              }}
+            >
+              {sumMemuat
+                ? MEMBER_COPY["beranda.memuat"]
+                : MEMBER_COPY["uang.kosong.judul"]}
+            </span>
+          )}
         </span>
         <IkonChevronKanan size={15} style={{ stroke: "var(--muted)" }} />
       </button>

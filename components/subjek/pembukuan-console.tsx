@@ -1080,6 +1080,9 @@ export function PembukuanConsole() {
     () => () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
       if (pollRef.current) clearInterval(pollRef.current);
+      // Unmount menggugurkan run berjalan: mulaiAudit yang masih menunggu
+      // postAudit melihat seq basi dan tidak membuat interval (anti zombie poll).
+      auditSeqRef.current++;
     },
     [],
   );
@@ -1458,6 +1461,7 @@ export function PembukuanConsole() {
                       value={trx.jenis}
                       onChange={setTrxField("jenis")}
                       style={mkSelect(false)}
+                      aria-label={c.trx.lJenis}
                     >
                       {c.opsi.jenis.map((o) => (
                         <option key={o.value} value={o.value}>
@@ -1515,6 +1519,7 @@ export function PembukuanConsole() {
                       value={trx.unitUsaha}
                       onChange={setTrxField("unitUsaha")}
                       style={mkSelect(!!trxErr.unitUsaha)}
+                      aria-label={c.trx.lUnit}
                     >
                       {c.opsi.unit.map((o) => (
                         <option key={o.value} value={o.value}>
@@ -1538,6 +1543,7 @@ export function PembukuanConsole() {
                       onChange={setTrxField("vendorNama")}
                       placeholder={c.trx.phVendorNama}
                       style={mkInput(!!trxErr.vendorNama)}
+                      aria-label={c.trx.lVendorNama}
                     />
                     {trxErr.vendorNama && <ErrText msg={trxErr.vendorNama} />}
                   </div>
@@ -1554,6 +1560,7 @@ export function PembukuanConsole() {
                       onChange={setTrxField("vendorAlamat")}
                       placeholder={c.trx.phVendorAlamat}
                       style={mkInput(!!trxErr.vendorAlamat)}
+                      aria-label={c.trx.lVendorAlamat}
                     />
                     {trxErr.vendorAlamat && (
                       <ErrText msg={trxErr.vendorAlamat} />
@@ -1570,6 +1577,7 @@ export function PembukuanConsole() {
                       value={trx.anggota}
                       onChange={setTrxField("anggota")}
                       style={mkSelect(false)}
+                      aria-label={c.trx.lAnggota}
                     >
                       {trxAnggotaOptions.map((o) => (
                         <option key={o.value} value={o.value}>
@@ -1591,6 +1599,7 @@ export function PembukuanConsole() {
                     onChange={setTrxField("deskripsi")}
                     placeholder={c.trx.phDeskripsi}
                     style={mkTextarea(!!trxErr.deskripsi)}
+                    aria-label={c.trx.lDeskripsi}
                   />
                   {trxErr.deskripsi && <ErrText msg={trxErr.deskripsi} />}
                 </div>
@@ -1648,6 +1657,7 @@ export function PembukuanConsole() {
                       value={pin.anggota}
                       onChange={setPinField("anggota")}
                       style={mkSelect(!!pinErr.anggota)}
+                      aria-label={c.pin.lAnggota}
                     >
                       {pinAnggotaOptions.map((o) => (
                         <option key={o.value} value={o.value}>
@@ -1670,6 +1680,7 @@ export function PembukuanConsole() {
                       value={pin.disetujuiOleh}
                       onChange={setPinField("disetujuiOleh")}
                       style={mkSelect(!!pinErr.disetujuiOleh)}
+                      aria-label={c.pin.lDisetujui}
                     >
                       {c.opsi.jabatan.map((o) => (
                         <option key={o.value} value={o.value}>
@@ -1760,6 +1771,7 @@ export function PembukuanConsole() {
                       type="button"
                       role="switch"
                       aria-checked={pin.dokumenLengkap}
+                      aria-label={c.pin.dokJudul}
                       onClick={() =>
                         setPin((prev) => ({
                           ...prev,
@@ -1847,6 +1859,7 @@ export function PembukuanConsole() {
                   type="button"
                   role="switch"
                   aria-checked={ratTerlaksana}
+                  aria-label={c.rat.judul}
                   onClick={() => {
                     setRat((prev) => ({
                       ...prev,

@@ -2657,21 +2657,31 @@ export function OverviewClient() {
   const [berjalan, setBerjalan] = useState<Berjalan[]>([]);
   const berjalanIds = useRef<Set<string>>(new Set());
 
-  const muat = useCallback(async (p: string | null) => {
-    setStatus("memuat");
+  // Guard balapan: hanya panggilan muat terbaru yang boleh menulis state.
+  const muatSeq = useRef(0);
+  // senyap: refresh latar (poll pemeriksaan selesai) tanpa membuang dashboard
+  // yang sudah termuat ke skeleton; gagal senyap mempertahankan tampilan.
+  const muat = useCallback(async (p: string | null, senyap = false) => {
+    const seq = ++muatSeq.current;
+    const gagalkan = () => {
+      if (senyap) setStatus((s) => (s === "memuat" ? "gagal" : s));
+      else setStatus("gagal");
+    };
+    if (!senyap) setStatus("memuat");
     try {
       const url = p ? `/api/gov/overview?periode=${p}` : "/api/gov/overview";
       const res = await fetch(url, { cache: "no-store" });
       const json = await res.json();
+      if (seq !== muatSeq.current) return;
       if (!res.ok || !json?.ok) {
-        setStatus("gagal");
+        gagalkan();
         return;
       }
       const d = json.data as GovOverview;
       setData(d);
       setStatus(d.kpi.jumlahKoperasi > 0 ? "default" : "kosong");
     } catch {
-      setStatus("gagal");
+      if (seq === muatSeq.current) gagalkan();
     }
   }, []);
 
@@ -2710,7 +2720,7 @@ export function OverviewClient() {
         }
         berjalanIds.current = idsBaru;
         setBerjalan(list);
-        if (adaSelesai) void muat(periode);
+        if (adaSelesai) void muat(periode, true);
       } catch {
         /* diamkan; percobaan poll berikutnya coba lagi */
       }

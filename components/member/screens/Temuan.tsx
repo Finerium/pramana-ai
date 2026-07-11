@@ -36,6 +36,7 @@ import {
   IkonSeverity,
   IkonChevronBawah,
   IkonDokumen,
+  IkonJam,
   IkonLingkaranCentang,
   IkonPerisai,
 } from "@/components/member/icons";
@@ -175,6 +176,14 @@ export function Temuan() {
 
       {muat.status === "memuat" ? (
         <Skeleton heights={[190, 190, 190]} />
+      ) : muat.status === "gagal" && !data ? (
+        // Gagal memuat TANPA cache: state netral (pola Beranda saat verdict
+        // tidak tersedia), BUKAN kartu hijau "tidak ada temuan" yang menyesatkan.
+        <EmptyCard
+          icon={<IkonJam size={48} style={{ stroke: "var(--muted)" }} />}
+          judul={MEMBER_COPY["beranda.kosong.judul"]}
+          sub={MEMBER_COPY["beranda.kosong.sub"]}
+        />
       ) : list.length === 0 ? (
         <EmptyCard
           icon={

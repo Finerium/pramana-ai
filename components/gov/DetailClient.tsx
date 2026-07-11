@@ -533,8 +533,9 @@ export function DetailClient({ id }: { id: string }) {
         const st = json.data.status as string;
         if (st === "selesai") {
           stopPoll();
+          // muat() sudah men-set status yang benar (default/kosong/gagal);
+          // jangan menimpa kegagalan refetch dengan "default".
           await muat();
-          setStatus("default");
           setPeri("langsung");
         } else if (st === "gagal_langsung") {
           stopPoll();
