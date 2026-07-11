@@ -179,7 +179,9 @@ async function fokusTransaksi(db: Db, koperasiId: string) {
       ),
     )
     .orderBy(desc(transaksi.tanggal), desc(transaksi.id))
-    .limit(FOKUS_MAKS_TRANSAKSI);
+    // BUKAN jendela 12: >12 baris live akan menggusur pin trx-an1 dan entri
+    // live lama. Batas longgar = cap snapshot penuh (500), cukup satu sesi.
+    .limit(MAKS_TRANSAKSI);
   const perId = new Map<string, (typeof terbaru)[number]>();
   for (const r of [...terbaru, ...wajib]) perId.set(r.id, r);
   return [...perId.values()].sort((a, b) =>

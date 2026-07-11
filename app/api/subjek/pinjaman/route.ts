@@ -10,6 +10,7 @@ import {
   koperasiForPengurus,
   requireRole,
 } from "../../../../lib/auth";
+import { hariIniWIB, tanggalIsoValid } from "../../../../lib/waktu";
 
 const Body = z.object({
   anggotaId: z.string().min(1),
@@ -34,6 +35,19 @@ export async function POST(req: NextRequest) {
         "Data pinjaman tidak lengkap atau tidak sah.",
       );
     const b = parsed.data;
+    // Jatuh tempo wajib YYYY-MM-DD valid dan rentang wajar (2020 s.d. lima
+    // tahun ke depan): string bebas merusak tampilan tanggal dan snapshot audit.
+    const batasMaju = `${Number(hariIniWIB().slice(0, 4)) + 5}-12-31`;
+    if (
+      !tanggalIsoValid(b.jatuhTempoBerikut) ||
+      b.jatuhTempoBerikut < "2020-01-01" ||
+      b.jatuhTempoBerikut > batasMaju
+    ) {
+      throw new ApiError(
+        "VALIDATION",
+        "Tanggal jatuh tempo tidak sah. Silakan periksa kembali.",
+      );
+    }
     // Anti IDOR: pinjaman hanya untuk anggota koperasi pengurus sesi.
     if (!(await anggotaMilikKoperasi(b.anggotaId, koperasiId))) {
       throw new ApiError(

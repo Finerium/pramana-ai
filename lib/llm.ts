@@ -55,50 +55,55 @@ async function panggilSekali(
 ): Promise<string> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
-  let res: Response;
   const base = process.env.LLM_BASE_URL || DEFAULT_BASE_URL;
   const model = process.env.LLM_MODEL || DEFAULT_MODEL;
   const key = process.env.LLM_API_KEY || "";
+  // Timer TETAP aktif sampai body selesai dibaca: status 200 yang bodinya
+  // macet ikut dibatalkan AbortSignal, tidak menggantung tanpa batas.
   try {
-    res = await fetchImpl(`${base}/chat/completions`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${key}`,
-      },
-      body: JSON.stringify({
-        model,
-        messages,
-        response_format: { type: "json_object" },
-        // ponytail: temperature 0 agar audit dapat direproduksi; naikkan bila
-        // perlu variasi. Non-streaming (tanpa field stream) per 6.4.
-        temperature: 0,
-      }),
-      signal: controller.signal,
-    });
-  } catch (e) {
-    throw new LLMUnavailable("panggilan LLM gagal (jaringan atau timeout)", {
-      cause: e,
-    });
+    let res: Response;
+    try {
+      res = await fetchImpl(`${base}/chat/completions`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${key}`,
+        },
+        body: JSON.stringify({
+          model,
+          messages,
+          response_format: { type: "json_object" },
+          // ponytail: temperature 0 agar audit dapat direproduksi; naikkan bila
+          // perlu variasi. Non-streaming (tanpa field stream) per 6.4.
+          temperature: 0,
+        }),
+        signal: controller.signal,
+      });
+    } catch (e) {
+      throw new LLMUnavailable("panggilan LLM gagal (jaringan atau timeout)", {
+        cause: e,
+      });
+    }
+    if (!res.ok) {
+      throw new LLMUnavailable(`LLM merespons status ${res.status}`);
+    }
+    let envelope: unknown;
+    try {
+      envelope = await res.json();
+    } catch (e) {
+      // Termasuk abort saat baca body (timeout).
+      throw new LLMUnavailable("respons LLM bukan JSON", { cause: e });
+    }
+    const content = (
+      envelope as { choices?: Array<{ message?: { content?: unknown } }> }
+    )?.choices?.[0]?.message?.content;
+    if (typeof content !== "string") {
+      throw new LLMUnavailable("respons LLM tanpa konten teks");
+    }
+    return content;
   } finally {
     clearTimeout(timer);
   }
-  if (!res.ok) {
-    throw new LLMUnavailable(`LLM merespons status ${res.status}`);
-  }
-  let envelope: unknown;
-  try {
-    envelope = await res.json();
-  } catch (e) {
-    throw new LLMUnavailable("respons LLM bukan JSON", { cause: e });
-  }
-  const content = (
-    envelope as { choices?: Array<{ message?: { content?: unknown } }> }
-  )?.choices?.[0]?.message?.content;
-  if (typeof content !== "string") {
-    throw new LLMUnavailable("respons LLM tanpa konten teks");
-  }
-  return content;
 }
 
 /**

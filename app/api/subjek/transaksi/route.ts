@@ -1,15 +1,16 @@
 import type { NextRequest } from "next/server";
-import { eq, sql } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { ulid } from "ulid";
 import { getDb } from "../../../../db/client";
-import { koperasi, transaksi } from "../../../../db/schema";
+import { koperasi, transaksi, unitUsaha } from "../../../../db/schema";
 import { ApiError, ok, runRoute } from "../../../../lib/api";
 import {
   anggotaMilikKoperasi,
   koperasiForPengurus,
   requireRole,
 } from "../../../../lib/auth";
+import { hariIniWIB, tanggalIsoValid } from "../../../../lib/waktu";
 
 const Body = z.object({
   jenis: z.enum([
@@ -48,6 +49,19 @@ export async function POST(req: NextRequest) {
         "Data transaksi tidak lengkap atau tidak sah.",
       );
     const b = parsed.data;
+    // Trust boundary: tanggal wajib YYYY-MM-DD valid dan rentang wajar (2020
+    // s.d. hari ini WIB). String bebas / tanggal masa depan meracuni periode
+    // snapshot audit dan urutan latestRun (sort leksikografis).
+    if (
+      !tanggalIsoValid(b.tanggal) ||
+      b.tanggal < "2020-01-01" ||
+      b.tanggal > hariIniWIB()
+    ) {
+      throw new ApiError(
+        "VALIDATION",
+        "Tanggal transaksi tidak sah. Gunakan tanggal yang benar, paling lama tahun 2020 dan tidak melebihi hari ini.",
+      );
+    }
     if (b.jenis === "pembelian" && (!b.vendorNama || !b.vendorAlamat)) {
       throw new ApiError(
         "VALIDATION",
@@ -65,6 +79,27 @@ export async function POST(req: NextRequest) {
     const transaksiId = ulid();
     const delta = arah === "masuk" ? b.jumlah : -b.jumlah;
     const { db } = getDb();
+
+    // Validasi unitUsaha sebelum insert: id tak dikenal (atau milik koperasi
+    // lain) harus VALIDATION, bukan 500 karena pelanggaran FK.
+    if (b.unitUsahaId) {
+      const unit = await db
+        .select({ id: unitUsaha.id })
+        .from(unitUsaha)
+        .where(
+          and(
+            eq(unitUsaha.id, b.unitUsahaId),
+            eq(unitUsaha.koperasiId, koperasiId),
+          ),
+        )
+        .limit(1);
+      if (!unit[0]) {
+        throw new ApiError(
+          "VALIDATION",
+          "Unit usaha tidak terdaftar di koperasi ini.",
+        );
+      }
+    }
 
     const saldoKasBaru = await db.transaction(async (tx) => {
       await tx.insert(transaksi).values({

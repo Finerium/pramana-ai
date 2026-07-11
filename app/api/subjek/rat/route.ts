@@ -5,6 +5,7 @@ import { getDb } from "../../../../db/client";
 import { koperasi } from "../../../../db/schema";
 import { ApiError, ok, runRoute } from "../../../../lib/api";
 import { koperasiForPengurus, requireRole } from "../../../../lib/auth";
+import { hariIniWIB, tanggalIsoValid } from "../../../../lib/waktu";
 
 const Body = z.object({
   status: z.enum(["belum", "terlaksana"]),
@@ -21,6 +22,18 @@ export async function POST(req: NextRequest) {
     if (!parsed.success)
       throw new ApiError("VALIDATION", "Status RAT tidak sah.");
     const { status, tanggal } = parsed.data;
+    // Tanggal RAT (bila diisi) wajib YYYY-MM-DD valid, 2020 s.d. hari ini WIB.
+    if (
+      tanggal &&
+      (!tanggalIsoValid(tanggal) ||
+        tanggal < "2020-01-01" ||
+        tanggal > hariIniWIB())
+    ) {
+      throw new ApiError(
+        "VALIDATION",
+        "Tanggal RAT tidak sah. Gunakan tanggal yang benar dan tidak melebihi hari ini.",
+      );
+    }
     const { db } = getDb();
     await db
       .update(koperasi)

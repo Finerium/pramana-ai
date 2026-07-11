@@ -325,7 +325,9 @@ export async function runAudit(
   metadata.warnaAdjudikator = warnaUsul !== warna ? warnaUsul : null;
 
   // Ringkasan: pakai adjudikator bila lolos guard, selain itu fallback copy.
-  if (!periksaRingkasan(ringkasan).ok) {
+  // Cek kosong eksplisit: jalur cepat melewati adjudikator sehingga ringkasan
+  // tetap "" dan lolos periksaRingkasan; tanpa ini run cepat tersimpan kosong.
+  if (ringkasan.trim() === "" || !periksaRingkasan(ringkasan).ok) {
     // ponytail: lib/copy tidak punya ringkasan merah-live (hanya kuning/hijau,
     // merah-live memakai teks kuning yang netral dan bersih register). Upgrade:
     // tambah RINGKASAN_LIVE.merah bila butuh kalimat khusus merah non-fixture.

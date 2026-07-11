@@ -18,11 +18,13 @@ export async function GET(req: NextRequest) {
     const { db } = getDb();
 
     const batas = new Date(Date.now() - 5 * 60_000).toISOString();
+    // Dedupe per koperasi: >1 marker berjalan (trigger tumpang tindih) tetap
+    // satu entri; mulai = marker terbaru agar banner tidak menghitung ganda.
     const berjalan = await db
       .select({
         koperasiId: auditRun.koperasiId,
         nama: koperasi.nama,
-        mulai: sql<string>`json_extract(${auditRun.rawJson}, '$.mulai')`,
+        mulai: sql<string>`max(json_extract(${auditRun.rawJson}, '$.mulai'))`,
       })
       .from(auditRun)
       .innerJoin(koperasi, eq(koperasi.id, auditRun.koperasiId))
@@ -32,7 +34,8 @@ export async function GET(req: NextRequest) {
           gt(auditRun.dibuatPada, batas),
         ),
       )
-      .orderBy(desc(auditRun.dibuatPada))
+      .groupBy(auditRun.koperasiId, koperasi.nama)
+      .orderBy(desc(sql`max(${auditRun.dibuatPada})`))
       .limit(24);
 
     return ok({ berjalan });
