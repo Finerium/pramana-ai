@@ -136,21 +136,50 @@ export async function persistFailureMarker(
   });
 }
 
+/** true bila marker "berjalan-<id>" masih ada (audit belum dibatalkan reset). */
+async function markerHidup(db: Db, auditRunId: string): Promise<boolean> {
+  try {
+    const rows = await db
+      .select({ id: auditRun.id })
+      .from(auditRun)
+      .where(eq(auditRun.id, "berjalan-" + auditRunId))
+      .limit(1);
+    return rows.length > 0;
+  } catch {
+    // DB blip: jangan batalkan persist yang sah (default anggap masih hidup).
+    return true;
+  }
+}
+
 /**
  * Orkestrasi live audit (F12, 6.4) untuk dijalankan latar (after()). Tanpa key
  * LLM: langsung marker gagal_langsung (nol panggilan provider, AC-DEMO-03).
  * Dengan key: buildSnapshot -> runAudit -> persist sukses; kegagalan apa pun
  * (LLMUnavailable dsb) -> marker. chat/hasKey injectable untuk test.
+ *
+ * cancelViaMarker (jalur subjek yang menyisipkan marker "berjalan-"): sebelum
+ * persist, cek marker masih ada. Reset (/api/subjek/reset) menghapus baris
+ * source=live termasuk marker; marker hilang = audit dibatalkan -> LEWATI
+ * persist (tanpa run/temuan/notif hantu). Jalur gov TIDAK memakai marker
+ * (cancelViaMarker undefined) -> persist normal, tidak terpengaruh.
  */
 export async function runLiveAudit(
   auditRunId: string,
   koperasiId: string,
-  deps?: { chat?: AuditChat; hasKey?: () => boolean; fokus?: boolean },
+  deps?: {
+    chat?: AuditChat;
+    hasKey?: () => boolean;
+    fokus?: boolean;
+    cancelViaMarker?: boolean;
+  },
 ): Promise<void> {
   const { db } = getDb();
   const hasKey = deps?.hasKey ?? hasLlmKey;
+  const dibatalkan = async () =>
+    deps?.cancelViaMarker === true && !(await markerHidup(db, auditRunId));
   try {
     if (!hasKey()) {
+      if (await dibatalkan()) return;
       await persistFailureMarker(db, { auditRunId, koperasiId, periode: "" });
       return;
     }
@@ -167,8 +196,10 @@ export async function runLiveAudit(
       });
       const result = await runAudit(snapshot, { chat, cepat: deps?.fokus });
       recordLlmSuccess();
+      if (await dibatalkan()) return;
       await persistLiveRun(db, { auditRunId, koperasiId, periode, result });
     } catch {
+      if (await dibatalkan()) return;
       await persistFailureMarker(db, {
         auditRunId,
         koperasiId,

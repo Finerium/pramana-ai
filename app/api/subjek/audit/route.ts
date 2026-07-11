@@ -6,6 +6,7 @@
  * tidak mematikan trigger; tanpa key LLM runLiveAudit menandai gagal_langsung.
  */
 import { after, type NextRequest } from "next/server";
+import { and, desc, eq, gt, sql } from "drizzle-orm";
 import { ulid } from "ulid";
 import { getDb } from "../../../../db/client";
 import { auditRun } from "../../../../db/schema";
@@ -20,6 +21,34 @@ export async function POST(req: NextRequest) {
     if (!koperasiId)
       throw new ApiError("FORBIDDEN", "Akun pengurus tidak terkait koperasi.");
 
+    const { db } = getDb();
+
+    // Guard konkurensi: bila koperasi ini SUDAH punya audit berjalan (marker
+    // < 5 menit, filter sama dgn gov/pemeriksaan-berjalan), jangan mulai audit
+    // baru. Balas auditRunId yang sedang jalan agar klien polling itu. Mencegah
+    // audit menumpuk, notif dobel, dan run basi menang sebagai latestRun.
+    const batas = new Date(Date.now() - 5 * 60_000).toISOString();
+    const sedangJalan = await db
+      .select({
+        auditRunId: sql<string>`json_extract(${auditRun.rawJson}, '$.auditRunId')`,
+      })
+      .from(auditRun)
+      .where(
+        and(
+          eq(auditRun.koperasiId, koperasiId),
+          sql`json_extract(${auditRun.rawJson}, '$.status') = 'berjalan'`,
+          gt(auditRun.dibuatPada, batas),
+        ),
+      )
+      .orderBy(desc(auditRun.dibuatPada))
+      .limit(1);
+    if (sedangJalan[0]?.auditRunId) {
+      return ok(
+        { auditRunId: sedangJalan[0].auditRunId, status: "berjalan" },
+        { status: 202 },
+      );
+    }
+
     const auditRunId = ulid();
 
     // Marker "sedang diperiksa Pramana": disisipkan SINKRON sebelum audit latar
@@ -28,7 +57,6 @@ export async function POST(req: NextRequest) {
     // hasil. Gagal insert TIDAK menggagalkan trigger (indikator best-effort).
     try {
       const now = new Date().toISOString();
-      const { db } = getDb();
       await db.insert(auditRun).values({
         id: "berjalan-" + auditRunId,
         koperasiId,
@@ -47,7 +75,12 @@ export async function POST(req: NextRequest) {
     try {
       // fokus:true = snapshot jendela kecil supaya audit interaktif bendahara
       // selalu selesai cepat (gov tetap snapshot penuh yang dalam).
-      after(() => runLiveAudit(auditRunId, koperasiId, { fokus: true }));
+      after(() =>
+        runLiveAudit(auditRunId, koperasiId, {
+          fokus: true,
+          cancelViaMarker: true,
+        }),
+      );
     } catch {
       // ponytail: after() di luar konteks request (mis. unit test) diabaikan;
       // eksekusi live audit diuji langsung lewat runLiveAudit.

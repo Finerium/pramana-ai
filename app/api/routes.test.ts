@@ -1,7 +1,9 @@
 import { NextRequest } from "next/server";
 import { describe, it, expect, beforeAll, beforeEach, vi } from "vitest";
+import { eq } from "drizzle-orm";
 import { ulid } from "ulid";
 import { createDb, resolveDbUrl, type Db } from "../../db/client";
+import { auditRun } from "../../db/schema";
 import { seed } from "../../scripts/seed/index";
 import {
   SESSION_COOKIE,
@@ -547,6 +549,35 @@ describe("perilaku endpoint", () => {
     expect(d.auditRun?.verdictWarna).toBe("merah");
     const last = await latestRun(testDb, "kop-sukamaju");
     expect(last?.source).toBe("seed");
+  });
+
+  it("cancelViaMarker: marker hilang (reset) -> LEWATI persist; ada -> persist", async () => {
+    const has = async (id: string) =>
+      (await testDb.select().from(auditRun).where(eq(auditRun.id, id))).length >
+      0;
+    // Tanpa marker "berjalan-" (seolah reset menghapusnya) -> tidak ada run baru.
+    await runLiveAudit("cancel-x", "kop-sukamaju", {
+      hasKey: () => false,
+      cancelViaMarker: true,
+    });
+    expect(await has("cancel-x")).toBe(false);
+    // Marker ada -> persist gagal_langsung normal (audit tidak dibatalkan).
+    await testDb.insert(auditRun).values({
+      id: "berjalan-cancel-y",
+      koperasiId: "kop-sukamaju",
+      periode: "",
+      source: "live",
+      verdictWarna: "kuning",
+      ringkasan: "",
+      durasiMs: 0,
+      rawJson: JSON.stringify({ status: "berjalan", auditRunId: "cancel-y" }),
+      dibuatPada: new Date().toISOString(),
+    });
+    await runLiveAudit("cancel-y", "kop-sukamaju", {
+      hasKey: () => false,
+      cancelViaMarker: true,
+    });
+    expect(await has("cancel-y")).toBe(true);
   });
 
   it("persistLiveRun -> status selesai membaca run live", async () => {
