@@ -9,6 +9,7 @@ import { ApiError, ok, runRoute } from "../../../lib/api";
 import { sealSession, setSessionCookie } from "../../../lib/auth";
 import { COPY } from "../../../lib/copy";
 import type { OnboardResp } from "../../../lib/contracts";
+import { maskNik } from "../../../lib/simkopdes";
 
 // Anggota baru pada purwarupa bergabung ke koperasi detail (kop-sukamaju).
 const KOPERASI_ID = "kop-sukamaju";
@@ -75,7 +76,9 @@ export async function POST(req: NextRequest) {
         id: anggotaId,
         koperasiId: KOPERASI_ID,
         nama,
-        nik,
+        // NIK disamarkan sebelum persist (12************56): tidak ada konsumen
+        // kolom nik, dan landing menjanjikan tanpa data pribadi nyata.
+        nik: maskNik(nik),
         noAnggota,
         alamat,
         bergabungPada,

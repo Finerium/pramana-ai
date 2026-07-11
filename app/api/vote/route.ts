@@ -1,11 +1,11 @@
 import type { NextRequest } from "next/server";
-import { eq, sql } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { z } from "zod";
 import { ulid } from "ulid";
 import { getDb } from "../../../db/client";
 import { keputusan, vote } from "../../../db/schema";
 import { ApiError, ok, runRoute } from "../../../lib/api";
-import { requireRole } from "../../../lib/auth";
+import { koperasiForAnggota, requireRole } from "../../../lib/auth";
 
 const Body = z.object({
   keputusanId: z.string(),
@@ -24,10 +24,18 @@ export async function POST(req: NextRequest) {
     const { keputusanId, pilihan } = parsed.data;
     const { db } = getDb();
 
+    // Scope ke koperasi sesi: keputusan koperasi lain diperlakukan tidak ada
+    // (anti IDOR; anggota hanya memberi suara di koperasinya sendiri).
+    const koperasiId = await koperasiForAnggota(anggotaId);
     const kExists = await db
       .select({ id: keputusan.id })
       .from(keputusan)
-      .where(eq(keputusan.id, keputusanId))
+      .where(
+        and(
+          eq(keputusan.id, keputusanId),
+          eq(keputusan.koperasiId, koperasiId ?? ""),
+        ),
+      )
       .limit(1);
     if (!kExists[0])
       throw new ApiError("NOT_FOUND", "Keputusan tidak ditemukan.");

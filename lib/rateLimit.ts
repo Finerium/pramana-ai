@@ -33,9 +33,19 @@ export function resetRateLimit(): void {
   hits.clear();
 }
 
-/** IP klien dari header proxy; fallback "unknown". */
+/**
+ * IP klien dari sumber TEPERCAYA; fallback "unknown". x-real-ip diisi platform
+ * (Vercel) jadi utama; bila kosong pakai entri X-Forwarded-For paling KANAN
+ * (yang di-append proxy). Entri paling kiri dikendalikan klien: memakainya
+ * membuat rate limit login bisa dilewati dengan mengganti header tiap percobaan.
+ */
 export function clientIp(req: Request): string {
+  const real = req.headers.get("x-real-ip")?.trim();
+  if (real) return real;
   const xff = req.headers.get("x-forwarded-for");
-  if (xff) return xff.split(",")[0]!.trim();
-  return req.headers.get("x-real-ip") ?? "unknown";
+  if (xff) {
+    const kanan = xff.split(",").at(-1)?.trim();
+    if (kanan) return kanan;
+  }
+  return "unknown";
 }

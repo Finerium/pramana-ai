@@ -151,10 +151,19 @@ describe("rateLimit AC-SEC-07", () => {
     expect(tooManyLogins("2.2.2.2")).toBe(false);
   });
 
-  it("clientIp mengambil IP pertama x-forwarded-for", () => {
-    const req = new NextRequest("http://localhost/", {
+  it("clientIp memakai x-real-ip, lalu entri x-forwarded-for paling kanan", () => {
+    // x-real-ip (diisi platform) menang atas XFF.
+    const nyata = new NextRequest("http://localhost/", {
+      headers: {
+        "x-real-ip": "9.9.9.9",
+        "x-forwarded-for": "5.6.7.8, 9.9.9.9",
+      },
+    });
+    expect(clientIp(nyata)).toBe("9.9.9.9");
+    // Tanpa x-real-ip: entri paling KANAN (append proxy), bukan kiriman klien.
+    const xff = new NextRequest("http://localhost/", {
       headers: { "x-forwarded-for": "5.6.7.8, 9.9.9.9" },
     });
-    expect(clientIp(req)).toBe("5.6.7.8");
+    expect(clientIp(xff)).toBe("9.9.9.9");
   });
 });
