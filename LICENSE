@@ -1,21 +1,17 @@
-MIT License
+Hak Cipta (c) 2026 Kementerian Koperasi Republik Indonesia. Seluruh hak dilindungi.
 
-Copyright (c) 2026 Tim Daulat (Ghaisan Khoirul Badruzaman, Kemal Ardian)
+Seluruh hak cipta atas perangkat lunak Pramana AI, termasuk kode program,
+struktur data, sistem, dan dokumentasinya, telah beralih secara mutlak kepada
+Kementerian Koperasi Republik Indonesia berdasarkan Surat Pernyataan Komitmen
+dan Pengalihan Hak Cipta Kelompok Daulat atas hasil keputusan rapat tanggal
+16 Juli 2026, sesuai Pasal 16 ayat (2) huruf e dan Pasal 9 ayat (1)
+Undang-Undang Nomor 28 Tahun 2014 tentang Hak Cipta.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Penggunaan, penggandaan, pengubahan, penggabungan, publikasi, atau
+pendistribusian perangkat lunak ini, seluruhnya maupun sebagian, memerlukan
+izin tertulis dari Kementerian Koperasi Republik Indonesia.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Hak moral pencipta tetap diakui sesuai Pasal 5 ayat (1) huruf a Undang-Undang
+Nomor 28 Tahun 2014. Pramana AI pertama kali dikembangkan oleh Tim Daulat
+(Ghaisan Khoirul Badruzaman), Politeknik Negeri Bandung, untuk Hackathon
+Digital Cooperatives Expo 2026.

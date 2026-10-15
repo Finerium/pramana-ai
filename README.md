@@ -1,6 +1,6 @@
 # Pramana AI
 
-[![Lisensi MIT](https://img.shields.io/badge/lisensi-MIT-black)](LICENSE) [![Next.js 16](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org) [![Demo langsung](https://img.shields.io/badge/demo-langsung-brightgreen)](https://pramana-ai-puce.vercel.app) [![Data sintetis](https://img.shields.io/badge/data-sintetis-blue)](#lisensi) [![Uji 394](https://img.shields.io/badge/uji-394%2F394-success)](#status-dan-verifikasi)
+[![Hak cipta Kemenkop RI](https://img.shields.io/badge/hak%20cipta-Kemenkop%20RI-black)](LICENSE) [![Next.js 16](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org) [![Demo langsung](https://img.shields.io/badge/demo-langsung-brightgreen)](https://pramana-ai-puce.vercel.app) [![Data sintetis](https://img.shields.io/badge/data-sintetis-blue)](#lisensi) [![Uji 394](https://img.shields.io/badge/uji-394%2F394-success)](#status-dan-verifikasi)
 
 Sebelum koperasi desa boleh tumbuh, anggotanya harus percaya lebih dulu bahwa uang mereka aman. Pramana AI membangun kepercayaan itu: pengawas berbasis AI yang mengaudit koperasi atas nama anggotanya, bukan pengurusnya.
 
@@ -492,10 +492,10 @@ Ringkasnya: satu bahasa karena jantung produk adalah antarmuka yang diport dari 
 
 ## Disclosure AI
 
-Gagasan inti Pramana AI adalah karya orisinal **Tim Daulat**, yaitu Ghaisan Khoirul Badruzaman dan Kemal Ardian dari Politeknik Negeri Bandung, dan terdokumentasi sebelum pembangunan. Produk ini dikembangkan untuk Hackathon Digital Cooperatives Expo 2026, Kementerian Koperasi RI bekerja sama dengan PEBS FEB UI.
+Gagasan inti Pramana AI adalah karya orisinal **Tim Daulat** (Ghaisan Khoirul Badruzaman) dari Politeknik Negeri Bandung, dan terdokumentasi sebelum pembangunan. Produk ini dikembangkan untuk Hackathon Digital Cooperatives Expo 2026, Kementerian Koperasi RI bekerja sama dengan PEBS FEB UI.
 
 AI generatif dipakai sebagai alat, bukan sebagai penggagas. Claude Opus 4.8 via Claude Code menjadi alat implementasi untuk menulis kode, debugging, dan dokumentasi; MiniMax-M2.7 menjadi mesin runtime produk yang menjalankan agen pemeriksa saat aplikasi berjalan. Pernyataan lengkap ada di [DISCLOSURE-AI.md](DISCLOSURE-AI.md), dan rincian per tahap ada di [.crown/ai-usage.md](.crown/ai-usage.md).
 
 ## Lisensi
 
-MIT. Lihat [LICENSE](LICENSE). Seluruh data dalam repositori ini bersifat sintetis; tidak ada data pribadi nyata.
+Hak cipta Pramana AI telah dialihkan kepada Kementerian Koperasi Republik Indonesia dan seluruh hak dilindungi. Lihat [LICENSE](LICENSE). Seluruh data dalam repositori ini bersifat sintetis; tidak ada data pribadi nyata.

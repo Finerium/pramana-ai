@@ -5,7 +5,7 @@
 Satu kalimat: Pramana AI adalah pengawas tata kelola koperasi desa berbasis AI multi-agent yang mengaudit koperasi atas nama anggotanya, memberi verdict hijau/kuning/merah beserta pertanyaan untuk Rapat Anggota Tahunan, dengan aplikasi mobile-first untuk anggota dan dasbor web untuk pemerintah.
 
 Status: v1.0, locked, siap eksekusi Orchestrator. Tanggal: 7 Juli 2026.
-Tim: Daulat (Ghaisan Khoirul Badruzaman, Kemal Ardian), Politeknik Negeri Bandung.
+Tim: Daulat (Ghaisan Khoirul Badruzaman), Politeknik Negeri Bandung.
 Konteks kompetisi: Hackathon Digital Cooperatives Expo 2026 (Kemenkop RI x PEBS FEB UI), Top 100, Offline Hackathon dan Pitching Day 10-11 Juli 2026 di Hotel Borobudur Jakarta, Awarding 12 Juli. Tema terkunci: Keterlibatan Masyarakat dalam Berkoperasi.
 
 Cakupan dokumen: layer 1-8 penuh. Yang diserahkan ke Orchestrator pada planning time: layout file internal, pola implementasi di dalam komponen, micro-choice library (dalam batas dependency-hygiene), lebar fan-out per fase, dan detail implementasi tiap invariant. Yang TIDAK boleh direlitigasi Orchestrator: semua kontrak di section 6, semua ADR di section 5, scope edge di section 2, dan register copy di section 6.8.

@@ -47,5 +47,5 @@ mengapa perubahan dibuat, bukan hanya apa yang diubah.
 
 ## Lisensi kontribusi
 
-Dengan berkontribusi, Anda setuju bahwa kontribusi Anda dilisensikan di bawah
-Lisensi MIT yang sama dengan proyek ini.
+Dengan berkontribusi, Anda setuju bahwa hak cipta atas kontribusi Anda menjadi
+milik Kementerian Koperasi Republik Indonesia sesuai ketentuan dalam LICENSE.
