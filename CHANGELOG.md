@@ -4,6 +4,50 @@ Seluruh perubahan penting proyek ini dicatat di berkas ini. Format mengikuti
 [Keep a Changelog](https://keepachangelog.com/id/1.1.0/) dan proyek menganut
 [Semantic Versioning](https://semver.org/lang/id/).
 
+## [2.4.0] - 2026-07-12
+
+Rilis pengerasan menjelang adopsi Kementerian Koperasi. Mencakup seluruh
+perubahan sejak 2.1.0. Laporan lengkap: `docs/bug-hunt-2026-07-12.md`.
+
+### Ditambahkan
+
+- Tanggal dan waktu penemuan dalam WIB, riwayat pemeriksaan, indikator audit
+  berjalan di dasbor pemerintah, dan penjaga bahasa asing pada keluaran model.
+- Halaman masuk pemerintah dan bendahara dalam tata letak dua panel.
+
+### Keamanan
+
+- Voting dibatasi ke koperasi milik pemilih (anti-IDOR).
+- Sumber IP rate limit tidak lagi dapat dipalsukan klien.
+- NIK disamarkan sebelum disimpan pada onboarding.
+
+### Diperbaiki
+
+- Validasi tanggal dan foreign key, pin temuan AN-1, ringkasan mode cepat, dan
+  timeout panggilan model.
+- Reset data dipagari terhadap audit latar yang sedang berjalan; pemicu audit
+  dijaga dari eksekusi ganda.
+- Tampilan tidak lagi memuat angka uang fabrikasi; status gagal ditampilkan
+  jujur; polling berhenti saat tidak dibutuhkan; aksesibilitas konsol dan
+  sinkronisasi muat ulang dasbor diperbaiki.
+
+## [2.1.0] - 2026-07-10
+
+### Ditambahkan
+
+- Pohon agen pemeriksa lebih cepat dan andal, riwayat lintas permukaan,
+  notifikasi ke seluruh anggota, dan reset data bersih.
+
+## [2.0.0] - 2026-07-10
+
+### Ditambahkan
+
+- Audit langsung end-to-end ke MiniMax-M2.7 dengan penjaga grounding bukti.
+- Penyelarasan format identifier SIMKOPDES lewat lapisan display-ref.
+- Dasbor pemerintah 12 panel dengan riwayat enam periode.
+- Pohon agen pemeriksa real-time pada konsol bendahara.
+- Deploy produksi di Vercel dengan basis data Turso.
+
 ## [1.0.0] - 2026-07-10
 
 Rilis purwarupa pertama untuk Hackathon Digital Cooperatives Expo 2026.
